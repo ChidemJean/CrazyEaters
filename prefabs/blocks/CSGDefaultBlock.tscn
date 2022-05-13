@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/materials/prototype/orange.tres" type="Material" id=1]
+
+[sub_resource type="BoxShape" id=8]
+
+[node name="CSGDefaultBlock" type="CSGBox"]
+material = ExtResource( 1 )
+
+[node name="StaticBody" type="StaticBody" parent="."]
+collision_layer = 4
+
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody"]
+shape = SubResource( 8 )

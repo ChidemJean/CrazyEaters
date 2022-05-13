@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/fonts/CrazyEaters.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://src/Tools/FPSLabel.cs" type="Script" id=2]
+
+[sub_resource type="DynamicFont" id=7]
+font_data = ExtResource( 1 )
+
+[sub_resource type="Theme" id=8]
+default_font = SubResource( 7 )
+
+[node name="Label" type="Label"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -117.0
+margin_top = -7.0
+margin_bottom = 16.0
+theme = SubResource( 8 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/line_spacing = 10
+custom_constants/shadow_offset_y = 2
+custom_constants/shadow_as_outline = 2
+text = "FPS"
+align = 1
+valign = 1
+script = ExtResource( 2 )

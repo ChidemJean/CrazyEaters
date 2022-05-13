@@ -1,0 +1,308 @@
+[gd_scene load_steps=28 format=2]
+
+[ext_resource path="res://src/Spawners/TesteSpawner.cs" type="Script" id=1]
+[ext_resource path="res://prefabs/blocks/Chair.tscn" type="PackedScene" id=2]
+[ext_resource path="res://prefabs/characters/Character.tscn" type="PackedScene" id=3]
+[ext_resource path="res://prefabs/blocks/MetalRoundTable.tscn" type="PackedScene" id=4]
+[ext_resource path="res://prefabs/blocks/CSGDefaultBlock.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/materials/prototype/dark.tres" type="Material" id=6]
+[ext_resource path="res://assets/models/prototype/campfire.obj" type="ArrayMesh" id=7]
+[ext_resource path="res://assets/models/prototype/structureBase.obj" type="ArrayMesh" id=8]
+[ext_resource path="res://assets/models/prototype/rockB.obj" type="ArrayMesh" id=9]
+[ext_resource path="res://prefabs/items/Workbench.tscn" type="PackedScene" id=10]
+[ext_resource path="res://assets/models/prototype/tentClosed.obj" type="ArrayMesh" id=11]
+[ext_resource path="res://assets/models/prototype/rockA.obj" type="ArrayMesh" id=12]
+[ext_resource path="res://src/Tools/ExplosionTap.cs" type="Script" id=13]
+[ext_resource path="res://assets/models/prototype/grassLarge.obj" type="ArrayMesh" id=14]
+[ext_resource path="res://assets/models/prototype/signpost.obj" type="ArrayMesh" id=15]
+[ext_resource path="res://assets/models/prototype/chest.obj" type="ArrayMesh" id=16]
+[ext_resource path="res://assets/models/prototype/nature/tree_detailed_fall.obj" type="ArrayMesh" id=17]
+[ext_resource path="res://conf/HabitatSceneEnv.tres" type="Environment" id=18]
+[ext_resource path="res://assets/models/prototype/nature/tree_cone.obj" type="ArrayMesh" id=19]
+[ext_resource path="res://assets/physics/explosion.tres" type="Shape" id=20]
+[ext_resource path="res://src/Controllers/CameraRotator.cs" type="Script" id=21]
+[ext_resource path="res://src/Controllers/PlacementController.cs" type="Script" id=22]
+
+[sub_resource type="Animation" id=10]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:environment:background_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0.658824, 0.952941, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:environment:ambient_light_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0.658824, 0.952941, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=11]
+resource_name = "SkyColor"
+length = 12.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:environment:background_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.8, 2.7, 6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0.658824, 0.952941, 1, 1 ), Color( 0.658824, 0.952941, 1, 1 ), Color( 1, 0.827451, 0.372549, 1 ), Color( 0.0588235, 0.117647, 0.286275, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:environment:ambient_light_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1.8, 2.7, 6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0.658824, 0.952941, 1, 1 ), Color( 0.658824, 0.952941, 1, 1 ), Color( 1, 0.827451, 0.372549, 1 ), Color( 0.0588235, 0.117647, 0.286275, 1 ) ]
+}
+
+[sub_resource type="Animation" id=9]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( -90, 58.943, 180 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:light_energy")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1.0 ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "SunRotate"
+length = 12.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 12 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( -90, 58.943, 180 ), Vector3( 270, 58.943, 180 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:light_energy")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 2.9, 3.5, 9, 12 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 1.0, 0.7, 0.0, 0.0, 1.0 ]
+}
+
+[sub_resource type="BoxShape" id=7]
+extents = Vector3( 26, 1, 26 )
+
+[node name="HabitatScene" type="Spatial"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource( 18 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="WorldEnvironment"]
+autoplay = "SkyColor"
+anims/RESET = SubResource( 10 )
+anims/SkyColor = SubResource( 11 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( -0.515891, 0.856655, -3.74456e-08, 3.82137e-15, 4.37114e-08, 1, 0.856655, 0.515891, -2.25503e-08, 0, 8.84839, 0 )
+light_specular = 0.0
+shadow_enabled = true
+shadow_reverse_cull_face = true
+directional_shadow_mode = 0
+directional_shadow_blend_splits = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="DirectionalLight"]
+autoplay = "SunRotate"
+anims/RESET = SubResource( 9 )
+anims/SunRotate = SubResource( 8 )
+
+[node name="CameraPivot" type="Spatial" parent="."]
+script = ExtResource( 21 )
+speed = 30.0
+targetNode = NodePath("Camera")
+
+[node name="Camera" type="Camera" parent="CameraPivot"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 49 )
+environment = ExtResource( 18 )
+fov = 60.8724
+far = 250.0
+
+[node name="ExplosionTap" type="Spatial" parent="."]
+script = ExtResource( 13 )
+shapeExplosion = ExtResource( 20 )
+impulseForce = 50.0
+
+[node name="Spawner" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 32.2481, 0 )
+script = ExtResource( 1 )
+prefabs = [ ExtResource( 2 ), ExtResource( 4 ), ExtResource( 10 ), ExtResource( 3 ) ]
+qtdInstances = 250
+
+[node name="CSGMain" type="CSGCombiner" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+snap = 0.01
+script = ExtResource( 22 )
+blockPref = ExtResource( 5 )
+
+[node name="CSGFloor" type="CSGBox" parent="CSGMain"]
+snap = 0.01
+width = 52.0
+depth = 52.0
+material = ExtResource( 6 )
+
+[node name="StaticBody" type="StaticBody" parent="CSGMain/CSGFloor"]
+collision_layer = 2
+
+[node name="CollisionShape" type="CollisionShape" parent="CSGMain/CSGFloor/StaticBody"]
+shape = SubResource( 7 )
+
+[node name="Character" parent="." instance=ExtResource( 3 )]
+transform = Transform( 0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, -8, 10, -1 )
+
+[node name="Scenario" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0, -31 )
+
+[node name="campfire" type="MeshInstance" parent="Scenario"]
+transform = Transform( -8.74228e-08, 0, 2, 0, 2, 0, -2, 0, -8.74228e-08, 18, 2, 29 )
+mesh = ExtResource( 7 )
+skeleton = NodePath("../..")
+material/0 = null
+material/1 = null
+material/2 = null
+material/3 = null
+material/4 = null
+
+[node name="structureBase" type="MeshInstance" parent="Scenario"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 13, 2, 36 )
+mesh = ExtResource( 8 )
+skeleton = NodePath("../..")
+material/0 = null
+material/1 = null
+
+[node name="tentClosed" type="MeshInstance" parent="Scenario"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 24, 2, 30 )
+mesh = ExtResource( 11 )
+skeleton = NodePath("../..")
+material/0 = null
+material/1 = null
+
+[node name="workbench" parent="Scenario" instance=ExtResource( 10 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 2.97116, 41 )
+
+[node name="rockB" type="MeshInstance" parent="Scenario"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2, 38 )
+mesh = ExtResource( 9 )
+skeleton = NodePath("../..")
+material/0 = null
+
+[node name="rockA" type="MeshInstance" parent="Scenario"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2, 34 )
+mesh = ExtResource( 12 )
+skeleton = NodePath("../..")
+material/0 = null
+
+[node name="signpost" type="MeshInstance" parent="Scenario"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 2, 39 )
+mesh = ExtResource( 15 )
+skeleton = NodePath("../..")
+material/0 = null
+
+[node name="grassLarge" type="MeshInstance" parent="Scenario"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 2, 38 )
+mesh = ExtResource( 14 )
+skeleton = NodePath("../..")
+material/0 = null
+
+[node name="grassLarge4" type="MeshInstance" parent="Scenario"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 2, 23 )
+mesh = ExtResource( 14 )
+skeleton = NodePath("../..")
+material/0 = null
+
+[node name="grassLarge2" type="MeshInstance" parent="Scenario"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 2, 34 )
+mesh = ExtResource( 14 )
+skeleton = NodePath("../..")
+material/0 = null
+
+[node name="grassLarge3" type="MeshInstance" parent="Scenario"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 2, 28 )
+mesh = ExtResource( 14 )
+skeleton = NodePath("../..")
+material/0 = null
+
+[node name="chest" type="MeshInstance" parent="Scenario"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 2, 25 )
+mesh = ExtResource( 16 )
+skeleton = NodePath("../..")
+material/0 = null
+material/1 = null
+material/2 = null
+material/3 = null
+material/4 = null
+
+[node name="tree_detailed_fall" type="MeshInstance" parent="Scenario"]
+transform = Transform( 7, 0, 0, 0, 7, 0, 0, 0, 7, 45, 2, 22 )
+mesh = ExtResource( 17 )
+skeleton = NodePath("../..")
+material/0 = null
+material/1 = null
+material/2 = null
+
+[node name="tree_cone" type="MeshInstance" parent="Scenario"]
+transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 5, 6, 2, 29 )
+mesh = ExtResource( 19 )
+skeleton = NodePath("../..")
+material/0 = null
+material/1 = null
+
+[node name="signpost2" type="MeshInstance" parent="Scenario"]
+transform = Transform( 0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 17, 2, 38 )
+mesh = ExtResource( 15 )
+skeleton = NodePath("../../WorldEnvironment/AnimationPlayer")
+material/0 = null

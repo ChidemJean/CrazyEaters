@@ -1,0 +1,48 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+[application]
+
+config/name="CrazyEatersGodot"
+run/main_scene="res://scenes/MainScene.tscn"
+boot_splash/image="res://assets/textures/UI/logo_chidem_games.fw.png"
+boot_splash/bg_color=Color( 0.129412, 0.0745098, 0.231373, 1 )
+config/icon="res://icon.png"
+
+[autoload]
+
+GameManager="*res://src/Managers/GameManager.cs"
+ResourceQueue="*res://resource_queue.gd"
+
+[display]
+
+window/size/width=600
+window/size/height=1024
+window/vsync/use_vsync=false
+window/handheld/orientation="portrait"
+
+[layer_names]
+
+3d_physics/layer_2="Ground"
+3d_physics/layer_3="Block"
+
+[physics]
+
+common/enable_pause_aware_picking=true
+3d/physics_engine="GodotPhysics"
+3d/default_gravity_vector=Vector3( 0, -9, 0 )
+
+[rendering]
+
+threads/thread_model=2
+threads/thread_safe_bvh=true
+quality/shadows/filter_mode=0
+quality/subsurface_scattering/quality=0
+environment/default_environment="res://default_env.tres"

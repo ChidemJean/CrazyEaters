@@ -1,0 +1,27 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=2]
+
+[ext_resource path="res://assets/shaders/cel.tres" type="Shader" id=1]
+[ext_resource path="res://assets/textures/palette1.png" type="Texture" id=2]
+
+[resource]
+shader = ExtResource( 1 )
+shader_param/use_shade = true
+shader_param/use_specular = true
+shader_param/use_rim = true
+shader_param/use_light = true
+shader_param/use_shadow = true
+shader_param/base_color = Color( 1, 1, 1, 1 )
+shader_param/shade_color = Color( 0, 0, 0, 1 )
+shader_param/specular_tint = Color( 0.75, 0.75, 0.75, 0.75 )
+shader_param/rim_tint = Color( 0.75, 0.75, 0.75, 0.75 )
+shader_param/shade_threshold = 0.076
+shader_param/shade_softness = 0.01
+shader_param/specular_glossiness = 15.0
+shader_param/specular_threshold = 0.5
+shader_param/specular_softness = 0.1
+shader_param/rim_threshold = 0.25
+shader_param/rim_softness = 0.05
+shader_param/rim_spread = 0.5
+shader_param/shadow_threshold = 0.7
+shader_param/shadow_softness = 0.1
+shader_param/base_texture = ExtResource( 2 )
