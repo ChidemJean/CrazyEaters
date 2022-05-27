@@ -47,7 +47,6 @@ namespace CrazyEaters.Spawners
 
         public void item_load(Resource resource)
         {
-            GD.Print("item load!");
             prefabsLoaded.Add((PackedScene)resource);
         }
 
@@ -59,7 +58,6 @@ namespace CrazyEaters.Spawners
                 PackedScene res = await Task.Run(async () => {
                                     while(true) {
                                         Error err = interactive_ldr.Poll();
-                                        GD.Print(interactive_ldr.GetStage() / interactive_ldr.GetStageCount());
                                         if (err == Error.FileEof) {
                                             return interactive_ldr.GetResource();
                                         }

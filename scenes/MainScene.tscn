@@ -49,27 +49,31 @@ shadow_atlas_size = 1
 [node name="FPS" parent="." instance=ExtResource( 2 )]
 
 [node name="Button" type="TextureButton" parent="."]
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -74.0
-margin_top = 22.0
-margin_right = -34.0
-margin_bottom = 62.0
+anchor_left = 0.876667
+anchor_top = 0.0214844
+anchor_right = 0.943333
+anchor_bottom = 0.0605469
 texture_normal = ExtResource( 7 )
 expand = true
 stretch_mode = 5
 script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
 configurationsMenuPath = NodePath("../ConfigurationsMenu")
 
 [node name="EditModeButton" type="TextureButton" parent="."]
-margin_left = 29.0
-margin_top = 22.0
-margin_right = 69.0
-margin_bottom = 62.0
+anchor_left = 0.0483333
+anchor_top = 0.0214844
+anchor_right = 0.115
+anchor_bottom = 0.0605469
 texture_normal = ExtResource( 11 )
 expand = true
 stretch_mode = 5
 script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
 [node name="RemoveBlockButton" type="TextureButton" parent="."]
 visible = false

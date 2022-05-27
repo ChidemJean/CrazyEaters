@@ -1,0 +1,119 @@
+[gd_scene load_steps=27 format=2]
+
+[ext_resource path="res://assets/models/imported/character.escn" type="PackedScene" id=1]
+[ext_resource path="res://assets/materials/character.tres" type="Material" id=2]
+[ext_resource path="res://assets/materials/eye_character.tres" type="Material" id=3]
+
+[sub_resource type="SphereMesh" id=1]
+radial_segments = 12
+rings = 6
+
+[sub_resource type="AnimationNodeAnimation" id=20]
+animation = "eat"
+
+[sub_resource type="AnimationNodeAnimation" id=4]
+animation = "idle-loop"
+
+[sub_resource type="AnimationNodeAnimation" id=5]
+animation = "idle_foot"
+
+[sub_resource type="AnimationNodeAnimation" id=6]
+animation = "idle_head"
+
+[sub_resource type="AnimationNodeAnimation" id=15]
+animation = "jump.001"
+
+[sub_resource type="AnimationNodeAnimation" id=16]
+animation = "jump_down.001"
+
+[sub_resource type="AnimationNodeAnimation" id=23]
+animation = "open_mmouth.001"
+
+[sub_resource type="AnimationNodeAnimation" id=12]
+animation = "walk-loop"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=7]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=8]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=9]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=10]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=13]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=14]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=17]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=18]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=19]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=22]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=24]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=25]
+
+[sub_resource type="AnimationNodeStateMachine" id=11]
+states/eat.001/node = SubResource( 20 )
+states/eat.001/position = Vector2( 550, 346 )
+states/idle/node = SubResource( 4 )
+states/idle/position = Vector2( 247, 162 )
+states/idle_foot/node = SubResource( 5 )
+states/idle_foot/position = Vector2( -61, 119 )
+states/idle_head/node = SubResource( 6 )
+states/idle_head/position = Vector2( 550, 95 )
+states/jump.001/node = SubResource( 15 )
+states/jump.001/position = Vector2( 150, 25 )
+states/jump_down.001/node = SubResource( 16 )
+states/jump_down.001/position = Vector2( 369, 25 )
+states/open_mmouth.001/node = SubResource( 23 )
+states/open_mmouth.001/position = Vector2( 550, 245 )
+states/walk/node = SubResource( 12 )
+states/walk/position = Vector2( 73, 335 )
+transitions = [ "idle", "idle_foot", SubResource( 7 ), "idle_foot", "idle", SubResource( 8 ), "idle", "idle_head", SubResource( 9 ), "idle_head", "idle", SubResource( 10 ), "idle", "walk", SubResource( 13 ), "walk", "idle", SubResource( 14 ), "idle", "jump.001", SubResource( 17 ), "jump.001", "jump_down.001", SubResource( 18 ), "jump_down.001", "idle", SubResource( 19 ), "eat.001", "idle", SubResource( 22 ), "idle", "open_mmouth.001", SubResource( 24 ), "open_mmouth.001", "eat.001", SubResource( 25 ) ]
+start_node = "idle"
+graph_offset = Vector2( -259, -2 )
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=3]
+
+[node name="character" instance=ExtResource( 1 )]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0 )
+
+[node name="Armature" parent="." index="0"]
+bones/11/bound_children = [ NodePath("Eyes") ]
+
+[node name="Cube" parent="Armature" index="1"]
+material_override = ExtResource( 2 )
+
+[node name="Eyes" type="BoneAttachment" parent="Armature" index="2"]
+transform = Transform( 1, -2.54577e-06, 7.62288e-07, 1.02073e-06, 0.77593, 0.630821, 9.90003e-07, -0.630824, 0.775931, -0.095297, 8.55668, -1.75644 )
+bone_name = "mouth_up"
+
+[node name="MeshInstance" type="MeshInstance" parent="Armature/Eyes" index="0"]
+transform = Transform( 1.55, 3.18323e-12, 4.54747e-13, 1.59162e-12, 1.55, 2.38419e-07, -4.3201e-12, -1.01328e-06, 1.55, -1.47728, 0.303843, -0.605687 )
+mesh = SubResource( 1 )
+material/0 = ExtResource( 3 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="Armature/Eyes" index="1"]
+transform = Transform( 1.2, -4.20641e-12, -1.81899e-12, 2.67164e-12, 1.2, 8.9407e-07, -4.54747e-13, -1.78814e-07, 1.2, 1.97961, 0.167457, -0.786879 )
+mesh = SubResource( 1 )
+material/0 = ExtResource( 3 )
+
+[node name="AnimationTree" type="AnimationTree" parent="Armature" index="3"]
+tree_root = SubResource( 11 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource( 3 )

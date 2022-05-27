@@ -24,15 +24,13 @@ namespace CrazyEaters.Optimization
             GetViewport().Connect("size_changed", this, nameof(OnViewportSizeChanged));
         }
 
-        public void OnViewportSizeChanged(float size)
+        public void OnViewportSizeChanged()
         {
-            GD.Print("VIEWPORT RESIZED: " + size);
-            UpdateViewport3DSize(size);
+            UpdateViewport3DSize(this.currentScale);
         }
 
         public void UpdateViewport3DSize(float value, string type = "LOAD")
         {
-            GD.Print("CURRENT VIEWPORT SIZE: " + GetViewport().Size);
             float scaleFactorClamped = Mathf.Clamp(value, 0.2f, 1f);
             this.viewport3d.Size = GetViewport().Size * scaleFactorClamped;
             this.currentScale = scaleFactorClamped;

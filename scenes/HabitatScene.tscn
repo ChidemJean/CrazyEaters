@@ -1,8 +1,8 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://src/Spawners/TesteSpawner.cs" type="Script" id=1]
 [ext_resource path="res://prefabs/blocks/Chair.tscn" type="PackedScene" id=2]
-[ext_resource path="res://prefabs/characters/Character.tscn" type="PackedScene" id=3]
+[ext_resource path="res://prefabs/characters/SmallCharacter.tscn" type="PackedScene" id=3]
 [ext_resource path="res://prefabs/blocks/MetalRoundTable.tscn" type="PackedScene" id=4]
 [ext_resource path="res://prefabs/blocks/CSGDefaultBlock.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/materials/prototype/dark.tres" type="Material" id=6]
@@ -22,67 +22,68 @@
 [ext_resource path="res://assets/physics/explosion.tres" type="Shape" id=20]
 [ext_resource path="res://src/Controllers/CameraRotator.cs" type="Script" id=21]
 [ext_resource path="res://src/Controllers/PlacementController.cs" type="Script" id=22]
+[ext_resource path="res://assets/materials/grid.tres" type="Material" id=23]
+[ext_resource path="res://prefabs/particles/PlaceBlockDust.tscn" type="PackedScene" id=24]
+[ext_resource path="res://prefabs/blocks/CSGDefaultBlock__1_2.tscn" type="PackedScene" id=25]
+[ext_resource path="res://prefabs/characters/Character.tscn" type="PackedScene" id=26]
 
-[sub_resource type="Animation" id=10]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:environment:background_color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Color( 0.658824, 0.952941, 1, 1 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath(".:environment:ambient_light_color")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Color( 0.658824, 0.952941, 1, 1 ) ]
-}
-
-[sub_resource type="Animation" id=11]
-resource_name = "SkyColor"
-length = 12.0
+[sub_resource type="Animation" id=12]
+resource_name = "DayNight"
+length = 120.0
 loop = true
 tracks/0/type = "value"
-tracks/0/path = NodePath(".:environment:background_color")
+tracks/0/path = NodePath("DirectionalLight:rotation_degrees")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1.8, 2.7, 6 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 120 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Color( 0.658824, 0.952941, 1, 1 ), Color( 0.658824, 0.952941, 1, 1 ), Color( 1, 0.827451, 0.372549, 1 ), Color( 0.0588235, 0.117647, 0.286275, 1 ) ]
+"values": [ Vector3( -90, 58.943, 180 ), Vector3( 270, 58.943, 180 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath(".:environment:ambient_light_color")
+tracks/1/path = NodePath("DirectionalLight:light_energy")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 1.8, 2.7, 6 ),
+"times": PoolRealArray( 0, 30.2, 90.2, 120 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Color( 0.658824, 0.952941, 1, 1 ), Color( 0.658824, 0.952941, 1, 1 ), Color( 1, 0.827451, 0.372549, 1 ), Color( 0.0588235, 0.117647, 0.286275, 1 ) ]
+"values": [ 1.0, 0.0, 0.0, 1.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("WorldEnvironment:environment:background_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 12.3, 22.8, 31, 90.7, 107.4, 120 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0.658824, 0.952941, 1, 1 ), Color( 0.658824, 0.952941, 1, 1 ), Color( 1, 0.827451, 0.372549, 1 ), Color( 0.0588235, 0.117647, 0.286275, 1 ), Color( 0.0588235, 0.117647, 0.286275, 1 ), Color( 0.658824, 0.952941, 1, 1 ), Color( 0.658824, 0.952941, 1, 1 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("WorldEnvironment:environment:ambient_light_color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 12.3, 22.8, 31, 90.7, 108, 120.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0.658824, 0.952941, 1, 1 ), Color( 0.658824, 0.952941, 1, 1 ), Color( 1, 0.827451, 0.372549, 1 ), Color( 0.0588235, 0.117647, 0.286275, 1 ), Color( 0.0588235, 0.117647, 0.286275, 1 ), Color( 0.658824, 0.952941, 1, 1 ), Color( 0.658824, 0.952941, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=13]
 length = 0.001
 tracks/0/type = "value"
-tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/path = NodePath("DirectionalLight:rotation_degrees")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -94,7 +95,7 @@ tracks/0/keys = {
 "values": [ Vector3( -90, 58.943, 180 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath(".:light_energy")
+tracks/1/path = NodePath("DirectionalLight:light_energy")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -105,48 +106,44 @@ tracks/1/keys = {
 "update": 0,
 "values": [ 1.0 ]
 }
-
-[sub_resource type="Animation" id=8]
-resource_name = "SunRotate"
-length = 12.0
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:rotation_degrees")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 12 ),
-"transitions": PoolRealArray( 1, 1 ),
+tracks/2/type = "value"
+tracks/2/path = NodePath("WorldEnvironment:environment:background_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector3( -90, 58.943, 180 ), Vector3( 270, 58.943, 180 ) ]
+"values": [ Color( 0.658824, 0.952941, 1, 1 ) ]
 }
-tracks/1/type = "value"
-tracks/1/path = NodePath(".:light_energy")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 2.9, 3.5, 9, 12 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+tracks/3/type = "value"
+tracks/3/path = NodePath("WorldEnvironment:environment:ambient_light_color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ 1.0, 0.7, 0.0, 0.0, 1.0 ]
+"values": [ Color( 0.658824, 0.952941, 1, 1 ) ]
 }
 
 [sub_resource type="BoxShape" id=7]
-extents = Vector3( 26, 1, 26 )
+extents = Vector3( 19, 1, 19 )
+
+[sub_resource type="QuadMesh" id=14]
+material = ExtResource( 23 )
+size = Vector2( 38, 38 )
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=15]
 
 [node name="HabitatScene" type="Spatial"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource( 18 )
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="WorldEnvironment"]
-autoplay = "SkyColor"
-anims/RESET = SubResource( 10 )
-anims/SkyColor = SubResource( 11 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( -0.515891, 0.856655, -3.74456e-08, 3.82137e-15, 4.37114e-08, 1, 0.856655, 0.515891, -2.25503e-08, 0, 8.84839, 0 )
@@ -156,10 +153,10 @@ shadow_reverse_cull_face = true
 directional_shadow_mode = 0
 directional_shadow_blend_splits = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="DirectionalLight"]
-autoplay = "SunRotate"
-anims/RESET = SubResource( 9 )
-anims/SunRotate = SubResource( 8 )
+[node name="DayNightAnimation" type="AnimationPlayer" parent="."]
+autoplay = "DayNight"
+anims/DayNight = SubResource( 12 )
+anims/RESET = SubResource( 13 )
 
 [node name="CameraPivot" type="Spatial" parent="."]
 script = ExtResource( 21 )
@@ -187,22 +184,28 @@ qtdInstances = 250
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 snap = 0.01
 script = ExtResource( 22 )
-blockPref = ExtResource( 5 )
+blockPref = ExtResource( 25 )
+dustParticlesPref = ExtResource( 24 )
+scenePath = NodePath("..")
 
-[node name="CSGFloor" type="CSGBox" parent="CSGMain"]
-snap = 0.01
-width = 52.0
-depth = 52.0
-material = ExtResource( 6 )
-
-[node name="StaticBody" type="StaticBody" parent="CSGMain/CSGFloor"]
+[node name="Floor" type="StaticBody" parent="CSGMain"]
 collision_layer = 2
 
-[node name="CollisionShape" type="CollisionShape" parent="CSGMain/CSGFloor/StaticBody"]
+[node name="CollisionShape" type="CollisionShape" parent="CSGMain/Floor"]
 shape = SubResource( 7 )
 
+[node name="CSGFloor" type="CSGBox" parent="CSGMain"]
+visible = false
+snap = 0.01
+width = 38.0
+depth = 38.0
+material = ExtResource( 6 )
+
+[node name="CSGDefaultBlock" parent="CSGMain" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2, 2 )
+
 [node name="Character" parent="." instance=ExtResource( 3 )]
-transform = Transform( 0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, -8, 10, -1 )
+transform = Transform( 1.49012e-07, 0, 1, 0, 1, 0, -1, 0, 1.49012e-07, 6, 4, 12 )
 
 [node name="Scenario" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0, -31 )
@@ -304,5 +307,53 @@ material/1 = null
 [node name="signpost2" type="MeshInstance" parent="Scenario"]
 transform = Transform( 0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 17, 2, 38 )
 mesh = ExtResource( 15 )
-skeleton = NodePath("../../WorldEnvironment/AnimationPlayer")
+skeleton = NodePath("")
 material/0 = null
+
+[node name="GridPlanes" type="Spatial" parent="."]
+
+[node name="Whall" type="MeshInstance" parent="GridPlanes"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 21, -19 )
+mesh = SubResource( 14 )
+skeleton = NodePath("../..")
+material/0 = null
+
+[node name="Whall4" type="MeshInstance" parent="GridPlanes"]
+transform = Transform( -1, 0, 5.96046e-08, 0, 1, 0, -5.96046e-08, 0, -1, 0, 21, 19 )
+mesh = SubResource( 14 )
+skeleton = NodePath("../..")
+material/0 = null
+
+[node name="Whall2" type="MeshInstance" parent="GridPlanes"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -19, 21, -5.96046e-08 )
+mesh = SubResource( 14 )
+skeleton = NodePath("../..")
+material/0 = null
+
+[node name="Whall5" type="MeshInstance" parent="GridPlanes"]
+transform = Transform( 1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 19, 21, -5.96046e-08 )
+mesh = SubResource( 14 )
+skeleton = NodePath("../..")
+material/0 = null
+
+[node name="Whall3" type="MeshInstance" parent="GridPlanes"]
+transform = Transform( 1.91069e-15, -1, -4.37114e-08, -4.37114e-08, -4.37114e-08, 1, -1, 0, -4.37114e-08, 0, 2, -5.96046e-08 )
+mesh = SubResource( 14 )
+skeleton = NodePath("../..")
+material/0 = null
+
+[node name="CharacterKB" parent="." instance=ExtResource( 26 )]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -2.09958, 54.1901, 1.87474 )
+speed = 7.0
+gravityScale = 0.5
+jumpSpeed = 15.0
+
+[node name="Eyes" parent="CharacterKB/character/Armature/Skeleton" index="1"]
+transform = Transform( 1, -4.32134e-07, -2.90573e-06, 2.04518e-06, -0.536424, 0.843949, 7.15256e-07, -0.843952, -0.536427, -0.0953007, 8.73567, -1.16395 )
+
+[node name="AnimationTree" parent="CharacterKB/character" index="2"]
+parameters/playback = SubResource( 15 )
+
+[editable path="CSGMain/CSGDefaultBlock"]
+[editable path="CharacterKB"]
+[editable path="CharacterKB/character"]

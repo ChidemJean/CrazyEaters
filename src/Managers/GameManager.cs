@@ -13,6 +13,9 @@ namespace CrazyEaters.Managers
         public Hud hud;
         public Godot.Object ResourceQueue;
 
+        public Vector3 gravityVector = (Vector3) ProjectSettings.GetSetting("physics/3d/default_gravity_vector");
+        public int gravityMagnitude = Convert.ToInt32(ProjectSettings.GetSetting("physics/3d/default_gravity"));
+
         public override void _Ready()
         {
             camera = GetNode<Camera>("/root/MainNode/ViewportContainer/Viewport/HabitatScene/CameraPivot/Camera");

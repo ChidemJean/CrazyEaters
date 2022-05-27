@@ -32,6 +32,7 @@ window/handheld/orientation="portrait"
 
 3d_physics/layer_2="Ground"
 3d_physics/layer_3="Block"
+3d_physics/layer_4="Character"
 
 [physics]
 

@@ -3,6 +3,7 @@ namespace CrazyEaters.Controllers
     using Godot;
     using System;
     using CrazyEaters.Managers;
+    using CrazyEaters.Entities;
 
     public class PlacementController : CSGCombiner
     {
@@ -15,16 +16,24 @@ namespace CrazyEaters.Controllers
         [Export]
         public PackedScene blockPref;
 
+        [Export]
+        public PackedScene dustParticlesPref = null;
+
+        [Export]
+        public NodePath scenePath = null;
+
         [Signal]
         public delegate void OnChangeEditMode(bool editMode);
 
         private GameManager gameManager;
 
-        private Spatial currentBlock = null;
+        private Block currentBlock = null;
+        private Spatial scene = null;
 
         public override void _Ready()
         {
             gameManager = GetNode<GameManager>("/root/GameManager");
+            scene = GetNode<Spatial>(scenePath);
         }
 
         public override void _Input(InputEvent @event)
@@ -60,7 +69,14 @@ namespace CrazyEaters.Controllers
 
             if (intersect != null && intersect.Count > 0) {
                 Vector3 pos = (Vector3) intersect["position"];
-                currentBlock.Translation = GetSnappedPos(pos);
+                CollisionObject collider = (CollisionObject) intersect["collider"];
+                Spatial target = collider.GetParentOrNull<Spatial>();
+                
+                if (target != null && target is Block) {
+                    currentBlock.Translation = GetSnappedPos(pos, currentBlock, target as Block);
+                } else {
+                    currentBlock.Translation = GetSnappedPos(pos, currentBlock, null);
+                }
             }
         }
 
@@ -81,10 +97,15 @@ namespace CrazyEaters.Controllers
         {
             var intersect = ProjectRay(mousePos);
             if (intersect != null && intersect.Count > 0) {
-                GD.Print("PLACE BLOCK");
                 Vector3 pos = (Vector3) intersect["position"];
-                Spatial newBlock = InstaceNewBlock(pos);
+                Spatial newBlock = InstanceNewBlock(pos);
                 newBlock.GetNode<StaticBody>("StaticBody").CollisionLayer = 2^1;
+                if (dustParticlesPref != null) {
+                    Particles dustParticles = dustParticlesPref.Instance<Particles>();
+                    dustParticles.Translation = pos;
+                    scene.AddChild(dustParticles);
+                    dustParticles.Emitting = true;
+                }
             }
         }
 
@@ -96,23 +117,31 @@ namespace CrazyEaters.Controllers
             return spaceState.IntersectRay(rayOrigin, rayEnd, null, 2^1);
         }
 
-        private Spatial InstaceNewBlock(Vector3 pos) 
+        private Block InstanceNewBlock(Vector3 pos) 
         {
-            Spatial newBlock = (Spatial) blockPref.Instance();
-            newBlock.Translation = GetSnappedPos(pos);
+            Block newBlock = (Block) blockPref.Instance();
+            newBlock.Translation = GetSnappedPos(pos, newBlock);
             AddChild(newBlock);
             return newBlock;
         }
 
-        public Vector3 GetSnappedPos(Vector3 pos)
+        public Vector3 GetSnappedPos(Vector3 pos, Block block, Block targetBlock = null)
         {
+            if (targetBlock != null) {
+                Vector3 dir = (pos - targetBlock.GlobalTransform.origin).Normalized();
+                GD.Print("DIR BLOCK: " + dir);
+            }
+
+            Vector3 blockGrid = block.data.gridSize;
+
             float x = Mathf.Floor(pos.x);
             float y = Mathf.Floor(pos.y);
             float z = Mathf.Floor(pos.z);
 
-            x = x % 2 == 0 ? x : x + 1;
-            y = y % 2 == 0 ? y : y + 1;
-            z = z % 2 == 0 ? z : z + 1;
+            x = x % 2 == 0 ? x : x + 1 * blockGrid.x;
+            y = y % 2 == 0 ? y : y + 1 * blockGrid.y;
+            z = z % 2 == 0 ? z : z + 1 * blockGrid.z;
+
             return new Vector3(x, y, z);
         }
 
@@ -120,10 +149,8 @@ namespace CrazyEaters.Controllers
         {
             inEditMode = editMode;
             if (inEditMode) {
-                GD.Print("In Edit");
-                currentBlock = InstaceNewBlock(Vector3.Zero);
+                currentBlock = InstanceNewBlock(Vector3.Zero);
             } else {
-                GD.Print("No Edit");
                 currentBlock.QueueFree();
             }
             EmitSignal(nameof(OnChangeEditMode), inEditMode);

@@ -1,24 +1,47 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://assets/models/new_character.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/models/character.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/Characters/Character.cs" type="Script" id=2]
 
-[sub_resource type="CapsuleShape" id=1]
-radius = 1.2567
-height = 0.951144
+[sub_resource type="AnimationNodeStateMachinePlayback" id=2]
 
-[node name="Spatial" type="RigidBody"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.54128, 0 )
+[sub_resource type="CylinderShape" id=1]
+radius = 2.64732
+height = 10.6835
 
-[node name="new_character" parent="." instance=ExtResource( 1 )]
-transform = Transform( 0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, -0.517169, 0 )
+[sub_resource type="CylinderShape" id=3]
+radius = 3.1957
+height = 11.4252
+
+[node name="CharacterKB" type="KinematicBody"]
+collision_layer = 8
+collision_mask = 6
+script = ExtResource( 2 )
+animTreePath = NodePath("character/AnimationTree")
+sensorAreaPath = NodePath("Sensor")
+characterPath = NodePath("character")
+
+[node name="character" parent="." instance=ExtResource( 1 )]
+
+[node name="Eyes" parent="character/Armature/Skeleton" index="1"]
+transform = Transform( 1, -2.08616e-07, -3.05474e-06, 2.07778e-06, -0.628373, 0.777911, 5.06639e-07, -0.777914, -0.628377, -0.0953018, 8.56242, -1.7407 )
+
+[node name="AnimationPlayer" parent="character" index="1"]
+playback_speed = 1.2
+
+[node name="AnimationTree" parent="character" index="2"]
+root_motion_track = NodePath("Armature/Skeleton:root")
+parameters/playback = SubResource( 2 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.0860392, 0.0974414, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.42493, -0.116218 )
 shape = SubResource( 1 )
 
-[node name="SpotLight" type="SpotLight" parent="."]
-transform = Transform( 0.00211191, 0, -0.999998, 0, 1, 0, 0.999998, 0, 0.00211191, -0.371811, -0.556126, -1.67563 )
-light_color = Color( 0.0235294, 1, 0.2, 1 )
-light_energy = 6.0
-spot_range = 7.26065
-spot_angle = 32.0654
+[node name="Sensor" type="Area" parent="."]
+collision_mask = 7
+
+[node name="CollisionShape" type="CollisionShape" parent="Sensor"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.31535, -0.0892117 )
+shape = SubResource( 3 )
+
+[editable path="character"]

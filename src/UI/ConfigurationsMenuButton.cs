@@ -11,10 +11,8 @@ namespace CrazyEaters.UI
 
         public override void _Ready()
         {
-            GD.Print(configurationsMenuPath);
             if (configurationsMenuPath != "") {
                 configurationsMenu = GetNode<ConfigurationsMenu>(configurationsMenuPath);
-                GD.Print(configurationsMenu);
             }
 
             this.Connect("button_up", this, nameof(OnClick));
