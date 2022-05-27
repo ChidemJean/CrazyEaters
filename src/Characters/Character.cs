@@ -2,6 +2,8 @@ namespace CrazyEaters.Characters
 {
     using Godot;
     using System;
+    using System.Threading;
+    using System.Threading.Tasks;
     using CrazyEaters.Managers;
 
     public class Character : KinematicBody
@@ -15,6 +17,8 @@ namespace CrazyEaters.Characters
         [Export] NodePath animTreePath;
         [Export] NodePath sensorAreaPath;
         [Export] NodePath characterPath;
+        [Export] NodePath eyePath;
+        [Export] StreamTexture[] eyeTextures;
 
         Vector3 gravity;
         public Vector3? moveTo = null;
@@ -26,8 +30,14 @@ namespace CrazyEaters.Characters
         Area sensorArea;
 
         bool isJumping = false;
+        bool isFloor = false;
+        bool isBlinking = false;
 
         Spatial character;
+
+        SpatialMaterial eyeMaterial;
+
+        RandomNumberGenerator rng;
 
         public override void _Ready()
         {
@@ -43,6 +53,30 @@ namespace CrazyEaters.Characters
             stateMachine = (AnimationNodeStateMachinePlayback) animationTree.Get("parameters/playback");
             stateMachine.Start("idle");
 
+            eyeMaterial = (SpatialMaterial) GetNode<MeshInstance>(eyePath).Mesh.SurfaceGetMaterial(0);
+            
+            rng = new RandomNumberGenerator();
+            rng.Randomize();
+        }
+
+        public async void Blink() {
+            isBlinking = true;
+            eyeMaterial.AlbedoTexture = eyeTextures[0];
+            await Task.Delay(TimeSpan.FromMilliseconds(50));
+            eyeMaterial.AlbedoTexture = eyeTextures[1];
+            await Task.Delay(TimeSpan.FromMilliseconds(50));
+            eyeMaterial.AlbedoTexture = eyeTextures[2];
+            await Task.Delay(TimeSpan.FromMilliseconds(50));
+            eyeMaterial.AlbedoTexture = eyeTextures[3];
+            await Task.Delay(TimeSpan.FromMilliseconds(50));
+            eyeMaterial.AlbedoTexture = eyeTextures[4];
+            await Task.Delay(TimeSpan.FromMilliseconds(100));
+            eyeMaterial.AlbedoTexture = eyeTextures[0];
+
+            rng.Randomize();
+            float randomValue = rng.Randf();
+            await Task.Delay(TimeSpan.FromMilliseconds(1500 + 3000 * randomValue));
+            isBlinking = false;
         }
 
         public override void _Input(InputEvent @event)
@@ -76,7 +110,7 @@ namespace CrazyEaters.Characters
 
         public void MoveAnimation(bool isPressed) {
             if (isPressed && stateMachine.GetCurrentNode() != "walk" && IsOnFloor()) {
-                stateMachine.Start("walk");
+                stateMachine.Start("start_walk");
             } else if (velocity.x == 0 && velocity.z == 0) {
                 stateMachine.Start("idle");
             }
@@ -93,21 +127,36 @@ namespace CrazyEaters.Characters
         public override void _PhysicsProcess(float delta)
         {
             bool isOnFloor = IsOnFloor();
+
+            if (!isBlinking) {
+                Blink();
+            }
+
             if (!isJumping && !isOnFloor && stateMachine.GetCurrentNode() != "jump-loop") {
-                stateMachine.Travel("jump-loop");
+                stateMachine.Start("jump-loop");
             }
 
             if (!isOnFloor) {
                 velocity += gravity * delta;
             }
 
+            if (isOnFloor && !isFloor) {
+                stateMachine.Start("jump_down");
+                isJumping = false;
+            }
+
+            isFloor = isOnFloor;
+
             if (velocity.x != 0 || velocity.z != 0) {
                 Vector3 targetLook = GlobalTransform.origin + (velocity.Normalized() * 10f);
                 targetLook.y = GlobalTransform.origin.y;
                 //
                 var newTransform = character.GlobalTransform.LookingAt(targetLook, Vector3.Up);
-                character.GlobalTransform = character.GlobalTransform.InterpolateWith(newTransform, speed * delta);
+                character.GlobalTransform = character.GlobalTransform.InterpolateWith(newTransform, speed * 2 * delta);
                 character.Scale = Vector3.One;
+                //
+                // character.RotateY(Mathf.LerpAngle(character.Rotation.y, Mathf.Atan2(-targetLook.x, -targetLook.z), speed * delta));
+                //
                 // character.LookAt(targetLook, Vector3.Up);
             }
 
@@ -116,10 +165,10 @@ namespace CrazyEaters.Characters
         }
 
         public void onSensorBodyEnter(Node body) {
-            if (body is StaticBody) {
-                stateMachine.Start("jump_down");
-                isJumping = false;
-            }
+            // if (body is StaticBody) {
+            //     stateMachine.Start("jump_down");
+            //     isJumping = false;
+            // }
         }
     }
 }
