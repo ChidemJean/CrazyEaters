@@ -39,6 +39,8 @@ namespace CrazyEaters.Characters
 
         RandomNumberGenerator rng;
 
+        float idleTime = 0.0f;
+
         public override void _Ready()
         {
             gameManager = GetNode<GameManager>("/root/GameManager");
@@ -126,6 +128,13 @@ namespace CrazyEaters.Characters
 
         public override void _PhysicsProcess(float delta)
         {
+            if (stateMachine.GetCurrentNode() == "idle") {
+                idleTime += delta;
+                IdleAnimationVariations();
+            } else {
+                idleTime = 0f;
+            }
+
             bool isOnFloor = IsOnFloor();
 
             if (!isBlinking) {
@@ -162,6 +171,24 @@ namespace CrazyEaters.Characters
 
             this.MoveAndSlide(velocity, Vector3.Up);
             
+        }
+
+        public void IdleAnimationVariations() {
+            if (idleTime >= 25) {
+                int randIdleAnim = rng.RandiRange(1, 3);
+                switch (randIdleAnim) {
+                    case 1:
+                        stateMachine.Start("idle_foot");
+                        break;
+                    case 2:
+                        stateMachine.Start("idle_head");
+                        break;
+                    case 3:
+                        stateMachine.Start("idle_pose");
+                        break;
+                }
+                idleTime = 0f;
+            }
         }
 
         public void onSensorBodyEnter(Node body) {

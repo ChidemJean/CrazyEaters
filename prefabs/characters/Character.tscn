@@ -31,7 +31,7 @@ eyeTextures = [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 7 ), ExtResourc
 [node name="character" parent="." instance=ExtResource( 1 )]
 
 [node name="Eyes" parent="character/Armature/Skeleton" index="1"]
-transform = Transform( 1, -2.98023e-07, -2.90573e-06, 2.11224e-06, -0.559106, 0.829096, 7.45058e-07, -0.829099, -0.559109, -0.0953012, 8.70017, -1.30374 )
+transform = Transform( 1, -3.72529e-07, -2.89083e-06, 2.09361e-06, -0.534436, 0.845209, 7.7486e-07, -0.845212, -0.534439, -0.0953009, 8.73857, -1.15177 )
 
 [node name="AnimationPlayer" parent="character" index="1"]
 playback_speed = 1.2
