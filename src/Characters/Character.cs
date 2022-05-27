@@ -8,6 +8,10 @@ namespace CrazyEaters.Characters
 
     public class Character : KinematicBody
     {
+        public enum CharacterControllerMode {
+            PLAYER,
+            IA
+        };
 
         [Export] float speed = 6f;
         [Export] float speedFactor = 20f;
@@ -19,6 +23,7 @@ namespace CrazyEaters.Characters
         [Export] NodePath characterPath;
         [Export] NodePath eyePath;
         [Export] StreamTexture[] eyeTextures;
+        [Export] CharacterControllerMode controllerMode = CharacterControllerMode.IA;
 
         Vector3 gravity;
         public Vector3? moveTo = null;
@@ -28,6 +33,8 @@ namespace CrazyEaters.Characters
         AnimationTree animationTree;
         AnimationNodeStateMachinePlayback stateMachine;
         Area sensorArea;
+        float _speed;
+        Vector3 moveDir = Vector3.Zero;
 
         bool isJumping = false;
         bool isFloor = false;
@@ -59,6 +66,8 @@ namespace CrazyEaters.Characters
             
             rng = new RandomNumberGenerator();
             rng.Randomize();
+
+            _speed = speed;
         }
 
         public async void Blink() {
@@ -83,29 +92,39 @@ namespace CrazyEaters.Characters
 
         public override void _Input(InputEvent @event)
         {
-            if (@event is InputEventKey) {
-                InputEventKey _event = (InputEventKey) @event;
-                if (_event.IsPressed() && _event.Scancode == (uint) KeyList.Space) {
-                    Jump();
-                    return;
-                }
-                bool onFloor = IsOnFloor();
+            if (controllerMode == CharacterControllerMode.PLAYER) {
+                if (@event is InputEventKey) {
+                    InputEventKey _event = (InputEventKey) @event;
+                    if (_event.IsPressed() && _event.Scancode == (uint) KeyList.Space) {
+                        Jump();
+                        return;
+                    }
+                    bool onFloor = IsOnFloor();
 
-                if (_event.Scancode == (uint) KeyList.W) {
-                    velocity.z = _event.IsPressed() && onFloor ? -1 * speed : 0;
-                    MoveAnimation(_event.IsPressed());
-                }
-                if (_event.Scancode == (uint) KeyList.S) {
-                    velocity.z = _event.IsPressed() && onFloor ? 1 * speed : 0;
-                    MoveAnimation(_event.IsPressed());
-                }
-                if (_event.Scancode == (uint) KeyList.A) {
-                    velocity.x = _event.IsPressed() && onFloor ? -1 * speed : 0;
-                    MoveAnimation(_event.IsPressed());
-                }
-                if (_event.Scancode == (uint) KeyList.D) {
-                    velocity.x = _event.IsPressed() && onFloor ? 1 * speed : 0;
-                    MoveAnimation(_event.IsPressed());
+                    if (_event.Scancode == (uint) KeyList.Shift) {
+                        if (_event.IsPressed()) {
+                            _speed = speed * 1.75f;
+                        } else {
+                            _speed = speed;
+                        }
+                    }
+
+                    if (_event.Scancode == (uint) KeyList.W) {
+                        moveDir.z = _event.IsPressed() && onFloor ? -1 : 0;
+                        MoveAnimation(_event.IsPressed());
+                    }
+                    if (_event.Scancode == (uint) KeyList.S) {
+                        moveDir.z = _event.IsPressed() && onFloor ? 1 : 0;
+                        MoveAnimation(_event.IsPressed());
+                    }
+                    if (_event.Scancode == (uint) KeyList.A) {
+                        moveDir.x = _event.IsPressed() && onFloor ? -1 : 0;
+                        MoveAnimation(_event.IsPressed());
+                    }
+                    if (_event.Scancode == (uint) KeyList.D) {
+                        moveDir.x = _event.IsPressed() && onFloor ? 1 : 0;
+                        MoveAnimation(_event.IsPressed());
+                    }
                 }
             }
         }
@@ -113,7 +132,7 @@ namespace CrazyEaters.Characters
         public void MoveAnimation(bool isPressed) {
             if (isPressed && stateMachine.GetCurrentNode() != "walk" && IsOnFloor()) {
                 stateMachine.Start("start_walk");
-            } else if (velocity.x == 0 && velocity.z == 0) {
+            } else if (moveDir.x == 0 && moveDir.z == 0) {
                 stateMachine.Start("idle");
             }
         }
@@ -128,6 +147,7 @@ namespace CrazyEaters.Characters
 
         public override void _PhysicsProcess(float delta)
         {
+
             if (stateMachine.GetCurrentNode() == "idle") {
                 idleTime += delta;
                 IdleAnimationVariations();
@@ -147,6 +167,9 @@ namespace CrazyEaters.Characters
 
             if (!isOnFloor) {
                 velocity += gravity * delta;
+            } else {
+                velocity.x = moveDir.x * _speed;
+                velocity.z = moveDir.z * _speed;
             }
 
             if (isOnFloor && !isFloor) {
@@ -156,20 +179,22 @@ namespace CrazyEaters.Characters
 
             isFloor = isOnFloor;
 
-            if (velocity.x != 0 || velocity.z != 0) {
-                Vector3 targetLook = GlobalTransform.origin + (velocity.Normalized() * 10f);
+            Vector3 localVelocity = velocity.Rotated(Vector3.Up, Rotation.y);
+
+            if ((localVelocity.x != 0 || localVelocity.z != 0) && moveDir.z != 1) {
+                Vector3 targetLook = GlobalTransform.origin + (localVelocity.Normalized() * 10f);
                 targetLook.y = GlobalTransform.origin.y;
                 //
-                var newTransform = character.GlobalTransform.LookingAt(targetLook, Vector3.Up);
-                character.GlobalTransform = character.GlobalTransform.InterpolateWith(newTransform, speed * 2 * delta);
-                character.Scale = Vector3.One;
+                var newTransform = GlobalTransform.LookingAt(targetLook, Vector3.Up);
+                GlobalTransform = GlobalTransform.InterpolateWith(newTransform, speed * 2 * delta);
+                Scale = Vector3.One / 2;
                 //
                 // character.RotateY(Mathf.LerpAngle(character.Rotation.y, Mathf.Atan2(-targetLook.x, -targetLook.z), speed * delta));
                 //
                 // character.LookAt(targetLook, Vector3.Up);
             }
 
-            this.MoveAndSlide(velocity, Vector3.Up);
+            this.MoveAndSlide(localVelocity, Vector3.Up);
             
         }
 
