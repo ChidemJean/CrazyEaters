@@ -31,6 +31,7 @@ namespace CrazyEaters.Characters
         float stopDistance = 0;
         GameManager gameManager;
         AnimationTree animationTree;
+        AnimationPlayer animationPlayer;
         AnimationNodeStateMachinePlayback stateMachine;
         Area sensorArea;
         float _speed;
@@ -39,6 +40,7 @@ namespace CrazyEaters.Characters
         bool isJumping = false;
         bool isFloor = false;
         bool isBlinking = false;
+        bool canWalk = true;
 
         Spatial character;
 
@@ -56,12 +58,12 @@ namespace CrazyEaters.Characters
             character = GetNode<Spatial>(characterPath);
 
             sensorArea = GetNode<Area>(sensorAreaPath);
-            sensorArea.Connect("body_entered", this, nameof(onSensorBodyEnter));
 
             animationTree = GetNode<AnimationTree>(animTreePath);
             stateMachine = (AnimationNodeStateMachinePlayback) animationTree.Get("parameters/playback");
             stateMachine.Start("idle");
-
+            animationPlayer = animationTree.GetNode<AnimationPlayer>(animationTree.AnimPlayer);
+            
             eyeMaterial = (SpatialMaterial) GetNode<MeshInstance>(eyePath).Mesh.SurfaceGetMaterial(0);
             
             rng = new RandomNumberGenerator();
@@ -104,25 +106,27 @@ namespace CrazyEaters.Characters
                     if (_event.Scancode == (uint) KeyList.Shift) {
                         if (_event.IsPressed()) {
                             _speed = speed * 1.75f;
+                            animationPlayer.PlaybackSpeed *= 6;
                         } else {
                             _speed = speed;
+                            animationPlayer.PlaybackSpeed /= 6;
                         }
                     }
 
                     if (_event.Scancode == (uint) KeyList.W) {
-                        moveDir.z = _event.IsPressed() && onFloor ? -1 : 0;
+                        moveDir.z = _event.IsPressed() && onFloor && canWalk ? -1 : 0;
                         MoveAnimation(_event.IsPressed());
                     }
                     if (_event.Scancode == (uint) KeyList.S) {
-                        moveDir.z = _event.IsPressed() && onFloor ? 1 : 0;
+                        moveDir.z = _event.IsPressed() && onFloor && canWalk ? 1 : 0;
                         MoveAnimation(_event.IsPressed());
                     }
                     if (_event.Scancode == (uint) KeyList.A) {
-                        moveDir.x = _event.IsPressed() && onFloor ? -1 : 0;
+                        moveDir.x = _event.IsPressed() && onFloor && canWalk ? -1 : 0;
                         MoveAnimation(_event.IsPressed());
                     }
                     if (_event.Scancode == (uint) KeyList.D) {
-                        moveDir.x = _event.IsPressed() && onFloor ? 1 : 0;
+                        moveDir.x = _event.IsPressed() && onFloor && canWalk ? 1 : 0;
                         MoveAnimation(_event.IsPressed());
                     }
                 }
@@ -142,11 +146,17 @@ namespace CrazyEaters.Characters
                 isJumping = true;
                 stateMachine.Start("jump");
                 velocity.y = jumpSpeed;
+                canWalk = false;
             }
         }
 
         public override void _PhysicsProcess(float delta)
         {
+            bool isOnFloor = IsOnFloor();
+
+            if (canWalk && stateMachine.GetCurrentNode() != "walk" && stateMachine.GetCurrentNode() != "start_walk" && moveDir != Vector3.Zero && isOnFloor) {
+                stateMachine.Start("start_walk");
+            }
 
             if (stateMachine.GetCurrentNode() == "idle") {
                 idleTime += delta;
@@ -154,8 +164,6 @@ namespace CrazyEaters.Characters
             } else {
                 idleTime = 0f;
             }
-
-            bool isOnFloor = IsOnFloor();
 
             if (!isBlinking) {
                 Blink();
@@ -174,6 +182,7 @@ namespace CrazyEaters.Characters
 
             if (isOnFloor && !isFloor) {
                 stateMachine.Start("jump_down");
+                OnJumpDownAnimationEnd();
                 isJumping = false;
             }
 
@@ -186,7 +195,7 @@ namespace CrazyEaters.Characters
                 targetLook.y = GlobalTransform.origin.y;
                 //
                 var newTransform = GlobalTransform.LookingAt(targetLook, Vector3.Up);
-                GlobalTransform = GlobalTransform.InterpolateWith(newTransform, speed * 2 * delta);
+                GlobalTransform = GlobalTransform.InterpolateWith(newTransform, speed * 1.2f * delta);
                 Scale = Vector3.One / 2;
                 //
                 // character.RotateY(Mathf.LerpAngle(character.Rotation.y, Mathf.Atan2(-targetLook.x, -targetLook.z), speed * delta));
@@ -216,11 +225,13 @@ namespace CrazyEaters.Characters
             }
         }
 
-        public void onSensorBodyEnter(Node body) {
-            // if (body is StaticBody) {
-            //     stateMachine.Start("jump_down");
-            //     isJumping = false;
-            // }
+        public async void OnJumpDownAnimationEnd() {
+            Vector3 tempMoveDir = moveDir;
+            moveDir = Vector3.Zero;
+            await Task.Delay(TimeSpan.FromSeconds(.57f));
+            moveDir = tempMoveDir;
+            canWalk = true;
+            GD.Print("jump end");
         }
     }
 }

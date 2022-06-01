@@ -1,0 +1,20 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type spatial;
+
+uniform float overlap = 0;
+uniform float velocity = 2;
+uniform vec4 in_over_color: hint_color;
+
+void fragment() {
+	ALBEDO = in_over_color.rgb * overlap;
+	ALPHA = clamp(sin(TIME * velocity), .25f, .85f) * overlap;
+}"
+
+[resource]
+resource_local_to_scene = true
+shader = SubResource( 1 )
+shader_param/overlap = 0.0
+shader_param/velocity = 2.0
+shader_param/in_over_color = Color( 1, 0, 0, 1 )

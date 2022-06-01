@@ -3,8 +3,9 @@ namespace CrazyEaters.UI
     using Godot;
     using System;
     using CrazyEaters.Optimization;
+    using CrazyEaters.Managers;
 
-    public class ConfigurationsMenu : ColorRect
+    public class ConfigurationsMenu : PanelContainer
     {
         [Export]
         public NodePath closeButtonPath = "MarginContainer/Control/CloseButton";
@@ -24,9 +25,13 @@ namespace CrazyEaters.UI
 
         Hud hud;
         Label valueLabel;
+        GameManager gameManager;
 
         public override void _Ready()
         {
+            Visible = false;
+            gameManager = GetNode<GameManager>("/root/GameManager");
+
             valueLabel = GetNode<Label>(valueLabelPath);
 
             hud = GetNode<Hud>(hudPath);
@@ -44,10 +49,12 @@ namespace CrazyEaters.UI
 
         public void Show() {
             this.Visible = true;
+            gameManager.inputMode = GameManager.InputMode.UI;
         }
 
         public void Hide() {
             this.Visible = false;
+            gameManager.inputMode = GameManager.InputMode.SCENE;
         }
 
         public void OnUpdateViewport3DScale(string type, float value) {

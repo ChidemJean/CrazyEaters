@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource( 1 )
-gridSize = Vector3( 1, 1, 1 )
+gridSize = Vector3( 2, 1, 1 )
 life = 100
 price = 0.0
 blockType = 1

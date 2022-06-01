@@ -1,0 +1,17 @@
+[gd_resource type="Theme" load_steps=7 format=2]
+
+[ext_resource path="res://assets/fonts/CrazyEaterFont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/textures/UI/check_button_off_dis.png" type="Texture" id=2]
+[ext_resource path="res://assets/textures/UI/check_button_off.png" type="Texture" id=3]
+[ext_resource path="res://assets/textures/UI/check_button_on.png" type="Texture" id=4]
+[ext_resource path="res://assets/textures/UI/check_button_on_dis.png" type="Texture" id=5]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[resource]
+default_font = ExtResource( 1 )
+CheckButton/icons/off = ExtResource( 3 )
+CheckButton/icons/off_disabled = ExtResource( 2 )
+CheckButton/icons/on = ExtResource( 4 )
+CheckButton/icons/on_disabled = ExtResource( 5 )
+CheckButton/styles/focus = SubResource( 1 )

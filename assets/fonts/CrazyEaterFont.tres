@@ -3,4 +3,5 @@
 [ext_resource path="res://assets/fonts/CrazyEaters.ttf" type="DynamicFontData" id=1]
 
 [resource]
+size = 40
 font_data = ExtResource( 1 )

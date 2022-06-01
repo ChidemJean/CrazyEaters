@@ -1,12 +1,11 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://src/Spawners/TesteSpawner.cs" type="Script" id=1]
 [ext_resource path="res://prefabs/blocks/Chair.tscn" type="PackedScene" id=2]
 [ext_resource path="res://prefabs/characters/SmallCharacter.tscn" type="PackedScene" id=3]
 [ext_resource path="res://prefabs/blocks/MetalRoundTable.tscn" type="PackedScene" id=4]
 [ext_resource path="res://prefabs/blocks/CSGDefaultBlock.tscn" type="PackedScene" id=5]
-[ext_resource path="res://assets/materials/prototype/dark.tres" type="Material" id=6]
-[ext_resource path="res://assets/models/prototype/campfire.obj" type="ArrayMesh" id=7]
+[ext_resource path="res://assets/materials/floor_empty.tres" type="Material" id=6]
 [ext_resource path="res://assets/models/prototype/structureBase.obj" type="ArrayMesh" id=8]
 [ext_resource path="res://assets/models/prototype/rockB.obj" type="ArrayMesh" id=9]
 [ext_resource path="res://prefabs/items/Workbench.tscn" type="PackedScene" id=10]
@@ -50,7 +49,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 30.2, 90.2, 120 ),
+"times": PoolRealArray( 0, 34.9, 87.9, 120 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
 "values": [ 1.0, 0.0, 0.0, 1.0 ]
@@ -62,7 +61,7 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 12.3, 22.8, 31, 90.7, 107.4, 120 ),
+"times": PoolRealArray( 0, 12.3, 28.3, 35.7, 88.4, 108, 120 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 0.658824, 0.952941, 1, 1 ), Color( 0.658824, 0.952941, 1, 1 ), Color( 1, 0.827451, 0.372549, 1 ), Color( 0.0588235, 0.117647, 0.286275, 1 ), Color( 0.0588235, 0.117647, 0.286275, 1 ), Color( 0.658824, 0.952941, 1, 1 ), Color( 0.658824, 0.952941, 1, 1 ) ]
@@ -74,10 +73,22 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 12.3, 22.8, 31, 90.7, 108, 120.4 ),
+"times": PoolRealArray( 0, 12.3, 28.3, 35.7, 88.4, 108.2, 120.2 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 0.658824, 0.952941, 1, 1 ), Color( 0.658824, 0.952941, 1, 1 ), Color( 1, 0.827451, 0.372549, 1 ), Color( 0.0588235, 0.117647, 0.286275, 1 ), Color( 0.0588235, 0.117647, 0.286275, 1 ), Color( 0.658824, 0.952941, 1, 1 ), Color( 0.658824, 0.952941, 1, 1 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("CSGMain/CSGFloor:material:albedo_color")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 12.3, 28.4, 35.8, 88.4, 108.3, 120.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0.658824, 0.952941, 1, 1 ), Color( 0.658824, 0.952941, 1, 1 ), Color( 1, 0.898039, 0.627451, 1 ), Color( 0.658824, 0.952941, 1, 1 ), Color( 0.658824, 0.952941, 1, 1 ), Color( 0.658824, 0.952941, 1, 1 ), Color( 0.658824, 0.952941, 1, 1 ) ]
 }
 
 [sub_resource type="Animation" id=13]
@@ -130,15 +141,25 @@ tracks/3/keys = {
 "update": 0,
 "values": [ Color( 0.658824, 0.952941, 1, 1 ) ]
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath("CSGMain/CSGFloor:material:albedo_color")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
 
 [sub_resource type="BoxShape" id=7]
-extents = Vector3( 19, 1, 19 )
+extents = Vector3( 104.447, 1, 106.326 )
 
 [sub_resource type="QuadMesh" id=14]
 material = ExtResource( 23 )
 size = Vector2( 38, 38 )
-
-[sub_resource type="AnimationNodeStateMachinePlayback" id=15]
 
 [node name="HabitatScene" type="Spatial"]
 
@@ -146,15 +167,16 @@ size = Vector2( 38, 38 )
 environment = ExtResource( 18 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
-transform = Transform( -0.515891, 0.856655, -3.74456e-08, 3.82137e-15, 4.37114e-08, 1, 0.856655, 0.515891, -2.25503e-08, 0, 8.84839, 0 )
+transform = Transform( -0.515891, 0.856654, -3.74456e-08, 3.82137e-15, 4.37114e-08, 1, 0.856655, 0.51589, -2.25503e-08, 0, 8.84839, 0 )
+portal_mode = 1
 light_specular = 0.0
 shadow_enabled = true
-shadow_reverse_cull_face = true
 directional_shadow_mode = 0
 directional_shadow_blend_splits = true
 
 [node name="DayNightAnimation" type="AnimationPlayer" parent="."]
 autoplay = "DayNight"
+playback_speed = 0.1
 anims/DayNight = SubResource( 12 )
 anims/RESET = SubResource( 13 )
 
@@ -181,43 +203,33 @@ prefabs = [ ExtResource( 2 ), ExtResource( 4 ), ExtResource( 10 ), ExtResource( 
 qtdInstances = 250
 
 [node name="CSGMain" type="CSGCombiner" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 snap = 0.01
 script = ExtResource( 22 )
 blockPref = ExtResource( 25 )
 dustParticlesPref = ExtResource( 24 )
 scenePath = NodePath("..")
 
-[node name="Floor" type="StaticBody" parent="CSGMain"]
-collision_layer = 2
-
-[node name="CollisionShape" type="CollisionShape" parent="CSGMain/Floor"]
-shape = SubResource( 7 )
-
-[node name="CSGFloor" type="CSGBox" parent="CSGMain"]
-snap = 0.01
-width = 38.0
-depth = 38.0
+[node name="CSGFloor" type="CSGCylinder" parent="CSGMain"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
+radius = 104.8
+height = 2.0
+sides = 12
 material = ExtResource( 6 )
 
+[node name="Floor" type="StaticBody" parent="CSGMain/CSGFloor"]
+collision_layer = 2
+
+[node name="CollisionShape" type="CollisionShape" parent="CSGMain/CSGFloor/Floor"]
+shape = SubResource( 7 )
+
 [node name="CSGDefaultBlock" parent="CSGMain" instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2, 2 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 
 [node name="Character" parent="." instance=ExtResource( 3 )]
 transform = Transform( 0.732115, 0, 0.681181, 0, 1, 0, -0.681181, 0, 0.732115, 6, 4, 12 )
 
 [node name="Scenario" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0, -31 )
-
-[node name="campfire" type="MeshInstance" parent="Scenario"]
-transform = Transform( -8.74228e-08, 0, 2, 0, 2, 0, -2, 0, -8.74228e-08, 18, 2, 29 )
-mesh = ExtResource( 7 )
-skeleton = NodePath("../..")
-material/0 = null
-material/1 = null
-material/2 = null
-material/3 = null
-material/4 = null
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -27, -2, -31 )
 
 [node name="structureBase" type="MeshInstance" parent="Scenario"]
 transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 13, 2, 36 )
@@ -227,7 +239,7 @@ material/0 = null
 material/1 = null
 
 [node name="tentClosed" type="MeshInstance" parent="Scenario"]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 24, 2, 30 )
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 13, 2, 27 )
 mesh = ExtResource( 11 )
 skeleton = NodePath("../..")
 material/0 = null
@@ -279,7 +291,7 @@ skeleton = NodePath("../..")
 material/0 = null
 
 [node name="chest" type="MeshInstance" parent="Scenario"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 2, 25 )
+transform = Transform( -0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 16, 2, 34 )
 mesh = ExtResource( 16 )
 skeleton = NodePath("../..")
 material/0 = null
@@ -310,6 +322,7 @@ skeleton = NodePath("")
 material/0 = null
 
 [node name="GridPlanes" type="Spatial" parent="."]
+visible = false
 
 [node name="Whall" type="MeshInstance" parent="GridPlanes"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 21, -19 )
@@ -343,20 +356,8 @@ material/0 = null
 
 [node name="CharacterKB" parent="." instance=ExtResource( 26 )]
 transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -2.09958, 54.1901, -0.960174 )
-speed = 4.0
+speed = 8.0
 gravityScale = 0.4
-jumpSpeed = 18.0
 controllerMode = 0
 
-[node name="Eyes" parent="CharacterKB/character/Armature/Skeleton" index="1"]
-transform = Transform( 1, -1.49012e-07, -3.01003e-06, 2.13832e-06, -0.615801, 0.787902, 5.36442e-07, -0.787904, -0.615804, -0.0953018, 8.59094, -1.66018 )
-
-[node name="AnimationTree" parent="CharacterKB/character" index="2"]
-parameters/playback = SubResource( 15 )
-
-[editable path="CSGMain/CSGDefaultBlock"]
 [editable path="Character"]
-[editable path="CharacterKB"]
-[editable path="CharacterKB/character"]
-[editable path="CharacterKB/character/Armature/Skeleton/Eyes/REye/character_eye"]
-[editable path="CharacterKB/character/Armature/Skeleton/Eyes/LEye/character_eye"]

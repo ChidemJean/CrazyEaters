@@ -5,6 +5,8 @@ namespace CrazyEaters.Resources
 
     public class BlockData : Resource
     {
+        public enum BlockType { Ground, Air, Water, Stone, Wood, Custom };
+
         [Export]
         public PackedScene prefab;
 
@@ -16,6 +18,12 @@ namespace CrazyEaters.Resources
 
         [Export]
         public float price = 0;
+
+        [Export]
+        public BlockType blockType = BlockType.Air;
+
+        [Export]
+        public bool solid = false;
 
     }
 }

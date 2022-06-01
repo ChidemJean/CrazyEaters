@@ -29,32 +29,34 @@ namespace CrazyEaters.Controllers
 
         public override void _Input(InputEvent @event)
         {
-            if (tapHolding) {
-                if (@event is InputEventMouseMotion) {
-                    InputEventMouseMotion _event = (InputEventMouseMotion) @event;
-                    Vector2 mousePos = _event.Position * hud.currentScale;
-                    OnPosition(mousePos);
-                    return;
-                }
-            }
-            if (@event is InputEventMouseButton) {
-                InputEventMouseButton _event = (InputEventMouseButton) @event;
-
-                if (_event.ButtonIndex == (int) ButtonList.Left) {
-                    Vector2 mousePos = _event.Position * hud.currentScale;
-                    if (_event.IsPressed()) {
-                        OnTap(mousePos);
-                    } else {
-                        OnRelease();
+            if (gameManager.inputMode == GameManager.InputMode.SCENE) {
+                if (tapHolding) {
+                    if (@event is InputEventMouseMotion) {
+                        InputEventMouseMotion _event = (InputEventMouseMotion) @event;
+                        Vector2 mousePos = _event.Position * (hud != null ? hud.currentScale : 1);
+                        OnPosition(mousePos);
+                        return;
                     }
-                    return;
                 }
+                if (@event is InputEventMouseButton) {
+                    InputEventMouseButton _event = (InputEventMouseButton) @event;
 
-                if (_event.IsPressed() && _event.ButtonIndex == (int) ButtonList.WheelDown) {
-                    OnZoom(1);
-                }
-                if (_event.IsPressed() && _event.ButtonIndex == (int) ButtonList.WheelUp) {
-                    OnZoom(-1);
+                    if (_event.ButtonIndex == (int) ButtonList.Left) {
+                        Vector2 mousePos = _event.Position * (hud != null ? hud.currentScale : 1);
+                        if (_event.IsPressed()) {
+                            OnTap(mousePos);
+                        } else {
+                            OnRelease();
+                        }
+                        return;
+                    }
+
+                    if (_event.IsPressed() && _event.ButtonIndex == (int) ButtonList.WheelDown) {
+                        OnZoom(1);
+                    }
+                    if (_event.IsPressed() && _event.ButtonIndex == (int) ButtonList.WheelUp) {
+                        OnZoom(-1);
+                    }
                 }
             }
         }
