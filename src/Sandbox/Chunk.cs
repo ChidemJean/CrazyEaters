@@ -2,6 +2,7 @@ namespace CrazyEaters.Sandbox
 {
     using Godot;
     using System;
+    using System.Threading;
     using CrazyEaters.Entities;
     using Godot.Collections;
 
@@ -19,7 +20,7 @@ namespace CrazyEaters.Sandbox
         public Vector3 chunkPosition = Vector3.Zero;
         
         public World world;
-        public Thread _Thread;
+        public System.Threading.Thread _Thread;
 
         public override void _Ready()
         {
@@ -29,11 +30,14 @@ namespace CrazyEaters.Sandbox
             data = TerrainGenerator.HabitatGround(GlobalTransform.origin);
 
             GenerateChunkCollider();
+            ThreadGenerateMesh();
+        }
 
+        public void ThreadGenerateMesh() {
             //TODO: Thread to create the mesh
-            _Thread = new Thread();
-            _Thread.Start(this, nameof(GenerateChunkMesh));
-
+            // _Thread = new System.Threading.Thread(GenerateChunkMesh);
+            // _Thread.Start();
+            GenerateChunkMesh();
         }
 
         public void Regenerate() {
@@ -43,7 +47,7 @@ namespace CrazyEaters.Sandbox
             }
 
             GenerateChunkCollider();
-            GenerateChunkMesh();
+            ThreadGenerateMesh();
         }
 
 #region CHUNK RENDER
@@ -65,7 +69,8 @@ namespace CrazyEaters.Sandbox
             MeshInstance mi = new MeshInstance();
             mi.Mesh = arrayMesh;
             mi.MaterialOverride = world.material;
-            AddChild(mi);
+            CallDeferred("add_child", mi);
+
         }
 
         public void DrawBlockMesh(SurfaceTool surfaceTool, Vector3 blockSubPosition, int blockId) 
@@ -105,7 +110,7 @@ namespace CrazyEaters.Sandbox
             Vector3 otherBlockPos = blockSubPosition + Vector3.Left;
             int otherBlockId = 0;
             if (otherBlockPos.x == -1) {
-                otherBlockId = world.GetBlockGlobalPosition(otherBlockPos + chunkPosition * CHUNK_SIZE);
+                otherBlockId = world.GetBlockGlobalPosition(otherBlockPos + GlobalTransform.origin);
             } else if (data.Contains(otherBlockPos)) {
                 otherBlockId = (int) data[otherBlockPos];
             }
@@ -116,7 +121,7 @@ namespace CrazyEaters.Sandbox
             otherBlockPos = blockSubPosition + Vector3.Right;
             otherBlockId = 0;
             if (otherBlockPos.x == CHUNK_SIZE) {
-                otherBlockId = world.GetBlockGlobalPosition(otherBlockPos + chunkPosition * CHUNK_SIZE);
+                otherBlockId = world.GetBlockGlobalPosition(otherBlockPos + GlobalTransform.origin);
             } else if (data.Contains(otherBlockPos)) {
                 otherBlockId = (int) data[otherBlockPos];
             }
@@ -127,7 +132,7 @@ namespace CrazyEaters.Sandbox
             otherBlockPos = blockSubPosition + Vector3.Forward;
             otherBlockId = 0;
             if (otherBlockPos.z == -1) {
-                otherBlockId = world.GetBlockGlobalPosition(otherBlockPos + chunkPosition * CHUNK_SIZE);
+                otherBlockId = world.GetBlockGlobalPosition(otherBlockPos + GlobalTransform.origin);
             } else if (data.Contains(otherBlockPos)) {
                 otherBlockId = (int) data[otherBlockPos];
             }
@@ -138,7 +143,7 @@ namespace CrazyEaters.Sandbox
             otherBlockPos = blockSubPosition + Vector3.Back;
             otherBlockId = 0;
             if (otherBlockPos.z == CHUNK_SIZE) {
-                otherBlockId = world.GetBlockGlobalPosition(otherBlockPos + chunkPosition * CHUNK_SIZE);
+                otherBlockId = world.GetBlockGlobalPosition(otherBlockPos + GlobalTransform.origin);
             } else if (data.Contains(otherBlockPos)) {
                 otherBlockId = (int) data[otherBlockPos];
             }
@@ -149,7 +154,7 @@ namespace CrazyEaters.Sandbox
             otherBlockPos = blockSubPosition + Vector3.Down;
             otherBlockId = 0;
             if (otherBlockPos.y == -1) {
-                otherBlockId = world.GetBlockGlobalPosition(otherBlockPos + chunkPosition * CHUNK_SIZE);
+                otherBlockId = world.GetBlockGlobalPosition(otherBlockPos + GlobalTransform.origin);
             } else if (data.Contains(otherBlockPos)) {
                 otherBlockId = (int) data[otherBlockPos];
             }
@@ -160,7 +165,7 @@ namespace CrazyEaters.Sandbox
             otherBlockPos = blockSubPosition + Vector3.Up;
             otherBlockId = 0;
             if (otherBlockPos.y == CHUNK_SIZE) {
-                otherBlockId = world.GetBlockGlobalPosition(otherBlockPos + chunkPosition * CHUNK_SIZE);
+                otherBlockId = world.GetBlockGlobalPosition(otherBlockPos + GlobalTransform.origin);
             } else if (data.Contains(otherBlockPos)) {
                 otherBlockId = (int) data[otherBlockPos];
             }
@@ -240,7 +245,8 @@ namespace CrazyEaters.Sandbox
             collider.GlobalTranslate(blockSubPosition + Vector3.One / 2);
             AddChild(collider);
         }
-#endregion
+        #endregion
 
     }
+   
 }

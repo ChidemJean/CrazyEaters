@@ -72,6 +72,8 @@ namespace CrazyEaters.Sandbox
 
         public int GetBlockGlobalPosition(Vector3 blockGlobalPosition) 
         {
+            if (blockGlobalPosition == null) return 0;
+
             Vector3 chunkPosition = (blockGlobalPosition / Chunk.CHUNK_SIZE).Floor();
             if (chunks.Contains(chunkPosition)) {
                 Chunk chunk = (Chunk) chunks[chunkPosition];
@@ -86,7 +88,11 @@ namespace CrazyEaters.Sandbox
 
         public void SetBlockGlobalPosition(Vector3 blockGlobalPosition, int blockId)
         {
+            if (blockGlobalPosition == null) return;
+
             Vector3 chunkPosition = (blockGlobalPosition / Chunk.CHUNK_SIZE).Floor();
+            if (!chunks.Contains(chunkPosition)) return;
+
             Chunk chunk = (Chunk) chunks[chunkPosition];
             Vector3 subPosition = blockGlobalPosition.PosMod(Chunk.CHUNK_SIZE);
             if (blockId == 0) {
@@ -118,9 +124,9 @@ namespace CrazyEaters.Sandbox
         public void CleanUp()
         {
             foreach (Vector3 chunkPosition in chunks.Keys) {
-                Thread thread = ((Chunk) chunks[chunkPosition])._Thread;
+                System.Threading.Thread thread = ((Chunk) chunks[chunkPosition])._Thread;
                 if (thread != null) {
-                    thread.WaitToFinish();
+                    // thread.WaitToFinish();
                 }
             }
 
