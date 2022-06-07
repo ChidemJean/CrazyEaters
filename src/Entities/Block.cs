@@ -36,24 +36,28 @@ namespace CrazyEaters.Entities
 
         public void OnBodyEnter(PhysicsBody body) 
         {
-            overlaping = true;
-            fbMat.SetShaderParam("overlap", overlaping);
+            if (!placed) {
+                overlaping = true;
+                fbMat.SetShaderParam("overlap", overlaping);
+            }
         }
 
         public void OnBodyExit(PhysicsBody body) 
         {
-            overlaping = false;
-            fbMat.SetShaderParam("overlap", overlaping);
+            if (!placed) {
+                overlaping = false;
+                fbMat.SetShaderParam("overlap", overlaping);
+            }
         }
 
         public void SetPlaced(bool placed) 
         {
             this.placed = placed;
             if (placed) {
-                area.Monitoring = false;
+                // area.Monitoring = false;
                 overlaping = false;
             } else {
-                area.Monitoring = true;
+                // area.Monitoring = true;
             }
         }
 

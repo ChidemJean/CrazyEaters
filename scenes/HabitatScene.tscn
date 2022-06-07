@@ -1,23 +1,9 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=15 format=2]
 
-[ext_resource path="res://src/Spawners/TesteSpawner.cs" type="Script" id=1]
-[ext_resource path="res://prefabs/blocks/Chair.tscn" type="PackedScene" id=2]
-[ext_resource path="res://prefabs/characters/SmallCharacter.tscn" type="PackedScene" id=3]
-[ext_resource path="res://prefabs/blocks/MetalRoundTable.tscn" type="PackedScene" id=4]
-[ext_resource path="res://prefabs/blocks/CSGDefaultBlock.tscn" type="PackedScene" id=5]
-[ext_resource path="res://assets/materials/floor_empty.tres" type="Material" id=6]
-[ext_resource path="res://assets/models/prototype/structureBase.obj" type="ArrayMesh" id=8]
-[ext_resource path="res://assets/models/prototype/rockB.obj" type="ArrayMesh" id=9]
-[ext_resource path="res://prefabs/items/Workbench.tscn" type="PackedScene" id=10]
-[ext_resource path="res://assets/models/prototype/tentClosed.obj" type="ArrayMesh" id=11]
-[ext_resource path="res://assets/models/prototype/rockA.obj" type="ArrayMesh" id=12]
+[ext_resource path="res://assets/materials/sandbox.tres" type="Material" id=2]
+[ext_resource path="res://src/Sandbox/World.cs" type="Script" id=5]
 [ext_resource path="res://src/Tools/ExplosionTap.cs" type="Script" id=13]
-[ext_resource path="res://assets/models/prototype/grassLarge.obj" type="ArrayMesh" id=14]
-[ext_resource path="res://assets/models/prototype/signpost.obj" type="ArrayMesh" id=15]
-[ext_resource path="res://assets/models/prototype/chest.obj" type="ArrayMesh" id=16]
-[ext_resource path="res://assets/models/prototype/nature/tree_detailed_fall.obj" type="ArrayMesh" id=17]
 [ext_resource path="res://conf/HabitatSceneEnv.tres" type="Environment" id=18]
-[ext_resource path="res://assets/models/prototype/nature/tree_cone.obj" type="ArrayMesh" id=19]
 [ext_resource path="res://assets/physics/explosion.tres" type="Shape" id=20]
 [ext_resource path="res://src/Controllers/CameraRotator.cs" type="Script" id=21]
 [ext_resource path="res://src/Controllers/PlacementController.cs" type="Script" id=22]
@@ -78,18 +64,6 @@ tracks/3/keys = {
 "update": 0,
 "values": [ Color( 0.658824, 0.952941, 1, 1 ), Color( 0.658824, 0.952941, 1, 1 ), Color( 1, 0.827451, 0.372549, 1 ), Color( 0.0588235, 0.117647, 0.286275, 1 ), Color( 0.0588235, 0.117647, 0.286275, 1 ), Color( 0.658824, 0.952941, 1, 1 ), Color( 0.658824, 0.952941, 1, 1 ) ]
 }
-tracks/4/type = "value"
-tracks/4/path = NodePath("CSGMain/CSGFloor:material:albedo_color")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0, 12.3, 28.4, 35.8, 88.4, 108.3, 120.4 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
-"update": 0,
-"values": [ Color( 0.658824, 0.952941, 1, 1 ), Color( 0.658824, 0.952941, 1, 1 ), Color( 1, 0.898039, 0.627451, 1 ), Color( 0.658824, 0.952941, 1, 1 ), Color( 0.658824, 0.952941, 1, 1 ), Color( 0.658824, 0.952941, 1, 1 ), Color( 0.658824, 0.952941, 1, 1 ) ]
-}
 
 [sub_resource type="Animation" id=13]
 length = 0.001
@@ -141,25 +115,10 @@ tracks/3/keys = {
 "update": 0,
 "values": [ Color( 0.658824, 0.952941, 1, 1 ) ]
 }
-tracks/4/type = "value"
-tracks/4/path = NodePath("CSGMain/CSGFloor:material:albedo_color")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 1 ) ]
-}
-
-[sub_resource type="BoxShape" id=7]
-extents = Vector3( 104.447, 1, 106.326 )
 
 [sub_resource type="QuadMesh" id=14]
 material = ExtResource( 23 )
-size = Vector2( 38, 38 )
+size = Vector2( 18, 18 )
 
 [node name="HabitatScene" type="Spatial"]
 
@@ -186,7 +145,7 @@ speed = 30.0
 targetNode = NodePath("Camera")
 
 [node name="Camera" type="Camera" parent="CameraPivot"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 49 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 39 )
 environment = ExtResource( 18 )
 fov = 60.8724
 far = 250.0
@@ -196,154 +155,39 @@ script = ExtResource( 13 )
 shapeExplosion = ExtResource( 20 )
 impulseForce = 50.0
 
-[node name="Spawner" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 32.2481, 0 )
-script = ExtResource( 1 )
-prefabs = [ ExtResource( 2 ), ExtResource( 4 ), ExtResource( 10 ), ExtResource( 3 ) ]
-qtdInstances = 250
-
-[node name="CSGMain" type="CSGCombiner" parent="."]
-snap = 0.01
+[node name="CSGMain" type="Spatial" parent="."]
+visible = false
 script = ExtResource( 22 )
 blockPref = ExtResource( 25 )
 dustParticlesPref = ExtResource( 24 )
 scenePath = NodePath("..")
 
-[node name="CSGFloor" type="CSGCylinder" parent="CSGMain"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
-radius = 104.8
-height = 2.0
-sides = 12
-material = ExtResource( 6 )
-
-[node name="Floor" type="StaticBody" parent="CSGMain/CSGFloor"]
-collision_layer = 2
-
-[node name="CollisionShape" type="CollisionShape" parent="CSGMain/CSGFloor/Floor"]
-shape = SubResource( 7 )
-
-[node name="CSGDefaultBlock" parent="CSGMain" instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
-
-[node name="Character" parent="." instance=ExtResource( 3 )]
-transform = Transform( 0.732115, 0, 0.681181, 0, 1, 0, -0.681181, 0, 0.732115, 6, 4, 12 )
-
 [node name="Scenario" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -27, -2, -31 )
 
-[node name="structureBase" type="MeshInstance" parent="Scenario"]
-transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 13, 2, 36 )
-mesh = ExtResource( 8 )
-skeleton = NodePath("../..")
-material/0 = null
-material/1 = null
-
-[node name="tentClosed" type="MeshInstance" parent="Scenario"]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 13, 2, 27 )
-mesh = ExtResource( 11 )
-skeleton = NodePath("../..")
-material/0 = null
-material/1 = null
-
-[node name="workbench" parent="Scenario" instance=ExtResource( 10 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 2.97116, 41 )
-
-[node name="rockB" type="MeshInstance" parent="Scenario"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2, 38 )
-mesh = ExtResource( 9 )
-skeleton = NodePath("../..")
-material/0 = null
-
-[node name="rockA" type="MeshInstance" parent="Scenario"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2, 34 )
-mesh = ExtResource( 12 )
-skeleton = NodePath("../..")
-material/0 = null
-
-[node name="signpost" type="MeshInstance" parent="Scenario"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 2, 39 )
-mesh = ExtResource( 15 )
-skeleton = NodePath("../..")
-material/0 = null
-
-[node name="grassLarge" type="MeshInstance" parent="Scenario"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 2, 38 )
-mesh = ExtResource( 14 )
-skeleton = NodePath("../..")
-material/0 = null
-
-[node name="grassLarge4" type="MeshInstance" parent="Scenario"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 2, 23 )
-mesh = ExtResource( 14 )
-skeleton = NodePath("../..")
-material/0 = null
-
-[node name="grassLarge2" type="MeshInstance" parent="Scenario"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 2, 34 )
-mesh = ExtResource( 14 )
-skeleton = NodePath("../..")
-material/0 = null
-
-[node name="grassLarge3" type="MeshInstance" parent="Scenario"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 2, 28 )
-mesh = ExtResource( 14 )
-skeleton = NodePath("../..")
-material/0 = null
-
-[node name="chest" type="MeshInstance" parent="Scenario"]
-transform = Transform( -0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 16, 2, 34 )
-mesh = ExtResource( 16 )
-skeleton = NodePath("../..")
-material/0 = null
-material/1 = null
-material/2 = null
-material/3 = null
-material/4 = null
-
-[node name="tree_detailed_fall" type="MeshInstance" parent="Scenario"]
-transform = Transform( 7, 0, 0, 0, 7, 0, 0, 0, 7, 45, 2, 22 )
-mesh = ExtResource( 17 )
-skeleton = NodePath("../..")
-material/0 = null
-material/1 = null
-material/2 = null
-
-[node name="tree_cone" type="MeshInstance" parent="Scenario"]
-transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 5, 6, 2, 29 )
-mesh = ExtResource( 19 )
-skeleton = NodePath("../..")
-material/0 = null
-material/1 = null
-
-[node name="signpost2" type="MeshInstance" parent="Scenario"]
-transform = Transform( 0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 17, 2, 38 )
-mesh = ExtResource( 15 )
-skeleton = NodePath("")
-material/0 = null
-
 [node name="GridPlanes" type="Spatial" parent="."]
-visible = false
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.93877, 0 )
 
 [node name="Whall" type="MeshInstance" parent="GridPlanes"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 21, -19 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11, -9 )
 mesh = SubResource( 14 )
 skeleton = NodePath("../..")
 material/0 = null
 
 [node name="Whall4" type="MeshInstance" parent="GridPlanes"]
-transform = Transform( -1, 0, 5.96046e-08, 0, 1, 0, -5.96046e-08, 0, -1, 0, 21, 19 )
+transform = Transform( -1, 0, 5.96046e-08, 0, 1, 0, -5.96046e-08, 0, -1, 0, 11, 9 )
 mesh = SubResource( 14 )
 skeleton = NodePath("../..")
 material/0 = null
 
 [node name="Whall2" type="MeshInstance" parent="GridPlanes"]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -19, 21, -5.96046e-08 )
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -9, 11, -5.96046e-08 )
 mesh = SubResource( 14 )
 skeleton = NodePath("../..")
 material/0 = null
 
 [node name="Whall5" type="MeshInstance" parent="GridPlanes"]
-transform = Transform( 1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 19, 21, -5.96046e-08 )
+transform = Transform( 1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 9, 11, -5.96046e-08 )
 mesh = SubResource( 14 )
 skeleton = NodePath("../..")
 material/0 = null
@@ -355,9 +199,13 @@ skeleton = NodePath("../..")
 material/0 = null
 
 [node name="CharacterKB" parent="." instance=ExtResource( 26 )]
-transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -2.09958, 54.1901, -0.960174 )
-speed = 8.0
+transform = Transform( 0.17, 0, 0, 0, 0.17, 0, 0, 0, 0.17, -2.09958, 54.1901, -0.960174 )
+speed = 4.0
+speedFactor = 10.0
 gravityScale = 0.4
+jumpSpeed = 10.0
 controllerMode = 0
 
-[editable path="Character"]
+[node name="World" type="Node" parent="."]
+script = ExtResource( 5 )
+material = ExtResource( 2 )

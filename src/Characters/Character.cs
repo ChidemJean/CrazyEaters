@@ -36,6 +36,7 @@ namespace CrazyEaters.Characters
         Area sensorArea;
         float _speed;
         Vector3 moveDir = Vector3.Zero;
+        Vector3 OriginalScale = Vector3.One;
 
         bool isJumping = false;
         bool isFloor = false;
@@ -70,6 +71,8 @@ namespace CrazyEaters.Characters
             rng.Randomize();
 
             _speed = speed;
+
+            OriginalScale = Scale;
         }
 
         public async void Blink() {
@@ -196,7 +199,7 @@ namespace CrazyEaters.Characters
                 //
                 var newTransform = GlobalTransform.LookingAt(targetLook, Vector3.Up);
                 GlobalTransform = GlobalTransform.InterpolateWith(newTransform, speed * 1.2f * delta);
-                Scale = Vector3.One / 2;
+                Scale = OriginalScale;
                 //
                 // character.RotateY(Mathf.LerpAngle(character.Rotation.y, Mathf.Atan2(-targetLook.x, -targetLook.z), speed * delta));
                 //
@@ -226,12 +229,11 @@ namespace CrazyEaters.Characters
         }
 
         public async void OnJumpDownAnimationEnd() {
-            Vector3 tempMoveDir = moveDir;
-            moveDir = Vector3.Zero;
+            // Vector3 tempMoveDir = moveDir;
+            // moveDir = Vector3.Zero;
             await Task.Delay(TimeSpan.FromSeconds(.57f));
-            moveDir = tempMoveDir;
+            // moveDir = tempMoveDir;
             canWalk = true;
-            GD.Print("jump end");
         }
     }
 }

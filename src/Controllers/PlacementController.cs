@@ -5,7 +5,7 @@ namespace CrazyEaters.Controllers
     using CrazyEaters.Managers;
     using CrazyEaters.Entities;
 
-    public class PlacementController : CSGCombiner
+    public class PlacementController : Spatial
     {
         [Export]
         public bool inEditMode = false;
@@ -41,17 +41,17 @@ namespace CrazyEaters.Controllers
         {
             if (gameManager.inputMode == GameManager.InputMode.SCENE) {
                 if (inEditMode) {
-                    if (@event is InputEventMouseMotion) {
-                        InputEventMouseMotion _event = (InputEventMouseMotion) @event;
-                        Vector2 mousePos = _event.Position * gameManager.hud.currentScale;
-                        MoveBlock(mousePos);
-                        return;
-                    }
+                    // if (@event is InputEventMouseMotion) {
+                    //     InputEventMouseMotion _event = (InputEventMouseMotion) @event;
+                    //     Vector2 mousePos = _event.Position * gameManager.hud.currentScale;
+                    //     MoveBlock(mousePos);
+                    //     return;
+                    // }
                     if (@event is InputEventMouseButton) {
                         InputEventMouseButton _event = (InputEventMouseButton) @event;
                         Vector2 mousePos = _event.Position * gameManager.hud.currentScale;
 
-                        if (_event.ButtonIndex == 1 && _event.IsPressed()) {
+                        if (_event.ButtonIndex == 1 && !_event.IsPressed()) {
                             if (removeBlockFlag) {
                                 RemoveBlock(mousePos);
                             } else {
@@ -90,6 +90,13 @@ namespace CrazyEaters.Controllers
 
             if (intersect != null && intersect.Count > 0) {
                 CollisionObject collider = (CollisionObject) intersect["collider"];
+                Vector3 pos = (Vector3) intersect["position"];
+                Vector3 normal = (Vector3) intersect["normal"];
+
+                Vector3 blockGlobalPos = (pos - normal / 2).Floor();
+                gameManager.world.SetBlockGlobalPosition(blockGlobalPos, 0);
+
+                return;
                 Block box = collider.GetParentOrNull<Block>();
                 if (box != null && !box.Name.ToLower().Contains("floor")) {
                     box.QueueFree();
@@ -103,6 +110,11 @@ namespace CrazyEaters.Controllers
             if (intersect != null && intersect.Count > 0) {
                 Vector3 pos = (Vector3) intersect["position"];
                 Vector3 normal = (Vector3) intersect["normal"];
+
+                Vector3 blockGlobalPos = (pos + normal / 2).Floor();
+                gameManager.world.SetBlockGlobalPosition(blockGlobalPos, 31);
+
+                return;
                 //
                 CollisionObject collider = (CollisionObject) intersect["collider"];
                 Block targetBlock = collider.GetParentOrNull<Block>();

@@ -9,7 +9,7 @@ uniform vec4 in_over_color: hint_color;
 
 void fragment() {
 	ALBEDO = in_over_color.rgb * overlap;
-	ALPHA = clamp(sin(TIME * velocity), .25f, .85f) * overlap;
+	ALPHA = clamp(1.2f*sin(TIME * velocity * 2.0f), .4f, .9f) * overlap;
 }"
 
 [resource]

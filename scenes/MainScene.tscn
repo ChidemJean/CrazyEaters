@@ -71,7 +71,7 @@ handle_input_locally = false
 render_target_update_mode = 3
 audio_listener_enable_2d = true
 audio_listener_enable_3d = true
-shadow_atlas_size = 1024
+shadow_atlas_size = 512
 shadow_atlas_quad_0 = 1
 
 [node name="HabitatScene" parent="ViewportContainer/Viewport" instance=ExtResource( 1 )]
@@ -323,7 +323,7 @@ custom_constants/margin_bottom = 15
 margin_left = 15.0
 margin_top = 15.0
 margin_right = 999.0
-margin_bottom = 60.0
+margin_bottom = 61.0
 size_flags_horizontal = 3
 custom_constants/separation = 30
 alignment = 1

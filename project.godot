@@ -46,6 +46,8 @@ common/enable_pause_aware_picking=true
 
 threads/thread_model=2
 threads/thread_safe_bvh=true
+quality/shadow_atlas/size=2048
+quality/shadow_atlas/size.mobile=1024
 quality/shadows/filter_mode=0
 quality/subsurface_scattering/quality=0
 environment/default_environment="res://default_env.tres"

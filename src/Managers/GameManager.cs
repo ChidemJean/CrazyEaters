@@ -4,6 +4,7 @@ namespace CrazyEaters.Managers
     using System;
     using CrazyEaters.Controllers;
     using CrazyEaters.Optimization;
+    using CrazyEaters.Sandbox;
 
     public class GameManager : Spatial
     {
@@ -18,6 +19,7 @@ namespace CrazyEaters.Managers
         public Vector3 gravityVector = (Vector3) ProjectSettings.GetSetting("physics/3d/default_gravity_vector");
         public int gravityMagnitude = Convert.ToInt32(ProjectSettings.GetSetting("physics/3d/default_gravity"));
         public bool inDebug = false;
+        public CrazyEaters.Sandbox.World world;
 
         [Signal]
         public delegate void OnDebugModeChange(bool inDebug);
