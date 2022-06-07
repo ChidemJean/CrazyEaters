@@ -13,7 +13,7 @@ namespace CrazyEaters.Sandbox
             foreach (int x in GD.Range(Chunk.CHUNK_SIZE)) {
                 foreach (int z in GD.Range(Chunk.CHUNK_SIZE)) {
                     foreach (int y in GD.Range(Chunk.CHUNK_SIZE)) {
-                        data[new Vector3(x, y, z)] = (y + chunkPosition.y) != 0 ? 0 : 7;
+                        data[new Vector3(x, y, z)] = (y + chunkPosition.y) != 0 ? 0 : 3;
                     }
                 }
             }

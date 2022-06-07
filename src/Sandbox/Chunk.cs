@@ -9,7 +9,7 @@ namespace CrazyEaters.Sandbox
     public class Chunk : StaticBody
     {
         
-        public static int CHUNK_SIZE = 9;
+        public static int CHUNK_SIZE = 10;
         public static int CHUNK_END_SIZE = CHUNK_SIZE - 1;
         public static int TEXTURE_SHEET_WIDTH = 8;
 
@@ -21,6 +21,7 @@ namespace CrazyEaters.Sandbox
         
         public World world;
         public System.Threading.Thread _Thread;
+        public Label labelUi;
 
         public override void _Ready()
         {
@@ -29,6 +30,7 @@ namespace CrazyEaters.Sandbox
             
             data = TerrainGenerator.HabitatGround(GlobalTransform.origin);
 
+            GenerateLabel();
             GenerateChunkCollider();
             ThreadGenerateMesh();
         }
@@ -48,6 +50,15 @@ namespace CrazyEaters.Sandbox
 
             GenerateChunkCollider();
             ThreadGenerateMesh();
+        }
+
+        public void GenerateLabel()
+        {
+            Spatial label = world.chunkLabel.Instance<Spatial>();
+            labelUi = label.GetNode<Label>("Viewport/Label");
+            labelUi.Text = Name + " " + Translation;
+            AddChild(label);
+            label.TranslateObjectLocal((Vector3.One * CHUNK_SIZE / 2) / label.Scale);
         }
 
 #region CHUNK RENDER

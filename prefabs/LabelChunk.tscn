@@ -1,0 +1,51 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://assets/themes/Theme.tres" type="Theme" id=1]
+[ext_resource path="res://assets/fonts/CrazyEaters.ttf" type="DynamicFontData" id=2]
+
+[sub_resource type="QuadMesh" id=1]
+
+[sub_resource type="ViewportTexture" id=3]
+viewport_path = NodePath("Viewport")
+
+[sub_resource type="SpatialMaterial" id=2]
+resource_local_to_scene = true
+flags_transparent = true
+flags_unshaded = true
+flags_no_depth_test = true
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+params_billboard_mode = 1
+params_billboard_keep_scale = true
+albedo_texture = SubResource( 3 )
+
+[sub_resource type="DynamicFont" id=4]
+resource_local_to_scene = true
+size = 22
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 2 )
+
+[node name="ChunkViewport" type="MeshInstance"]
+transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0 )
+mesh = SubResource( 1 )
+material/0 = SubResource( 2 )
+
+[node name="Viewport" type="Viewport" parent="."]
+size = Vector2( 300, 200 )
+size_override_stretch = true
+transparent_bg = true
+handle_input_locally = false
+render_target_v_flip = true
+gui_disable_input = true
+
+[node name="Label" type="Label" parent="Viewport"]
+margin_right = 91.0
+margin_bottom = 162.0
+size_flags_horizontal = 7
+theme = ExtResource( 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "CHUNK-LABEL"
+align = 1
+valign = 1

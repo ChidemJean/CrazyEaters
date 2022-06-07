@@ -11,12 +11,16 @@ namespace CrazyEaters.Sandbox
         bool _generating = true;
         bool _deleting = false;
         Vector3 renderPosition = Vector3.Zero;
-        float renderDistance = 1;
+        float renderDistance = 2;
         Dictionary chunks;
+        Vector3 chunkCenter = new Vector3(Chunk.CHUNK_SIZE / 2, Chunk.CHUNK_SIZE / 2, Chunk.CHUNK_SIZE / 2);
 
         [Export]
         public Material material;
         private GameManager gameManager;
+
+        [Export]
+        public PackedScene chunkLabel;
 
 
         public override void _Ready()
@@ -43,9 +47,21 @@ namespace CrazyEaters.Sandbox
             foreach (int x in xRange) {
                 foreach (int y in yRange) {
                     foreach (int z in zRange) {
+
                         Vector3 chunkPosition = new Vector3(x, y, z);
-                        if (Mathf.Floor(playerChunk.DistanceTo(chunkPosition)) > renderDistance) {
-                            continue;
+                        Vector3 offsetedChunkPos = (chunkPosition * Chunk.CHUNK_SIZE) + chunkCenter;
+
+                        float distanceFloor = Mathf.Floor(playerChunk.DistanceTo(offsetedChunkPos));
+                        float scaledRenderDistance = renderDistance * Chunk.CHUNK_SIZE / 2;
+
+                        if (distanceFloor > scaledRenderDistance) {
+                            if (Mathf.Abs(offsetedChunkPos.x) < scaledRenderDistance 
+                                && Mathf.Abs(offsetedChunkPos.z) < scaledRenderDistance 
+                                && (offsetedChunkPos.y > scaledRenderDistance && offsetedChunkPos.y <= scaledRenderDistance * 2)) {
+                                //
+                            } else {
+                                continue;
+                            }
                         }
 
                         if (chunks.Contains(chunkPosition)) {
@@ -106,17 +122,28 @@ namespace CrazyEaters.Sandbox
             // We also might need to regenerate some neighboring chunks.
             if (Chunk.IsBlockTransparent(blockId)) {
                 if (subPosition.x == 0) {
-                    ((Chunk) chunks[chunkPosition + Vector3.Left]).Regenerate();
+                    Vector3 left = chunkPosition + Vector3.Left;
+                    if (chunks.Contains(left)) ((Chunk) chunks[left]).Regenerate();
+
                 } else if (subPosition.x == Chunk.CHUNK_END_SIZE) {
-                    ((Chunk) chunks[chunkPosition + Vector3.Right]).Regenerate();
+                    Vector3 right = chunkPosition + Vector3.Right;
+                    if (chunks.Contains(right)) ((Chunk) chunks[right]).Regenerate();
+
                 } else if (subPosition.z == 0) {
-                    ((Chunk) chunks[chunkPosition + Vector3.Forward]).Regenerate();
+                    Vector3 forward = chunkPosition + Vector3.Forward;
+                    if (chunks.Contains(forward)) ((Chunk) chunks[forward]).Regenerate();
+
                 } else if (subPosition.z == Chunk.CHUNK_END_SIZE) {
-                    ((Chunk) chunks[chunkPosition + Vector3.Back]).Regenerate();
+                    Vector3 backward = chunkPosition + Vector3.Back;
+                    if (chunks.Contains(backward)) ((Chunk) chunks[backward]).Regenerate();
+
                 } else if (subPosition.y == 0) {
-                    ((Chunk) chunks[chunkPosition + Vector3.Down]).Regenerate();
+                    Vector3 down = chunkPosition + Vector3.Down;
+                    if (chunks.Contains(down)) ((Chunk) chunks[down]).Regenerate();
+
                 } else if (subPosition.y == Chunk.CHUNK_END_SIZE) {
-                    ((Chunk) chunks[chunkPosition + Vector3.Up]).Regenerate();
+                    Vector3 up = chunkPosition + Vector3.Up;
+                    if (chunks.Contains(up)) ((Chunk) chunks[up]).Regenerate();
                 }
             }
         }

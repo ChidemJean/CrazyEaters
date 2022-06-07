@@ -12,7 +12,7 @@
 
 [sub_resource type="CapsuleShape" id=4]
 radius = 3.39885
-height = 4.48422
+height = 3.3136
 
 [sub_resource type="CylinderShape" id=3]
 radius = 3.1957
@@ -30,12 +30,13 @@ eyePath = NodePath("character/Armature/Skeleton/Eyes/REye/character_eye/Sphere")
 eyeTextures = [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 7 ), ExtResource( 6 ), ExtResource( 5 ) ]
 
 [node name="character" parent="." instance=ExtResource( 1 )]
+transform = Transform( 0.17, 0, 0, 0, 0.17, 0, 0, 0, 0.17, 0, 0, 0 )
 
 [node name="Skeleton" parent="character/Armature" index="0"]
 bones/17/bound_children = [  ]
 
 [node name="Eyes" parent="character/Armature/Skeleton" index="1"]
-transform = Transform( 1, -3.8743e-07, -2.89083e-06, 2.10479e-06, -0.532409, 0.846487, 7.45058e-07, -0.84649, -0.532412, -0.0953009, 8.7415, -1.13936 )
+transform = Transform( 1, -2.5332e-07, -2.98023e-06, 2.12528e-06, -0.585045, 0.811, 6.55651e-07, -0.811003, -0.585048, -0.0953015, 8.65397, -1.46552 )
 
 [node name="AnimationPlayer" parent="character" index="1"]
 playback_speed = 1.2
@@ -46,10 +47,11 @@ root_motion_track = NodePath("Armature/Skeleton:root")
 parameters/playback = SubResource( 2 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 1.86265e-09, -8.32667e-17, 0, -4.37114e-08, -1, -1.86265e-09, 1, -4.37114e-08, 0, 5.66094, -0.116218 )
+transform = Transform( 0.17, 2.91038e-10, -1.38778e-17, 0, -7.43094e-09, -0.17, -2.91038e-10, 0.17, -7.43094e-09, 0, 0.858617, -0.116218 )
 shape = SubResource( 4 )
 
 [node name="Sensor" type="Area" parent="."]
+transform = Transform( 0.17, 0, 0, 0, 0.17, 0, 0, 0, 0.17, 0, 0, 0 )
 collision_mask = 7
 
 [node name="CollisionShape" type="CollisionShape" parent="Sensor"]

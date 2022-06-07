@@ -1,5 +1,6 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
+[ext_resource path="res://prefabs/LabelChunk.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/materials/sandbox.tres" type="Material" id=2]
 [ext_resource path="res://src/Sandbox/World.cs" type="Script" id=5]
 [ext_resource path="res://src/Tools/ExplosionTap.cs" type="Script" id=13]
@@ -199,7 +200,7 @@ skeleton = NodePath("../..")
 material/0 = null
 
 [node name="CharacterKB" parent="." instance=ExtResource( 26 )]
-transform = Transform( 0.17, 0, 0, 0, 0.17, 0, 0, 0, 0.17, -2.09958, 54.1901, -0.960174 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.09958, 54.1901, -0.960174 )
 speed = 4.0
 speedFactor = 10.0
 gravityScale = 0.4
@@ -209,3 +210,4 @@ controllerMode = 0
 [node name="World" type="Node" parent="."]
 script = ExtResource( 5 )
 material = ExtResource( 2 )
+chunkLabel = ExtResource( 1 )
