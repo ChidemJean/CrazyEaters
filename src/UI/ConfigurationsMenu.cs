@@ -4,6 +4,7 @@ namespace CrazyEaters.UI
     using System;
     using CrazyEaters.Optimization;
     using CrazyEaters.Managers;
+    using CrazyEaters.Save;
 
     public class ConfigurationsMenu : PanelContainer
     {
@@ -27,10 +28,12 @@ namespace CrazyEaters.UI
         Hud hud;
         Label valueLabel;
         GameManager gameManager;
+        private SaveSystemNode saveSystemNode;
 
         public override void _Ready()
         {
             Visible = false;
+            saveSystemNode = GetNode<SaveSystemNode>("/root/MainNode/SaveSystem");
             gameManager = GetNode<GameManager>("/root/GameManager");
 
             valueLabel = GetNode<Label>(valueLabelPath);
@@ -62,7 +65,7 @@ namespace CrazyEaters.UI
         }
 
         public void Quit() {
-            gameManager.SaveGame(() => {
+            saveSystemNode.SaveGame(() => {
                 GetTree().Quit();
             });
             

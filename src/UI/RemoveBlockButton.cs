@@ -10,12 +10,14 @@ namespace CrazyEaters.UI
 
         private bool selected = false;
         private GameManager gameManager;
+        private SceneSwitcher sceneSwitcher;
 
         public override void _Ready()
         {
             gameManager = GetNode<GameManager>("/root/GameManager");
+            sceneSwitcher = GetNode<SceneSwitcher>("/root/MainNode/SceneSwitcher");
             this.Connect("button_up", this, nameof(OnClick));
-            gameManager.placementController.Connect(nameof(PlacementController.OnChangeEditMode), this, nameof(OnChangeEditMode));
+            // ((HabitatScene)sceneSwitcher.currentScene).placementController.Connect(nameof(PlacementController.OnChangeEditMode), this, nameof(OnChangeEditMode));
         }
 
         public void OnChangeEditMode(bool inEditMode) {
@@ -25,7 +27,7 @@ namespace CrazyEaters.UI
         public void OnClick()
         {
             selected = !selected;
-            gameManager.placementController.ChangeRemoveBlockFlag(selected);
+            ((HabitatScene)sceneSwitcher.currentScene).placementController.ChangeRemoveBlockFlag(selected);
         }
 
     }

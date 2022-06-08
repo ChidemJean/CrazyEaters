@@ -15,8 +15,12 @@ namespace CrazyEaters.Optimization
 
         public override void _Ready()
         {
+            
+        }
+
+        public void ChangeViewport3d(Viewport viewport) {
             this.currentScale = scaleFactor;
-            this.viewport3d = GetNode<Viewport>("SceneSwitcher/MainSceneHabitat/ViewportContainer/Viewport");
+            this.viewport3d = viewport;
             this.viewport3d.GetTexture().Flags = ((uint)Texture.FlagsEnum.Filter);
 
             UpdateViewport3DSize(scaleFactor);

@@ -7,10 +7,12 @@ namespace CrazyEaters.UI.Debug
     public class DebugDrawOptions : OptionButton
     {
         GameManager gameManager;
+        private SceneSwitcher sceneSwitcher;
 
         public override void _Ready()
         {
             gameManager = GetNode<GameManager>("/root/GameManager");
+            sceneSwitcher = GetNode<SceneSwitcher>("/root/MainNode/SceneSwitcher");
             Connect("item_selected", this, nameof(OnItemSelected));
         }
 
@@ -24,7 +26,7 @@ namespace CrazyEaters.UI.Debug
                     type = Viewport.DebugDrawEnum.Overdraw;
                     break;
             }
-            gameManager.gameViewport.DebugDraw = type;
+            ((HabitatScene)sceneSwitcher.currentScene).gameViewport.DebugDraw = type;
         }
 
     }

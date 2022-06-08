@@ -16,10 +16,13 @@ namespace CrazyEaters.Tools
 
         [Export]
         float impulseForce = 30;
+        private SceneSwitcher sceneSwitcher;
 
         public override void _Ready()
         {
             gameManager = GetNode<GameManager>("/root/GameManager");
+            sceneSwitcher = GetNode<SceneSwitcher>("/root/MainNode/SceneSwitcher");
+            
             hud = GetNode<Hud>("/root/MainNode");
         }
 
@@ -32,8 +35,8 @@ namespace CrazyEaters.Tools
 
                     if (_event.ButtonIndex == 1 && _event.IsPressed()) {
                         PhysicsDirectSpaceState spaceState = GetWorld().DirectSpaceState;
-                        Vector3 rayOrigin = gameManager.camera.ProjectRayOrigin(mousePos);
-                        Vector3 rayEnd = rayOrigin + gameManager.camera.ProjectRayNormal(mousePos) * 2000;
+                        Vector3 rayOrigin = ((HabitatScene)sceneSwitcher.currentScene).camera.ProjectRayOrigin(mousePos);
+                        Vector3 rayEnd = rayOrigin + ((HabitatScene)sceneSwitcher.currentScene).camera.ProjectRayNormal(mousePos) * 2000;
                         var intersect = spaceState.IntersectRay(rayOrigin, rayEnd);
 
                         if (intersect != null && intersect.Count > 0) {

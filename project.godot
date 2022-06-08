@@ -13,7 +13,9 @@ config_version=4
 config/name="CrazyEatersGodot"
 run/main_scene="res://scenes/MainScene.tscn"
 boot_splash/image="res://assets/textures/UI/logo_chidem_games.fw.png"
-boot_splash/bg_color=Color( 0.129412, 0.0745098, 0.231373, 1 )
+boot_splash/fullsize=false
+boot_splash/use_filter=false
+boot_splash/bg_color=Color( 0.145098, 0.0745098, 0.219608, 1 )
 config/icon="res://icon.png"
 
 [autoload]

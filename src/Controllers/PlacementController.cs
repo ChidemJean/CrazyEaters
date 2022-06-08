@@ -30,10 +30,12 @@ namespace CrazyEaters.Controllers
         private Block currentBlock = null;
         private Spatial scene = null;
         public float blockSize = 2;
+        private SceneSwitcher sceneSwitcher;
 
         public override void _Ready()
         {
             gameManager = GetNode<GameManager>("/root/GameManager");
+            sceneSwitcher = GetNode<SceneSwitcher>("/root/MainNode/SceneSwitcher");
             scene = GetNode<Spatial>(scenePath);
         }
 
@@ -137,8 +139,8 @@ namespace CrazyEaters.Controllers
         private Godot.Collections.Dictionary ProjectRay(Vector2 mousePos)
         {
             PhysicsDirectSpaceState spaceState = GetWorld().DirectSpaceState;
-            Vector3 rayOrigin = gameManager.camera.ProjectRayOrigin(mousePos);
-            Vector3 rayEnd = rayOrigin + gameManager.camera.ProjectRayNormal(mousePos) * 2000;
+            Vector3 rayOrigin = ((HabitatScene)sceneSwitcher.currentScene).camera.ProjectRayOrigin(mousePos);
+            Vector3 rayEnd = rayOrigin + ((HabitatScene)sceneSwitcher.currentScene).camera.ProjectRayNormal(mousePos) * 2000;
             return spaceState.IntersectRay(rayOrigin, rayEnd, null, 2^1);
         }
 

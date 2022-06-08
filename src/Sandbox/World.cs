@@ -19,6 +19,7 @@ namespace CrazyEaters.Sandbox
         [Export]
         public Material material;
         private GameManager gameManager;
+        private SaveSystemNode saveSystemNode;
 
         [Export]
         public PackedScene chunkLabel;
@@ -27,14 +28,15 @@ namespace CrazyEaters.Sandbox
         public override void _Ready()
         {
             chunks = new Dictionary();
+            saveSystemNode = GetNode<SaveSystemNode>("/root/MainNode/SaveSystem");
             gameManager = GetNode<GameManager>("/root/GameManager");
             gameManager.world = this;
-            gameManager.LoadGame(OnLoaded);
+            saveSystemNode.LoadGame(OnLoaded);
         }
 
         public void OnLoaded(GameData gameData) {
             if (gameData != null) {
-                this.chunks = gameManager.FromGameData(gameData);
+                this.chunks = saveSystemNode.FromGameData(gameData);
             }
 
             if (this.chunks.Count > 0) {
