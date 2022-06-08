@@ -89,6 +89,7 @@ namespace CrazyEaters.Sandbox
         public void DrawBlockMesh(SurfaceTool surfaceTool, Vector3 blockSubPosition, int blockId) 
         {
             if (blockId == 0) return;
+            if (blockId >= 60) { InstantiateUniqueBlock(blockSubPosition + Vector3.One / 2, blockId); return; }
 
             Array<Vector3> verts = CalculateBlockVerts(blockSubPosition);
             Array<Vector2> uvs = CalculateBlockUVs(blockId);
@@ -227,9 +228,17 @@ namespace CrazyEaters.Sandbox
 
         public static bool IsBlockTransparent(int blockId)
         {
-            return blockId == 0 || (blockId > 25 && blockId < 30);
+            return blockId == 0 || (blockId > 25 && blockId < 30) || blockId >=60;
         }
 #endregion
+
+        public void InstantiateUniqueBlock(Vector3 position, int blockId) 
+        {
+            PackedScene blockPrefab = world.blocksRefs.blocks["" + blockId];
+            Block _block = blockPrefab.Instance<Block>();
+            AddChild(_block);
+            _block.Translate(position);
+        }
 
 #region CHUNK PHYSICS
         public void GenerateChunkCollider() {
@@ -238,12 +247,12 @@ namespace CrazyEaters.Sandbox
                 return;
             }
 
-            CollisionLayer = 0xFFFFF;
+            CollisionLayer = world.chunkCollisionLayer;
             CollisionMask = 0xFFFFF;
 
             foreach (Vector3 blockPosition in data.Keys) {
                 int blockId = (int) data[blockPosition];
-                if (blockId != 27 && blockId != 28 && blockId != 0) {
+                if (blockId != 27 && blockId != 28 && blockId != 0 && blockId < 60) {
                     CreateBlockCollider(blockPosition);
                 }
             }

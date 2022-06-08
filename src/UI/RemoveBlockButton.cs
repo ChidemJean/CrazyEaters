@@ -20,6 +20,13 @@ namespace CrazyEaters.UI
             // ((HabitatScene)sceneSwitcher.currentScene).placementController.Connect(nameof(PlacementController.OnChangeEditMode), this, nameof(OnChangeEditMode));
         }
 
+        public override void _Process(float delta)
+        {
+            if (((HabitatScene)sceneSwitcher.currentScene).placementController != null) {
+                OnChangeEditMode(((HabitatScene)sceneSwitcher.currentScene).placementController.inEditMode);
+            }
+        }
+
         public void OnChangeEditMode(bool inEditMode) {
             Visible = inEditMode;
         }

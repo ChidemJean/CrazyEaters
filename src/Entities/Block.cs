@@ -25,13 +25,13 @@ namespace CrazyEaters.Entities
 
         public override void _Ready()
         {
-            if (areaPath != null) {
-                area = GetNode<Area>(areaPath);
-                area.Connect("body_entered", this, nameof(OnBodyEnter));
-                area.Connect("body_exited", this, nameof(OnBodyExit));
-            }
-            fbMesh = GetNode<MeshInstance>(fbMeshPath);
-            fbMat = (ShaderMaterial) fbMesh.GetSurfaceMaterial(0);
+            // if (areaPath != null) {
+            //     area = GetNode<Area>(areaPath);
+            //     area.Connect("body_entered", this, nameof(OnBodyEnter));
+            //     area.Connect("body_exited", this, nameof(OnBodyExit));
+            // }
+            // fbMesh = GetNode<MeshInstance>(fbMeshPath);
+            // fbMat = (ShaderMaterial) fbMesh.GetSurfaceMaterial(0);
         }
 
         public void OnBodyEnter(PhysicsBody body) 

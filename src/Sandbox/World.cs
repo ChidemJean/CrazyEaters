@@ -5,6 +5,7 @@ namespace CrazyEaters.Sandbox
     using Godot.Collections;
     using CrazyEaters.Managers;
     using CrazyEaters.Save;
+    using CrazyEaters.Resources;
 
     public class World : Node
     {
@@ -15,9 +16,14 @@ namespace CrazyEaters.Sandbox
         float renderDistance = 2;
         public Dictionary chunks;
         Vector3 chunkCenter = new Vector3(Chunk.CHUNK_SIZE / 2, Chunk.CHUNK_SIZE / 2, Chunk.CHUNK_SIZE / 2);
-
+        [Export]
+        public BlocksData blocksRefs;
         [Export]
         public Material material;
+
+        [Export(PropertyHint.Layers3dPhysics)]
+        public uint chunkCollisionLayer;
+
         private GameManager gameManager;
         private SaveSystemNode saveSystemNode;
 
@@ -27,6 +33,7 @@ namespace CrazyEaters.Sandbox
 
         public override void _Ready()
         {
+            GD.Print(chunkCollisionLayer);
             chunks = new Dictionary();
             saveSystemNode = GetNode<SaveSystemNode>("/root/MainNode/SaveSystem");
             gameManager = GetNode<GameManager>("/root/GameManager");

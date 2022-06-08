@@ -32,6 +32,9 @@ namespace CrazyEaters.Controllers
         public float blockSize = 2;
         private SceneSwitcher sceneSwitcher;
 
+        [Export(PropertyHint.Layers3dPhysics)]
+        public uint rayCollisionMask;
+
         public override void _Ready()
         {
             gameManager = GetNode<GameManager>("/root/GameManager");
@@ -91,7 +94,7 @@ namespace CrazyEaters.Controllers
             var intersect = ProjectRay(mousePos);
 
             if (intersect != null && intersect.Count > 0) {
-                CollisionObject collider = (CollisionObject) intersect["collider"];
+                // CollisionObject collider = (CollisionObject) intersect["collider"];
                 Vector3 pos = (Vector3) intersect["position"];
                 Vector3 normal = (Vector3) intersect["normal"];
 
@@ -99,10 +102,10 @@ namespace CrazyEaters.Controllers
                 gameManager.world.SetBlockGlobalPosition(blockGlobalPos, 0);
 
                 return;
-                Block box = collider.GetParentOrNull<Block>();
-                if (box != null && !box.Name.ToLower().Contains("floor")) {
-                    box.QueueFree();
-                }
+                // Block box = collider.GetParentOrNull<Block>();
+                // if (box != null && !box.Name.ToLower().Contains("floor")) {
+                //     box.QueueFree();
+                // }
             }
         }
 
@@ -114,7 +117,7 @@ namespace CrazyEaters.Controllers
                 Vector3 normal = (Vector3) intersect["normal"];
 
                 Vector3 blockGlobalPos = (pos + normal / 2).Floor();
-                gameManager.world.SetBlockGlobalPosition(blockGlobalPos, 31);
+                gameManager.world.SetBlockGlobalPosition(blockGlobalPos, 60);
 
                 return;
                 //
@@ -141,7 +144,7 @@ namespace CrazyEaters.Controllers
             PhysicsDirectSpaceState spaceState = GetWorld().DirectSpaceState;
             Vector3 rayOrigin = ((HabitatScene)sceneSwitcher.currentScene).camera.ProjectRayOrigin(mousePos);
             Vector3 rayEnd = rayOrigin + ((HabitatScene)sceneSwitcher.currentScene).camera.ProjectRayNormal(mousePos) * 2000;
-            return spaceState.IntersectRay(rayOrigin, rayEnd, null, 2^1);
+            return spaceState.IntersectRay(rayOrigin, rayEnd, null, rayCollisionMask);
         }
 
         private Block InstanceNewBlock(Vector3 pos) 
@@ -177,22 +180,22 @@ namespace CrazyEaters.Controllers
         public void ChangeEditMode(bool editMode)
         {
             inEditMode = editMode;
-            if (inEditMode) {
-                currentBlock = InstanceNewBlock(Vector3.Zero);
-            } else {
-                if (currentBlock != null && IsInstanceValid(currentBlock)) currentBlock.QueueFree();
-            }
+            // if (inEditMode) {
+            //     currentBlock = InstanceNewBlock(Vector3.Zero);
+            // } else {
+            //     if (currentBlock != null && IsInstanceValid(currentBlock)) currentBlock.QueueFree();
+            // }
             EmitSignal(nameof(OnChangeEditMode), inEditMode);
         }
 
         public void ChangeRemoveBlockFlag(bool removeBlockFlag)
         {
             this.removeBlockFlag = removeBlockFlag;
-            if (this.removeBlockFlag) {
-                currentBlock.QueueFree();
-            } else {
+            // if (this.removeBlockFlag) {
+            //     currentBlock.QueueFree();
+            // } else {
                 ChangeEditMode(true);
-            }
+            // }
         }
 
     }
