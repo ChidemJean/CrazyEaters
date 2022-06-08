@@ -22,6 +22,7 @@ namespace CrazyEaters.Sandbox
         public World world;
         public System.Threading.Thread _Thread;
         public Label labelUi;
+        public MeshInstance mi;
 
         public override void _Ready()
         {
@@ -79,7 +80,7 @@ namespace CrazyEaters.Sandbox
             surfaceTool.GenerateTangents();
             surfaceTool.Index();
             ArrayMesh arrayMesh = surfaceTool.Commit();
-            MeshInstance mi = new MeshInstance();
+            mi = new MeshInstance();
             mi.Mesh = arrayMesh;
             mi.MaterialOverride = world.material;
             CallDeferred("add_child", mi);

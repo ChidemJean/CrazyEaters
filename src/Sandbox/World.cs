@@ -19,7 +19,9 @@ namespace CrazyEaters.Sandbox
         [Export]
         public BlocksData blocksRefs;
         [Export]
-        public Material material;
+        public ShaderMaterial shaderMaterial;
+        [Export]
+        public SpatialMaterial material;
 
         [Export(PropertyHint.Layers3dPhysics)]
         public uint chunkCollisionLayer;
@@ -30,15 +32,20 @@ namespace CrazyEaters.Sandbox
         [Export]
         public PackedScene chunkLabel;
 
+        [Export]
+        public NodePath tweenPath;
+        public Tween tween;
+
 
         public override void _Ready()
         {
-            GD.Print(chunkCollisionLayer);
             chunks = new Dictionary();
             saveSystemNode = GetNode<SaveSystemNode>("/root/MainNode/SaveSystem");
             gameManager = GetNode<GameManager>("/root/GameManager");
             gameManager.world = this;
+            tween = GetNode<Tween>(tweenPath);
             saveSystemNode.LoadGame(OnLoaded);
+
         }
 
         public void OnLoaded(GameData gameData) {
@@ -179,6 +186,33 @@ namespace CrazyEaters.Sandbox
                 } else if (subPosition.y == Chunk.CHUNK_END_SIZE) {
                     Vector3 up = chunkPosition + Vector3.Up;
                     if (chunks.Contains(up)) ((Chunk) chunks[up]).Regenerate();
+                }
+            }
+        
+            Shockwave(chunkPosition + blockGlobalPosition);
+        }
+
+        public async void Shockwave(Vector3 shockwaveOrigin) 
+        {
+            foreach (Vector3 chunkP in chunks.Keys) {
+                Chunk chunk = (Chunk) chunks[chunkP];
+                if (chunk.mi != null) {
+                    chunk.mi.MaterialOverride = shaderMaterial;
+                }
+            }
+            //
+            shaderMaterial.SetShaderParam("shockwave_origin", shockwaveOrigin);
+            tween.InterpolateProperty(shaderMaterial, "shader_param/shockwave_percentage", 0, 1, 1.1f);
+            tween.InterpolateProperty(shaderMaterial, "shader_param/shockwave_width", 4, 0, .75f);
+            tween.InterpolateProperty(shaderMaterial, "shader_param/shockwave_strength", 0.415f, 0, .65f);
+            tween.Start();
+            await ToSignal(tween, "tween_completed");
+            shaderMaterial.SetShaderParam("shockwave_percentage", 0);
+            //
+            foreach (Vector3 chunkP in chunks.Keys) {
+                Chunk chunk = (Chunk) chunks[chunkP];
+                if (chunk.mi != null) {
+                    chunk.mi.MaterialOverride = material;
                 }
             }
         }
