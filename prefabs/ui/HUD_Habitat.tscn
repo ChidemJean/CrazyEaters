@@ -1,0 +1,348 @@
+[gd_scene load_steps=25 format=2]
+
+[ext_resource path="res://src/UI/Debug/DebugCheck.cs" type="Script" id=2]
+[ext_resource path="res://src/UI/ConfigurationsMenuButton.cs" type="Script" id=3]
+[ext_resource path="res://src/UI/EditModeButton.cs" type="Script" id=4]
+[ext_resource path="res://src/UI/RemoveBlockButton.cs" type="Script" id=5]
+[ext_resource path="res://src/UI/Debug/DebugDrawOptions.cs" type="Script" id=6]
+[ext_resource path="res://src/UI/Debug/DebugMenu.cs" type="Script" id=7]
+[ext_resource path="res://src/UI/ConfigurationsMenu.cs" type="Script" id=8]
+[ext_resource path="res://prefabs/ui/Label.tscn" type="PackedScene" id=9]
+[ext_resource path="res://assets/fonts/CrazyEaterFont.tres" type="DynamicFont" id=10]
+[ext_resource path="res://assets/fonts/CrazyEaters.ttf" type="DynamicFontData" id=11]
+[ext_resource path="res://assets/themes/Theme.tres" type="Theme" id=12]
+[ext_resource path="res://assets/textures/prototype/UI/gear.png" type="Texture" id=13]
+[ext_resource path="res://assets/textures/prototype/UI/wrench.png" type="Texture" id=14]
+[ext_resource path="res://assets/textures/prototype/UI/trashcanOpen.png" type="Texture" id=15]
+[ext_resource path="res://assets/textures/prototype/UI/cross.png" type="Texture" id=16]
+
+[sub_resource type="DynamicFont" id=7]
+font_data = ExtResource( 11 )
+
+[sub_resource type="Theme" id=8]
+default_font = SubResource( 7 )
+
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 0, 0, 0, 0.913725 )
+
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 0.207843, 0.207843, 0.207843, 1 )
+
+[sub_resource type="Theme" id=10]
+
+[sub_resource type="DynamicFont" id=1]
+size = 52
+font_data = ExtResource( 11 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.298039, 0.490196, 1, 1 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.298039, 0.490196, 1, 1 )
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.290196, 0.290196, 0.290196, 0.290196 )
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color( 0.392157, 0.909804, 1, 1 )
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_size = 10
+shadow_offset = Vector2( 0, 5 )
+
+[node name="HUD_Habitat" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="FPS" parent="." instance=ExtResource( 9 )]
+margin_left = -164.0
+margin_top = -20.0
+margin_bottom = 20.0
+size_flags_horizontal = 9
+theme = SubResource( 8 )
+custom_fonts/font = ExtResource( 10 )
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+margin_bottom = 115.0
+size_flags_horizontal = 3
+custom_constants/margin_right = 35
+custom_constants/margin_top = 35
+custom_constants/margin_left = 35
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+margin_left = 35.0
+margin_top = 35.0
+margin_right = 115.0
+margin_bottom = 115.0
+size_flags_horizontal = 2
+
+[node name="EditModeButton" type="TextureButton" parent="MarginContainer/HBoxContainer"]
+margin_right = 80.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 80, 80 )
+texture_normal = ExtResource( 14 )
+expand = true
+stretch_mode = 5
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="RemoveBlockButton" type="TextureButton" parent="MarginContainer/HBoxContainer"]
+visible = false
+margin_left = 54.0
+margin_right = 104.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 80, 80 )
+texture_normal = ExtResource( 15 )
+expand = true
+stretch_mode = 5
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Button" type="TextureButton" parent="MarginContainer"]
+margin_left = 965.0
+margin_top = 35.0
+margin_right = 1045.0
+margin_bottom = 115.0
+rect_min_size = Vector2( 80, 80 )
+size_flags_horizontal = 10
+texture_normal = ExtResource( 13 )
+expand = true
+stretch_mode = 5
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+configurationsMenuPath = NodePath("../../ConfigurationsMenu")
+
+[node name="ConfigurationsMenu" type="PanelContainer" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = SubResource( 6 )
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+closeButtonPath = NodePath("HBoxContainer/Head/Control/HBoxContainer/CloseButton")
+renderSliderPath = NodePath("HBoxContainer/ScrollContainer/Content/Control/ConfLine/RenderScaleSlider")
+valueLabelPath = NodePath("HBoxContainer/ScrollContainer/Content/Control/ConfLine/VBoxContainer/ValueLabel")
+quitPath = NodePath("HBoxContainer/ScrollContainer/Content/Control/Quit")
+
+[node name="HBoxContainer" type="VBoxContainer" parent="ConfigurationsMenu"]
+margin_right = 1080.0
+margin_bottom = 1920.0
+
+[node name="Head" type="PanelContainer" parent="ConfigurationsMenu/HBoxContainer"]
+margin_right = 1080.0
+margin_bottom = 120.0
+rect_min_size = Vector2( 0, 120 )
+custom_styles/panel = SubResource( 9 )
+
+[node name="Control" type="MarginContainer" parent="ConfigurationsMenu/HBoxContainer/Head"]
+margin_right = 1080.0
+margin_bottom = 120.0
+custom_constants/margin_right = 25
+custom_constants/margin_top = 25
+custom_constants/margin_left = 25
+custom_constants/margin_bottom = 25
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ConfigurationsMenu/HBoxContainer/Head/Control"]
+margin_left = 25.0
+margin_top = 25.0
+margin_right = 1055.0
+margin_bottom = 95.0
+
+[node name="Label" type="Label" parent="ConfigurationsMenu/HBoxContainer/Head/Control/HBoxContainer"]
+margin_top = 8.0
+margin_right = 335.0
+margin_bottom = 61.0
+size_flags_horizontal = 2
+theme = SubResource( 10 )
+custom_fonts/font = SubResource( 1 )
+text = "Configurações"
+
+[node name="CloseButton" type="TextureButton" parent="ConfigurationsMenu/HBoxContainer/Head/Control/HBoxContainer"]
+margin_left = 970.0
+margin_right = 1030.0
+margin_bottom = 70.0
+rect_min_size = Vector2( 60, 60 )
+texture_normal = ExtResource( 16 )
+expand = true
+stretch_mode = 5
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ConfigurationsMenu/HBoxContainer"]
+margin_top = 124.0
+margin_right = 1080.0
+margin_bottom = 1920.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+scroll_horizontal_enabled = false
+
+[node name="Content" type="MarginContainer" parent="ConfigurationsMenu/HBoxContainer/ScrollContainer"]
+margin_right = 1080.0
+margin_bottom = 1796.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 30
+custom_constants/margin_top = 35
+custom_constants/margin_left = 30
+custom_constants/margin_bottom = 30
+
+[node name="Control" type="VBoxContainer" parent="ConfigurationsMenu/HBoxContainer/ScrollContainer/Content"]
+margin_left = 30.0
+margin_top = 35.0
+margin_right = 1050.0
+margin_bottom = 1766.0
+size_flags_horizontal = 3
+custom_constants/separation = 45
+
+[node name="ConfLine" type="HBoxContainer" parent="ConfigurationsMenu/HBoxContainer/ScrollContainer/Content/Control"]
+margin_right = 1020.0
+margin_bottom = 84.0
+size_flags_horizontal = 3
+custom_constants/separation = 30
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ConfigurationsMenu/HBoxContainer/ScrollContainer/Content/Control/ConfLine"]
+margin_left = 131.0
+margin_right = 559.0
+margin_bottom = 84.0
+
+[node name="Label" type="Label" parent="ConfigurationsMenu/HBoxContainer/ScrollContainer/Content/Control/ConfLine/VBoxContainer"]
+margin_right = 428.0
+margin_bottom = 40.0
+theme = ExtResource( 12 )
+text = "Escala de Renderização"
+align = 2
+
+[node name="ValueLabel" type="Label" parent="ConfigurationsMenu/HBoxContainer/ScrollContainer/Content/Control/ConfLine/VBoxContainer"]
+margin_top = 44.0
+margin_right = 428.0
+margin_bottom = 84.0
+theme = ExtResource( 12 )
+custom_colors/font_color = Color( 1, 0.760784, 0.384314, 1 )
+text = "0/0"
+align = 2
+
+[node name="RenderScaleSlider" type="HSlider" parent="ConfigurationsMenu/HBoxContainer/ScrollContainer/Content/Control/ConfLine"]
+margin_left = 589.0
+margin_top = 34.0
+margin_right = 889.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 300, 0 )
+size_flags_vertical = 4
+custom_styles/grabber_area_highlight = SubResource( 4 )
+custom_styles/grabber_area = SubResource( 3 )
+min_value = 20.0
+value = 20.0
+rounded = true
+
+[node name="Debug" type="HBoxContainer" parent="ConfigurationsMenu/HBoxContainer/ScrollContainer/Content/Control"]
+margin_top = 129.0
+margin_right = 1020.0
+margin_bottom = 182.0
+size_flags_horizontal = 3
+custom_constants/separation = 30
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Label" type="Label" parent="ConfigurationsMenu/HBoxContainer/ScrollContainer/Content/Control/Debug"]
+margin_left = 376.0
+margin_top = 6.0
+margin_right = 479.0
+margin_bottom = 46.0
+theme = ExtResource( 12 )
+text = "Debug"
+align = 2
+
+[node name="ValueLabel" type="Label" parent="ConfigurationsMenu/HBoxContainer/ScrollContainer/Content/Control/Debug"]
+margin_left = 509.0
+margin_top = 6.0
+margin_right = 509.0
+margin_bottom = 46.0
+custom_colors/font_color = Color( 1, 0.760784, 0.384314, 1 )
+custom_fonts/font = ExtResource( 10 )
+
+[node name="CheckButton" type="CheckButton" parent="ConfigurationsMenu/HBoxContainer/ScrollContainer/Content/Control/Debug"]
+margin_left = 539.0
+margin_right = 644.0
+margin_bottom = 53.0
+theme = ExtResource( 12 )
+script = ExtResource( 2 )
+
+[node name="DebugMenu" type="PanelContainer" parent="ConfigurationsMenu/HBoxContainer/ScrollContainer/Content/Control"]
+margin_top = 227.0
+margin_right = 1020.0
+margin_bottom = 309.0
+custom_styles/panel = SubResource( 5 )
+script = ExtResource( 7 )
+
+[node name="MarginContainer" type="MarginContainer" parent="ConfigurationsMenu/HBoxContainer/ScrollContainer/Content/Control/DebugMenu"]
+margin_left = 3.0
+margin_top = 3.0
+margin_right = 1017.0
+margin_bottom = 79.0
+custom_constants/margin_right = 15
+custom_constants/margin_top = 15
+custom_constants/margin_left = 15
+custom_constants/margin_bottom = 15
+
+[node name="DebugDraw" type="HBoxContainer" parent="ConfigurationsMenu/HBoxContainer/ScrollContainer/Content/Control/DebugMenu/MarginContainer"]
+margin_left = 15.0
+margin_top = 15.0
+margin_right = 999.0
+margin_bottom = 61.0
+size_flags_horizontal = 3
+custom_constants/separation = 30
+alignment = 1
+
+[node name="Label" type="Label" parent="ConfigurationsMenu/HBoxContainer/ScrollContainer/Content/Control/DebugMenu/MarginContainer/DebugDraw"]
+margin_left = 257.0
+margin_top = 3.0
+margin_right = 467.0
+margin_bottom = 43.0
+theme = ExtResource( 12 )
+text = "Debug Draw"
+align = 2
+
+[node name="ValueLabel" type="Label" parent="ConfigurationsMenu/HBoxContainer/ScrollContainer/Content/Control/DebugMenu/MarginContainer/DebugDraw"]
+margin_left = 497.0
+margin_top = 3.0
+margin_right = 497.0
+margin_bottom = 43.0
+custom_colors/font_color = Color( 1, 0.760784, 0.384314, 1 )
+custom_fonts/font = ExtResource( 10 )
+align = 2
+
+[node name="OptionButton" type="OptionButton" parent="ConfigurationsMenu/HBoxContainer/ScrollContainer/Content/Control/DebugMenu/MarginContainer/DebugDraw"]
+margin_left = 527.0
+margin_right = 727.0
+margin_bottom = 46.0
+rect_min_size = Vector2( 200, 44 )
+theme = ExtResource( 12 )
+text = "Disabled"
+items = [ "Disabled", null, false, 0, null, "Unshaded", null, false, 1, null, "Overdraw", null, false, 2, null ]
+selected = 0
+script = ExtResource( 6 )
+
+[node name="Quit" type="Button" parent="ConfigurationsMenu/HBoxContainer/ScrollContainer/Content/Control"]
+margin_top = 354.0
+margin_right = 1020.0
+margin_bottom = 424.0
+rect_min_size = Vector2( 0, 70 )
+theme = ExtResource( 12 )
+text = "Quit"

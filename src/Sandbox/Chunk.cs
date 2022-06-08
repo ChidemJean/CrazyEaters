@@ -16,7 +16,7 @@ namespace CrazyEaters.Sandbox
         public int CHUNK_LAST_INDEX = CHUNK_SIZE - 1;
         public static float TEXTURE_TILE_SIZE = 1.0f / TEXTURE_SHEET_WIDTH;
 
-        public Dictionary data;
+        public Dictionary data = null;
         public Vector3 chunkPosition = Vector3.Zero;
         
         public World world;
@@ -28,11 +28,13 @@ namespace CrazyEaters.Sandbox
             GlobalTranslate(chunkPosition * CHUNK_SIZE);
             Name = chunkPosition.ToString();
             
-            data = TerrainGenerator.HabitatGround(GlobalTransform.origin);
+            if (data == null) {
+                data = TerrainGenerator.HabitatGround(GlobalTransform.origin);
+            }
 
-            GenerateLabel();
             GenerateChunkCollider();
             ThreadGenerateMesh();
+            GenerateLabel();
         }
 
         public void ThreadGenerateMesh() {

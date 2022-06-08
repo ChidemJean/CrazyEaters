@@ -4,15 +4,16 @@ namespace CrazyEaters.Sandbox
     using System;
     using Godot.Collections;
     using CrazyEaters.Managers;
+    using CrazyEaters.Save;
 
     public class World : Node
     {
         float effectiveRenderDistance = 0;
-        bool _generating = true;
+        bool _generating = false;
         bool _deleting = false;
         Vector3 renderPosition = Vector3.Zero;
         float renderDistance = 2;
-        Dictionary chunks;
+        public Dictionary chunks;
         Vector3 chunkCenter = new Vector3(Chunk.CHUNK_SIZE / 2, Chunk.CHUNK_SIZE / 2, Chunk.CHUNK_SIZE / 2);
 
         [Export]
@@ -28,10 +29,36 @@ namespace CrazyEaters.Sandbox
             chunks = new Dictionary();
             gameManager = GetNode<GameManager>("/root/GameManager");
             gameManager.world = this;
+            gameManager.LoadGame(OnLoaded);
+        }
+
+        public void OnLoaded(GameData gameData) {
+            if (gameData != null) {
+                this.chunks = gameManager.FromGameData(gameData);
+            }
+
+            if (this.chunks.Count > 0) {
+                LoadChunks();
+            } else {
+                _generating = true;
+            }
         }
 
         public override void _Process(float delta)
         {
+            GenerateChunks();
+        }
+
+        public void LoadChunks() {
+            foreach(Vector3 chunkPosition in this.chunks.Keys) 
+            {
+                Chunk chunk = (Chunk) this.chunks[chunkPosition];
+                chunk.world = this;
+                AddChild(chunk);
+            }
+        }
+
+        public void GenerateChunks() {
             Vector3 playerChunk = (renderPosition / Chunk.CHUNK_SIZE).Round();
 
             if (_deleting) {
@@ -83,7 +110,6 @@ namespace CrazyEaters.Sandbox
             } else {
                 _generating = false;
             }
-
         }
 
         public int GetBlockGlobalPosition(Vector3 blockGlobalPosition) 

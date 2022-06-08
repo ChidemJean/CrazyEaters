@@ -194,11 +194,12 @@ namespace CrazyEaters.Characters
             Vector3 localVelocity = velocity.Rotated(Vector3.Up, Rotation.y);
 
             if ((localVelocity.x != 0 || localVelocity.z != 0) && moveDir.z != 1) {
-                Vector3 targetLook = GlobalTransform.origin + (localVelocity.Normalized());
+                Vector3 targetLook = GlobalTransform.origin + (localVelocity.Normalized() * 10f);
                 targetLook.y = GlobalTransform.origin.y;
                 //
-                Transform newTransform = GlobalTransform.LookingAt(targetLook, Vector3.Up);
-                GlobalTransform = GlobalTransform.InterpolateWith(newTransform, speed * 1f * delta);
+                var newTransform = GlobalTransform.LookingAt(targetLook, Vector3.Up);
+                GlobalTransform = GlobalTransform.InterpolateWith(newTransform, speed * 1.2f * delta);
+                Scale = OriginalScale;
                 //
                 // character.RotateY(Mathf.LerpAngle(character.Rotation.y, Mathf.Atan2(-targetLook.x, -targetLook.z), speed * delta));
                 //

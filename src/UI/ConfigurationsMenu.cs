@@ -17,11 +17,12 @@ namespace CrazyEaters.UI
         public NodePath valueLabelPath = "MarginContainer2/ScrollContainer/Control/ConfLine/ValueLabel";
 
         [Export]
-        public NodePath hudPath = "/root/MainNode";
+        public NodePath quitPath;
 
         bool open = false;
         TextureButton closeButton;
         HSlider renderSlider;
+        Button quitBtn;
 
         Hud hud;
         Label valueLabel;
@@ -34,13 +35,16 @@ namespace CrazyEaters.UI
 
             valueLabel = GetNode<Label>(valueLabelPath);
 
-            hud = GetNode<Hud>(hudPath);
+            hud = gameManager.hud;
             hud?.Connect("OnUpdateViewport3DSize", this, nameof(OnUpdateViewport3DScale));
 
             closeButton = GetNode<TextureButton>(closeButtonPath);
             closeButton?.Connect("button_up", this, nameof(Hide));
 
             renderSlider = GetNode<HSlider>(renderSliderPath);
+
+            quitBtn = GetNode<Button>(quitPath);
+            quitBtn?.Connect("button_up", this, nameof(Quit));
 
             if (renderSlider != null) {
                 renderSlider?.Connect("value_changed", this, nameof(OnSliderScaleChanged));
@@ -55,6 +59,13 @@ namespace CrazyEaters.UI
         public void Hide() {
             this.Visible = false;
             gameManager.inputMode = GameManager.InputMode.SCENE;
+        }
+
+        public void Quit() {
+            gameManager.SaveGame(() => {
+                GetTree().Quit();
+            });
+            
         }
 
         public void OnUpdateViewport3DScale(string type, float value) {
