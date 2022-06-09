@@ -17,6 +17,7 @@ namespace CrazyEaters.Sandbox
         public static float TEXTURE_TILE_SIZE = 1.0f / TEXTURE_SHEET_WIDTH;
 
         public Dictionary data = null;
+        public Dictionary<string, CollisionShape> colliders = new Dictionary<string, CollisionShape>();
         public Vector3 chunkPosition = Vector3.Zero;
         
         public World world;
@@ -47,11 +48,13 @@ namespace CrazyEaters.Sandbox
 
         public void Regenerate() {
             foreach (Node c in GetChildren()) {
-                RemoveChild(c);
-                c.QueueFree();
+                if (c is MeshInstance) { 
+                    RemoveChild(c);
+                    c.QueueFree();
+                }
             }
 
-            GenerateChunkCollider();
+            // GenerateChunkCollider();
             ThreadGenerateMesh();
         }
 
@@ -62,6 +65,24 @@ namespace CrazyEaters.Sandbox
             labelUi.Text = Name + " " + Translation;
             AddChild(label);
             label.TranslateObjectLocal((Vector3.One * CHUNK_SIZE / 2) / label.Scale);
+        }
+
+        public void InstantiateUniqueBlocks() 
+        {
+            foreach (Vector3 blockPosition in data.Keys) {
+                int blockId = (int) data[blockPosition];
+                if (blockId >= 60) {
+                    InstantiateUniqueBlock(blockPosition + Vector3.One / 2, blockId);
+                }
+            }
+        }
+
+        public void InstantiateUniqueBlock(Vector3 position, int blockId) 
+        {
+            PackedScene blockPrefab = world.blocksRefs.blocks["" + blockId];
+            Block _block = blockPrefab.Instance<Block>();
+            AddChild(_block);
+            _block.Translate(position);
         }
 
 #region CHUNK RENDER
@@ -89,8 +110,7 @@ namespace CrazyEaters.Sandbox
 
         public void DrawBlockMesh(SurfaceTool surfaceTool, Vector3 blockSubPosition, int blockId) 
         {
-            if (blockId == 0) return;
-            if (blockId >= 60) { InstantiateUniqueBlock(blockSubPosition + Vector3.One / 2, blockId); return; }
+            if (blockId == 0 || blockId >= 60) return;
 
             Array<Vector3> verts = CalculateBlockVerts(blockSubPosition);
             Array<Vector2> uvs = CalculateBlockUVs(blockId);
@@ -219,12 +239,14 @@ namespace CrazyEaters.Sandbox
             int row = blockId / TEXTURE_SHEET_WIDTH;
             int col = blockId % TEXTURE_SHEET_WIDTH;
 
-            return new Array<Vector2> {
+            var array = new Array<Vector2> {
                 TEXTURE_TILE_SIZE * new Vector2(col, row),
                 TEXTURE_TILE_SIZE * new Vector2(col, row + 1),
                 TEXTURE_TILE_SIZE * new Vector2(col + 1, row),
                 TEXTURE_TILE_SIZE * new Vector2(col + 1, row + 1)
             };
+
+            return array;
         }
 
         public static bool IsBlockTransparent(int blockId)
@@ -232,14 +254,6 @@ namespace CrazyEaters.Sandbox
             return blockId == 0 || (blockId > 25 && blockId < 30) || blockId >=60;
         }
 #endregion
-
-        public void InstantiateUniqueBlock(Vector3 position, int blockId) 
-        {
-            PackedScene blockPrefab = world.blocksRefs.blocks["" + blockId];
-            Block _block = blockPrefab.Instance<Block>();
-            AddChild(_block);
-            _block.Translate(position);
-        }
 
 #region CHUNK PHYSICS
         public void GenerateChunkCollider() {
@@ -261,12 +275,26 @@ namespace CrazyEaters.Sandbox
 
         public void CreateBlockCollider(Vector3 blockSubPosition) 
         {
-            CollisionShape collider = new CollisionShape();
-            BoxShape shape =  new BoxShape();
-            shape.Extents = Vector3.One / 2;
-            collider.Shape = shape;
-            collider.GlobalTranslate(blockSubPosition + Vector3.One / 2);
-            AddChild(collider);
+            if (!colliders.ContainsKey(blockSubPosition.ToString())) {
+                CollisionShape collider = new CollisionShape();
+                BoxShape shape =  new BoxShape();
+                shape.Extents = Vector3.One / 2;
+                collider.Shape = shape;
+                colliders[blockSubPosition.ToString()] = collider;
+                AddChild(collider);
+                collider.GlobalTranslate(blockSubPosition + Vector3.One / 2);
+            }
+        }
+
+        public void RemoveBlockCollider(Vector3 blockSubPosition) 
+        {
+            string key = blockSubPosition.ToString();
+            if (colliders.ContainsKey(key)) {
+                CollisionShape col = colliders[key];
+                colliders.Remove(key);
+
+                col.QueueFree();
+            }
         }
         #endregion
 

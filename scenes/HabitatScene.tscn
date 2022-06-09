@@ -219,3 +219,5 @@ chunkLabel = ExtResource( 1 )
 tweenPath = NodePath("../Tween")
 
 [node name="Tween" type="Tween" parent="."]
+playback_speed = 1.35
+playback/speed = 1.35

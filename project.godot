@@ -8,6 +8,16 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Tween",
+"class": "CurveTween",
+"language": "GDScript",
+"path": "res://gdscript/CurveTween.gd"
+} ]
+_global_script_class_icons={
+"CurveTween": ""
+}
+
 [application]
 
 config/name="CrazyEatersGodot"

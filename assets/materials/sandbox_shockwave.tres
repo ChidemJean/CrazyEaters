@@ -37,13 +37,13 @@ void vertex() {
 
 void fragment() {
 	ALBEDO = texture(color_texture, UV).rgb;
-	NORMAL = texture(normal_texture, UV).rgb;
+	NORMALMAP = texture(normal_texture, UV).rgb;
 }"
 
 [resource]
 shader = SubResource( 1 )
 shader_param/shockwave_origin = null
-shader_param/shockwave_radius = 20.0
+shader_param/shockwave_radius = 8.0
 shader_param/shockwave_percentage = 0.0
 shader_param/shockwave_width = 3.0
 shader_param/shockwave_strength = 0.32
