@@ -1,10 +1,11 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://prefabs/LabelChunk.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/materials/sandbox_shockwave.tres" type="Material" id=2]
 [ext_resource path="res://resources/blocks_data.tres" type="Resource" id=3]
 [ext_resource path="res://assets/materials/sandbox.tres" type="Material" id=4]
 [ext_resource path="res://src/Sandbox/World.cs" type="Script" id=5]
+[ext_resource path="res://assets/textures/particles/kenney/circle_01.png" type="Texture" id=6]
 [ext_resource path="res://src/Tools/ExplosionTap.cs" type="Script" id=13]
 [ext_resource path="res://conf/HabitatSceneEnv.tres" type="Environment" id=18]
 [ext_resource path="res://assets/physics/explosion.tres" type="Shape" id=20]
@@ -123,6 +124,32 @@ tracks/3/keys = {
 material = ExtResource( 23 )
 size = Vector2( 18, 18 )
 
+[sub_resource type="SpatialMaterial" id=15]
+flags_transparent = true
+flags_unshaded = true
+vertex_color_use_as_albedo = true
+params_blend_mode = 1
+params_billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+albedo_texture = ExtResource( 6 )
+
+[sub_resource type="Curve" id=18]
+_data = [ Vector2( 0, 0 ), 0.0, 6.04675, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=19]
+curve = SubResource( 18 )
+
+[sub_resource type="ParticlesMaterial" id=16]
+spread = 180.0
+flatness = 1.0
+gravity = Vector3( 0, 0, 0 )
+scale_random = 1.0
+scale_curve = SubResource( 19 )
+
+[sub_resource type="QuadMesh" id=17]
+
 [node name="HabitatScene" type="Spatial"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -221,3 +248,12 @@ tweenPath = NodePath("../Tween")
 [node name="Tween" type="Tween" parent="."]
 playback_speed = 1.35
 playback/speed = 1.35
+
+[node name="Particles" type="Particles" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.24549, 0 )
+material_override = SubResource( 15 )
+cast_shadow = 0
+amount = 1
+explosiveness = 1.0
+process_material = SubResource( 16 )
+draw_pass_1 = SubResource( 17 )

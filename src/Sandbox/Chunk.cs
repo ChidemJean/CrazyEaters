@@ -79,7 +79,7 @@ namespace CrazyEaters.Sandbox
 
         public void InstantiateUniqueBlock(Vector3 position, int blockId) 
         {
-            PackedScene blockPrefab = world.blocksRefs.blocks["" + blockId];
+            PackedScene blockPrefab = world.blocksRefs.blocks["" + blockId].prefab;
             Block _block = blockPrefab.Instance<Block>();
             AddChild(_block);
             _block.Translate(position);

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   sodipodi:docname="desenhando.svg"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
+   id="svg8"
+   version="1.1"
+   viewBox="0 0 507.99999 111.125"
+   height="420"
+   width="1920">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     inkscape:window-maximized="1"
+     inkscape:window-y="-8"
+     inkscape:window-x="1272"
+     inkscape:window-height="1027"
+     inkscape:window-width="1920"
+     units="px"
+     showgrid="false"
+     inkscape:document-rotation="0"
+     inkscape:current-layer="layer1"
+     inkscape:document-units="mm"
+     inkscape:cy="-272.4664"
+     inkscape:cx="827.14457"
+     inkscape:zoom="0.44861296"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:groupmode="layer"
+     inkscape:label="Layer 1">
+    <path
+       sodipodi:nodetypes="cccczszssccccc"
+       id="path833"
+       d="M 0.21907048,110.98503 -0.29537139,39.330508 c 0,0 2.64851159,-10.007273 15.73694139,-10.211607 55.526594,-4.25935 101.70328,-1.52539 154.23138,-4.98942 23.4825,1.688859 46.62395,-11.242884 55.0047,-8.750717 8.38076,2.492167 -9.14023,10.636552 -4.00921,30.471025 3.22437,12.464106 14.89155,22.785884 31.79132,22.733191 16.89977,-0.05269 28.40468,-10.070453 32.60777,-23.761729 6.21849,-20.256311 -12.15262,-25.491098 -4.5716,-29.093654 8.56692,-4.071061 33.22677,10.407517 55.72716,8.848264 60.75623,3.849073 104.94995,0.940762 157.36912,3.836777 11.23398,0.287705 14.17903,10.88106 14.17903,10.88106 l -0.1646,71.219962 z"
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+  </g>
+</svg>

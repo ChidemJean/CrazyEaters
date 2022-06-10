@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource( 1 )
+id = null
 gridSize = Vector3( 1, 1, 1 )
 life = 100
 price = 0.0

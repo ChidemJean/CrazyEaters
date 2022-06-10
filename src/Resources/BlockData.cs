@@ -8,6 +8,8 @@ namespace CrazyEaters.Resources
         public enum BlockType { Ground, Air, Water, Stone, Wood, Custom };
 
         [Export]
+        public string id;
+        [Export]
         public PackedScene prefab;
 
         [Export]
@@ -24,6 +26,9 @@ namespace CrazyEaters.Resources
 
         [Export]
         public bool solid = false;
+
+        [Export]
+        public Texture thumb;
 
     }
 }

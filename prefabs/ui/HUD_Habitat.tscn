@@ -1,5 +1,6 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=32 format=2]
 
+[ext_resource path="res://assets/textures/prototype/UI/arrowUp.png" type="Texture" id=1]
 [ext_resource path="res://src/UI/Debug/DebugCheck.cs" type="Script" id=2]
 [ext_resource path="res://src/UI/ConfigurationsMenuButton.cs" type="Script" id=3]
 [ext_resource path="res://src/UI/EditModeButton.cs" type="Script" id=4]
@@ -15,12 +16,27 @@
 [ext_resource path="res://assets/textures/prototype/UI/wrench.png" type="Texture" id=14]
 [ext_resource path="res://assets/textures/prototype/UI/trashcanOpen.png" type="Texture" id=15]
 [ext_resource path="res://assets/textures/prototype/UI/cross.png" type="Texture" id=16]
+[ext_resource path="res://src/UI/BottomMenu.cs" type="Script" id=17]
+[ext_resource path="res://prefabs/ui/BlockItem.tscn" type="PackedScene" id=18]
+[ext_resource path="res://resources/blocks_data.tres" type="Resource" id=19]
 
 [sub_resource type="DynamicFont" id=7]
 font_data = ExtResource( 11 )
 
 [sub_resource type="Theme" id=8]
 default_font = SubResource( 7 )
+
+[sub_resource type="StyleBoxFlat" id=11]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="StyleBoxFlat" id=14]
+corner_radius_top_left = 55
+corner_radius_top_right = 55
+corner_radius_bottom_right = 55
+corner_radius_bottom_left = 55
+
+[sub_resource type="StyleBoxFlat" id=12]
+bg_color = Color( 0.168627, 0.168627, 0.168627, 0.941176 )
 
 [sub_resource type="StyleBoxFlat" id=6]
 bg_color = Color( 0, 0, 0, 0.913725 )
@@ -57,6 +73,10 @@ shadow_offset = Vector2( 0, 5 )
 [node name="HUD_Habitat" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Tween" type="Tween" parent="."]
 
 [node name="FPS" parent="." instance=ExtResource( 9 )]
 margin_left = -164.0
@@ -66,22 +86,30 @@ size_flags_horizontal = 9
 theme = SubResource( 8 )
 custom_fonts/font = ExtResource( 10 )
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchor_right = 1.0
-margin_bottom = 115.0
-size_flags_horizontal = 3
+anchor_bottom = 1.0
+size_flags_horizontal = 5
+size_flags_vertical = 3
+
+[node name="Header" type="MarginContainer" parent="VBoxContainer"]
+margin_right = 1080.0
+margin_bottom = 150.0
+size_flags_horizontal = 5
+size_flags_vertical = 5
 custom_constants/margin_right = 35
 custom_constants/margin_top = 35
 custom_constants/margin_left = 35
+custom_constants/margin_bottom = 35
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Header"]
 margin_left = 35.0
 margin_top = 35.0
 margin_right = 115.0
 margin_bottom = 115.0
 size_flags_horizontal = 2
 
-[node name="EditModeButton" type="TextureButton" parent="MarginContainer/HBoxContainer"]
+[node name="EditModeButton" type="TextureButton" parent="VBoxContainer/Header/HBoxContainer"]
 margin_right = 80.0
 margin_bottom = 80.0
 rect_min_size = Vector2( 80, 80 )
@@ -93,7 +121,7 @@ __meta__ = {
 "_edit_use_anchors_": true
 }
 
-[node name="RemoveBlockButton" type="TextureButton" parent="MarginContainer/HBoxContainer"]
+[node name="RemoveBlockButton" type="TextureButton" parent="VBoxContainer/Header/HBoxContainer"]
 visible = false
 margin_left = 54.0
 margin_right = 104.0
@@ -107,7 +135,7 @@ __meta__ = {
 "_edit_use_anchors_": true
 }
 
-[node name="Button" type="TextureButton" parent="MarginContainer"]
+[node name="Button" type="TextureButton" parent="VBoxContainer/Header"]
 margin_left = 965.0
 margin_top = 35.0
 margin_right = 1045.0
@@ -121,7 +149,90 @@ script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": true
 }
-configurationsMenuPath = NodePath("../../ConfigurationsMenu")
+configurationsMenuPath = NodePath("../../../ConfigurationsMenu")
+
+[node name="BottomMenu" type="PanelContainer" parent="VBoxContainer"]
+margin_top = 154.0
+margin_right = 1080.0
+margin_bottom = 1920.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 12 )
+custom_styles/panel = SubResource( 11 )
+script = ExtResource( 17 )
+slideTriggerPath = NodePath("VBoxContainer/SlideTrigger")
+tweenPath = NodePath("../../Tween")
+blockItemsContainerPath = NodePath("VBoxContainer/ContentPanel/MarginContainer/BlocksGrid")
+blockItemPrefab = ExtResource( 18 )
+blocksData = ExtResource( 19 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/BottomMenu"]
+margin_right = 1080.0
+margin_bottom = 1766.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 0
+
+[node name="SlideTrigger" type="MarginContainer" parent="VBoxContainer/BottomMenu/VBoxContainer"]
+margin_right = 1080.0
+margin_bottom = 174.0
+size_flags_horizontal = 3
+custom_constants/margin_right = 32
+custom_constants/margin_top = 32
+custom_constants/margin_left = 32
+custom_constants/margin_bottom = 32
+
+[node name="TextureButton" type="Panel" parent="VBoxContainer/BottomMenu/VBoxContainer/SlideTrigger"]
+margin_left = 485.0
+margin_top = 32.0
+margin_right = 595.0
+margin_bottom = 142.0
+rect_min_size = Vector2( 110, 110 )
+rect_pivot_offset = Vector2( 55, 55 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
+custom_styles/panel = SubResource( 14 )
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/BottomMenu/VBoxContainer/SlideTrigger/TextureButton"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -25.0
+margin_top = -25.0
+margin_right = 25.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 50, 50 )
+texture = ExtResource( 1 )
+expand = true
+
+[node name="ContentPanel" type="PanelContainer" parent="VBoxContainer/BottomMenu/VBoxContainer"]
+margin_top = 174.0
+margin_right = 1080.0
+margin_bottom = 1766.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 12 )
+custom_styles/panel = SubResource( 12 )
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/BottomMenu/VBoxContainer/ContentPanel"]
+margin_right = 1080.0
+margin_bottom = 1592.0
+custom_constants/margin_right = 32
+custom_constants/margin_top = 32
+custom_constants/margin_left = 32
+custom_constants/margin_bottom = 32
+
+[node name="BlocksGrid" type="GridContainer" parent="VBoxContainer/BottomMenu/VBoxContainer/ContentPanel/MarginContainer"]
+margin_left = 32.0
+margin_top = 32.0
+margin_right = 1048.0
+margin_bottom = 1560.0
+size_flags_horizontal = 5
+theme = ExtResource( 12 )
+custom_constants/vseparation = 30
+custom_constants/hseparation = 30
+columns = 4
 
 [node name="ConfigurationsMenu" type="PanelContainer" parent="."]
 visible = false

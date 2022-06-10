@@ -28,6 +28,9 @@ namespace CrazyEaters.Controllers
         private GameManager gameManager;
 
         private Block currentBlock = null;
+
+        [Export]
+        public int currentBlockId = 3;
         private Spatial scene = null;
         public float blockSize = 2;
         private SceneSwitcher sceneSwitcher;
@@ -62,7 +65,17 @@ namespace CrazyEaters.Controllers
                             } else {
                                 PlaceBlock(mousePos);
                             }
+                            return;
                         }
+
+                        // if (_event.IsPressed()) {
+                        //     if (_event.ButtonIndex == (int) ButtonList.WheelUp) {
+                        //         currentBlockId ++;
+                        //     }
+                        //     if (_event.ButtonIndex == (int) ButtonList.WheelDown) {
+                        //         currentBlockId --;
+                        //     }
+                        // }
                         return;
                     }
                 }
@@ -117,7 +130,7 @@ namespace CrazyEaters.Controllers
                 Vector3 normal = (Vector3) intersect["normal"];
 
                 Vector3 blockGlobalPos = (pos + normal / 2).Floor();
-                gameManager.world.SetBlockGlobalPosition(blockGlobalPos, 60);
+                gameManager.world.SetBlockGlobalPosition(blockGlobalPos, currentBlockId);
 
                 return;
                 //

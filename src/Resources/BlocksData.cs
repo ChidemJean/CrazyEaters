@@ -7,7 +7,7 @@ namespace CrazyEaters.Resources
     public class BlocksData : Resource
     {
         [Export]
-        public Dictionary<string, PackedScene> blocks = new Dictionary<string, PackedScene>();
+        public Dictionary<string, BlockData> blocks = new Dictionary<string, BlockData>();
 
     }
 }
