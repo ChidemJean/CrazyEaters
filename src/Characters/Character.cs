@@ -2,6 +2,7 @@ namespace CrazyEaters.Characters
 {
     using Godot;
     using System;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
     using CrazyEaters.Managers;
@@ -51,6 +52,33 @@ namespace CrazyEaters.Characters
 
         float idleTime = 0.0f;
 
+        // IA
+        [Export]
+        public NodePath targetIAPosPath;
+        [Export]
+        public NodePath navigationPath;
+        [Export]
+        public NodePath navigationAgentPath;
+        [Export]
+        public NodePath igPath;
+
+        public Navigation navigation;
+        public NavigationMeshInstance navmesh;
+        public NavigationAgent navigationAgent;
+        public Vector3 targetIALocation;
+        public int pathNodeIA = 0;
+        public Vector3[] pathIA;
+        
+        public ImmediateGeometry ig;
+
+        // Debug
+        [Export]
+        public NodePath labelVelPath;
+        [Export]
+        public NodePath labelDirPath;
+        public Label labelVel;
+        public Label labelDir;
+
         public override void _Ready()
         {
             gameManager = GetNode<GameManager>("/root/GameManager");
@@ -70,9 +98,29 @@ namespace CrazyEaters.Characters
             rng = new RandomNumberGenerator();
             rng.Randomize();
 
+            // Debug
+            labelVel = GetNode<Label>(labelVelPath);
+            labelDir = GetNode<Label>(labelDirPath);
+
+            // IA
+            navigation = GetNode<Navigation>(navigationPath);
+            navigationAgent = GetNode<NavigationAgent>(navigationAgentPath);
+            navmesh = navigation.GetNode<NavigationMeshInstance>("Navmesh");
+            targetIALocation = GetNode<Spatial>(targetIAPosPath).GlobalTransform.origin;
+            ig = GetNode<ImmediateGeometry>(igPath);
+
+            navmesh.Connect("bake_finished", this, nameof(OnNavmeshChanged));
+            navigationAgent.SetTargetLocation(targetIALocation);
+
             _speed = speed;
 
             OriginalScale = Scale;
+
+        }
+
+        public void OnNavmeshChanged() 
+        {
+            
         }
 
         public async void Blink() {
@@ -99,6 +147,7 @@ namespace CrazyEaters.Characters
         {
             if (controllerMode == CharacterControllerMode.PLAYER) {
                 if (@event is InputEventKey) {
+                    return;
                     InputEventKey _event = (InputEventKey) @event;
                     if (_event.IsPressed() && _event.Scancode == (uint) KeyList.Space) {
                         Jump();
@@ -118,19 +167,33 @@ namespace CrazyEaters.Characters
 
                     if (_event.Scancode == (uint) KeyList.W) {
                         moveDir.z = _event.IsPressed() && onFloor && canWalk ? -1 : 0;
-                        MoveAnimation(_event.IsPressed());
+                        // MoveAnimation(_event.IsPressed());
                     }
                     if (_event.Scancode == (uint) KeyList.S) {
                         moveDir.z = _event.IsPressed() && onFloor && canWalk ? 1 : 0;
-                        MoveAnimation(_event.IsPressed());
+                        // MoveAnimation(_event.IsPressed());
                     }
                     if (_event.Scancode == (uint) KeyList.A) {
                         moveDir.x = _event.IsPressed() && onFloor && canWalk ? -1 : 0;
-                        MoveAnimation(_event.IsPressed());
+                        // MoveAnimation(_event.IsPressed());
                     }
                     if (_event.Scancode == (uint) KeyList.D) {
                         moveDir.x = _event.IsPressed() && onFloor && canWalk ? 1 : 0;
-                        MoveAnimation(_event.IsPressed());
+                        // MoveAnimation(_event.IsPressed());
+                    }
+                }
+            }
+            if (@event is InputEventMouseButton) {
+                InputEventMouseButton _event = (InputEventMouseButton) @event;
+                if (!_event.IsPressed() && _event.ButtonIndex == (uint) ButtonList.Left) {
+                    Vector2 mousePos = _event.Position * gameManager.hud.currentScale;
+                    PhysicsDirectSpaceState spaceState = GetWorld().DirectSpaceState;
+                    Vector3 rayOrigin = GetViewport().GetCamera().ProjectRayOrigin(mousePos);
+                    Vector3 rayEnd = rayOrigin + GetViewport().GetCamera().ProjectRayNormal(mousePos) * 2000;
+                    Godot.Collections.Dictionary rayCol = spaceState.IntersectRay(rayOrigin, rayEnd, null);
+                    if (rayCol != null && rayCol.Count > 0) {
+                        targetIALocation = (Vector3) rayCol["position"];
+                        UpdatePath();
                     }
                 }
             }
@@ -150,6 +213,62 @@ namespace CrazyEaters.Characters
                 stateMachine.Start("jump");
                 velocity.y = jumpSpeed;
                 canWalk = false;
+            }
+        }
+
+        public void DebugPath()
+        {
+            if (pathIA != null && pathIA.Length > 0) {
+                ig.SetAsToplevel(true);
+                // ig.GlobalTransform = new Transform();
+                ig.Clear();
+                ig.Begin(Mesh.PrimitiveType.Lines);
+                foreach (int i in GD.Range(pathIA.Length-1)) {
+                    ig.AddVertex(pathIA[i]);
+                    ig.AddVertex(pathIA[i+1]);
+                }
+                if (pathIA.Length == 0) {
+                    ig.End();
+                    return;
+                }
+                List<int> _list = new List<int>();
+                _list.AddRange(GD.Range(pathIA.Length));
+
+                if (_list.Contains(pathNodeIA)) {
+                    ig.AddVertex(pathIA[pathNodeIA]);
+                    ig.AddVertex(pathIA[pathNodeIA] + new Vector3(0, 3, 0));
+                }
+                ig.End();
+            }
+            ig.Translation = Vector3.Zero;
+        }
+
+        public void UpdatePath()
+        {
+            pathNodeIA = 0;
+            pathIA = navigation.GetSimplePath(GlobalTransform.origin, targetIALocation);
+        }
+
+        public void UpdateAIMovement()
+        {
+            // IA MOVEMENT
+            if (pathIA != null && pathIA.Length > 0 && pathNodeIA < pathIA.Length) {
+                Vector3 dir = (pathIA[pathNodeIA] - GlobalTransform.origin).Normalized();
+                dir.y = 0;
+
+                if (dir.Length() < .25f) {
+                    if (pathNodeIA == pathIA.Length - 1) {
+                        dir = Vector3.Zero;
+                    } else { 
+                        pathNodeIA += 1;
+                    }
+                }
+
+                moveDir = dir;
+                return;
+            }
+            if (targetIALocation != null) {
+                UpdatePath();
             }
         }
 
@@ -176,9 +295,16 @@ namespace CrazyEaters.Characters
                 stateMachine.Start("jump-loop");
             }
 
+            Vector3 correction = Vector3.Zero;
+
             if (!isOnFloor) {
                 velocity += gravity * delta;
             } else {
+                // correction = Vector3.Up - GetFloorNormal();
+                // correction *= gravity;
+                // correction *= -1;
+                
+                UpdateAIMovement();
                 velocity.x = moveDir.x * _speed;
                 velocity.z = moveDir.z * _speed;
             }
@@ -191,23 +317,42 @@ namespace CrazyEaters.Characters
 
             isFloor = isOnFloor;
 
-            Vector3 localVelocity = velocity.Rotated(Vector3.Up, Rotation.y);
+            // Vector3 localVelocity = velocity.Rotated(Vector3.Up, Rotation.y);
+            // Vector3 targetLook = (GlobalTransform.origin + (localVelocity.Normalized()));
+            // targetLook.y = GlobalTransform.origin.y;
 
-            if ((localVelocity.x != 0 || localVelocity.z != 0) && moveDir.z != 1) {
-                Vector3 targetLook = GlobalTransform.origin + (localVelocity.Normalized() * 10f);
-                targetLook.y = GlobalTransform.origin.y;
-                //
-                var newTransform = GlobalTransform.LookingAt(targetLook, Vector3.Up);
-                GlobalTransform = GlobalTransform.InterpolateWith(newTransform, speed * 1.2f * delta);
-                Scale = OriginalScale;
-                //
-                // character.RotateY(Mathf.LerpAngle(character.Rotation.y, Mathf.Atan2(-targetLook.x, -targetLook.z), speed * delta));
-                //
-                // character.LookAt(targetLook, Vector3.Up);
+            // if (controllerMode == CharacterControllerMode.PLAYER && (localVelocity.x != 0 || localVelocity.z != 0) && moveDir.z != 1) {
+            //     //
+            //     var newTransform = GlobalTransform.LookingAt(targetLook, Vector3.Up);
+            //     GlobalTransform = GlobalTransform.InterpolateWith(newTransform, speed * 1.2f * delta);
+            //     Scale = OriginalScale;
+            //     //
+            //     // character.RotateY(Mathf.LerpAngle(character.Rotation.y, Mathf.Atan2(-targetLook.x, -targetLook.z), speed * delta));
+            //     //
+            //     // character.LookAt(targetLook, Vector3.Up);
+            // } else {
+                
+            // }
+
+            if (moveDir != Vector3.Zero) {
+                MoveAnimation(false);
+            } else {
+                MoveAnimation(true);
             }
 
-            this.MoveAndSlide(localVelocity, Vector3.Up);
+            labelVel.Text = "sp: " +_speed+" velocidade: " + velocity.ToString();
+            labelDir.Text = "direção: " + moveDir.ToString();
+
+            if (pathIA != null) {
+                Vector3 look = pathIA[pathNodeIA];
+                look.y = GlobalTransform.origin.y;
+                // character.LookAt(look, Vector3.Up);
+                var newTransform = GlobalTransform.LookingAt(look, Vector3.Up);
+                GlobalTransform = GlobalTransform.InterpolateWith(newTransform, speed * 1.42f * delta);
+            }
+            velocity = this.MoveAndSlideWithSnap(velocity + correction, isJumping ? Vector3.Zero : Vector3.Down, Vector3.Up, true, 4, Mathf.Deg2Rad(52));
             
+            DebugPath();
         }
 
         public void IdleAnimationVariations() {

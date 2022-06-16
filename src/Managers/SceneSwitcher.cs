@@ -32,7 +32,7 @@ namespace CrazyEaters.Managers
             resourceQueueObj = (Godot.Object) resourceQueue.New();
             resourceQueueObj.Call("start");
 
-            ChangeScene("habitat_scene");
+            ChangeScene("sandbox_test");
         }
 
         public void ChangeScene(string key) {

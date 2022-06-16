@@ -197,36 +197,32 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 
 [node name="GridPlanes" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.93877, 0 )
+visible = false
 
 [node name="Whall" type="MeshInstance" parent="GridPlanes"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11, -9 )
 mesh = SubResource( 14 )
 skeleton = NodePath("../..")
-material/0 = null
 
 [node name="Whall4" type="MeshInstance" parent="GridPlanes"]
 transform = Transform( -1, 0, 5.96046e-08, 0, 1, 0, -5.96046e-08, 0, -1, 0, 11, 9 )
 mesh = SubResource( 14 )
 skeleton = NodePath("../..")
-material/0 = null
 
 [node name="Whall2" type="MeshInstance" parent="GridPlanes"]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -9, 11, -5.96046e-08 )
 mesh = SubResource( 14 )
 skeleton = NodePath("../..")
-material/0 = null
 
 [node name="Whall5" type="MeshInstance" parent="GridPlanes"]
 transform = Transform( 1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 9, 11, -5.96046e-08 )
 mesh = SubResource( 14 )
 skeleton = NodePath("../..")
-material/0 = null
 
 [node name="Whall3" type="MeshInstance" parent="GridPlanes"]
 transform = Transform( 1.91069e-15, -1, -4.37114e-08, -4.37114e-08, -4.37114e-08, 1, -1, 0, -4.37114e-08, 0, 2, -5.96046e-08 )
 mesh = SubResource( 14 )
 skeleton = NodePath("../..")
-material/0 = null
 
 [node name="CharacterKB" parent="." instance=ExtResource( 26 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.09958, 54.1901, -0.960174 )

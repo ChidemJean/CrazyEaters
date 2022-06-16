@@ -60,6 +60,7 @@ namespace CrazyEaters.Sandbox
 
         public void GenerateLabel()
         {
+            return;
             Spatial label = world.chunkLabel.Instance<Spatial>();
             labelUi = label.GetNode<Label>("Viewport/Label");
             labelUi.Text = Name + " " + Translation;
