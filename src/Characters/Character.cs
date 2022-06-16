@@ -54,8 +54,6 @@ namespace CrazyEaters.Characters
 
         // IA
         [Export]
-        public NodePath targetIAPosPath;
-        [Export]
         public NodePath navigationPath;
         [Export]
         public NodePath navigationAgentPath;
@@ -78,6 +76,10 @@ namespace CrazyEaters.Characters
         public NodePath labelDirPath;
         public Label labelVel;
         public Label labelDir;
+        [Export]
+        public NodePath btnBakePath;
+        public Button btnBake;
+        double initialBakingTime = 0;
 
         public override void _Ready()
         {
@@ -101,12 +103,13 @@ namespace CrazyEaters.Characters
             // Debug
             labelVel = GetNode<Label>(labelVelPath);
             labelDir = GetNode<Label>(labelDirPath);
+            btnBake = GetNode<Button>(btnBakePath);
+            btnBake.Connect("button_up", this, nameof(OnClickBake));
 
             // IA
             navigation = GetNode<Navigation>(navigationPath);
             navigationAgent = GetNode<NavigationAgent>(navigationAgentPath);
             navmesh = navigation.GetNode<NavigationMeshInstance>("Navmesh");
-            targetIALocation = GetNode<Spatial>(targetIAPosPath).GlobalTransform.origin;
             ig = GetNode<ImmediateGeometry>(igPath);
 
             navmesh.Connect("bake_finished", this, nameof(OnNavmeshChanged));
@@ -118,9 +121,17 @@ namespace CrazyEaters.Characters
 
         }
 
+        public void OnClickBake()
+        {
+            initialBakingTime = OS.GetSystemTimeSecs();
+            navmesh.BakeNavigationMesh(true);
+            labelDir.Text = "Baking...";
+        }
+
         public void OnNavmeshChanged() 
         {
-            
+            double bakeTime = OS.GetSystemTimeSecs() - initialBakingTime;
+            labelDir.Text = "Bake finished time: " + bakeTime+"s";
         }
 
         public async void Blink() {
@@ -195,6 +206,12 @@ namespace CrazyEaters.Characters
                         targetIALocation = (Vector3) rayCol["position"];
                         UpdatePath();
                     }
+                }
+            }
+            if (@event is InputEventKey) {
+                InputEventKey _event = (InputEventKey) @event;
+                if (_event.IsPressed() && _event.Scancode == (uint) KeyList.B) {
+                    OnClickBake();
                 }
             }
         }
@@ -340,8 +357,7 @@ namespace CrazyEaters.Characters
                 MoveAnimation(true);
             }
 
-            labelVel.Text = "sp: " +_speed+" velocidade: " + velocity.ToString();
-            labelDir.Text = "direção: " + moveDir.ToString();
+            labelVel.Text = "sp: " +_speed+" velocidade: " + velocity.ToString() + " direção: " + moveDir.ToString();
 
             if (pathIA != null) {
                 Vector3 look = pathIA[pathNodeIA];
