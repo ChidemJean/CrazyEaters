@@ -15,6 +15,11 @@ namespace CrazyEaters.Entities
         [Export]
         public NodePath fbMeshPath;
 
+        [Export]
+        public NodePath collisionShapePath;
+
+        public CollisionShape collisionShape;
+
         Area area;
         MeshInstance fbMesh;
         ShaderMaterial fbMat;
@@ -22,7 +27,6 @@ namespace CrazyEaters.Entities
         public bool overlaping = false;
 
         public bool placed = false;
-
         public override void _Ready()
         {
             // if (areaPath != null) {
@@ -32,6 +36,12 @@ namespace CrazyEaters.Entities
             // }
             // fbMesh = GetNode<MeshInstance>(fbMeshPath);
             // fbMat = (ShaderMaterial) fbMesh.GetSurfaceMaterial(0);
+            collisionShape = GetNodeOrNull<CollisionShape>(collisionShapePath);
+        }
+
+        public CollisionShape GetCollisionShape()
+        {
+            return collisionShape;
         }
 
         public void OnBodyEnter(PhysicsBody body) 

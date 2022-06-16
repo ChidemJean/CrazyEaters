@@ -161,6 +161,7 @@ namespace CrazyEaters.Sandbox
                 chunk.RemoveBlockCollider(subPosition);
                 chunk.data[subPosition] = blockId;
                 chunk.CreateBlockCollider(subPosition);
+                Shockwave(blockGlobalPosition + Vector3.One / 2);
             }
 
             if (blockId < 60) {
@@ -192,11 +193,7 @@ namespace CrazyEaters.Sandbox
                         if (chunks.Contains(up)) ((Chunk) chunks[up]).Regenerate();
                     }
                 }
-            } else {
-                chunk.InstantiateUniqueBlock(subPosition + Vector3.One / 2, blockId);
             }
-        
-            Shockwave(blockGlobalPosition + Vector3.One / 2);
         }
 
         public async void Shockwave(Vector3 shockwaveOrigin) 

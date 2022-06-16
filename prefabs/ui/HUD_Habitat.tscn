@@ -93,7 +93,7 @@ size_flags_horizontal = 5
 size_flags_vertical = 3
 
 [node name="Header" type="MarginContainer" parent="VBoxContainer"]
-margin_right = 1900.0
+margin_right = 1080.0
 margin_bottom = 150.0
 size_flags_horizontal = 5
 size_flags_vertical = 5
@@ -136,9 +136,9 @@ __meta__ = {
 }
 
 [node name="Button" type="TextureButton" parent="VBoxContainer/Header"]
-margin_left = 1785.0
+margin_left = 965.0
 margin_top = 35.0
-margin_right = 1865.0
+margin_right = 1045.0
 margin_bottom = 115.0
 rect_min_size = Vector2( 80, 80 )
 size_flags_horizontal = 10

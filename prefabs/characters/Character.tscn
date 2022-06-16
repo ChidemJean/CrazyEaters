@@ -44,7 +44,7 @@ transform = Transform( 0.17, 0, 0, 0, 0.17, 0, 0, 0, 0.17, 0, 0, 0 )
 bones/17/bound_children = [  ]
 
 [node name="Eyes" parent="character/Armature/Skeleton" index="1"]
-transform = Transform( 1, -4.17233e-07, -2.89083e-06, 2.10479e-06, -0.523275, 0.852164, 7.15256e-07, -0.852167, -0.523277, -0.0953008, 8.75427, -1.08359 )
+transform = Transform( 1, -1.16229e-06, -1.62423e-06, 3.8743e-07, -0.63082, 0.77593, 6.85453e-07, -0.775932, -0.630823, -0.095292, 8.55668, -1.75643 )
 
 [node name="AnimationPlayer" parent="character" index="1"]
 playback_speed = 1.2

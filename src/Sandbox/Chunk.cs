@@ -78,12 +78,13 @@ namespace CrazyEaters.Sandbox
             }
         }
 
-        public void InstantiateUniqueBlock(Vector3 position, int blockId) 
+        public Block InstantiateUniqueBlock(Vector3 position, int blockId) 
         {
             PackedScene blockPrefab = world.blocksRefs.blocks["" + blockId].prefab;
             Block _block = blockPrefab.Instance<Block>();
             AddChild(_block);
             _block.Translate(position);
+            return _block;
         }
 
 #region CHUNK RENDER
@@ -277,13 +278,23 @@ namespace CrazyEaters.Sandbox
         public void CreateBlockCollider(Vector3 blockSubPosition) 
         {
             if (!colliders.ContainsKey(blockSubPosition.ToString())) {
-                CollisionShape collider = new CollisionShape();
-                BoxShape shape =  new BoxShape();
-                shape.Extents = Vector3.One / 2;
-                collider.Shape = shape;
-                colliders[blockSubPosition.ToString()] = collider;
-                AddChild(collider);
-                collider.GlobalTranslate(blockSubPosition + Vector3.One / 2);
+                int blockId = (int) data[blockSubPosition];
+                CollisionShape collider = null;
+
+                if (blockId < 60) {
+                    collider = new CollisionShape();
+                    BoxShape shape =  new BoxShape();
+                    shape.Extents = Vector3.One / 2;
+                    collider.Shape = shape;
+                } else {
+                    collider = InstantiateUniqueBlock(blockSubPosition + Vector3.One / 2, blockId).GetCollisionShape();
+                }
+
+                if (collider != null) {
+                    colliders[blockSubPosition.ToString()] = collider;
+                    AddChild(collider);
+                    collider.GlobalTranslate(blockSubPosition + Vector3.One / 2);
+                }
             }
         }
 
