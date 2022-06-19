@@ -2,6 +2,7 @@ namespace CrazyEaters.Sandbox
 {
     using Godot;
     using System;
+    using System.Threading.Tasks;
     using Godot.Collections;
     using CrazyEaters.Managers;
     using CrazyEaters.Save;
@@ -35,10 +36,32 @@ namespace CrazyEaters.Sandbox
         [Export]
         public NodePath tweenPath;
         public Tween tween;
+        public Dictionary chunksLoaded;
 
+        [Export]
+        public NodePath navigationPath;
+        [Export]
+        public NodePath btnBakePath;
+        public Button btnBake;
+        double initialBakingTime = 0;
+        public NavigationMeshInstance navmesh;
+
+        public Navigation navigation;
+        [Export]
+        public NodePath labelDirPath;
+        public Label labelDir;
 
         public override void _Ready()
         {
+            btnBake = GetNode<Button>(btnBakePath);
+            btnBake.Connect("button_up", this, nameof(OnClickBake));
+            
+            // IA
+            navigation = GetNode<Navigation>(navigationPath);
+            navmesh = navigation.GetNode<NavigationMeshInstance>("Navmesh");
+            labelDir = GetNode<Label>(labelDirPath);
+
+            navmesh.Connect("bake_finished", this, nameof(OnNavmeshChanged));
             chunks = new Dictionary();
             saveSystemNode = GetNode<SaveSystemNode>("/root/MainNode/SaveSystem");
             gameManager = GetNode<GameManager>("/root/GameManager");
@@ -48,16 +71,44 @@ namespace CrazyEaters.Sandbox
 
         }
 
+        public override void _Input(InputEvent @event)
+        {
+            if (@event is InputEventKey) {
+                InputEventKey _event = (InputEventKey) @event;
+                if (_event.IsPressed() && _event.Scancode == (uint) KeyList.B) {
+                    OnClickBake();
+                }
+            }
+        }
+
+        public void OnClickBake()
+        {
+            BakeNavmesh();
+        }
+
+        public void BakeNavmesh()
+        {
+            initialBakingTime = OS.GetSystemTimeSecs();
+            navmesh.BakeNavigationMesh(true);
+            labelDir.Text = "Baking... ";
+        }
+
+        public void OnNavmeshChanged() 
+        {
+            double bakeTime = OS.GetSystemTimeSecs() - initialBakingTime;
+            labelDir.Text = "Bake finished time: " + bakeTime+"s";
+        }
+
         public void OnLoaded(GameData gameData) {
             if (gameData != null) {
-                this.chunks = saveSystemNode.FromGameData(gameData);
+                chunksLoaded = saveSystemNode.FromGameData(gameData);
             }
 
-            if (this.chunks.Count > 0) {
-                LoadChunks();
-            } else {
-                _generating = true;
-            }
+            // if (chunksLoaded.Count > 0) {
+            //     // LoadChunks();
+            // }
+
+            _generating = true;
         }
 
         public override void _Process(float delta)
@@ -125,6 +176,41 @@ namespace CrazyEaters.Sandbox
                 effectiveRenderDistance += 1;
             } else {
                 _generating = false;
+                MergeChunksLoaded();
+                BakeNavmesh();
+            }
+        }
+
+        public void MergeChunksLoaded()
+        {
+            if (chunksLoaded.Count > 0) {
+                foreach(Vector3 chunkPosition in this.chunksLoaded.Keys) 
+                {
+                    Chunk chunk_Loaded = (Chunk) this.chunksLoaded[chunkPosition];
+                    Dictionary blocks_Loaded = chunk_Loaded.data;
+                    
+                    if (this.chunks[chunkPosition] != null) {
+                        Chunk chunk = (Chunk) this.chunks[chunkPosition];
+
+                        foreach (Vector3 blockPosition in blocks_Loaded.Keys)
+                        {
+                            int blockLoadedId = (int) blocks_Loaded[blockPosition];
+                            if (chunk.data[blockPosition] != null) {
+                                chunk.data[blockPosition] = blockLoadedId;
+                            }                            
+                        }
+                    }
+                }
+                RegenerateChunks();
+            }
+        }
+
+        public void RegenerateChunks()
+        {
+            foreach(Vector3 chunkPosition in this.chunks.Keys) 
+            {
+                Chunk chunk = (Chunk) this.chunks[chunkPosition];
+                chunk.GenerateChunk();
             }
         }
 
@@ -144,8 +230,9 @@ namespace CrazyEaters.Sandbox
             return 0;
         }
 
-        public void SetBlockGlobalPosition(Vector3 blockGlobalPosition, int blockId)
+        public async void SetBlockGlobalPosition(Vector3 blockGlobalPosition, int blockId)
         {
+            bool isRemoving = blockId == 0;
             if (blockGlobalPosition == null) return;
 
             Vector3 chunkPosition = (blockGlobalPosition / Chunk.CHUNK_SIZE).Floor();
@@ -154,14 +241,11 @@ namespace CrazyEaters.Sandbox
             Chunk chunk = (Chunk) chunks[chunkPosition];
             Vector3 subPosition = blockGlobalPosition.PosMod(Chunk.CHUNK_SIZE);
 
-            if (blockId == 0) {
-                chunk.data.Remove(subPosition);
-                chunk.RemoveBlockCollider(subPosition);
+            if (isRemoving) {
+                GD.Print(chunk.data[subPosition]);
+                chunk.RemoveBlock(subPosition);
             } else {
-                chunk.RemoveBlockCollider(subPosition);
-                chunk.data[subPosition] = blockId;
-                chunk.CreateBlockCollider(subPosition);
-                Shockwave(blockGlobalPosition + Vector3.One / 2);
+                chunk.UpdateBlock(blockId, subPosition);
             }
 
             if (blockId < 60) {
@@ -193,10 +277,18 @@ namespace CrazyEaters.Sandbox
                         if (chunks.Contains(up)) ((Chunk) chunks[up]).Regenerate();
                     }
                 }
+            } else {
+                chunk.Regenerate(); // TODO: temporario, preciso remover apenas o unique block para performance
             }
+
+            if (!isRemoving) {
+                await Shockwave(blockGlobalPosition + Vector3.One / 2);
+            }
+
+            BakeNavmesh();
         }
 
-        public async void Shockwave(Vector3 shockwaveOrigin) 
+        public async Task Shockwave(Vector3 shockwaveOrigin) 
         {
             tween.StopAll();
 

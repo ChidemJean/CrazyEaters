@@ -34,6 +34,12 @@ namespace CrazyEaters.Sandbox
                 data = TerrainGenerator.HabitatGround(GlobalTransform.origin);
             }
 
+            GenerateChunk();
+        }
+
+        public void GenerateChunk()
+        {
+            InstantiateUniqueBlocks();
             GenerateChunkCollider();
             ThreadGenerateMesh();
             GenerateLabel();
@@ -48,14 +54,28 @@ namespace CrazyEaters.Sandbox
 
         public void Regenerate() {
             foreach (Node c in GetChildren()) {
-                if (c is MeshInstance) { 
+                if (c is MeshInstance || c is Block) { 
                     RemoveChild(c);
                     c.QueueFree();
                 }
             }
 
+            InstantiateUniqueBlocks();
             // GenerateChunkCollider();
             ThreadGenerateMesh();
+        }
+
+        public void RemoveBlock(Vector3 subPosition)
+        {
+            data.Remove(subPosition);
+            RemoveBlockCollider(subPosition);
+        }
+
+        public void UpdateBlock(int blockId, Vector3 subPosition)
+        {
+            RemoveBlockCollider(subPosition);
+            data[subPosition] = blockId;
+            CreateBlockCollider(subPosition);
         }
 
         public void GenerateLabel()
@@ -269,7 +289,7 @@ namespace CrazyEaters.Sandbox
 
             foreach (Vector3 blockPosition in data.Keys) {
                 int blockId = (int) data[blockPosition];
-                if (blockId != 27 && blockId != 28 && blockId != 0 && blockId < 60) {
+                if (blockId != 27 && blockId != 28 && blockId != 0) {
                     CreateBlockCollider(blockPosition);
                 }
             }

@@ -1,8 +1,8 @@
 [gd_resource type="Resource" load_steps=4 format=2]
 
 [ext_resource path="res://src/Resources/BlocksData.cs" type="Script" id=1]
-[ext_resource path="res://resources/chair_block.tres" type="Resource" id=2]
-[ext_resource path="res://resources/stone_stair.tres" type="Resource" id=3]
+[ext_resource path="res://resources/blocks/chair_block.tres" type="Resource" id=2]
+[ext_resource path="res://resources/blocks/stone_stair.tres" type="Resource" id=3]
 
 [resource]
 script = ExtResource( 1 )

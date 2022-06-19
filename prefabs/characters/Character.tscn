@@ -35,7 +35,6 @@ eyeTextures = [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 7 ), ExtResourc
 navigationAgentPath = NodePath("NavigationAgent")
 igPath = NodePath("ig")
 labelVelPath = NodePath("")
-labelDirPath = NodePath("")
 
 [node name="character" parent="." instance=ExtResource( 1 )]
 transform = Transform( 0.17, 0, 0, 0, 0.17, 0, 0, 0, 0.17, 0, 0, 0 )

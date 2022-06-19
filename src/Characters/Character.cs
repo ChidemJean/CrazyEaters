@@ -6,12 +6,19 @@ namespace CrazyEaters.Characters
     using System.Threading;
     using System.Threading.Tasks;
     using CrazyEaters.Managers;
+    using CrazyEaters.Sandbox;
 
     public class Character : KinematicBody
     {
         public enum CharacterControllerMode {
             PLAYER,
             IA
+        };
+
+        public enum State {
+            IDLE,
+            SLEEPING,
+            WALK
         };
 
         [Export] float speed = 6f;
@@ -25,6 +32,8 @@ namespace CrazyEaters.Characters
         [Export] NodePath eyePath;
         [Export] StreamTexture[] eyeTextures;
         [Export] CharacterControllerMode controllerMode = CharacterControllerMode.IA;
+        [Export] NodePath worldPath;
+        CrazyEaters.Sandbox.World world;
 
         Vector3 gravity;
         public Vector3? moveTo = null;
@@ -54,16 +63,13 @@ namespace CrazyEaters.Characters
 
         // IA
         [Export]
-        public NodePath navigationPath;
-        [Export]
         public NodePath navigationAgentPath;
         [Export]
         public NodePath igPath;
-
+        public NavigationAgent navigationAgent;
         public Navigation navigation;
         public NavigationMeshInstance navmesh;
-        public NavigationAgent navigationAgent;
-        public Vector3 targetIALocation;
+        public Vector3? targetIALocation = null;
         public int pathNodeIA = 0;
         public Vector3[] pathIA;
         
@@ -72,19 +78,14 @@ namespace CrazyEaters.Characters
         // Debug
         [Export]
         public NodePath labelVelPath;
-        [Export]
-        public NodePath labelDirPath;
         public Label labelVel;
-        public Label labelDir;
-        [Export]
-        public NodePath btnBakePath;
-        public Button btnBake;
-        double initialBakingTime = 0;
+
 
         public override void _Ready()
         {
             gameManager = GetNode<GameManager>("/root/GameManager");
             gravity = gameManager.gravityVector * gameManager.gravityMagnitude * gravityScale;
+            world = GetNode<CrazyEaters.Sandbox.World>(worldPath);
 
             character = GetNode<Spatial>(characterPath);
 
@@ -102,18 +103,15 @@ namespace CrazyEaters.Characters
 
             // Debug
             labelVel = GetNode<Label>(labelVelPath);
-            labelDir = GetNode<Label>(labelDirPath);
-            btnBake = GetNode<Button>(btnBakePath);
-            btnBake.Connect("button_up", this, nameof(OnClickBake));
 
             // IA
-            navigation = GetNode<Navigation>(navigationPath);
+            navigation = world.navigation;
+            navmesh = world.navmesh;
             navigationAgent = GetNode<NavigationAgent>(navigationAgentPath);
-            navmesh = navigation.GetNode<NavigationMeshInstance>("Navmesh");
             ig = GetNode<ImmediateGeometry>(igPath);
 
             navmesh.Connect("bake_finished", this, nameof(OnNavmeshChanged));
-            navigationAgent.SetTargetLocation(targetIALocation);
+            // navigationAgent.SetTargetLocation(targetIALocation);
 
             _speed = speed;
 
@@ -121,17 +119,9 @@ namespace CrazyEaters.Characters
 
         }
 
-        public void OnClickBake()
-        {
-            initialBakingTime = OS.GetSystemTimeSecs();
-            navmesh.BakeNavigationMesh(true);
-            labelDir.Text = "Baking...";
-        }
-
         public void OnNavmeshChanged() 
         {
-            double bakeTime = OS.GetSystemTimeSecs() - initialBakingTime;
-            labelDir.Text = "Bake finished time: " + bakeTime+"s";
+           
         }
 
         public async void Blink() {
@@ -208,12 +198,6 @@ namespace CrazyEaters.Characters
                     }
                 }
             }
-            if (@event is InputEventKey) {
-                InputEventKey _event = (InputEventKey) @event;
-                if (_event.IsPressed() && _event.Scancode == (uint) KeyList.B) {
-                    OnClickBake();
-                }
-            }
         }
 
         public void MoveAnimation(bool isPressed) {
@@ -263,7 +247,7 @@ namespace CrazyEaters.Characters
         public void UpdatePath()
         {
             pathNodeIA = 0;
-            pathIA = navigation.GetSimplePath(GlobalTransform.origin, targetIALocation);
+            pathIA = navigation.GetSimplePath(GlobalTransform.origin, (Vector3)targetIALocation);
         }
 
         public void UpdateAIMovement()
@@ -359,8 +343,8 @@ namespace CrazyEaters.Characters
 
             labelVel.Text = "sp: " +_speed+" velocidade: " + velocity.ToString() + " direção: " + moveDir.ToString();
 
-            if (pathIA != null) {
-                Vector3 look = pathIA[pathNodeIA];
+            if (pathIA != null && pathIA.Length > 0) {
+                Vector3 look = (pathIA[pathNodeIA]);
                 look.y = GlobalTransform.origin.y;
                 // character.LookAt(look, Vector3.Up);
                 var newTransform = GlobalTransform.LookingAt(look, Vector3.Up);

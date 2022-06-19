@@ -42,10 +42,6 @@ window/handheld/orientation="portrait"
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 
-[editor_plugins]
-
-enabled=PoolStringArray( "res://addons/godot-navigation-lite/plugin.cfg" )
-
 [layer_names]
 
 3d_physics/layer_2="Ground"

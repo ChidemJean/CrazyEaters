@@ -5,7 +5,7 @@ namespace CrazyEaters.Resources
 
     public class BlockData : Resource
     {
-        public enum BlockType { Ground, Air, Water, Stone, Wood, Custom };
+        public enum BlockType { Unique, Group };
 
         [Export]
         public string id;
@@ -22,7 +22,7 @@ namespace CrazyEaters.Resources
         public float price = 0;
 
         [Export]
-        public BlockType blockType = BlockType.Air;
+        public BlockType blockType = BlockType.Unique;
 
         [Export]
         public bool solid = false;

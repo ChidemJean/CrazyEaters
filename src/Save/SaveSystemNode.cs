@@ -44,8 +44,10 @@ namespace CrazyEaters.Save
                 foreach(Vector3 blockPos in chunk.data.Keys)
                 {
                     int blockId = (int) chunk.data[blockPos];
-                    BlockItemSave blockData = new BlockItemSave(blockId, blockPos);
-                    blocksData.Add(blockData);
+                    if (blockId != 0) {
+                        BlockItemSave blockData = new BlockItemSave(blockId, blockPos);
+                        blocksData.Add(blockData);
+                    }
                 }
 
                 ChunkSave chunkData = new ChunkSave(chunkPosition, blocksData);
