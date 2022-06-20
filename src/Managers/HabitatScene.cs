@@ -16,6 +16,8 @@ namespace CrazyEaters.Managers
         public Camera camera;
         public Viewport gameViewport;
         public PlacementController placementController;
+        [Export]
+        public int currentBlockId = 3;
 
         public override void _Ready()
         {

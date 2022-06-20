@@ -6,7 +6,7 @@ namespace CrazyEaters.UI
     using CrazyEaters.Managers;
     using CrazyEaters.Controllers;
 
-    public class BottomMenu : PanelContainer
+    public class BottomMenu : Control
     {
         [Export(hintString: "Slider Trigger")]
         public NodePath slideTriggerPath;
@@ -34,7 +34,7 @@ namespace CrazyEaters.UI
 
         private BlockItem selectedItem;
         private SceneSwitcher sceneSwitcher;
-        private PlacementController placementController;
+        public PlacementController placementController;
 
         public override void _Ready()
         {
@@ -43,10 +43,15 @@ namespace CrazyEaters.UI
             slideTrigger = GetNode<Control>(slideTriggerPath);
             blockItemsContainer = GetNode<GridContainer>(blockItemsContainerPath);
             tween = GetNode<Tween>(tweenPath);
-            //TODO: esquema de injeacao de dependencia, ou coloar no global
-            placementController = ((HabitatScene) sceneSwitcher.currentScene).placementController;
             CreateBlockItems();
             StartAnimation();
+            // RectMinSize = new Vector2(0, GetViewport().Size.y);
+            // GetViewport().Connect("size_changed", this, nameof(OnViewportSizeChanged));
+        }
+
+        public void OnViewportSizeChanged()
+        {
+            RectMinSize = new Vector2(0, GetViewport().Size.y);
         }
 
         public override void _Input(InputEvent @event)
@@ -107,7 +112,7 @@ namespace CrazyEaters.UI
             if (selectedItem != null) selectedItem.SetSelect(false);
             selectedItem = item;
             selectedItem.SetSelect(true);
-            placementController.currentBlockId = selectedItem.blockData.id.ToInt();
+            ((HabitatScene)sceneSwitcher.currentScene).currentBlockId = selectedItem.blockData.id.ToInt();
         }
 
     }

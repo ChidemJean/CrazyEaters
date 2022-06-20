@@ -29,8 +29,6 @@ namespace CrazyEaters.Controllers
 
         private Block currentBlock = null;
 
-        [Export]
-        public int currentBlockId = 3;
         private Spatial scene = null;
         public float blockSize = 2;
         private SceneSwitcher sceneSwitcher;
@@ -130,7 +128,7 @@ namespace CrazyEaters.Controllers
                 Vector3 normal = (Vector3) intersect["normal"];
 
                 Vector3 blockGlobalPos = (pos + normal / 2).Floor();
-                gameManager.world.SetBlockGlobalPosition(blockGlobalPos, currentBlockId);
+                gameManager.world.SetBlockGlobalPosition(blockGlobalPos, ((HabitatScene)sceneSwitcher.currentScene).currentBlockId);
 
                 return;
                 //

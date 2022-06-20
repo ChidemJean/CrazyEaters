@@ -161,6 +161,13 @@ polygon/verts_per_poly = 3.0
 
 [node name="HabitatScene" type="Spatial"]
 
+[node name="PlacementController" type="Spatial" parent="."]
+script = ExtResource( 22 )
+blockPref = ExtResource( 25 )
+dustParticlesPref = ExtResource( 24 )
+scenePath = NodePath("..")
+rayCollisionMask = 4
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource( 18 )
 
@@ -193,14 +200,6 @@ far = 250.0
 script = ExtResource( 13 )
 shapeExplosion = ExtResource( 20 )
 impulseForce = 50.0
-
-[node name="CSGMain" type="Spatial" parent="."]
-script = ExtResource( 22 )
-blockPref = ExtResource( 25 )
-dustParticlesPref = ExtResource( 24 )
-scenePath = NodePath("..")
-currentBlockId = 61
-rayCollisionMask = 4
 
 [node name="Scenario" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )

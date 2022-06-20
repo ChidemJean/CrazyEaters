@@ -10,3 +10,4 @@ background_sky = SubResource( 5 )
 background_color = Color( 0.658824, 0.952941, 1, 1 )
 ambient_light_color = Color( 0.658824, 0.952941, 1, 1 )
 ambient_light_sky_contribution = 0.7
+ss_reflections_enabled = true
