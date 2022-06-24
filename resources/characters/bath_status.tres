@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=5 format=2]
+
+[ext_resource path="res://assets/textures/UI/character_status_gradient.tres" type="Gradient" id=1]
+[ext_resource path="res://assets/textures/UI/icons/bath.svg" type="Texture" id=2]
+[ext_resource path="res://src/Resources/StatusCharacter.cs" type="Script" id=3]
+
+[sub_resource type="GradientTexture" id=1]
+gradient = ExtResource( 1 )
+
+[resource]
+script = ExtResource( 3 )
+name = "Bathroom"
+max = 100
+fillGradient = SubResource( 1 )
+icon = ExtResource( 2 )
+uiVisibility = 0
+acceptModifiers = true

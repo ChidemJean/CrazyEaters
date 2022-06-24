@@ -12,6 +12,9 @@ namespace CrazyEaters.UI
         public NodePath slideTriggerPath;
         
         [Export]
+        public NodePath offsetControlPath;
+        
+        [Export]
         public bool open = false;
 
         [Export]
@@ -25,6 +28,7 @@ namespace CrazyEaters.UI
         [Export]
         public BlocksData blocksData;
 
+        private Control offsetControl;
         private Control slideTrigger;
         private GridContainer blockItemsContainer;
 
@@ -40,6 +44,7 @@ namespace CrazyEaters.UI
         {
             sceneSwitcher = GetNode<SceneSwitcher>("/root/MainNode/SceneSwitcher");
             initialRectPosition = GetGlobalRect().Position;
+            offsetControl = GetNode<Control>(offsetControlPath);
             slideTrigger = GetNode<Control>(slideTriggerPath);
             blockItemsContainer = GetNode<GridContainer>(blockItemsContainerPath);
             tween = GetNode<Tween>(tweenPath);
@@ -83,7 +88,7 @@ namespace CrazyEaters.UI
         public async void CloseAnimation()
         {
             tween.StopAll();
-            tween.InterpolateProperty(this, "rect_position:y", GetGlobalRect().Position.y, GetViewport().Size.y - slideTrigger.GetGlobalRect().Size.y, .6f, Tween.TransitionType.Cubic, Tween.EaseType.Out);
+            tween.InterpolateProperty(this, "rect_position:y", GetGlobalRect().Position.y, GetViewport().Size.y - offsetControl.GetGlobalRect().Size.y, .6f, Tween.TransitionType.Cubic, Tween.EaseType.Out);
             tween.Start();
             await ToSignal(tween, "tween_completed");
         }

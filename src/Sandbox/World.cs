@@ -183,7 +183,7 @@ namespace CrazyEaters.Sandbox
 
         public void MergeChunksLoaded()
         {
-            if (chunksLoaded.Count > 0) {
+            if (chunksLoaded != null && chunksLoaded.Count > 0) {
                 foreach(Vector3 chunkPosition in this.chunksLoaded.Keys) 
                 {
                     Chunk chunk_Loaded = (Chunk) this.chunksLoaded[chunkPosition];

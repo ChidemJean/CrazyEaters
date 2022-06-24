@@ -5,20 +5,25 @@
 [ext_resource path="res://assets/themes/block_item.tres" type="StyleBox" id=3]
 
 [node name="BlockBtn" type="PanelContainer"]
-margin_right = 254.0
-margin_bottom = 250.0
-rect_min_size = Vector2( 0, 250 )
-size_flags_horizontal = 3
+anchor_right = 0.212963
+anchor_bottom = 0.119792
+margin_right = -1.52588e-05
+rect_min_size = Vector2( 230, 230 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme = ExtResource( 2 )
 custom_styles/panel = ExtResource( 3 )
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
 thumbPath = NodePath("Thumb")
 
 [node name="Thumb" type="TextureRect" parent="."]
 margin_left = 10.0
 margin_top = 10.0
-margin_right = 244.0
-margin_bottom = 240.0
+margin_right = 220.0
+margin_bottom = 220.001
 size_flags_horizontal = 3
 size_flags_vertical = 3
 expand = true
