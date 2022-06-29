@@ -36,7 +36,7 @@ namespace CrazyEaters.UI
         public void SetBlockData(BlockData blockData)
         {
             this.blockData = blockData;
-            thumb.Texture = this.blockData.thumb;
+            if (this.blockData.thumb != null) thumb.Texture = this.blockData.thumb;
         }
 
         public void SetSelect(bool selected) 

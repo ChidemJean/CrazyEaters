@@ -30,6 +30,7 @@ config/icon="res://icon.png"
 
 [autoload]
 
+DependencyInjectionSystem="*res://src/DependencyInjection/DependencyInjectionSystem.cs"
 GameManager="*res://src/Managers/GameManager.cs"
 ResourceQueue="*res://resource_queue.gd"
 

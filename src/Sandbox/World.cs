@@ -7,6 +7,7 @@ namespace CrazyEaters.Sandbox
     using CrazyEaters.Managers;
     using CrazyEaters.Save;
     using CrazyEaters.Resources;
+    using CrazyEaters.DependencyInjection;
 
     public class World : Node
     {
@@ -27,8 +28,7 @@ namespace CrazyEaters.Sandbox
         [Export(PropertyHint.Layers3dPhysics)]
         public uint chunkCollisionLayer;
 
-        private GameManager gameManager;
-        private SaveSystemNode saveSystemNode;
+        [Inject] private GameManager gameManager;
 
         [Export]
         public PackedScene chunkLabel;
@@ -51,8 +51,19 @@ namespace CrazyEaters.Sandbox
         public NodePath labelDirPath;
         public Label labelDir;
 
+        [Inject] private SceneSwitcher sSwitcher = null;
+        [Inject] private SaveSystemNode saveSystemNode = null;
+
+        public override void _EnterTree()
+        {
+        }
+
         public override void _Ready()
         {
+            this.ResolveDependencies();
+            
+            gameManager.world = this;
+            
             btnBake = GetNode<Button>(btnBakePath);
             btnBake.Connect("button_up", this, nameof(OnClickBake));
             
@@ -63,12 +74,11 @@ namespace CrazyEaters.Sandbox
 
             navmesh.Connect("bake_finished", this, nameof(OnNavmeshChanged));
             chunks = new Dictionary();
-            saveSystemNode = GetNode<SaveSystemNode>("/root/MainNode/SaveSystem");
-            gameManager = GetNode<GameManager>("/root/GameManager");
-            gameManager.world = this;
-            tween = GetNode<Tween>(tweenPath);
-            saveSystemNode.LoadGame(OnLoaded);
 
+            tween = GetNode<Tween>(tweenPath);
+
+            sSwitcher.currentScene.Load(OnLoaded);
+            GD.Print("world: ", sSwitcher.currentScene);
         }
 
         public override void _Input(InputEvent @event)
@@ -100,8 +110,8 @@ namespace CrazyEaters.Sandbox
         }
 
         public void OnLoaded(GameData gameData) {
-            if (gameData != null) {
-                chunksLoaded = saveSystemNode.FromGameData(gameData);
+            if (gameData != null && gameData is HabitatGameData) {
+                chunksLoaded = saveSystemNode.FromGameData((HabitatGameData) gameData);
             }
 
             // if (chunksLoaded.Count > 0) {

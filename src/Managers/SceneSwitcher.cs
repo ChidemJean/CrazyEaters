@@ -63,6 +63,7 @@ namespace CrazyEaters.Managers
             Clean();
             
             currentScene = scene.Instance<CEScene>();
+            GD.Print("switcher", this);
             AddChild(currentScene);
             gameManager.hud.ChangeViewport3d(currentScene.viewport3d);
             isLoading = false;

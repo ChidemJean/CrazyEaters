@@ -7,6 +7,7 @@ namespace CrazyEaters.Characters
     using System.Threading.Tasks;
     using CrazyEaters.Managers;
     using CrazyEaters.Sandbox;
+    using CrazyEaters.Resources;
 
     public class Character : KinematicBody
     {
@@ -33,6 +34,10 @@ namespace CrazyEaters.Characters
         [Export] StreamTexture[] eyeTextures;
         [Export] CharacterControllerMode controllerMode = CharacterControllerMode.IA;
         [Export] NodePath worldPath;
+        [Export] StatusesCharacter statusesResource;
+
+        List<CrazyEaters.Save.StatusCharacter> statuses; 
+
         CrazyEaters.Sandbox.World world;
 
         Vector3 gravity;

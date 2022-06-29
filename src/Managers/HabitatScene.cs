@@ -3,6 +3,8 @@ namespace CrazyEaters.Managers
     using Godot;
     using System;
     using CrazyEaters.Controllers;
+    using CrazyEaters.Save;
+
 
     public class HabitatScene : CEScene
     {

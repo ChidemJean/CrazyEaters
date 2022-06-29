@@ -68,7 +68,6 @@ namespace CrazyEaters.UI
             saveSystemNode.SaveGame(() => {
                 GetTree().Quit();
             });
-            
         }
 
         public void OnUpdateViewport3DScale(string type, float value) {

@@ -2,4 +2,18 @@
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="SimpleInjector">
+      <Version>5.3.3</Version>
+    </PackageReference>
+    <PackageReference Include="SimpleGOAP.Core">
+      <Version>0.0.7</Version>
+    </PackageReference>
+    <PackageReference Include="SimpleGOAP.KeyValueState">
+      <Version>0.0.2</Version>
+    </PackageReference>
+  </ItemGroup>
 </Project>

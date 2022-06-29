@@ -4,6 +4,10 @@ using Godot;
 
 namespace CrazyEaters.Save
 {
+    [System.Serializable]
+    public class GameData
+    {
+    }
     
     [System.Serializable]
     public class BlockItemSave {
@@ -36,16 +40,29 @@ namespace CrazyEaters.Save
     }
 
     [System.Serializable]
-    public class GameData
+    public class StatusCharacter {
+        public string id;
+        public int current;
+        public StatusCharacter(string id, int current)
+        {
+            this.id = id;
+            this.current = current;
+        }
+    }
+
+    [System.Serializable]
+    public class HabitatGameData : GameData
     {
         public string launcherActiveID = "default";
         public List<ChunkSave> chunks = new List<ChunkSave>();
+        public List<StatusCharacter> statusesEater = new List<StatusCharacter>();
 
         public bool debug = false;
-        public GameData(){}
-        public GameData(List<ChunkSave> chunks)
+        public HabitatGameData(){}
+        public HabitatGameData(List<ChunkSave> chunks, List<StatusCharacter> statusesEater = null)
         {
             this.chunks = chunks;
+            this.statusesEater = statusesEater;
         }
     }
 }

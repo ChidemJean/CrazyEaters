@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://assets/models/character.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/Characters/Character.cs" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://assets/textures/eye/eye_closed.png" type="Texture" id=5]
 [ext_resource path="res://assets/textures/eye/eye_center.png" type="Texture" id=6]
 [ext_resource path="res://assets/textures/eye/eye_mid.png" type="Texture" id=7]
+[ext_resource path="res://resources/eater_statuses.tres" type="Resource" id=8]
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=2]
 
@@ -32,6 +33,7 @@ sensorAreaPath = NodePath("Sensor")
 characterPath = NodePath("character")
 eyePath = NodePath("character/Armature/Skeleton/Eyes/REye/character_eye/Sphere")
 eyeTextures = [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 7 ), ExtResource( 6 ), ExtResource( 5 ) ]
+statusesResource = ExtResource( 8 )
 navigationAgentPath = NodePath("NavigationAgent")
 igPath = NodePath("ig")
 labelVelPath = NodePath("")

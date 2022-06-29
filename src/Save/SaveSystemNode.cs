@@ -54,10 +54,10 @@ namespace CrazyEaters.Save
                 chunksData.Add(chunkData);
             }
 
-            return new GameData(chunksData);
+            return new HabitatGameData(chunksData);
         }
 
-        public Dictionary FromGameData(GameData _gameData) {
+        public Dictionary FromGameData(HabitatGameData _gameData) {
             if (_gameData == null) return null;
 
             Dictionary chunks = new Dictionary();
