@@ -42,7 +42,6 @@ namespace CrazyEaters.Managers
                 loading.Visible = true;
                 loading.SetProcess(true);
                 resourceQueueObj.Call("queue_resource", currentSceneResource.ResourcePath, true);
-                GD.Print(currentSceneResource.ResourcePath);
             }
         }
 
@@ -63,7 +62,6 @@ namespace CrazyEaters.Managers
             Clean();
             
             currentScene = scene.Instance<CEScene>();
-            GD.Print("switcher", this);
             AddChild(currentScene);
             gameManager.hud.ChangeViewport3d(currentScene.viewport3d);
             isLoading = false;

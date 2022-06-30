@@ -35,20 +35,30 @@ namespace CrazyEaters.Sandbox
 
         [Export]
         public NodePath tweenPath;
+        
+        [Inject(InjectType.Transient)] 
         public Tween tween;
+
         public Dictionary chunksLoaded;
 
         [Export]
         public NodePath navigationPath;
         [Export]
         public NodePath btnBakePath;
+
+        [Inject(InjectType.Transient)] 
         public Button btnBake;
+
         double initialBakingTime = 0;
         public NavigationMeshInstance navmesh;
 
+        [Inject(InjectType.Transient)] 
         public Navigation navigation;
+
         [Export]
         public NodePath labelDirPath;
+
+        [Inject(InjectType.Transient)] 
         public Label labelDir;
 
         [Inject] private SceneSwitcher sSwitcher = null;
@@ -64,21 +74,15 @@ namespace CrazyEaters.Sandbox
             
             gameManager.world = this;
             
-            btnBake = GetNode<Button>(btnBakePath);
             btnBake.Connect("button_up", this, nameof(OnClickBake));
             
             // IA
-            navigation = GetNode<Navigation>(navigationPath);
             navmesh = navigation.GetNode<NavigationMeshInstance>("Navmesh");
-            labelDir = GetNode<Label>(labelDirPath);
-
             navmesh.Connect("bake_finished", this, nameof(OnNavmeshChanged));
+            
             chunks = new Dictionary();
 
-            tween = GetNode<Tween>(tweenPath);
-
             sSwitcher.currentScene.Load(OnLoaded);
-            GD.Print("world: ", sSwitcher.currentScene);
         }
 
         public override void _Input(InputEvent @event)
