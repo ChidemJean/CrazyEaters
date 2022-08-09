@@ -30,12 +30,11 @@ collision_mask = 6
 script = ExtResource( 2 )
 animTreePath = NodePath("character/AnimationTree")
 sensorAreaPath = NodePath("Sensor")
-characterPath = NodePath("character")
+navigationAgentPath = NodePath("NavigationAgent")
+igPath = NodePath("ig")
 eyePath = NodePath("character/Armature/Skeleton/Eyes/REye/character_eye/Sphere")
 eyeTextures = [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 7 ), ExtResource( 6 ), ExtResource( 5 ) ]
 statusesResource = ExtResource( 8 )
-navigationAgentPath = NodePath("NavigationAgent")
-igPath = NodePath("ig")
 labelVelPath = NodePath("")
 
 [node name="character" parent="." instance=ExtResource( 1 )]

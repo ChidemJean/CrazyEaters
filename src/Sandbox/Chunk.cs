@@ -121,6 +121,7 @@ namespace CrazyEaters.Sandbox
 
             surfaceTool.GenerateNormals();
             surfaceTool.GenerateTangents();
+            surfaceTool.AddSmoothGroup(true);
             surfaceTool.Index();
             ArrayMesh arrayMesh = surfaceTool.Commit();
             mi = new MeshInstance();
@@ -141,10 +142,10 @@ namespace CrazyEaters.Sandbox
 
             // Bush blocks get drawn in their own special way.
             if (blockId == 27 || blockId == 28) {
-                DrawBlockFace(surfaceTool, new Array<Vector3> { verts[2], verts[0], verts[7], verts[5] }, uvs);
-                DrawBlockFace(surfaceTool, new Array<Vector3> { verts[7], verts[5], verts[2], verts[0] }, uvs);
-                DrawBlockFace(surfaceTool, new Array<Vector3> { verts[3], verts[1], verts[6], verts[4] }, uvs);
-                DrawBlockFace(surfaceTool, new Array<Vector3> { verts[6], verts[4], verts[3], verts[1] }, uvs);
+                DrawBlockFace(surfaceTool, new Array<Vector3> { verts[2], verts[0], verts[7], verts[5] }, uvs, Vector3.Left, blockSubPosition);
+                DrawBlockFace(surfaceTool, new Array<Vector3> { verts[7], verts[5], verts[2], verts[0] }, uvs, Vector3.Right, blockSubPosition);
+                DrawBlockFace(surfaceTool, new Array<Vector3> { verts[3], verts[1], verts[6], verts[4] }, uvs, Vector3.Forward, blockSubPosition);
+                DrawBlockFace(surfaceTool, new Array<Vector3> { verts[6], verts[4], verts[3], verts[1] }, uvs, Vector3.Back, blockSubPosition);
                 return;
             }
 
@@ -163,83 +164,87 @@ namespace CrazyEaters.Sandbox
                 bottomUvs = topUvs;
             }
 
-            // Main rendering code for normal blocks.
-            Vector3 otherBlockPos = blockSubPosition + Vector3.Left;
+            DrawBlockFaceCheckingNeighbor(blockSubPosition, Vector3.Left, blockId, surfaceTool, verts, uvs, bottomUvs, topUvs);
+            DrawBlockFaceCheckingNeighbor(blockSubPosition, Vector3.Right, blockId, surfaceTool, verts, uvs, bottomUvs, topUvs);
+            DrawBlockFaceCheckingNeighbor(blockSubPosition, Vector3.Forward, blockId, surfaceTool, verts, uvs, bottomUvs, topUvs);
+            DrawBlockFaceCheckingNeighbor(blockSubPosition, Vector3.Back, blockId, surfaceTool, verts, uvs, bottomUvs, topUvs);
+            DrawBlockFaceCheckingNeighbor(blockSubPosition, Vector3.Down, blockId, surfaceTool, verts, uvs, bottomUvs, topUvs);
+            DrawBlockFaceCheckingNeighbor(blockSubPosition, Vector3.Up, blockId, surfaceTool, verts, uvs, bottomUvs, topUvs);
+
+        }
+
+        public void DrawBlockFaceCheckingNeighbor(Vector3 blockSubPosition, Vector3 direction, int blockId, SurfaceTool surfaceTool, Array<Vector3> verts, Array<Vector2> uvs, Array<Vector2> bottomUvs, Array<Vector2> topUvs)
+        {
+
+            Array<Vector3> finalVerts = verts;
+            Array<Vector2> finalUvs = uvs;
+            
+            Vector3 otherBlockPos = blockSubPosition + direction;
             int otherBlockId = 0;
-            if (otherBlockPos.x == -1) {
-                otherBlockId = world.GetBlockGlobalPosition(otherBlockPos + GlobalTransform.origin);
-            } else if (data.Contains(otherBlockPos)) {
-                otherBlockId = (int) data[otherBlockPos];
-            }
-            if (blockId != otherBlockId && IsBlockTransparent(otherBlockId)) {
-                DrawBlockFace(surfaceTool, new Array<Vector3> { verts[2], verts[0], verts[3], verts[1] }, uvs);
-            }
 
-            otherBlockPos = blockSubPosition + Vector3.Right;
-            otherBlockId = 0;
-            if (otherBlockPos.x == CHUNK_SIZE) {
-                otherBlockId = world.GetBlockGlobalPosition(otherBlockPos + GlobalTransform.origin);
-            } else if (data.Contains(otherBlockPos)) {
-                otherBlockId = (int) data[otherBlockPos];
-            }
-            if (blockId != otherBlockId && IsBlockTransparent(otherBlockId)) {
-                DrawBlockFace(surfaceTool, new Array<Vector3> { verts[7], verts[5], verts[6], verts[4] }, uvs);
-            }
+            bool otherBlockOnAnotherChunk = false;
 
-            otherBlockPos = blockSubPosition + Vector3.Forward;
-            otherBlockId = 0;
-            if (otherBlockPos.z == -1) {
+            
+            if (direction == Vector3.Left){
+                finalVerts = new Array<Vector3> { verts[2], verts[0], verts[3], verts[1] };
+                otherBlockOnAnotherChunk = otherBlockPos.x == -1;
+            }
+            if (direction == Vector3.Right){
+                finalVerts = new Array<Vector3> { verts[7], verts[5], verts[6], verts[4] };
+                otherBlockOnAnotherChunk = otherBlockPos.x == CHUNK_SIZE;
+            }
+            if (direction == Vector3.Forward){
+                finalVerts = new Array<Vector3> { verts[6], verts[4], verts[2], verts[0] };
+                otherBlockOnAnotherChunk = otherBlockPos.z == -1;
+            }
+            if (direction == Vector3.Back){
+                finalVerts = new Array<Vector3> { verts[3], verts[1], verts[7], verts[5] };
+                otherBlockOnAnotherChunk = otherBlockPos.z == CHUNK_SIZE;
+            }
+            if (direction == Vector3.Down){
+                finalVerts = new Array<Vector3> { verts[4], verts[5], verts[0], verts[1] };
+                finalUvs = bottomUvs;
+                otherBlockOnAnotherChunk = otherBlockPos.y == -1;
+            }
+            if (direction == Vector3.Up){
+                finalVerts = new Array<Vector3> { verts[2], verts[3], verts[6], verts[7] };
+                finalUvs = topUvs;
+                otherBlockOnAnotherChunk = otherBlockPos.y == CHUNK_SIZE;
+            }
+            
+            //
+            if (otherBlockOnAnotherChunk) {
                 otherBlockId = world.GetBlockGlobalPosition(otherBlockPos + GlobalTransform.origin);
             } else if (data.Contains(otherBlockPos)) {
                 otherBlockId = (int) data[otherBlockPos];
             }
             if (blockId != otherBlockId && IsBlockTransparent(otherBlockId)) {
-                DrawBlockFace(surfaceTool, new Array<Vector3> { verts[6], verts[4], verts[2], verts[0] }, uvs);
-            }
-
-            otherBlockPos = blockSubPosition + Vector3.Back;
-            otherBlockId = 0;
-            if (otherBlockPos.z == CHUNK_SIZE) {
-                otherBlockId = world.GetBlockGlobalPosition(otherBlockPos + GlobalTransform.origin);
-            } else if (data.Contains(otherBlockPos)) {
-                otherBlockId = (int) data[otherBlockPos];
-            }
-            if (blockId != otherBlockId && IsBlockTransparent(otherBlockId)) {
-                DrawBlockFace(surfaceTool, new Array<Vector3> { verts[3], verts[1], verts[7], verts[5] }, uvs);
-            }
-
-            otherBlockPos = blockSubPosition + Vector3.Down;
-            otherBlockId = 0;
-            if (otherBlockPos.y == -1) {
-                otherBlockId = world.GetBlockGlobalPosition(otherBlockPos + GlobalTransform.origin);
-            } else if (data.Contains(otherBlockPos)) {
-                otherBlockId = (int) data[otherBlockPos];
-            }
-            if (blockId != otherBlockId && IsBlockTransparent(otherBlockId)) {
-                DrawBlockFace(surfaceTool, new Array<Vector3> { verts[4], verts[5], verts[0], verts[1] }, bottomUvs);
-            }
-
-            otherBlockPos = blockSubPosition + Vector3.Up;
-            otherBlockId = 0;
-            if (otherBlockPos.y == CHUNK_SIZE) {
-                otherBlockId = world.GetBlockGlobalPosition(otherBlockPos + GlobalTransform.origin);
-            } else if (data.Contains(otherBlockPos)) {
-                otherBlockId = (int) data[otherBlockPos];
-            }
-            if (blockId != otherBlockId && IsBlockTransparent(otherBlockId)) {
-                DrawBlockFace(surfaceTool, new Array<Vector3> { verts[2], verts[3], verts[6], verts[7] }, topUvs);
+                DrawBlockFace(surfaceTool, finalVerts, finalUvs, direction, blockSubPosition);
             }
         }
 
-        public void DrawBlockFace(SurfaceTool surfaceTool, Array<Vector3> verts, Array<Vector2> uvs)
+        public void DrawBlockFace(SurfaceTool surfaceTool, Array<Vector3> verts, Array<Vector2> uvs, Vector3 faceDir, Vector3 bp)
         {
-            surfaceTool.AddUv(uvs[1]); surfaceTool.AddVertex(verts[1]);
-            surfaceTool.AddUv(uvs[2]); surfaceTool.AddVertex(verts[2]);
-            surfaceTool.AddUv(uvs[3]); surfaceTool.AddVertex(verts[3]);
-            
-            surfaceTool.AddUv(uvs[2]); surfaceTool.AddVertex(verts[2]);
-            surfaceTool.AddUv(uvs[1]); surfaceTool.AddVertex(verts[1]);
-            surfaceTool.AddUv(uvs[0]); surfaceTool.AddVertex(verts[0]);
+            surfaceTool.AddUv(uvs[1]); surfaceTool.AddVertex(CalculateVertPos(verts[1], bp, faceDir));
+            surfaceTool.AddUv(uvs[2]); surfaceTool.AddVertex(CalculateVertPos(verts[2], bp, faceDir));
+            surfaceTool.AddUv(uvs[3]); surfaceTool.AddVertex(CalculateVertPos(verts[3], bp, faceDir));
+
+            surfaceTool.AddUv(uvs[2]); surfaceTool.AddVertex(CalculateVertPos(verts[2], bp, faceDir));
+            surfaceTool.AddUv(uvs[1]); surfaceTool.AddVertex(CalculateVertPos(verts[1], bp, faceDir));
+            surfaceTool.AddUv(uvs[0]); surfaceTool.AddVertex(CalculateVertPos(verts[0], bp, faceDir));
+        }
+
+        public Vector3 CalculateVertPos(Vector3 vp, Vector3 bp, Vector3 faceDir, bool applyOffset = true) {
+            if (!applyOffset) return vp;
+
+            Vector3 mid = new Vector3(.5f, .5f, .5f);
+            Vector3 offset = new Vector3(.1f, .1f, .1f);
+            Vector3 c = bp + mid; // center block position
+            Vector3 f = c + faceDir * mid; // face center pos
+            Vector3 dir = vp.DirectionTo(f); // direction between this verts and face center
+            Vector3 v = vp + dir * offset; // final vert position
+
+            return v;
         }
 
         public static Array<Vector3> CalculateBlockVerts(Vector3 blockPosition) 
