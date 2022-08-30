@@ -70,6 +70,7 @@ namespace CrazyEaters.Sandbox
 
         public override void _Ready()
         {
+
             this.ResolveDependencies();
             
             gameManager.world = this;
@@ -228,6 +229,30 @@ namespace CrazyEaters.Sandbox
             }
         }
 
+        public Vector3 GetProjectedBlockGlobalPosition(Vector3 blockGlobalPosition) 
+        {
+            return blockGlobalPosition + Vector3.One / 2;
+        }
+
+        public bool CheckMultiBlocksFree(Vector3 blockGlobalPosition, Vector3 gridSize, Vector3 axis, float angle = 0)
+        {
+            if (angle != 0) {
+                gridSize = gridSize.Rotated(axis, Mathf.Deg2Rad(angle)).Abs().Round();
+            }
+            for (int x = 0; x < gridSize.x; x++) {
+                for (int y = 0; y < gridSize.y; y++) {
+                    for (int z = 0; z < gridSize.z; z++) {
+                        Vector3 i = blockGlobalPosition + (new Vector3(x, y, z) * Vector3.One);
+                        if (GetBlockGlobalPosition(i) != 0) {
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            return true;
+        }
+
         public int GetBlockGlobalPosition(Vector3 blockGlobalPosition) 
         {
             if (blockGlobalPosition == null) return 0;
@@ -256,7 +281,6 @@ namespace CrazyEaters.Sandbox
             Vector3 subPosition = blockGlobalPosition.PosMod(Chunk.CHUNK_SIZE);
 
             if (isRemoving) {
-                GD.Print(chunk.data[subPosition]);
                 chunk.RemoveBlock(subPosition);
             } else {
                 chunk.UpdateBlock(blockId, subPosition);

@@ -3,13 +3,14 @@
 [sub_resource type="Shader" id=1]
 code = "shader_type spatial;
 
-uniform float overlap = 0;
-uniform float velocity = 2;
-uniform vec4 in_over_color: hint_color;
+uniform float overlap = 0.0f;
+uniform float velocity = 2.0f;
+uniform vec4 over_color: hint_color;
+uniform vec4 free_color: hint_color;
 
 void fragment() {
-	ALBEDO = in_over_color.rgb * overlap;
-	ALPHA = clamp(1.2f*sin(TIME * velocity * 2.0f), .4f, .9f) * overlap;
+	ALBEDO = overlap == 0.0f ? free_color.rgb : over_color.rgb;
+	ALPHA = clamp(0.5f * (.75f + sin(2.0f * 3.14f * .85f * TIME)), .3f, 1.0f);
 }"
 
 [resource]
@@ -17,4 +18,5 @@ resource_local_to_scene = true
 shader = SubResource( 1 )
 shader_param/overlap = 0.0
 shader_param/velocity = 2.0
-shader_param/in_over_color = Color( 1, 0, 0, 1 )
+shader_param/over_color = Color( 0.996078, 0.227451, 0.12549, 1 )
+shader_param/free_color = Color( 0, 1, 0.392157, 1 )

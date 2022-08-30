@@ -4,6 +4,7 @@ namespace CrazyEaters.Managers
     using System;
     using CrazyEaters.Controllers;
     using CrazyEaters.Save;
+    using CrazyEaters.Resources;
 
 
     public class HabitatScene : CEScene
@@ -14,6 +15,10 @@ namespace CrazyEaters.Managers
         NodePath gameViewportPath;
         [Export]
         NodePath placementControllerPath;
+        [Export]
+        public bool inEditMode = false;
+        [Export]
+        BlocksData blocksData;
 
         public Camera camera;
         public Viewport gameViewport;
@@ -28,6 +33,18 @@ namespace CrazyEaters.Managers
             camera = GetNode<Camera>(cameraPath);
             gameViewport = GetNode<Viewport>(gameViewportPath);
             placementController = GetNode<PlacementController>(placementControllerPath);
+        }
+
+        public BlocksData GetBlocksData()
+        {
+            return this.blocksData;
+        }
+
+        public BlockData RetrieveBlockDataFromId(int blockId)
+        {
+            BlockData data = null;
+            this.blocksData.blocks.TryGetValue(blockId + "", out data);
+            return data;
         }
     }
 }

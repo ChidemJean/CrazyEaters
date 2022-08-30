@@ -12,12 +12,13 @@ namespace CrazyEaters.Sandbox
         public static int CHUNK_SIZE = 10;
         public static int CHUNK_END_SIZE = CHUNK_SIZE - 1;
         public static int TEXTURE_SHEET_WIDTH = 8;
+        public static float BLOCK_VERTICE_OFFSET = 0f;
 
         public int CHUNK_LAST_INDEX = CHUNK_SIZE - 1;
         public static float TEXTURE_TILE_SIZE = 1.0f / TEXTURE_SHEET_WIDTH;
 
         public Dictionary data = null;
-        public Dictionary<string, CollisionShape> colliders = new Dictionary<string, CollisionShape>();
+        public Dictionary<string, Spatial> colliders = new Dictionary<string, Spatial>();
         public Vector3 chunkPosition = Vector3.Zero;
         
         public World world;
@@ -118,10 +119,10 @@ namespace CrazyEaters.Sandbox
                 int blockId = (int) data[blockPosition];
                 DrawBlockMesh(surfaceTool, blockPosition, blockId);
             }
-
+            
+            surfaceTool.AddSmoothGroup(true);
             surfaceTool.GenerateNormals();
             surfaceTool.GenerateTangents();
-            surfaceTool.AddSmoothGroup(true);
             surfaceTool.Index();
             ArrayMesh arrayMesh = surfaceTool.Commit();
             mi = new MeshInstance();
@@ -223,26 +224,38 @@ namespace CrazyEaters.Sandbox
             }
         }
 
-        public void DrawBlockFace(SurfaceTool surfaceTool, Array<Vector3> verts, Array<Vector2> uvs, Vector3 faceDir, Vector3 bp)
+        public void DrawBlockFace(SurfaceTool surfaceTool, Array<Vector3> _verts, Array<Vector2> uvs, Vector3 faceDir, Vector3 bp)
         {
-            surfaceTool.AddUv(uvs[1]); surfaceTool.AddVertex(CalculateVertPos(verts[1], bp, faceDir));
-            surfaceTool.AddUv(uvs[2]); surfaceTool.AddVertex(CalculateVertPos(verts[2], bp, faceDir));
-            surfaceTool.AddUv(uvs[3]); surfaceTool.AddVertex(CalculateVertPos(verts[3], bp, faceDir));
+            Vector3[] verts = new Vector3[_verts.Count];
+            for (int i = 0; i < _verts.Count; i++) {
+                verts[i] = this.CalculateVertPos(_verts[i], bp, faceDir);
+            }
 
-            surfaceTool.AddUv(uvs[2]); surfaceTool.AddVertex(CalculateVertPos(verts[2], bp, faceDir));
-            surfaceTool.AddUv(uvs[1]); surfaceTool.AddVertex(CalculateVertPos(verts[1], bp, faceDir));
-            surfaceTool.AddUv(uvs[0]); surfaceTool.AddVertex(CalculateVertPos(verts[0], bp, faceDir));
+            // 1-triangle
+            surfaceTool.AddUv(uvs[1]); surfaceTool.AddVertex(verts[1]);
+            surfaceTool.AddUv(uvs[2]); surfaceTool.AddVertex(verts[2]);
+            surfaceTool.AddUv(uvs[3]); surfaceTool.AddVertex(verts[3]);
+            // 2-triangle
+            surfaceTool.AddUv(uvs[2]); surfaceTool.AddVertex(verts[2]);
+            surfaceTool.AddUv(uvs[1]); surfaceTool.AddVertex(verts[1]);
+            surfaceTool.AddUv(uvs[0]); surfaceTool.AddVertex(verts[0]);
+            // adj
+            for (int i = 0; i < _verts.Count; i++) {
+                int indexV3 = ((i + 1) > _verts.Count - 1) ? 0 : i + 1;
+                surfaceTool.AddUv(uvs[i]); surfaceTool.AddVertex(verts[i]);
+                surfaceTool.AddUv(uvs[indexV3]); surfaceTool.AddVertex(CalculateVertPos(_verts[indexV3], bp, faceDir));
+                surfaceTool.AddUv(uvs[indexV3]); surfaceTool.AddVertex(verts[indexV3]);
+            }
         }
 
-        public Vector3 CalculateVertPos(Vector3 vp, Vector3 bp, Vector3 faceDir, bool applyOffset = true) {
+        public Vector3 CalculateVertPos(Vector3 vp, Vector3 bp, Vector3 faceDir, bool applyOffset = true, Vector3? offset = null) {
             if (!applyOffset) return vp;
-
+            offset = offset == null ? new Vector3(BLOCK_VERTICE_OFFSET, BLOCK_VERTICE_OFFSET, BLOCK_VERTICE_OFFSET) : offset;
             Vector3 mid = new Vector3(.5f, .5f, .5f);
-            Vector3 offset = new Vector3(.1f, .1f, .1f);
             Vector3 c = bp + mid; // center block position
             Vector3 f = c + faceDir * mid; // face center pos
             Vector3 dir = vp.DirectionTo(f); // direction between this verts and face center
-            Vector3 v = vp + dir * offset; // final vert position
+            Vector3 v = vp + dir * (Vector3)offset; // final vert position
 
             return v;
         }
@@ -304,15 +317,16 @@ namespace CrazyEaters.Sandbox
         {
             if (!colliders.ContainsKey(blockSubPosition.ToString())) {
                 int blockId = (int) data[blockSubPosition];
-                CollisionShape collider = null;
+                Spatial collider = null;
 
                 if (blockId < 60) {
-                    collider = new CollisionShape();
+                    CollisionShape _collider = new CollisionShape();
                     BoxShape shape =  new BoxShape();
                     shape.Extents = Vector3.One / 2;
-                    collider.Shape = shape;
+                    _collider.Shape = shape;
+                    collider = _collider;
                 } else {
-                    collider = InstantiateUniqueBlock(blockSubPosition + Vector3.One / 2, blockId).GetCollisionShape();
+                    collider = InstantiateUniqueBlock(blockSubPosition + Vector3.One / 2, blockId);
                 }
 
                 if (collider != null) {
@@ -327,7 +341,7 @@ namespace CrazyEaters.Sandbox
         {
             string key = blockSubPosition.ToString();
             if (colliders.ContainsKey(key)) {
-                CollisionShape col = colliders[key];
+                Node col = colliders[key];
                 colliders.Remove(key);
 
                 col.QueueFree();

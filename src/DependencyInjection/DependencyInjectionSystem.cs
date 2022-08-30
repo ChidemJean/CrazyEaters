@@ -3,6 +3,7 @@ using System;
 using SimpleInjector;
 using CrazyEaters.Managers;
 using CrazyEaters.Save;
+using CrazyEaters.Controllers;
 using System.Collections.Generic;
 
 namespace CrazyEaters.DependencyInjection 

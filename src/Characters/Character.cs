@@ -8,6 +8,8 @@ namespace CrazyEaters.Characters
    using CrazyEaters.Managers;
    using CrazyEaters.Sandbox;
    using CrazyEaters.Resources;
+   using CrazyEaters.Controllers;
+   using CrazyEaters.DependencyInjection;
 
    public class Character : BaseCharacter
    {
@@ -32,12 +34,17 @@ namespace CrazyEaters.Characters
       [Export]
       public NodePath labelVelPath;
       public Label labelVel;
-
+      [Inject] private SceneSwitcher sSwitcher = null;
+      private HabitatScene scene = null;
 
       public override void _Ready()
       {
 			base._Ready();
+         this.ResolveDependencies();
+
          eyeMaterial = (SpatialMaterial)GetNode<MeshInstance>(eyePath).Mesh.SurfaceGetMaterial(0);
+         scene = ((HabitatScene) sSwitcher.currentScene);
+
          // Debug
          labelVel = GetNode<Label>(labelVelPath);
       }
@@ -117,7 +124,7 @@ namespace CrazyEaters.Characters
          if (@event is InputEventMouseButton)
          {
             InputEventMouseButton _event = (InputEventMouseButton)@event;
-            if (!_event.IsPressed() && _event.ButtonIndex == (uint)ButtonList.Left)
+            if (!_event.IsPressed() && _event.ButtonIndex == (uint)ButtonList.Left && !scene.inEditMode)
             {
                Vector2 mousePos = _event.Position * gameManager.hud.currentScale;
                PhysicsDirectSpaceState spaceState = GetWorld().DirectSpaceState;

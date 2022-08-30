@@ -34,8 +34,10 @@ namespace CrazyEaters.Entities
             //     area.Connect("body_entered", this, nameof(OnBodyEnter));
             //     area.Connect("body_exited", this, nameof(OnBodyExit));
             // }
-            // fbMesh = GetNode<MeshInstance>(fbMeshPath);
-            // fbMat = (ShaderMaterial) fbMesh.GetSurfaceMaterial(0);
+            if (fbMeshPath != null) { 
+                fbMesh = GetNode<MeshInstance>(fbMeshPath);
+                fbMat = (ShaderMaterial) fbMesh.GetSurfaceMaterial(0);
+            }
             collisionShape = GetNodeOrNull<CollisionShape>(collisionShapePath);
         }
 
@@ -44,7 +46,7 @@ namespace CrazyEaters.Entities
             return collisionShape;
         }
 
-        public void OnBodyEnter(PhysicsBody body) 
+        public void Blocked() 
         {
             if (!placed) {
                 overlaping = true;
@@ -52,12 +54,20 @@ namespace CrazyEaters.Entities
             }
         }
 
-        public void OnBodyExit(PhysicsBody body) 
+        public void Free() 
         {
             if (!placed) {
                 overlaping = false;
                 fbMat.SetShaderParam("overlap", overlaping);
             }
+        }
+
+        public void UpdateOverlap(bool canPlace) {
+            if (!canPlace) {
+                Blocked();
+                return;
+            }
+            Free();
         }
 
         public void SetPlaced(bool placed) 

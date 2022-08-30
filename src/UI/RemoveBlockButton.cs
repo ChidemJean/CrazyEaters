@@ -22,8 +22,8 @@ namespace CrazyEaters.UI
 
         public override void _Process(float delta)
         {
-            if (((HabitatScene)sceneSwitcher.currentScene).placementController != null) {
-                OnChangeEditMode(((HabitatScene)sceneSwitcher.currentScene).placementController.inEditMode);
+            if (((HabitatScene)sceneSwitcher.currentScene) != null) {
+                OnChangeEditMode(((HabitatScene)sceneSwitcher.currentScene).inEditMode);
             }
         }
 

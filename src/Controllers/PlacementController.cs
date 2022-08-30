@@ -4,11 +4,11 @@ namespace CrazyEaters.Controllers
     using System;
     using CrazyEaters.Managers;
     using CrazyEaters.Entities;
+    using CrazyEaters.Resources;
+    using CrazyEaters.DependencyInjection;
 
     public class PlacementController : Spatial
     {
-        [Export]
-        public bool inEditMode = false;
 
         [Export]
         public bool removeBlockFlag = false;
@@ -19,34 +19,31 @@ namespace CrazyEaters.Controllers
         [Export]
         public PackedScene dustParticlesPref = null;
 
-        [Export]
-        public NodePath scenePath = null;
-
         [Signal]
         public delegate void OnChangeEditMode(bool editMode);
 
+        [Inject]
         private GameManager gameManager;
-
+        [Inject]
+        private SceneSwitcher sceneSwitcher;
         private Block currentBlock = null;
 
-        private Spatial scene = null;
+        private HabitatScene scene = null;
         public float blockSize = 2;
-        private SceneSwitcher sceneSwitcher;
 
         [Export(PropertyHint.Layers3dPhysics)]
         public uint rayCollisionMask;
 
         public override void _Ready()
         {
-            gameManager = GetNode<GameManager>("/root/GameManager");
-            sceneSwitcher = GetNode<SceneSwitcher>("/root/MainNode/SceneSwitcher");
-            scene = GetNode<Spatial>(scenePath);
+            this.ResolveDependencies();
+            scene = (HabitatScene) sceneSwitcher.currentScene;
         }
 
         public override void _Input(InputEvent @event)
         {
             if (gameManager.inputMode == GameManager.InputMode.SCENE) {
-                if (inEditMode) {
+                if (scene.inEditMode) {
                     // if (@event is InputEventMouseMotion) {
                     //     InputEventMouseMotion _event = (InputEventMouseMotion) @event;
                     //     Vector2 mousePos = _event.Position * gameManager.hud.currentScale;
@@ -60,6 +57,8 @@ namespace CrazyEaters.Controllers
                         if (_event.ButtonIndex == 1 && !_event.IsPressed()) {
                             if (removeBlockFlag) {
                                 RemoveBlock(mousePos);
+                            } else if (currentBlock != null) {
+                                MoveBlock(mousePos);
                             } else {
                                 PlaceBlock(mousePos);
                             }
@@ -88,15 +87,13 @@ namespace CrazyEaters.Controllers
 
             if (intersect != null && intersect.Count > 0) {
                 Vector3 pos = (Vector3) intersect["position"];
-                CollisionObject collider = (CollisionObject) intersect["collider"];
-                Spatial target = collider.GetParentOrNull<Spatial>();
-                Vector3 normal = ((Vector3) intersect["normal"]).Normalized();
-                
-                if (target != null && target is Block) {
-                    currentBlock.Translation = GetSnappedPos(pos, normal, currentBlock, target as Block);
-                } else {
-                    currentBlock.Translation = GetSnappedPos(pos, Vector3.Zero, currentBlock, null);
-                }
+                Vector3 normal = (Vector3) intersect["normal"];
+
+                Vector3 blockGlobalPos = (pos + normal / 2).Floor();
+                BlockData blockData = scene.RetrieveBlockDataFromId(scene.currentBlockId);
+                currentBlock.Translation = gameManager.world.GetProjectedBlockGlobalPosition(blockGlobalPos);
+                bool canPlace = gameManager.world.CheckMultiBlocksFree(blockGlobalPos, blockData.gridSize, Vector3.Up);
+                currentBlock.UpdateOverlap(canPlace);
             }
         }
 
@@ -127,8 +124,19 @@ namespace CrazyEaters.Controllers
                 Vector3 pos = (Vector3) intersect["position"];
                 Vector3 normal = (Vector3) intersect["normal"];
 
+                int currentBlockId = scene.currentBlockId;
                 Vector3 blockGlobalPos = (pos + normal / 2).Floor();
-                gameManager.world.SetBlockGlobalPosition(blockGlobalPos, ((HabitatScene)sceneSwitcher.currentScene).currentBlockId);
+                BlockData blockData = scene.RetrieveBlockDataFromId(currentBlockId);
+
+                if (blockData.blockType == BlockData.BlockType.Group) {
+                    gameManager.world.SetBlockGlobalPosition(blockGlobalPos, currentBlockId);
+                } else {
+                    currentBlock = blockData.prefab.Instance<Block>();
+                    AddChild(currentBlock);
+                    currentBlock.Translate(gameManager.world.GetProjectedBlockGlobalPosition(blockGlobalPos));
+                    bool canPlace = gameManager.world.CheckMultiBlocksFree(blockGlobalPos, blockData.gridSize, Vector3.Up);
+                    currentBlock.UpdateOverlap(canPlace);
+                }
 
                 return;
                 //
@@ -190,13 +198,11 @@ namespace CrazyEaters.Controllers
 
         public void ChangeEditMode(bool editMode)
         {
-            inEditMode = editMode;
-            // if (inEditMode) {
-            //     currentBlock = InstanceNewBlock(Vector3.Zero);
-            // } else {
-            //     if (currentBlock != null && IsInstanceValid(currentBlock)) currentBlock.QueueFree();
-            // }
-            EmitSignal(nameof(OnChangeEditMode), inEditMode);
+            scene.inEditMode = editMode;
+            if (!scene.inEditMode) {
+                if (currentBlock != null && IsInstanceValid(currentBlock)) currentBlock.QueueFree();
+            }
+            EmitSignal(nameof(OnChangeEditMode), scene.inEditMode);
         }
 
         public void ChangeRemoveBlockFlag(bool removeBlockFlag)
