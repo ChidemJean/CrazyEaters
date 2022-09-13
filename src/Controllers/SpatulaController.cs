@@ -67,7 +67,6 @@ namespace CrazyEaters.Controllers
                         }
                     } else {
                         initialPos = null;
-                        skeleton.RotationDegrees = Vector3.Zero;
                         gameManager.inputMode = GameManager.InputMode.SCENE;
                         animationPlayer.Play("hold");
                         float animLength = animationPlayer.GetAnimation("hold").Length / animationPlayer.PlaybackSpeed;
@@ -83,7 +82,7 @@ namespace CrazyEaters.Controllers
                     Vector2 mousePos = _event.Position * gameManager.hud.currentScale;
                     Vector2 initial = (Vector2) initialPos;
                     Vector2 aux = new Vector2(initial.x, initial.y + 20f);
-                    currentDistance = Mathf.Clamp(mousePos.DistanceTo(initial) / 200f, 0f, 1f);
+                    currentDistance = Mathf.Clamp(mousePos.DistanceTo(initial) / 300f, 0f, 1f);
 
                     float angle = Mathf.Rad2Deg((initial - mousePos).AngleTo(initial - aux));
                     skeleton.RotationDegrees = new Vector3(0, angle, 0);
@@ -110,6 +109,19 @@ namespace CrazyEaters.Controllers
             newPose = newPose.Rotated(Vector3.Up, angle.y);
             newPose = newPose.Rotated(Vector3.Back, angle.z);
             skeleton.SetBonePose(boneIndex, newPose);
+        }
+
+        public void HoldAnimationFinished()
+        {
+            SceneTreeTween tween = GetTree().CreateTween();
+            tween.TweenProperty(skeleton, "rotation_degrees", Vector3.Zero, .9f).SetTrans(Tween.TransitionType.Elastic).SetEase(Tween.EaseType.Out);
+        }
+
+        public void OnAnimationFinished(string name)
+        {
+            if (name == "hold") {
+                HoldAnimationFinished();
+            }
         }
    }
 }
