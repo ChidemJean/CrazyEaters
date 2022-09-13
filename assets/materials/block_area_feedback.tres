@@ -2,6 +2,7 @@
 
 [sub_resource type="Shader" id=1]
 code = "shader_type spatial;
+render_mode unshaded;
 
 uniform float overlap = 0.0f;
 uniform float velocity = 2.0f;

@@ -11,7 +11,7 @@ namespace CrazyEaters.Managers
 
     public class GameManager : Spatial
     {
-        public enum InputMode { SCENE, UI };
+        public enum InputMode { SCENE, UI, LAUNCHER };
         public Hud hud;
         public Godot.Object ResourceQueue;
         public InputMode inputMode = InputMode.SCENE;

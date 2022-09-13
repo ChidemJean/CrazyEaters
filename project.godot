@@ -48,6 +48,7 @@ window/stretch/aspect="expand"
 3d_physics/layer_2="Ground"
 3d_physics/layer_3="Block"
 3d_physics/layer_4="Character"
+3d_physics/layer_5="Launcher"
 
 [physics]
 

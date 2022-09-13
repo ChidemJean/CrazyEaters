@@ -66,7 +66,7 @@ namespace CrazyEaters.Characters
 
          rng.Randomize();
          float randomValue = rng.Randf();
-         await Task.Delay(TimeSpan.FromMilliseconds(1500 + 3000 * randomValue));
+         await Task.Delay(TimeSpan.FromMilliseconds(1500 + 1000 * randomValue));
          isBlinking = false;
       }
 
