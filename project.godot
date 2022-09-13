@@ -9,12 +9,18 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Spatial",
+"class": "BoneHandle",
+"language": "GDScript",
+"path": "res://addons/bone_editor/BoneHandle.gd"
+}, {
 "base": "Tween",
 "class": "CurveTween",
 "language": "GDScript",
 "path": "res://gdscript/CurveTween.gd"
 } ]
 _global_script_class_icons={
+"BoneHandle": "",
 "CurveTween": ""
 }
 
@@ -42,6 +48,10 @@ window/vsync/use_vsync=false
 window/handheld/orientation="portrait"
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/bone_editor/plugin.cfg" )
 
 [layer_names]
 

@@ -167,6 +167,7 @@ far = 250.0
 
 [node name="spatula" parent="CameraPivot" instance=ExtResource( 9 )]
 transform = Transform( -6.55671e-09, 0, -0.15, 0, 0.15, 0, 0.15, 0, -6.55671e-09, 0, 1.01993, 33.2307 )
+spatulaMask = 16
 
 [node name="PlacementController" type="Spatial" parent="."]
 script = ExtResource( 22 )
