@@ -5,6 +5,8 @@ namespace CrazyEaters.UI
     using System;
     using System.Threading.Tasks;
     using CrazyEaters.Resources;
+    using CrazyEaters.Managers;
+    using CrazyEaters.DependencyInjection;
 
     public class CharacterStatusBar : Control
     {
@@ -16,8 +18,12 @@ namespace CrazyEaters.UI
 
         private RandomNumberGenerator rnd;
 
+        [Inject]
+        GameManager gm;
+
         public override void _Ready()
         {
+            this.ResolveDependencies();
             rnd = new RandomNumberGenerator();
             rnd.Randomize();
             Mount();
@@ -39,6 +45,7 @@ namespace CrazyEaters.UI
         public async void ChangeValue(StatusCharacterUI statusUI) {
             await Task.Delay(TimeSpan.FromSeconds(2 + rnd.RandiRange(1, 2)));
             statusUI.UpdateValue(-rnd.RandiRange(20, 100));
+            gm.TriggerEvent(GameManager.GameEvent.UpdateCharacterStatus, "teste_event");
         }
     }
 }

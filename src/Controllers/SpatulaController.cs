@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using CrazyEaters.Managers;
+using CrazyEaters.Tools;
 using CrazyEaters.DependencyInjection;
 
 namespace CrazyEaters.Controllers
@@ -35,6 +36,10 @@ namespace CrazyEaters.Controllers
 
         float currentDistance = 0f;
 
+        SceneTreeTween tween = null;
+
+        LineRenderer lineRenderer;
+
         public override void _Ready()
         {
             this.ResolveDependencies();
@@ -43,6 +48,8 @@ namespace CrazyEaters.Controllers
             skeleton = GetNode<Skeleton>(skeletonPath);
             meshInstance = GetNode<MeshInstance>(meshPath);
             animationPlayer = GetNode<AnimationPlayer>(animationPlayerPath);
+
+            lineRenderer = new LineRenderer(this, GetViewport().GetCamera(), 4, 4);
         }
 
         public override void _Input(InputEvent @event)
@@ -61,6 +68,7 @@ namespace CrazyEaters.Controllers
                         {
                             initialPos = mousePos;
                             gameManager.inputMode = GameManager.InputMode.LAUNCHER;
+                            StopTween();
                         } else {
                             initialPos = null;
                             gameManager.inputMode = GameManager.InputMode.SCENE;
@@ -90,6 +98,8 @@ namespace CrazyEaters.Controllers
                     float animLength = animationPlayer.GetAnimation("pull").Length / animationPlayer.PlaybackSpeed;
                     animationPlayer.Advance(animLength * currentDistance);
                     animationPlayer.Stop();
+
+                    lineRenderer.SimpleUpdate(GetGlobalTransform().origin, Vector3.Zero);
                 }
             }
         }
@@ -111,10 +121,20 @@ namespace CrazyEaters.Controllers
             skeleton.SetBonePose(boneIndex, newPose);
         }
 
-        public void HoldAnimationFinished()
+        public async void HoldAnimationFinished()
         {
-            SceneTreeTween tween = GetTree().CreateTween();
+            tween = GetTree().CreateTween();
             tween.TweenProperty(skeleton, "rotation_degrees", Vector3.Zero, .9f).SetTrans(Tween.TransitionType.Elastic).SetEase(Tween.EaseType.Out);
+            await ToSignal(tween, "finished");
+            tween = null;
+        }
+
+        public void StopTween()
+        {
+            if (tween != null) { 
+                tween.Stop();
+                tween.Free();
+            }
         }
 
         public void OnAnimationFinished(string name)

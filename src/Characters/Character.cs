@@ -35,6 +35,7 @@ namespace CrazyEaters.Characters
       public NodePath labelVelPath;
       public Label labelVel;
       [Inject] private SceneSwitcher sSwitcher = null;
+      [Inject] GameManager gm;
       private HabitatScene scene = null;
 
       public override void _Ready()
@@ -47,6 +48,13 @@ namespace CrazyEaters.Characters
 
          // Debug
          labelVel = GetNode<Label>(labelVelPath);
+
+         gm.StartListening(GameManager.GameEvent.UpdateCharacterStatus, OnUpdateStatus);
+      }
+
+      public void OnUpdateStatus(object param) 
+      {
+         GD.Print(param);
       }
 
       public async void Blink()
