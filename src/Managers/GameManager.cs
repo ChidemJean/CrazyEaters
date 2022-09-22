@@ -22,6 +22,7 @@ namespace CrazyEaters.Managers
         public bool inDebug = false;
         public CrazyEaters.Sandbox.World world;
         public GameData gameData = null;
+        public Spatial currentMainNode3D = null;
 
         [Signal]
         public delegate void OnDebugModeChange(bool inDebug);

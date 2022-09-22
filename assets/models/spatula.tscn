@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/models/imported/spatula.glb" type="PackedScene" id=1]
-[ext_resource path="res://src/Controllers/SpatulaController.cs" type="Script" id=2]
-[ext_resource path="res://assets/models/prototype/food/tomato.obj" type="ArrayMesh" id=3]
+[ext_resource path="res://src/Controllers/Launcher/SpatulaController.cs" type="Script" id=2]
 
 [sub_resource type="SpatialMaterial" id=2]
 flags_unshaded = true
@@ -21,9 +20,6 @@ meshPath = NodePath("Armature/Skeleton/spatula")
 skeletonPath = NodePath("Armature/Skeleton")
 animationPlayerPath = NodePath("AnimationPlayer")
 
-[node name="Skeleton" parent="Armature" index="0"]
-bones/4/bound_children = [ NodePath("BoneAttachment") ]
-
 [node name="spatula" parent="Armature/Skeleton" index="0"]
 material/0 = SubResource( 2 )
 material/1 = SubResource( 3 )
@@ -34,10 +30,6 @@ bone_name = "Bone4_end"
 
 [node name="BulletSlot" type="Spatial" parent="Armature/Skeleton/BoneAttachment" index="0"]
 transform = Transform( 1, 2.32976e-08, 7.45058e-09, 8.14907e-10, 1, -9.31323e-10, 1.11759e-08, 2.79397e-09, 1, -0.445581, 2.4801, 0.01749 )
-
-[node name="MeshInstance" type="MeshInstance" parent="Armature/Skeleton/BoneAttachment/BulletSlot" index="0"]
-transform = Transform( 20, 1.76951e-08, 5.96046e-08, 1.35042e-08, 20, -1.78814e-07, -1.78814e-07, -1.49012e-08, 20, -1.4317, -0.0881252, -0.0508475 )
-mesh = ExtResource( 3 )
 
 [node name="Area" type="Area" parent="Armature/Skeleton/BoneAttachment" index="1"]
 transform = Transform( 1, 1.58907e-08, 5.58794e-09, 8.44011e-10, 1, -9.31323e-10, 7.45058e-09, 9.31323e-10, 1, -0.0865946, 1.39919, 0.0132005 )

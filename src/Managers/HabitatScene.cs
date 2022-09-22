@@ -5,10 +5,13 @@ namespace CrazyEaters.Managers
     using CrazyEaters.Controllers;
     using CrazyEaters.Save;
     using CrazyEaters.Resources;
+    using CrazyEaters.DependencyInjection;
 
 
     public class HabitatScene : CEScene
     {
+        [Export]
+        NodePath main3DNodePath;
         [Export]
         NodePath cameraPath;
         [Export]
@@ -20,11 +23,13 @@ namespace CrazyEaters.Managers
         [Export]
         BlocksData blocksData;
 
+        public Spatial main3DNode;
         public Camera camera;
         public Viewport gameViewport;
         public PlacementController placementController;
         [Export]
         public int currentBlockId = 3;
+
 
         public override void _Ready()
         {
@@ -32,7 +37,10 @@ namespace CrazyEaters.Managers
             
             camera = GetNode<Camera>(cameraPath);
             gameViewport = GetNode<Viewport>(gameViewportPath);
+            main3DNode = GetNode<Spatial>(main3DNodePath);
             placementController = GetNode<PlacementController>(placementControllerPath);
+
+            gameManager.currentMainNode3D = main3DNode;
         }
 
         public BlocksData GetBlocksData()

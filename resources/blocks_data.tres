@@ -1,16 +1,16 @@
 [gd_resource type="Resource" load_steps=6 format=2]
 
 [ext_resource path="res://src/Resources/BlocksData.cs" type="Script" id=1]
-[ext_resource path="res://resources/blocks/chair_block.tres" type="Resource" id=2]
-[ext_resource path="res://resources/blocks/stone_stair.tres" type="Resource" id=3]
-[ext_resource path="res://resources/blocks/grass_block.tres" type="Resource" id=4]
-[ext_resource path="res://resources/blocks/wall_frame.tres" type="Resource" id=5]
+[ext_resource path="res://resources/items/blocks/stone_stair.tres" type="Resource" id=2]
+[ext_resource path="res://resources/items/blocks/grass_block.tres" type="Resource" id=3]
+[ext_resource path="res://resources/items/blocks/chair_block.tres" type="Resource" id=4]
+[ext_resource path="res://resources/items/blocks/wall_frame.tres" type="Resource" id=5]
 
 [resource]
 script = ExtResource( 1 )
 blocks = {
-"3": ExtResource( 4 ),
-"60": ExtResource( 2 ),
-"61": ExtResource( 3 ),
+"3": ExtResource( 3 ),
+"60": ExtResource( 4 ),
+"61": ExtResource( 2 ),
 "62": ExtResource( 5 )
 }

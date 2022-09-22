@@ -2,15 +2,13 @@ namespace CrazyEaters.Resources
 {
     using Godot;
     using System;
+    using MonoCustomResourceRegistry;
+    using CrazyEaters.Resources;
 
-    public class BlockData : Resource
+    [RegisteredType(nameof(BlockData), "res://assets/textures/UI/icons/icon_block.png", nameof(Resource))]
+    public class BlockData : EntityData
     {
         public enum BlockType { Unique, Group };
-
-        [Export]
-        public string id;
-        [Export]
-        public PackedScene prefab;
 
         [Export]
         public Vector3 gridSize = new Vector3(1,1,1);
@@ -26,9 +24,6 @@ namespace CrazyEaters.Resources
 
         [Export]
         public bool solid = false;
-
-        [Export]
-        public Texture thumb;
 
     }
 }

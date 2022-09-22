@@ -6,7 +6,16 @@
 [resource]
 script = ExtResource( 1 )
 id = "62"
+name = null
 prefab = ExtResource( 2 )
+description = null
+blocked = false
+unblockedByDefault = false
+stackable = false
+maxStack = 0
+rarity = 0
+conditionsToUnblock = {
+}
 gridSize = Vector3( 3, 3, 1 )
 life = 100
 price = 0.0

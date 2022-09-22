@@ -5,7 +5,16 @@
 [resource]
 script = ExtResource( 1 )
 id = null
-gridSize = Vector3( 1, 1, 1 )
+name = null
+description = null
+blocked = false
+unblockedByDefault = false
+stackable = false
+maxStack = 0
+rarity = 0
+conditionsToUnblock = {
+}
+gridSize = Vector3( 2, 1, 1 )
 life = 100
 price = 0.0
 blockType = 0

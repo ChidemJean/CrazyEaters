@@ -2,7 +2,9 @@ namespace CrazyEaters.Resources
 {
     using Godot;
     using System;
+    using MonoCustomResourceRegistry;
 
+    [RegisteredType(nameof(StatusCharacter), "res://assets/textures/UI/icons/icon_block.png", nameof(Resource))]
     public class StatusCharacter : Resource
     {
         public enum UIVisibility { Explicit, Implicit };

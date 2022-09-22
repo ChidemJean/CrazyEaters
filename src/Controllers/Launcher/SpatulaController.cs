@@ -1,10 +1,11 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using CrazyEaters.Managers;
 using CrazyEaters.Tools;
 using CrazyEaters.DependencyInjection;
 
-namespace CrazyEaters.Controllers
+namespace CrazyEaters.Controllers.Launcher
 {
     public class SpatulaController : Spatial
     {
@@ -20,6 +21,10 @@ namespace CrazyEaters.Controllers
 
         [Export]
         NodePath animationPlayerPath;
+
+        [Export]
+        float throwPower = 10;
+        float curThrowPower = 0;
 
         [Export(PropertyHint.Layers3dPhysics)]
         public uint spatulaMask;
@@ -38,7 +43,18 @@ namespace CrazyEaters.Controllers
 
         SceneTreeTween tween = null;
 
+        [Export]
+        NodePath lineRendererPath;
         LineRenderer lineRenderer;
+        [Export]
+        int numPoints = 8;
+        [Export] 
+        public float timeBetweenPoints = 1f;
+
+        [Export]
+        NodePath throwablePath;
+
+        IThrowable throwable;
 
         public override void _Ready()
         {
@@ -48,8 +64,10 @@ namespace CrazyEaters.Controllers
             skeleton = GetNode<Skeleton>(skeletonPath);
             meshInstance = GetNode<MeshInstance>(meshPath);
             animationPlayer = GetNode<AnimationPlayer>(animationPlayerPath);
-
-            lineRenderer = new LineRenderer(this, GetViewport().GetCamera(), 4, 4);
+            lineRenderer = GetNode<LineRenderer>(lineRendererPath);
+            if (throwablePath != null) {
+                throwable = GetNode<IThrowable>(throwablePath);
+            }
         }
 
         public override void _Input(InputEvent @event)
@@ -80,6 +98,12 @@ namespace CrazyEaters.Controllers
                         float animLength = animationPlayer.GetAnimation("hold").Length / animationPlayer.PlaybackSpeed;
                         animationPlayer.Advance(animLength - animLength * currentDistance);
                         currentDistance = 0f;
+                        lineRenderer.SetProcess(false);
+                        lineRenderer.Clear();
+                        if (curThrowPower != 0 && throwable != null) {
+                            throwable.Drop(Vector3.Forward * throwPower * curThrowPower);
+                            throwable = null;
+                        }
                     }
                 }
                 return;
@@ -99,9 +123,43 @@ namespace CrazyEaters.Controllers
                     animationPlayer.Advance(animLength * currentDistance);
                     animationPlayer.Stop();
 
-                    lineRenderer.SimpleUpdate(GetGlobalTransform().origin, Vector3.Zero);
+                    if (throwable == null) {
+                        throwable = GetNode<IThrowable>(throwablePath);
+                        throwable.Hold(bulletSlot);
+                    }
+
+                    if (currentDistance > 0.01f) {
+                        curThrowPower = currentDistance;
+                        lineRenderer.SetProcess(true);
+                        lineRenderer.UpdatePoints(GetTrajectoryPoints(currentDistance));
+                    } else {
+                        curThrowPower = 0;
+                    }
                 }
+                return;
             }
+        }
+
+        public Vector3 GetThrowVec(float force)
+        {
+            return -bulletSlot.GlobalTransform.basis.x * (throwPower * force);
+        }
+
+        public List<Vector3> GetTrajectoryPoints(float force)
+        {
+            List<Vector3> points = new List<Vector3>();
+
+            Vector3 startingPosition = bulletSlot.GlobalTransform.origin;
+            Vector3 startingVelocity = GetThrowVec(force);
+
+            for (float t = 0; t < numPoints; t += timeBetweenPoints)
+            {
+                Vector3 newPoint = startingPosition + t * startingVelocity;
+                newPoint.y = startingPosition.y + startingVelocity.y * t + gameManager.gravityVector.y/4f * t * t;
+                points.Add(newPoint);
+            }
+
+            return points;
         }
 
         private Vector3 GetBoneRotation(string boneName)

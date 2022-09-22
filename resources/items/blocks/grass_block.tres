@@ -1,0 +1,23 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://src/Resources/BlockData.cs" type="Script" id=1]
+[ext_resource path="res://assets/textures/UI/icons/grass_icon_block.png" type="Texture" id=2]
+
+[resource]
+script = ExtResource( 1 )
+id = "3"
+name = null
+description = null
+thumb = ExtResource( 2 )
+blocked = false
+unblockedByDefault = false
+stackable = false
+maxStack = 0
+rarity = 0
+conditionsToUnblock = {
+}
+gridSize = Vector3( 1, 1, 1 )
+life = 100
+price = 0.0
+blockType = 1
+solid = true
