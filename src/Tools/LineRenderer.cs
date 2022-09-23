@@ -176,9 +176,11 @@ namespace CrazyEaters.Tools
          var offset = start - center;
          var angle = offset.AngleTo(end - center);
          
+         try {
          foreach (int i in GD.Range(1, smoothing)) {
             array[i] = center + offset.Rotated(axis, Mathf.Lerp(0, angle, (float) i / smoothing));
          }
+         } catch (ArgumentException e) {}
          
          foreach (int i in GD.Range(1, smoothing + 1)) {
             SetUv(new Vector2(0, (i - 1) / smoothing));

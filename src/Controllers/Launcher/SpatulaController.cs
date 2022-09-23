@@ -101,7 +101,7 @@ namespace CrazyEaters.Controllers.Launcher
                         lineRenderer.SetProcess(false);
                         lineRenderer.Clear();
                         if (curThrowPower != 0 && throwable != null) {
-                            throwable.Drop(Vector3.Forward * throwPower * curThrowPower);
+                            throwable.Drop(-bulletSlot.GlobalTransform.basis.x * (throwPower * 6f * curThrowPower), bulletSlot.GlobalTransform.origin);
                             throwable = null;
                         }
                     }

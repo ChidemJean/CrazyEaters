@@ -1,9 +1,12 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://src/Entities/Food.cs" type="Script" id=1]
 [ext_resource path="res://assets/textures/UI/thumbs/thumb_hamb_teste.png" type="Texture" id=2]
 [ext_resource path="res://assets/models/hamburguer.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/Resources/FoodData.cs" type="Script" id=4]
+
+[sub_resource type="PhysicsMaterial" id=3]
+absorbent = true
 
 [sub_resource type="Resource" id=2]
 resource_local_to_scene = true
@@ -24,16 +27,18 @@ coinType = 1
 calories = 200
 
 [sub_resource type="SphereShape" id=1]
-radius = 0.541506
+radius = 0.349142
 
 [node name="Hamburguer" type="RigidBody"]
-transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0 )
-collision_mask = 15
+collision_mask = 14
+physics_material_override = SubResource( 3 )
+continuous_cd = true
 script = ExtResource( 1 )
 foodData = SubResource( 2 )
 
-[node name="hamburguer" parent="." instance=ExtResource( 3 )]
-
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0186667, 0.0433434, 0.00629264 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.282231, 0.0433434, 0.00629264 )
 shape = SubResource( 1 )
+
+[node name="hamburguer" parent="." instance=ExtResource( 3 )]
+transform = Transform( 0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, -0.263565, 0, 0 )
