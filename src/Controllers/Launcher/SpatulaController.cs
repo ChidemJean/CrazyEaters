@@ -70,6 +70,14 @@ namespace CrazyEaters.Controllers.Launcher
             }
         }
 
+        public override void _PhysicsProcess(float delta)
+        {
+            if (throwable != null) {
+                ((Spatial) throwable).GlobalTranslation = bulletSlot.GlobalTransform.origin;
+                ((Spatial) throwable).GlobalRotation = bulletSlot.GlobalRotation;
+            }
+        }
+
         public override void _Input(InputEvent @event)
         {
             if (@event is InputEventMouseButton)

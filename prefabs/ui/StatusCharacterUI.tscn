@@ -2,7 +2,7 @@
 
 [ext_resource path="res://assets/fonts/CrazyEaters.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://assets/textures/UI/icons/plus.svg" type="Texture" id=2]
-[ext_resource path="res://src/ui/StatusCharacterUI.cs" type="Script" id=3]
+[ext_resource path="res://src/UI/StatusCharacterUI.cs" type="Script" id=3]
 
 [sub_resource type="StyleBoxFlat" id=14]
 bg_color = Color( 0.0627451, 0.0627451, 0.0627451, 0.317647 )

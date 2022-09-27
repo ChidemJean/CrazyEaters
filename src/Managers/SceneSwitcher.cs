@@ -72,6 +72,7 @@ namespace CrazyEaters.Managers
 
         public void UpdateProgress(object progress) 
         {
+            GD.Print("progress: " + progress);
         }
 
         public void Clean() {

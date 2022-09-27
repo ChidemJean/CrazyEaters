@@ -25,10 +25,9 @@ namespace CrazyEaters.Entities
 
         void IThrowable.Drop(Vector3 force, Vector3 origin)
         {
-            GD.Print(force);
-            GetParent().RemoveChild(this);
+            // GetParent().RemoveChild(this);
             if (gameManager.currentMainNode3D != null) {
-                gameManager.currentMainNode3D.AddChild(this);
+                // gameManager.currentMainNode3D.AddChild(this);
                 GlobalTranslation = origin;
                 rb.Mode = RigidBody.ModeEnum.Rigid;
                 rb.GravityScale = 2;
@@ -39,8 +38,8 @@ namespace CrazyEaters.Entities
         void IThrowable.Hold(Spatial slot)
         {
             if (gameManager.currentMainNode3D != null) {
-                GetParent().RemoveChild(this);
-                slot.AddChild(this);
+                // GetParent().RemoveChild(this);
+                // slot.AddChild(this);
                 rb.Mode = RigidBody.ModeEnum.Character;
                 rb.GravityScale = 0;
                 rb.LinearVelocity = Vector3.Zero;

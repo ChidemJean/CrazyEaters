@@ -40,8 +40,6 @@ shadow_atlas_quad_0 = 1
 
 [node name="CharacterKB" parent="ViewportContainer/Viewport/Spatial/DetourNavigation" index="1"]
 labelVelPath = NodePath("../../../../../MarginContainer/VBoxContainer/Label")
-labelDirPath = NodePath("../../../../../MarginContainer/VBoxContainer/Label2")
-btnBakePath = NodePath("../../../../../Bake")
 
 [node name="FPS" parent="." instance=ExtResource( 4 )]
 margin_left = -164.0

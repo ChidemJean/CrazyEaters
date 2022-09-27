@@ -20,7 +20,7 @@
 [ext_resource path="res://prefabs/ui/BlockUI.tscn" type="PackedScene" id=18]
 [ext_resource path="res://resources/blocks_data.tres" type="Resource" id=19]
 [ext_resource path="res://prefabs/ui/StatusCharacterUI.tscn" type="PackedScene" id=20]
-[ext_resource path="res://src/ui/CharacterStatusBar.cs" type="Script" id=21]
+[ext_resource path="res://src/UI/CharacterStatusBar.cs" type="Script" id=21]
 [ext_resource path="res://resources/eater_statuses.tres" type="Resource" id=22]
 
 [sub_resource type="StyleBoxFlat" id=15]

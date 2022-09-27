@@ -181,7 +181,6 @@ anims/DayNight = SubResource( 12 )
 anims/RESET = SubResource( 13 )
 
 [node name="CameraPivot" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 script = ExtResource( 21 )
 speed = 30.0
 targetNode = NodePath("Camera")
@@ -194,7 +193,7 @@ far = 250.0
 
 [node name="spatula" parent="CameraPivot" instance=ExtResource( 9 )]
 transform = Transform( -6.55671e-09, 0, -0.15, 0, 0.15, 0, 0.15, 0, -6.55671e-09, 0, 1.01993, 29.1042 )
-throwPower = 120.0
+throwPower = 240.0
 spatulaMask = 16
 lineRendererPath = NodePath("../../LineRenderer")
 numPoints = 5
@@ -202,10 +201,7 @@ timeBetweenPoints = 0.2
 throwablePath = NodePath("../../Hamburguer")
 
 [node name="Skeleton" parent="CameraPivot/spatula/Armature" index="0"]
-bones/4/bound_children = [ NodePath("BoneAttachment") ]
-
-[node name="BoneAttachment" parent="CameraPivot/spatula/Armature/Skeleton" index="1"]
-transform = Transform( 0.997886, 0.0615615, 0.0208422, -0.061768, 0.998046, 0.0094159, -0.0202219, -0.0106834, 0.999738, -0.248285, 3.04844, 0.0488994 )
+bones/4/bound_children = [  ]
 
 [node name="LineRenderer" parent="." instance=ExtResource( 14 )]
 material_override = SubResource( 22 )
@@ -297,7 +293,7 @@ material = ExtResource( 6 )
 transform = Transform( 0.38, 0, 0, 0, 0.38, 0, 0, 0, 0.38, 0, -0.363017, 0 )
 
 [node name="Hamburguer" parent="." instance=ExtResource( 11 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.04115, 2.96657 )
+transform = Transform( 0.0202218, 0.0106834, -0.999738, -0.0617681, 0.998046, 0.0094159, 0.997886, 0.0615615, 0.0208422, -0.00979732, 2.66005, 29.0565 )
 foodData = SubResource( 21 )
 
 [editable path="CameraPivot/spatula"]
