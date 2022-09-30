@@ -1,6 +1,9 @@
 using Godot;
 using System;
 using CrazyEaters.Managers;
+using CrazyEaters.Entities;
+using CrazyEaters.Characters.States;
+using CrazyEaters.AI.StateMachine;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -15,6 +18,7 @@ namespace CrazyEaters.Characters
       [Export] protected Vector3 velocity;
       [Export] protected NodePath animTreePath;
       [Export] protected NodePath sensorAreaPath;
+      [Export] protected NodePath sensorMouthPath;
       [Export] protected NodePath worldPath;
 
       protected CrazyEaters.Sandbox.World world;
@@ -27,6 +31,7 @@ namespace CrazyEaters.Characters
       protected AnimationPlayer animationPlayer;
       protected AnimationNodeStateMachinePlayback stateMachine;
       protected Area sensorArea;
+      protected Area sensorMouth;
       protected float _speed;
       protected Vector3 moveDir = Vector3.Zero;
       protected Vector3 OriginalScale = Vector3.One;
@@ -35,7 +40,7 @@ namespace CrazyEaters.Characters
       protected bool isBlinking = false;
       protected bool canWalk = true;
       protected RandomNumberGenerator rng;
- 
+
       protected float idleTime = 0.0f;
       // IA
       [Export]
@@ -50,6 +55,9 @@ namespace CrazyEaters.Characters
       public Vector3[] pathIA;
 
       public ImmediateGeometry ig;
+      private StateMachine _ai_stateMachine;
+
+      public StateMachine ai_StateMachine => _ai_stateMachine;
 
       public override void _Ready()
       {
@@ -57,10 +65,10 @@ namespace CrazyEaters.Characters
          gravity = gameManager.gravityVector * gameManager.gravityMagnitude * gravityScale;
          world = GetNode<CrazyEaters.Sandbox.World>(worldPath);
          sensorArea = GetNode<Area>(sensorAreaPath);
+         sensorMouth = GetNode<Area>(sensorMouthPath);
 
          animationTree = GetNode<AnimationTree>(animTreePath);
          stateMachine = (AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback");
-         stateMachine.Start("idle");
          animationPlayer = animationTree.GetNode<AnimationPlayer>(animationTree.AnimPlayer);
 
          rng = new RandomNumberGenerator();
@@ -72,7 +80,19 @@ namespace CrazyEaters.Characters
          ig = GetNode<ImmediateGeometry>(igPath);
 
          navmesh.Connect("bake_finished", this, nameof(OnNavmeshChanged));
+         sensorArea.Connect("body_entered", this, nameof(OnBodyEnteredMouth));
          // navigationAgent.SetTargetLocation(targetIALocation);
+
+         _ai_stateMachine = new StateMachine();
+         _ai_stateMachine.AddAnyTransition(new IdleState(), () => {
+            return false;
+         });
+         _ai_stateMachine.AddAnyTransition(new WalkState(), () => {
+            return false;
+         });
+         _ai_stateMachine.AddAnyTransition(new EatState(), () => {
+            return false;
+         });
 
          _speed = speed;
 
@@ -81,14 +101,21 @@ namespace CrazyEaters.Characters
 
       public abstract void OnNavmeshChanged();
       public abstract void IdleAnimationVariations();
-
-      public void MoveAnimation(bool isPressed)
+      public void OnBodyEnteredMouth(Node body)
       {
-         if (isPressed && stateMachine.GetCurrentNode() != "walk" && IsOnFloor())
+         if (body is Food)
+         {
+            stateMachine.Start("open_mouth");
+         }
+      }
+
+      public void MoveAnimation(bool moving)
+      {
+         if (moving && stateMachine.GetCurrentNode() != "walk" && stateMachine.GetCurrentNode() != "start_walk" && IsOnFloor() && canWalk)
          {
             stateMachine.Start("start_walk");
          }
-         else if (moveDir.x == 0 && moveDir.z == 0)
+         else if (moveDir.x == 0 && moveDir.z == 0 && stateMachine.GetCurrentNode() != "eat" && !stateMachine.GetCurrentNode().Contains("idle"))
          {
             stateMachine.Start("idle");
          }
@@ -173,10 +200,9 @@ namespace CrazyEaters.Characters
       public override void _PhysicsProcess(float delta)
       {
          bool isOnFloor = IsOnFloor();
-
-         if (canWalk && stateMachine.GetCurrentNode() != "walk" && stateMachine.GetCurrentNode() != "start_walk" && moveDir != Vector3.Zero && isOnFloor)
-         {
-            stateMachine.Start("start_walk");
+         
+         if (ai_StateMachine != null) {
+            ai_StateMachine.Tick();
          }
 
          if (stateMachine.GetCurrentNode() == "idle")
@@ -217,7 +243,6 @@ namespace CrazyEaters.Characters
             OnJumpDownAnimationEnd();
             isJumping = false;
          }
-
          isFloor = isOnFloor;
 
          // Vector3 localVelocity = velocity.Rotated(Vector3.Up, Rotation.y);
@@ -236,15 +261,7 @@ namespace CrazyEaters.Characters
          // } else {
 
          // }
-
-         if (moveDir != Vector3.Zero)
-         {
-            MoveAnimation(false);
-         }
-         else
-         {
-            MoveAnimation(true);
-         }
+         MoveAnimation(moveDir != Vector3.Zero);
 
          if (pathIA != null && pathIA.Length > 0)
          {

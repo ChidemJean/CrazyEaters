@@ -11,7 +11,6 @@ namespace CrazyEaters.Managers
     public class GameManager : Spatial
     {
         public enum InputMode { SCENE, UI, LAUNCHER };
-        public enum GameEvent { UpdateCharacterStatus };
         public bool gameEventsActive = true;
         public Hud hud;
         public Godot.Object ResourceQueue;

@@ -49,13 +49,11 @@ namespace CrazyEaters.Characters
          // Debug
          labelVel = GetNode<Label>(labelVelPath);
 
-         gm.StartListening(GameManager.GameEvent.UpdateCharacterStatus, OnUpdateStatus);
+         gm.StartListening(GameEvent.UpdateCharacterStatus, OnUpdateStatus);
       }
 
       public void OnUpdateStatus(object param) 
-      {
-         GD.Print(param);
-      }
+      {}
 
       public async void Blink()
       {
@@ -84,7 +82,6 @@ namespace CrazyEaters.Characters
          {
             if (@event is InputEventKey)
             {
-               return;
                InputEventKey _event = (InputEventKey)@event;
                if (_event.IsPressed() && _event.Scancode == (uint)KeyList.Space)
                {
@@ -128,21 +125,21 @@ namespace CrazyEaters.Characters
                   // MoveAnimation(_event.IsPressed());
                }
             }
-         }
-         if (@event is InputEventMouseButton)
-         {
-            InputEventMouseButton _event = (InputEventMouseButton)@event;
-            if (!_event.IsPressed() && _event.ButtonIndex == (uint)ButtonList.Left && !scene.inEditMode)
+            if (@event is InputEventMouseButton)
             {
-               Vector2 mousePos = _event.Position * gameManager.hud.currentScale;
-               PhysicsDirectSpaceState spaceState = GetWorld().DirectSpaceState;
-               Vector3 rayOrigin = GetViewport().GetCamera().ProjectRayOrigin(mousePos);
-               Vector3 rayEnd = rayOrigin + GetViewport().GetCamera().ProjectRayNormal(mousePos) * 2000;
-               Godot.Collections.Dictionary rayCol = spaceState.IntersectRay(rayOrigin, rayEnd, null);
-               if (rayCol != null && rayCol.Count > 0)
+               InputEventMouseButton _event = (InputEventMouseButton)@event;
+               if (!_event.IsPressed() && _event.ButtonIndex == (uint)ButtonList.Left && !scene.inEditMode)
                {
-                  targetIALocation = (Vector3)rayCol["position"];
-                  UpdatePath();
+                  Vector2 mousePos = _event.Position * gameManager.hud.currentScale;
+                  PhysicsDirectSpaceState spaceState = GetWorld().DirectSpaceState;
+                  Vector3 rayOrigin = GetViewport().GetCamera().ProjectRayOrigin(mousePos);
+                  Vector3 rayEnd = rayOrigin + GetViewport().GetCamera().ProjectRayNormal(mousePos) * 2000;
+                  Godot.Collections.Dictionary rayCol = spaceState.IntersectRay(rayOrigin, rayEnd, null);
+                  if (rayCol != null && rayCol.Count > 0)
+                  {
+                     targetIALocation = (Vector3)rayCol["position"];
+                     UpdatePath();
+                  }
                }
             }
          }

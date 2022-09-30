@@ -37,15 +37,14 @@ namespace CrazyEaters.UI
                     StatusCharacterUI statusUI = prefabStatus.Instance<StatusCharacterUI>();
                     statusUI.StatusData = status;
                     AddChild(statusUI);
-                    ChangeValue(statusUI);
+                    // ChangeValue(statusUI);
                 }
             }
         }
 
-        public async void ChangeValue(StatusCharacterUI statusUI) {
-            await Task.Delay(TimeSpan.FromSeconds(2 + rnd.RandiRange(1, 2)));
-            statusUI.UpdateValue(-rnd.RandiRange(20, 100));
-            gm.TriggerEvent(GameManager.GameEvent.UpdateCharacterStatus, "teste_event");
-        }
+        // public async void ChangeValue(StatusCharacterUI statusUI) {
+        //     await Task.Delay(TimeSpan.FromSeconds(2 + rnd.RandiRange(1, 2)));
+        //     statusUI.UpdateValue(-rnd.RandiRange(20, 100));
+        // }
     }
 }
