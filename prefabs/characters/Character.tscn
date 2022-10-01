@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=42 format=2]
 
 [ext_resource path="res://assets/models/character.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/Characters/Character.cs" type="Script" id=2]
@@ -14,6 +14,20 @@ radius = 2.5203
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=2]
 
+[sub_resource type="AnimationNodeAnimation" id=29]
+animation = "idle_foot"
+
+[sub_resource type="AnimationNodeAnimation" id=30]
+animation = "idle_head"
+
+[sub_resource type="AnimationNodeAnimation" id=31]
+animation = "idle_pose"
+
+[sub_resource type="AnimationNodeAnimation" id=27]
+animation = "close_mouth"
+
+[sub_resource type="AnimationNodeOneShot" id=28]
+
 [sub_resource type="AnimationNodeOneShot" id=26]
 
 [sub_resource type="AnimationNodeAnimation" id=25]
@@ -21,6 +35,12 @@ animation = "eat"
 
 [sub_resource type="AnimationNodeAnimation" id=7]
 animation = "idle-loop"
+
+[sub_resource type="AnimationNodeOneShot" id=32]
+
+[sub_resource type="AnimationNodeOneShot" id=33]
+
+[sub_resource type="AnimationNodeOneShot" id=34]
 
 [sub_resource type="AnimationNodeTimeScale" id=8]
 
@@ -47,22 +67,22 @@ animation = "jump_down"
 
 [sub_resource type="AnimationNodeOneShot" id=14]
 
-[sub_resource type="AnimationNodeAnimation" id=21]
-animation = "idle-loop"
-
 [sub_resource type="AnimationNodeAnimation" id=22]
 animation = "open_mouth"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=23]
+[sub_resource type="AnimationNodeAnimation" id=35]
+animation = "opened_mouth-loop"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=36]
 switch_mode = 2
 auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachine" id=24]
-states/idle-loop/node = SubResource( 21 )
-states/idle-loop/position = Vector2( 398, 149 )
 states/open_mouth/node = SubResource( 22 )
 states/open_mouth/position = Vector2( 167, 164 )
-transitions = [ "open_mouth", "idle-loop", SubResource( 23 ) ]
+states/opened_mouth-loop/node = SubResource( 35 )
+states/opened_mouth-loop/position = Vector2( 399, 165 )
+transitions = [ "open_mouth", "opened_mouth-loop", SubResource( 36 ) ]
 start_node = "open_mouth"
 
 [sub_resource type="AnimationNodeTransition" id=19]
@@ -82,33 +102,49 @@ animation = "walk-loop"
 [sub_resource type="AnimationNodeTimeScale" id=10]
 
 [sub_resource type="AnimationNodeBlendTree" id=11]
-graph_offset = Vector2( -34.5635, -42.2985 )
+graph_offset = Vector2( 155.693, -25.4747 )
+nodes/Animation/node = SubResource( 27 )
+nodes/Animation/position = Vector2( 1440, 220 )
+"nodes/Animation 2/node" = SubResource( 29 )
+"nodes/Animation 2/position" = Vector2( 640, 560 )
+"nodes/Animation 3/node" = SubResource( 30 )
+"nodes/Animation 3/position" = Vector2( 840, 560 )
+"nodes/Animation 4/node" = SubResource( 31 )
+"nodes/Animation 4/position" = Vector2( 1040, 560 )
+nodes/CloseMouth/node = SubResource( 28 )
+nodes/CloseMouth/position = Vector2( 1440, 60 )
 nodes/Eat/node = SubResource( 26 )
-nodes/Eat/position = Vector2( 880, 460 )
+nodes/Eat/position = Vector2( 1240, 60 )
 nodes/EatAnim/node = SubResource( 25 )
-nodes/EatAnim/position = Vector2( 700, 520 )
+nodes/EatAnim/position = Vector2( 1260, 220 )
 nodes/IdleAnim/node = SubResource( 7 )
-nodes/IdleAnim/position = Vector2( -20, 60 )
+nodes/IdleAnim/position = Vector2( 0, 0 )
+nodes/IdleFoot/node = SubResource( 32 )
+nodes/IdleFoot/position = Vector2( 640, 400 )
+nodes/IdleHead/node = SubResource( 33 )
+nodes/IdleHead/position = Vector2( 840, 400 )
+nodes/IdlePose/node = SubResource( 34 )
+nodes/IdlePose/position = Vector2( 1040, 400 )
 nodes/IdleScale/node = SubResource( 8 )
-nodes/IdleScale/position = Vector2( 120, 60 )
+nodes/IdleScale/position = Vector2( 140, 0 )
 nodes/Jump/node = SubResource( 18 )
-nodes/Jump/position = Vector2( 180, 340 )
+nodes/Jump/position = Vector2( 160, 300 )
 nodes/JumpDown/node = SubResource( 12 )
-nodes/JumpDown/position = Vector2( 500, 380 )
+nodes/JumpDown/position = Vector2( 1040, 220 )
 nodes/Land/node = SubResource( 14 )
-nodes/Land/position = Vector2( 660, 320 )
+nodes/Land/position = Vector2( 1040, 60 )
 nodes/OpenMouth/node = SubResource( 24 )
-nodes/OpenMouth/position = Vector2( 180, 460 )
+nodes/OpenMouth/position = Vector2( 160, 420 )
 nodes/State/node = SubResource( 19 )
-nodes/State/position = Vector2( 500, 200 )
+nodes/State/position = Vector2( 580, 140 )
 nodes/Walk/node = SubResource( 13 )
-nodes/Walk/position = Vector2( 280, 100 )
+nodes/Walk/position = Vector2( 300, 40 )
 nodes/WalkAnim/node = SubResource( 9 )
-nodes/WalkAnim/position = Vector2( -20, 200 )
+nodes/WalkAnim/position = Vector2( 0, 140 )
 nodes/WalkScale/node = SubResource( 10 )
-nodes/WalkScale/position = Vector2( 120, 200 )
-nodes/output/position = Vector2( 1040, 260 )
-node_connections = [ "Land", 0, "State", "Land", 1, "JumpDown", "output", 0, "Eat", "WalkScale", 0, "WalkAnim", "IdleScale", 0, "IdleAnim", "State", 0, "Walk", "State", 1, "Jump", "State", 2, "OpenMouth", "Walk", 0, "IdleScale", "Walk", 1, "WalkScale", "Eat", 0, "Land", "Eat", 1, "EatAnim" ]
+nodes/WalkScale/position = Vector2( 140, 140 )
+nodes/output/position = Vector2( 1660, 60 )
+node_connections = [ "IdleHead", 0, "IdleFoot", "IdleHead", 1, "Animation 3", "Land", 0, "IdlePose", "Land", 1, "JumpDown", "IdlePose", 0, "IdleHead", "IdlePose", 1, "Animation 4", "IdleFoot", 0, "State", "IdleFoot", 1, "Animation 2", "output", 0, "CloseMouth", "WalkScale", 0, "WalkAnim", "IdleScale", 0, "IdleAnim", "State", 0, "Walk", "State", 1, "Jump", "State", 2, "OpenMouth", "Walk", 0, "IdleScale", "Walk", 1, "WalkScale", "CloseMouth", 0, "Eat", "CloseMouth", 1, "Animation", "Eat", 0, "Land", "Eat", 1, "EatAnim" ]
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=20]
 
@@ -146,10 +182,10 @@ transform = Transform( 0.17, 0, 0, 0, 0.17, 0, 0, 0, 0.17, 0, 0, 0 )
 bones/18/bound_children = [ NodePath("Mouth") ]
 
 [node name="Eyes" parent="character/Armature/Skeleton" index="1"]
-transform = Transform( 1, -1.3411e-07, -3.01003e-06, 2.14204e-06, -0.614189, 0.789158, 5.66244e-07, -0.789161, -0.614193, -0.0953019, 8.59448, -1.6499 )
+transform = Transform( 1, -4.32134e-07, -2.93553e-06, 2.06009e-06, -0.547685, 0.836684, 6.85453e-07, -0.836688, -0.547688, -0.0953009, 8.7186, -1.23316 )
 
 [node name="Mouth" type="BoneAttachment" parent="character/Armature/Skeleton" index="2"]
-transform = Transform( 1, -1.51992e-06, 6.70552e-08, 2.62633e-07, 0.334171, 0.942512, 1.19209e-06, -0.942516, 0.334171, -0.0952982, 5.35673, -1.53868 )
+transform = Transform( 1, -1.49012e-06, 3.35276e-07, 1.22935e-07, 0.410032, 0.912071, 1.2219e-06, -0.912075, 0.410033, -0.095298, 5.48258, -1.38675 )
 bone_name = "mouth_down"
 
 [node name="MouthSensor" type="Area" parent="character/Armature/Skeleton/Mouth"]
@@ -170,7 +206,11 @@ parameters/playback = SubResource( 2 )
 tree_root = SubResource( 11 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
+parameters/CloseMouth/active = false
 parameters/Eat/active = false
+parameters/IdleFoot/active = false
+parameters/IdleHead/active = false
+parameters/IdlePose/active = false
 parameters/IdleScale/scale = 1.0
 parameters/Jump/playback = SubResource( 20 )
 parameters/Land/active = false
