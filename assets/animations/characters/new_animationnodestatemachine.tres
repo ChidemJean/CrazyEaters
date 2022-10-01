@@ -1,0 +1,107 @@
+[gd_resource type="AnimationNodeStateMachine" load_steps=28 format=2]
+
+[sub_resource type="AnimationNodeAnimation" id=20]
+animation = "eat"
+
+[sub_resource type="AnimationNodeAnimation" id=4]
+animation = "idle-loop"
+
+[sub_resource type="AnimationNodeAnimation" id=5]
+animation = "idle_foot"
+
+[sub_resource type="AnimationNodeAnimation" id=6]
+animation = "idle_head"
+
+[sub_resource type="AnimationNodeAnimation" id=34]
+animation = "idle_pose"
+
+[sub_resource type="AnimationNodeAnimation" id=29]
+animation = "jump-loop"
+
+[sub_resource type="AnimationNodeAnimation" id=15]
+animation = "jump"
+
+[sub_resource type="AnimationNodeAnimation" id=16]
+animation = "jump_down"
+
+[sub_resource type="AnimationNodeAnimation" id=23]
+animation = "open_mouth"
+
+[sub_resource type="AnimationNodeAnimation" id=32]
+animation = "start_walk"
+
+[sub_resource type="AnimationNodeAnimation" id=12]
+animation = "walk-loop"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=7]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=8]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=9]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=10]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=13]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=14]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=17]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=19]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=22]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=24]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=25]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=30]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=31]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=33]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=35]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=36]
+
+[resource]
+states/eat/node = SubResource( 20 )
+states/eat/position = Vector2( 648, 381 )
+states/idle/node = SubResource( 4 )
+states/idle/position = Vector2( 127, 249 )
+states/idle_foot/node = SubResource( 5 )
+states/idle_foot/position = Vector2( -150, 241 )
+states/idle_head/node = SubResource( 6 )
+states/idle_head/position = Vector2( 553, 92 )
+states/idle_pose/node = SubResource( 34 )
+states/idle_pose/position = Vector2( 261, 366 )
+states/jump/node = SubResource( 15 )
+states/jump/position = Vector2( 148, 127 )
+states/jump-loop/node = SubResource( 29 )
+states/jump-loop/position = Vector2( 40, 29 )
+states/jump_down/node = SubResource( 16 )
+states/jump_down/position = Vector2( -103, 134 )
+states/open_mouth/node = SubResource( 23 )
+states/open_mouth/position = Vector2( 648, 217 )
+states/start_walk/node = SubResource( 32 )
+states/start_walk/position = Vector2( -181, 396 )
+states/walk/node = SubResource( 12 )
+states/walk/position = Vector2( 28, 396 )
+transitions = [ "idle", "idle_foot", SubResource( 7 ), "idle_foot", "idle", SubResource( 8 ), "idle", "idle_head", SubResource( 9 ), "idle_head", "idle", SubResource( 10 ), "idle", "walk", SubResource( 13 ), "walk", "idle", SubResource( 14 ), "idle", "jump", SubResource( 17 ), "jump_down", "idle", SubResource( 19 ), "eat", "idle", SubResource( 22 ), "idle", "open_mouth", SubResource( 24 ), "open_mouth", "eat", SubResource( 25 ), "jump", "jump-loop", SubResource( 30 ), "jump-loop", "jump_down", SubResource( 31 ), "start_walk", "walk", SubResource( 33 ), "idle_pose", "idle", SubResource( 35 ), "idle", "idle_pose", SubResource( 36 ) ]
+start_node = "idle"
+graph_offset = Vector2( -255, 42 )
