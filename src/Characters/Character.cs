@@ -159,7 +159,7 @@ namespace CrazyEaters.Characters
          
       }
 
-      public override void IdleAnimationVariations()
+      public override void IdleAnimationVariations(float idleTime)
       {
          if (idleTime >= 25)
          {
@@ -167,13 +167,13 @@ namespace CrazyEaters.Characters
             switch (randIdleAnim)
             {
                case 1:
-                  stateMachine.Start("idle_foot");
+                  AnimTree.Set("parameters/IdleFoot/active", true);
                   break;
                case 2:
-                  stateMachine.Start("idle_head");
+                  AnimTree.Set("parameters/IdleHead/active", true);
                   break;
                case 3:
-                  stateMachine.Start("idle_pose");
+                  AnimTree.Set("parameters/IdlePose/active", true);
                   break;
             }
             idleTime = 0f;

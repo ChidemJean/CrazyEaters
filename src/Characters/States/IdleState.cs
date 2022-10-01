@@ -5,26 +5,33 @@ using CrazyEaters.AI.StateMachine;
 namespace CrazyEaters.Characters.States
 {
 
-   public class IdleState : IState
+   public class IdleState : BaseState
    {
-      public void FixedTick()
+      protected float idleTime = 0.0f;
+
+      public IdleState(BaseCharacter baseCharacter) : base(baseCharacter)
       {
 
       }
 
-      public void OnEnter()
+      public override void OnEnter()
       {
-
+         base.OnEnter();
+         character.AnimTree.Set("parameters/Walk/blend_amount", 0);
+         character.AnimTree.Set("parameters/State/current", 0);
       }
 
-      public void OnExit()
+      public override void OnExit()
       {
-
+         base.OnExit();
+         idleTime = 0f;
       }
 
-      public void Tick()
+      public override void Tick(float delta)
       {
-
+         base.Tick(delta);
+         idleTime += delta;
+         character.IdleAnimationVariations(idleTime);
       }
    }
 }

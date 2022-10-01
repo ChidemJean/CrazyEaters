@@ -281,6 +281,7 @@ speedFactor = 10.0
 gravityScale = 0.4
 jumpSpeed = 10.0
 worldPath = NodePath("../Navmesh/World")
+controllerMode = 0
 
 [node name="MeshManipulation" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.81101, 1.39043, 0 )

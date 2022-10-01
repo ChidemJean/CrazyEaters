@@ -20,6 +20,7 @@ namespace CrazyEaters.AI.StateMachine
    public class StateMachine
    {
       private IState _currentState;
+      public IState CurrentState => _currentState;
 
       private Dictionary<Type, List<Transition>> _transitions = new Dictionary<Type, List<Transition>>();
       private List<Transition> _currentTransitions = new List<Transition>();
@@ -27,19 +28,19 @@ namespace CrazyEaters.AI.StateMachine
 
       private static List<Transition> EmptyTransitions = new List<Transition>(0);
 
-      public void Tick()
+      public void Tick(float delta)
       {
          var transition = GetTransition();
          if (transition != null)
             SetState(transition.To);
 
-         _currentState?.Tick();
+         _currentState?.Tick(delta);
       }
 
       public void FixedTick()
       {
          var transition = GetTransition();
-         if (transition != null)
+         if (transition != null && transition.To != _currentState)
             SetState(transition.To);
 
          _currentState?.FixedTick();

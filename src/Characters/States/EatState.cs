@@ -5,26 +5,23 @@ using CrazyEaters.AI.StateMachine;
 namespace CrazyEaters.Characters.States
 {
 
-   public class EatState : IState
+   public class EatState : BaseState
    {
-      public void FixedTick()
+      public EatState(BaseCharacter baseCharacter) : base(baseCharacter)
       {
-
+         
       }
 
-      public void OnEnter()
+      public override void OnEnter()
       {
-
+         base.OnEnter();
+         character.AnimTree.Set("parameters/Eat/active", true);
       }
 
-      public void OnExit()
+      public override void OnExit()
       {
-
-      }
-
-      public void Tick()
-      {
-
+         base.OnExit();
+         character.AnimTree.Set("parameters/Eat/active", false);
       }
    }
 }
