@@ -199,7 +199,7 @@ namespace CrazyEaters.Controllers.Launcher
         {
             if (tween != null) { 
                 tween.Stop();
-                tween.Free();
+                // tween.Free();
             }
         }
 

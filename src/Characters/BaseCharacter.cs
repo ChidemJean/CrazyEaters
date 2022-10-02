@@ -28,7 +28,8 @@ namespace CrazyEaters.Characters
       protected bool moving = false;
       protected float stopDistance = 0;
       protected GameManager gameManager;
-      protected AnimationTree animationTree;
+      public GameManager GM => gameManager;
+      public AnimationTree animationTree;
       protected AnimationPlayer animationPlayer;
       public AnimationTree AnimTree => animationTree;
       protected AnimationNodeStateMachinePlayback stateMachine;
@@ -91,13 +92,16 @@ namespace CrazyEaters.Characters
          // navigationAgent.SetTargetLocation(targetIALocation);
 
          _ai_stateMachine = new StateMachine();
-         _ai_stateMachine.AddAnyTransition(new IdleState(this), () => {
+         _ai_stateMachine.AddAnyTransition(new IdleState(this), () =>
+         {
             return moveDir.x == 0 && moveDir.z == 0 && !openMouth;
          });
-         _ai_stateMachine.AddAnyTransition(new WalkState(this), () => {
+         _ai_stateMachine.AddAnyTransition(new WalkState(this), () =>
+         {
             return moveDir != Vector3.Zero && canWalk;
          });
-         _ai_stateMachine.AddAnyTransition(new OpenMouthState(this), () => {
+         _ai_stateMachine.AddAnyTransition(new OpenMouthState(this), () =>
+         {
             return openMouth;
          });
 
@@ -112,10 +116,7 @@ namespace CrazyEaters.Characters
       {
          if (body is Food)
          {
-            eating = true;
-            AnimTree.Set("parameters/Eat/active", true);
-            await Task.Delay(TimeSpan.FromSeconds(1.93f));
-            openMouth = false;
+            EatAnimation();
          }
       }
       public void OnBodyEnteredViewField(Node body)
@@ -217,14 +218,15 @@ namespace CrazyEaters.Characters
       public override void _PhysicsProcess(float delta)
       {
          bool isOnFloor = IsOnFloor();
-         
-         if (ai_StateMachine != null) {
+
+         if (ai_StateMachine != null)
+         {
             ai_StateMachine.Tick(delta);
          }
 
          // if (!isJumping && !isOnFloor && stateMachine.GetCurrentNode() != "jump-loop")
          // {
-            // stateMachine.Start("jump-loop");
+         // stateMachine.Start("jump-loop");
          // }
 
          if (!isOnFloor)
@@ -266,10 +268,13 @@ namespace CrazyEaters.Characters
          canWalk = true;
       }
 
-      public void OnEatAnimationEnd()
+      public async void EatAnimation()
       {
+         eating = true;
+         AnimTree.Set("parameters/Eat/active", true);
+         await Task.Delay(TimeSpan.FromSeconds(1.93f));
          eating = false;
-         GD.Print("eating end");
+         gameManager.TriggerEvent(GameEvent.FoodEatFinish, this);
       }
    }
 }

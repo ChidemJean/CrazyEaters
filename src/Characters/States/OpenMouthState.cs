@@ -16,14 +16,19 @@ namespace CrazyEaters.Characters.States
       public override void OnEnter()
       {
          base.OnEnter();
-         character.AnimTree.Set("parameters/OpenMouth/add_amount", 1);
-         Timeout();
+         if (!active) {
+            SceneTreeTween tween = character.GetTree().CreateTween();
+            tween.TweenProperty(character.animationTree, "parameters/OpenMouth/add_amount", 1f, .15f)?.SetEase(Tween.EaseType.Out);
+            Timeout();
+            character.GM.StartListening(Managers.GameEvent.FoodEatFinish, OnEatEnd);
+            active = true;
+         }
       }
 
       public override void OnExit()
       {
          base.OnExit();
-         character.AnimTree.Set("parameters/OpenMouth/add_amount", 0);
+         character.GM.StopListening(Managers.GameEvent.FoodEatFinish, OnEatEnd);
       }
 
       private async void Timeout()
@@ -32,13 +37,22 @@ namespace CrazyEaters.Characters.States
          if (character.openMouth) CloseMouth();
       }
 
+      public void OnEatEnd(object param)
+      {
+         if (character.GetInstanceId() == ((BaseCharacter) param).GetInstanceId()) {
+            character.AnimTree.Set("parameters/OpenMouth/add_amount", 0);
+            character.openMouth = false;
+            active = false;
+         }
+      }
+
       public async void CloseMouth()
       {
-         character.AnimTree.Set("parameters/OpenMouth/add_amount", 0);
-         character.AnimTree.Set("parameters/CloseMouth/active", true);
-         await Task.Delay(TimeSpan.FromSeconds(.49f));
-         character.AnimTree.Set("parameters/CloseMouth/active", false);
+         SceneTreeTween tween = character.GetTree().CreateTween();
+         tween.TweenProperty(character.AnimTree, "parameters/OpenMouth/add_amount", 0f, .5f)?.SetEase(Tween.EaseType.Out);
+         await character.ToSignal(tween, "finished");
          character.openMouth = false;
+         active = false;
       }
    }
 }

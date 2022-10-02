@@ -3,5 +3,8 @@ using System;
 
 namespace CrazyEaters.Managers 
 {
-    public enum GameEvent { UpdateCharacterStatus };
+    public enum GameEvent { 
+        UpdateCharacterStatus,
+        FoodEatFinish
+    };
 }

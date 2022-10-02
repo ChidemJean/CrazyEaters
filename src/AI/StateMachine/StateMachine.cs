@@ -77,6 +77,15 @@ namespace CrazyEaters.AI.StateMachine
          _anyTransitions.Add(new Transition(state, predicate));
       }
 
+      public T GetState<T>() where T : class 
+      {
+         foreach (var transition in _anyTransitions)
+            if (transition.To is T)
+               return (T) transition.To;
+
+         return null;
+      }
+
       private class Transition
       {
          public Func<bool> Condition { get; }

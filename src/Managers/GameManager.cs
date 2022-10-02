@@ -91,7 +91,7 @@ namespace CrazyEaters.Managers
             if (eventDictionary.TryGetValue(gameEvent, out thisEvent))
             {
                 if (globalMidleware != null) globalMidleware.Invoke(gameEvent, eventParam);
-                thisEvent.Invoke(eventParam);
+                if (thisEvent != null) thisEvent.Invoke(eventParam);
                 // OR USE  instance.eventDictionary[eventName](eventParam);
             }
         }

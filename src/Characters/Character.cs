@@ -8,6 +8,7 @@ namespace CrazyEaters.Characters
    using CrazyEaters.Managers;
    using CrazyEaters.Sandbox;
    using CrazyEaters.Resources;
+   using CrazyEaters.Characters.States;
    using CrazyEaters.Controllers;
    using CrazyEaters.DependencyInjection;
 
@@ -50,6 +51,9 @@ namespace CrazyEaters.Characters
          labelVel = GetNode<Label>(labelVelPath);
 
          gm.StartListening(GameEvent.UpdateCharacterStatus, OnUpdateStatus);
+
+         WalkState walkState = ai_StateMachine.GetState<WalkState>();
+         GD.Print(walkState);
       }
 
       public void OnUpdateStatus(object param) 

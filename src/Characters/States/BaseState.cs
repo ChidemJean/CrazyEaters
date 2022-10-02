@@ -8,6 +8,7 @@ namespace CrazyEaters.Characters.States
     public class BaseState : IState
     {
         protected BaseCharacter character;
+        protected bool active = false;
 
         public BaseState(BaseCharacter baseCharacter)
         {
@@ -22,7 +23,7 @@ namespace CrazyEaters.Characters.States
 
         public virtual void OnEnter()
         {
-
+            
         }
 
         public virtual void OnExit()
