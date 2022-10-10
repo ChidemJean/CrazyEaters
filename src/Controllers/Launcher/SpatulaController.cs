@@ -18,6 +18,8 @@ namespace CrazyEaters.Controllers.Launcher
 
         [Export]
         NodePath skeletonPath;
+        [Export]
+        NodePath skeletonBasePath;
 
         [Export]
         NodePath animationPlayerPath;
@@ -31,6 +33,7 @@ namespace CrazyEaters.Controllers.Launcher
 
         Spatial bulletSlot;
         Skeleton skeleton;
+        Skeleton skeletonBase;
         MeshInstance meshInstance;
         AnimationPlayer animationPlayer;
 
@@ -62,6 +65,7 @@ namespace CrazyEaters.Controllers.Launcher
 
             bulletSlot = GetNode<Spatial>(bullerSlotPath);
             skeleton = GetNode<Skeleton>(skeletonPath);
+            skeletonBase = GetNode<Skeleton>(skeletonBasePath);
             meshInstance = GetNode<MeshInstance>(meshPath);
             animationPlayer = GetNode<AnimationPlayer>(animationPlayerPath);
             lineRenderer = GetNode<LineRenderer>(lineRendererPath);
@@ -76,6 +80,12 @@ namespace CrazyEaters.Controllers.Launcher
                 ((Spatial) throwable).GlobalTranslation = bulletSlot.GlobalTransform.origin;
                 ((Spatial) throwable).GlobalRotation = bulletSlot.GlobalRotation;
             }
+
+            Transform targetGlobalPose = LocalPoseToGlobalPose(skeleton.FindBone("Bone3"), skeleton.GetBoneGlobalPose(skeleton.FindBone("Bone3")), skeleton);
+            // Transform globalPoseBase = GlobalPoseToLocalPose(skeletonBase.FindBone("Center"), skeletonBase.GetBoneGlobalPose(skeletonBase.FindBone("Center")), skeletonBase);
+            Transform globalPoseBase = skeletonBase.GetBoneGlobalPose(skeletonBase.FindBone("Center"));
+            globalPoseBase.origin = targetGlobalPose.origin + new Vector3(.7f,5.6f,0);
+            skeletonBase.SetBoneGlobalPoseOverride(skeletonBase.FindBone("Center"), globalPoseBase, 1.0f, true);
         }
 
         public override void _Input(InputEvent @event)
@@ -208,6 +218,26 @@ namespace CrazyEaters.Controllers.Launcher
             if (name == "hold") {
                 HoldAnimationFinished();
             }
+        }
+   
+        public Transform GlobalPoseToLocalPose(int bondeIndex, Transform globalPose, Skeleton skeleton)
+        {
+            if (skeleton.GetBoneParent(bondeIndex) >= 0) {
+                int parentBoneIdx = skeleton.GetBoneParent(bondeIndex);
+                Transform conversionTransform = skeleton.GetBoneGlobalPose(parentBoneIdx) * skeleton.GetBoneRest(bondeIndex);
+                return conversionTransform.AffineInverse() * globalPose;
+            }
+            return globalPose;
+        }
+
+        public Transform LocalPoseToGlobalPose(int bondeIndex, Transform localPose, Skeleton skeleton)
+        {
+            if (skeleton.GetBoneParent(bondeIndex) >= 0) {
+                int parentBoneIdx = skeleton.GetBoneParent(bondeIndex);
+                Transform conversionTransform = skeleton.GetBoneGlobalPose(parentBoneIdx) * skeleton.GetBoneRest(bondeIndex);
+                return conversionTransform * localPose;
+            }
+            return localPose;
         }
    }
 }

@@ -116,3 +116,4 @@ text = "Bake navmesh"
 
 [editable path="ViewportContainer/Viewport/HabitatScene"]
 [editable path="ViewportContainer/Viewport/HabitatScene/CameraPivot/spatula"]
+[editable path="ViewportContainer/Viewport/HabitatScene/CameraPivot/spatula/spatula_base"]

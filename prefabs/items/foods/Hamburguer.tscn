@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://src/Entities/Food.cs" type="Script" id=1]
 [ext_resource path="res://assets/textures/UI/thumbs/thumb_hamb_teste.png" type="Texture" id=2]
-[ext_resource path="res://assets/models/hamburguer.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/models/imported/hamburguer.glb" type="PackedScene" id=3]
 [ext_resource path="res://src/Resources/FoodData.cs" type="Script" id=4]
+[ext_resource path="res://assets/materials/_default_pallete.tres" type="Material" id=5]
 
 [sub_resource type="PhysicsMaterial" id=3]
 absorbent = true
@@ -42,4 +43,9 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.282231, 0.0433434, 0.006292
 shape = SubResource( 1 )
 
 [node name="hamburguer" parent="." instance=ExtResource( 3 )]
-transform = Transform( 0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, -0.263565, 0, 0 )
+transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, -0.283106, -0.066022, 0.00208533 )
+
+[node name="Sphere" parent="hamburguer" index="2"]
+material/0 = ExtResource( 5 )
+
+[editable path="hamburguer"]
