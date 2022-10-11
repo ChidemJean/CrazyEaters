@@ -39,6 +39,8 @@ namespace CrazyEaters.Characters
       [Inject] GameManager gm;
       private HabitatScene scene = null;
 
+      public bool isDead = false;
+
       public override void _Ready()
       {
 			base._Ready();
@@ -53,11 +55,16 @@ namespace CrazyEaters.Characters
          gm.StartListening(GameEvent.UpdateCharacterStatus, OnUpdateStatus);
 
          WalkState walkState = ai_StateMachine.GetState<WalkState>();
-         GD.Print(walkState);
       }
 
       public void OnUpdateStatus(object param) 
-      {}
+      {
+         CharacterStatusEventData status = (CharacterStatusEventData) param;
+         if (status.name == "health" && statusesResource.statuses["health"].curValue == 0) {
+            isDead = true;
+            QueueFree();
+         }
+      }
 
       public async void Blink()
       {
@@ -156,6 +163,28 @@ namespace CrazyEaters.Characters
          {
             Blink();
          }
+         if (!isDead) {
+            foreach (KeyValuePair<string, StatusCharacter> item in statusesResource.statuses) {
+               StatusCharacter status = item.Value;
+               if (status.seconds > 0) {
+                  status.curSeconds += delta;
+               }
+               if (status.secondsForDamage > 0 && status.curValue == 0) {
+                  status.curSecondsForDamage += delta;
+               }
+               if (status.curSeconds > status.seconds) {
+                  status.curValue = Mathf.Clamp(status.curValue + status.variation, 0, status.max);
+                  gm.TriggerEvent(GameEvent.UpdateCharacterStatus, new CharacterStatusEventData(status.key, status.variation));
+                  status.curSeconds = 0;
+               }
+               if (status.damage != 0 && status.curSecondsForDamage > status.secondsForDamage) {
+                  var healthStatus = statusesResource.statuses["health"];
+                  healthStatus.curValue = Mathf.Clamp(healthStatus.curValue + status.damage, 0, healthStatus.max);
+                  gm.TriggerEvent(GameEvent.UpdateCharacterStatus, new CharacterStatusEventData("health", status.damage));
+                  status.curSecondsForDamage = 0;
+               }
+            }
+         }
       }
 
       public override void OnNavmeshChanged()
@@ -163,11 +192,12 @@ namespace CrazyEaters.Characters
          
       }
 
-      public override void IdleAnimationVariations(float idleTime)
+      public override float IdleAnimationVariations(float idleTime)
       {
          if (idleTime >= 25)
          {
             int randIdleAnim = rng.RandiRange(1, 3);
+
             switch (randIdleAnim)
             {
                case 1:
@@ -180,8 +210,9 @@ namespace CrazyEaters.Characters
                   AnimTree.Set("parameters/IdlePose/active", true);
                   break;
             }
-            idleTime = 0f;
+            return 0f;
          }
+         return idleTime;
       }
    }
 }

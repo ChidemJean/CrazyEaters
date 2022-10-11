@@ -8,6 +8,7 @@ namespace CrazyEaters.Characters.States
    public class IdleState : BaseState
    {
       protected float idleTime = 0.0f;
+      protected double radius = 20f;
 
       public IdleState(BaseCharacter baseCharacter) : base(baseCharacter)
       {
@@ -31,7 +32,14 @@ namespace CrazyEaters.Characters.States
       {
          base.Tick(delta);
          idleTime += delta;
-         character.IdleAnimationVariations(idleTime);
+         idleTime = character.IdleAnimationVariations(idleTime);
+         if (idleTime > 5) {
+            bool chance = GD.Randf() > .3f;
+            if (chance) {
+               character.targetIALocation = character.GlobalTransform.origin + new Vector3((float) GD.RandRange(-radius, radius), 0, (float) GD.RandRange(-radius, radius));
+               character.UpdatePath();
+            }
+         }
       }
    }
 }

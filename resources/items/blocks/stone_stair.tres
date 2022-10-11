@@ -19,5 +19,5 @@ conditionsToUnblock = {
 gridSize = Vector3( 1, 1, 1 )
 life = 100
 price = 0.0
-blockType = 0
+blockType = 1
 solid = true

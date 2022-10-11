@@ -111,7 +111,7 @@ namespace CrazyEaters.Characters
       }
 
       public abstract void OnNavmeshChanged();
-      public abstract void IdleAnimationVariations(float idleTime);
+      public abstract float IdleAnimationVariations(float idleTime);
       public async void OnBodyEnteredMouth(Node body)
       {
          if (body is Food)
@@ -184,6 +184,7 @@ namespace CrazyEaters.Characters
       {
          pathNodeIA = 0;
          pathIA = navigation.GetSimplePath(GlobalTransform.origin, (Vector3)targetIALocation);
+         targetIALocation = null;
       }
 
       public void UpdateAIMovement()

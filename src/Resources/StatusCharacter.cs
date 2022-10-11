@@ -13,7 +13,31 @@ namespace CrazyEaters.Resources
         public string name = "Status Character";
 
         [Export]
+        public string key = "key";
+
+        [Export]
         public int max = 100;
+
+        [Export]
+        public int curValue = 100;
+
+        [Export]
+        public float seconds = 0;
+        
+        [Export]
+        public float curSeconds = 0;
+
+        [Export]
+        public int variation = 0;
+
+        [Export]
+        public int damage = 0;
+
+        [Export]
+        public float secondsForDamage = 0;
+
+        [Export]
+        public float curSecondsForDamage = 0;
 
         [Export]
         public GradientTexture fillGradient;

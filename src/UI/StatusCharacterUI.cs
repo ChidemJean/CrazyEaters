@@ -3,6 +3,8 @@ namespace CrazyEaters.UI
     using Godot;
     using System;
     using CrazyEaters.Resources;
+    using CrazyEaters.DependencyInjection;
+    using CrazyEaters.Managers;
 
     public class StatusCharacterUI : Control
     {
@@ -26,6 +28,9 @@ namespace CrazyEaters.UI
         [Export]
         private NodePath clipPanelPath;
 
+        [Inject]
+        public GameManager gameManager;
+
         private Label numeroLabel;
         private TextureRect icon;
         private Control clipPanel;
@@ -36,6 +41,7 @@ namespace CrazyEaters.UI
 
         public override void _Ready()
         {
+            this.ResolveDependencies();
             tween = new Tween();
             AddChild(tween);
             icon = GetNode<TextureRect>(iconPath);
@@ -43,13 +49,25 @@ namespace CrazyEaters.UI
             clipPanel = GetNode<Control>(clipPanelPath);
             clipMaxSize = clipPanel.RectSize;
 
-            OnStatusUpdate();   
+            gameManager.StartListening(GameEvent.UpdateCharacterStatus, OnUpdateStatusCharacter);
+            OnStatusUpdate();
         }
 
         private void OnStatusUpdate()
         {
             value = value == 0 ? statusData.max : 0;
             UpdateUI();
+        }
+
+        private void OnUpdateStatusCharacter(object data)
+        {
+            if (!(data is CharacterStatusEventData)) {
+                return;
+            }
+            CharacterStatusEventData _data = (CharacterStatusEventData) data;
+            if (_data.name == statusData.key) {
+                UpdateValue(_data.newValue);
+            }
         }
 
         private void UpdateUI()

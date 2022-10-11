@@ -10,7 +10,15 @@ gradient = ExtResource( 1 )
 [resource]
 script = ExtResource( 2 )
 name = "Happiness"
+key = "happiness"
 max = 100
+curValue = 100
+seconds = 40.0
+curSeconds = 0.0
+variation = -3
+damage = 0
+secondsForDamage = 0.0
+curSecondsForDamage = 0.0
 fillGradient = SubResource( 1 )
 icon = ExtResource( 3 )
 uiVisibility = 0

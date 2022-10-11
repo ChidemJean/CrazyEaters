@@ -229,7 +229,7 @@ directional_shadow_blend_splits = true
 
 [node name="DayNightAnimation" type="AnimationPlayer" parent="."]
 autoplay = "DayNight"
-playback_speed = 4.0
+playback_speed = 0.25
 anims/DayNight = SubResource( 12 )
 anims/RESET = SubResource( 13 )
 
@@ -255,6 +255,9 @@ throwablePath = NodePath("../../Hamburguer")
 
 [node name="Skeleton" parent="CameraPivot/spatula/Armature" index="0"]
 bones/4/bound_children = [ NodePath("BoneAttachment") ]
+
+[node name="BoneAttachment" parent="CameraPivot/spatula/Armature/Skeleton" index="1"]
+transform = Transform( 0.997886, 0.0615615, 0.0208422, -0.061768, 0.998046, 0.0094159, -0.0202219, -0.0106834, 0.999738, -0.248285, 3.04844, 0.0488994 )
 
 [node name="CollisionShape" parent="CameraPivot/spatula/Armature/Skeleton/BoneAttachment/Area" index="0"]
 transform = Transform( 1, 0, 0, 0, 1, 8.14907e-10, 3.72529e-09, 3.49246e-10, 1, 0, 0, 0 )
@@ -343,7 +346,6 @@ speedFactor = 10.0
 gravityScale = 0.4
 jumpSpeed = 10.0
 worldPath = NodePath("../Navmesh/World")
-controllerMode = 0
 
 [node name="MeshManipulation" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.81101, 1.39043, 0 )
