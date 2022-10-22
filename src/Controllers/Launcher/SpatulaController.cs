@@ -107,11 +107,11 @@ namespace CrazyEaters.Controllers.Launcher
                             StopTween();
                         } else {
                             initialPos = null;
-                            gameManager.inputMode = GameManager.InputMode.SCENE;
+                            if (gameManager.inputMode == GameManager.InputMode.LAUNCHER) gameManager.inputMode = GameManager.InputMode.SCENE;
                         }
                     } else {
                         initialPos = null;
-                        gameManager.inputMode = GameManager.InputMode.SCENE;
+                        if (gameManager.inputMode == GameManager.InputMode.LAUNCHER) gameManager.inputMode = GameManager.InputMode.SCENE;
                         animationPlayer.Play("hold");
                         float animLength = animationPlayer.GetAnimation("hold").Length / animationPlayer.PlaybackSpeed;
                         animationPlayer.Advance(animLength - animLength * currentDistance);

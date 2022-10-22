@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://assets/textures/prototype/UI/arrowUp.png" type="Texture" id=1]
 [ext_resource path="res://src/UI/Debug/DebugCheck.cs" type="Script" id=2]
@@ -22,6 +22,7 @@
 [ext_resource path="res://prefabs/ui/StatusCharacterUI.tscn" type="PackedScene" id=20]
 [ext_resource path="res://src/UI/CharacterStatusBar.cs" type="Script" id=21]
 [ext_resource path="res://resources/eater_statuses.tres" type="Resource" id=22]
+[ext_resource path="res://assets/textures/UI/radial_progress_white.png" type="Texture" id=23]
 
 [sub_resource type="StyleBoxFlat" id=15]
 bg_color = Color( 0.203922, 0.203922, 0.203922, 0.784314 )
@@ -149,11 +150,13 @@ size_flags_vertical = 3
 theme = ExtResource( 12 )
 script = ExtResource( 17 )
 slideTriggerPath = NodePath("VBoxContainer/SlideTrigger/CharacterStatusBar/SliderUp")
+slideTriggerProgressPath = NodePath("VBoxContainer/SlideTrigger/CharacterStatusBar/SliderUp/Progress")
 offsetControlPath = NodePath("VBoxContainer/SlideTrigger")
 tweenPath = NodePath("../Tween")
 blockItemsContainerPath = NodePath("VBoxContainer/ContentPanel/MarginContainer/BlocksGrid")
 blockItemPrefab = ExtResource( 18 )
 blocksData = ExtResource( 19 )
+timeToOpenModeBtns = 1.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="BottomMenu"]
 anchor_right = 1.0
@@ -192,10 +195,21 @@ margin_right = 548.0
 margin_bottom = 80.0
 rect_min_size = Vector2( 80, 80 )
 rect_pivot_offset = Vector2( 55, 55 )
-rect_clip_content = true
 size_flags_horizontal = 4
 size_flags_vertical = 4
 custom_styles/panel = SubResource( 15 )
+
+[node name="Progress" type="TextureProgress" parent="BottomMenu/VBoxContainer/SlideTrigger/CharacterStatusBar/SliderUp"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -50.0
+margin_top = -50.0
+margin_right = 50.0
+margin_bottom = 50.0
+texture_progress = ExtResource( 23 )
+fill_mode = 4
 
 [node name="TextureRect" type="TextureRect" parent="BottomMenu/VBoxContainer/SlideTrigger/CharacterStatusBar/SliderUp"]
 anchor_left = 0.5
