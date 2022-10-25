@@ -2,6 +2,7 @@ namespace CrazyEaters.UI
 {
     using Godot;
     using System;
+    using System.Collections.Generic;
     using CrazyEaters.Resources;
     using CrazyEaters.Managers;
     using CrazyEaters.Controllers;
@@ -25,12 +26,21 @@ namespace CrazyEaters.UI
         public NodePath tweenPath;
         [Export]
         public NodePath blockItemsContainerPath;
+        [Export]
+        public NodePath inventoryItemsContainerPath;
+        [Export]
+        public NodePath recipesItemsContainerPath;
 
         [Export]
         public PackedScene blockItemPrefab;
+        [Export]
+        public PackedScene inventoryItemPrefab;
 
         [Export]
         public BlocksData blocksData;
+
+        [Export]
+        public BuyablesData buyablesData;
 
         [Export]
         public float timeToOpenModeBtns = 3f;
@@ -39,6 +49,8 @@ namespace CrazyEaters.UI
         private Control slideTrigger;
         private TextureProgress slideTriggerProgress;
         private GridContainer blockItemsContainer;
+        private GridContainer inventoryItemsContainer;
+        private GridContainer recipesItemsContainer;
 
         private Tween tween;
 
@@ -59,6 +71,9 @@ namespace CrazyEaters.UI
         [Inject]
         public GameManager gameManager;
 
+        private List<BtnMode> btnsMode;
+        private SceneTreeTween _tween;
+
         public override void _Ready()
         {
             this.ResolveDependencies();
@@ -68,12 +83,46 @@ namespace CrazyEaters.UI
             slideTrigger = GetNode<Control>(slideTriggerPath);
             slideTriggerProgress = GetNode<TextureProgress>(slideTriggerProgressPath);
             blockItemsContainer = GetNode<GridContainer>(blockItemsContainerPath);
+            inventoryItemsContainer = GetNode<GridContainer>(inventoryItemsContainerPath);
+            recipesItemsContainer = GetNode<GridContainer>(recipesItemsContainerPath);
             menuBottomInitialY = RectGlobalPosition.y;
             tween = GetNode<Tween>(tweenPath);
-            CreateBlockItems();
+            OnGameModeChange(gameManager.gameMode);
             StartAnimation();
+
+            btnsMode = new List<BtnMode>();
+            btnsMode.Add(slideTrigger.GetNode<BtnMode>("BtnModeBuild"));
+            btnsMode.Add(slideTrigger.GetNode<BtnMode>("BtnModeLauncher"));
+            btnsMode.Add(slideTrigger.GetNode<BtnMode>("BtnModeCook"));
             // RectMinSize = new Vector2(0, GetViewport().Size.y);
             // GetViewport().Connect("size_changed", this, nameof(OnViewportSizeChanged));
+
+            gameManager.StartListening(GameEvent.GameModeChange, OnGameModeChange);
+        }
+
+        public void OnGameModeChange(object mode)
+        {
+            if (mode is GameManager.GameMode)
+            {
+                blockItemsContainer.Visible = false;
+                inventoryItemsContainer.Visible = false;
+                recipesItemsContainer.Visible = false;
+
+                switch (mode) {
+                    case GameManager.GameMode.BUILD:
+                        ShowBlockItems();
+                        blockItemsContainer.Visible = true;
+                        break;
+                    case GameManager.GameMode.LAUNCHER:
+                        ShowInventoryItems();
+                        inventoryItemsContainer.Visible = true;
+                        break;
+                    case GameManager.GameMode.COOK:
+                        ShowRecipesItems();
+                        recipesItemsContainer.Visible = true;
+                        break;
+                }
+            }
         }
 
         public void OnViewportSizeChanged()
@@ -103,10 +152,11 @@ namespace CrazyEaters.UI
                         initialClickPosition = Vector2.Zero;
                         timeSliderTriggerHolded = 0;
                         slideTriggerProgress.Value = 0;
+                        if (gameManager.inputMode == GameManager.InputMode.UI) gameManager.inputMode = GameManager.InputMode.SCENE;
                         if (modeBtnsOpen) {
                             HideModeBtns();
+                            return;
                         }
-                        if (gameManager.inputMode == GameManager.InputMode.UI) gameManager.inputMode = GameManager.InputMode.SCENE;
                         if (currentMouseRelative.y > 0) {
                             CloseAnimation();
                         } else {
@@ -134,10 +184,10 @@ namespace CrazyEaters.UI
                 if (PointInsideSlideTrigger((Vector2) currentMousePosition)) {
                     timeSliderTriggerHolded += delta;
                     slideTriggerProgress.Value = (timeSliderTriggerHolded * 100) / timeToOpenModeBtns;
-                    if (timeSliderTriggerHolded >= timeToOpenModeBtns || !modeBtnsOpen) {
+                    if (timeSliderTriggerHolded >= timeToOpenModeBtns && !modeBtnsOpen) {
                         ShowModeBtns();
                     }
-                } else {
+                } else if (!modeBtnsOpen) {
                     timeSliderTriggerHolded = 0f;
                     ChangeBottomPosition(((Vector2) initialClickPosition).y - ((Vector2) currentMousePosition).y);
                 }
@@ -147,11 +197,48 @@ namespace CrazyEaters.UI
         public void ShowModeBtns()
         {
             modeBtnsOpen = true;
+            _tween = GetTree().CreateTween();
+            Vector2 middleSliderTrigger = Vector2.Zero;// + new Vector2(slideTrigger.GetGlobalRect().Size.x / 2, slideTrigger.GetGlobalRect().Size.y / 2);
+            
+            btnsMode[0].Modulate = new Color(1, 1, 1, 1);
+            btnsMode[1].Modulate = new Color(1, 1, 1, 1);
+            btnsMode[2].Modulate = new Color(1, 1, 1, 1);
+
+            _tween.TweenProperty(btnsMode[0], "rect_position", middleSliderTrigger - new Vector2(160, 180), .2f);
+            _tween.Parallel().TweenProperty(btnsMode[1], "rect_position", middleSliderTrigger - new Vector2(0, 240), .2f).SetDelay(.05f);
+            _tween.Parallel().TweenProperty(btnsMode[2], "rect_position", middleSliderTrigger - new Vector2(-160, 180), .2f).SetDelay(.1f);
+            _tween.TweenCallback(this, nameof(OnAnimBtnModeShowEnd));
+            _tween.Play();
+        }
+
+        public void OnAnimBtnModeShowEnd()
+        {
+            foreach (BtnMode btnMode in btnsMode) {
+                btnMode.IsShowing = true;
+            }
         }
 
         public void HideModeBtns()
         {
+            if (_tween != null) _tween.Stop();
+            _tween = GetTree().CreateTween();
             modeBtnsOpen = false;
+            foreach (BtnMode btnMode in btnsMode) {
+                btnMode.IsShowing = false;
+            }
+
+            _tween.TweenProperty(btnsMode[0], "rect_position", Vector2.Zero, .2f);
+            _tween.Parallel().TweenProperty(btnsMode[0], "modulate:a", 0f, .2f).SetDelay(.025f);
+            _tween.Parallel().TweenProperty(btnsMode[1], "rect_position", Vector2.Zero, .2f).SetDelay(.05f);
+            _tween.Parallel().TweenProperty(btnsMode[1], "modulate:a", 0f, .2f).SetDelay(.05f);
+            _tween.Parallel().TweenProperty(btnsMode[2], "rect_position", Vector2.Zero, .2f).SetDelay(.075f);
+            _tween.Parallel().TweenProperty(btnsMode[2], "modulate:a", 0f, .2f).SetDelay(.15f);
+            _tween.TweenCallback(this, nameof(OnAnimBtnModeHideEnd));
+            _tween.Play();
+        }
+
+        public void OnAnimBtnModeHideEnd()
+        {
         }
 
         public bool PointInsideSlideTrigger(Vector2 pos)
@@ -194,8 +281,11 @@ namespace CrazyEaters.UI
             menuBottomInitialY = RectGlobalPosition.y;
         }
 
-        public void CreateBlockItems()
+        public void ShowBlockItems()
         {
+            if (blockItemsContainer.GetChildCount() > 0) {
+                return;
+            }
             foreach (string key in blocksData.blocks.Keys) {
                 BlockData blockData = blocksData.blocks[key];
                 BlockItem item = blockItemPrefab.Instance<BlockItem>();
@@ -205,12 +295,39 @@ namespace CrazyEaters.UI
             }
         }
 
+        public void ShowInventoryItems()
+        {
+            if (inventoryItemsContainer.GetChildCount() > 0) {
+                return;
+            }
+            foreach (BuyableEntityData data in buyablesData.buyables) {
+                InventoryItem inventoryItem = inventoryItemPrefab.Instance<InventoryItem>();
+                inventoryItemsContainer.AddChild(inventoryItem);
+                inventoryItem.SetBuyableData(data);
+                inventoryItem.bottomMenu = this;
+            }
+        }
+
+        public void ShowRecipesItems()
+        {
+            if (recipesItemsContainer.GetChildCount() > 0) {
+                return;
+            }
+            foreach (BuyableEntityData key in buyablesData.buyables) {
+                
+            }
+        }
+
         public void ChangeBlock(BlockItem item)
         {
             if (selectedItem != null) selectedItem.SetSelect(false);
             selectedItem = item;
             selectedItem.SetSelect(true);
             ((HabitatScene)sceneSwitcher.currentScene).currentBlockId = selectedItem.blockData.id.ToInt();
+        }
+
+        public override void _ExitTree() {
+            gameManager.StopListening(GameEvent.GameModeChange, OnGameModeChange);
         }
 
     }

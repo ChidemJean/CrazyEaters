@@ -11,10 +11,12 @@ namespace CrazyEaters.Managers
     public class GameManager : Spatial
     {
         public enum InputMode { SCENE, UI, LAUNCHER };
+        public enum GameMode { DEFAULT, LAUNCHER, COOK, BUILD };
         public bool gameEventsActive = true;
         public Hud hud;
         public Godot.Object ResourceQueue;
         public InputMode inputMode = InputMode.SCENE;
+        public GameMode gameMode = GameMode.LAUNCHER;
 
         public Vector3 gravityVector = (Vector3) ProjectSettings.GetSetting("physics/3d/default_gravity_vector");
         public int gravityMagnitude = Convert.ToInt32(ProjectSettings.GetSetting("physics/3d/default_gravity"));
@@ -31,6 +33,14 @@ namespace CrazyEaters.Managers
             hud = GetNode<Hud>("/root/MainNode");
             if (eventDictionary == null) {
                 eventDictionary = new Dictionary<GameEvent, Action<object>>();
+            }
+            StartListening(GameEvent.GameModeChange, OnGameModeChange);
+        }
+
+        public void OnGameModeChange(object mode)
+        {
+            if (mode is GameMode) {
+                gameMode = (GameMode) mode;
             }
         }
 
@@ -102,6 +112,7 @@ namespace CrazyEaters.Managers
 
         public override void _ExitTree() {
             gameEventsActive = false;
+            StopListening(GameEvent.GameModeChange, OnGameModeChange);
         }
 
         #endregion
