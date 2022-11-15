@@ -20,6 +20,7 @@ namespace CrazyEaters.Managers
         private PackedScene currentSceneResource = null;
 
         Godot.Object resourceQueueObj;
+        ProgressBar loadingBar;
 
         bool isLoading = false;
 
@@ -27,10 +28,11 @@ namespace CrazyEaters.Managers
         {
             gameManager = GetNode<GameManager>("/root/GameManager");
             loading = GetNode<Control>(loadingPath);
+            loadingBar = loading.GetNode<ProgressBar>("Back/VBox/Progress");
 
-            GDScript resourceQueue = (GDScript) GD.Load("res://resource_queue.gd");
-            resourceQueueObj = (Godot.Object) resourceQueue.New();
-            resourceQueueObj.Call("start");
+            // GDScript resourceQueue = (GDScript) GD.Load("res://resource_queue.gd");
+            // resourceQueueObj = (Godot.Object) resourceQueue.New();
+            // resourceQueueObj.Call("start");
 
             ChangeScene("habitat_scene");
         }
@@ -40,21 +42,44 @@ namespace CrazyEaters.Managers
             if (currentSceneResource != null) {
                 isLoading = true;
                 loading.Visible = true;
-                loading.SetProcess(true);
-                resourceQueueObj.Call("queue_resource", currentSceneResource.ResourcePath, true);
+                LoadScene(currentSceneResource);
+                // loading.SetProcess(true);
+                // resourceQueueObj.Call("queue_resource", currentSceneResource.ResourcePath, true);
             }
         }
 
-        public override void _Process(float delta)
+        public async void LoadScene(PackedScene scene)
         {
-            if (isLoading) {
-                if ((bool)resourceQueueObj.Call("is_ready", currentSceneResource.ResourcePath)) {
-                    ShowScene((PackedScene) resourceQueueObj.Call("get_resource", currentSceneResource.ResourcePath));
-                } else {
-                    UpdateProgress(resourceQueueObj.Call("get_progress", currentSceneResource.ResourcePath));
+            var loader = ResourceLoader.LoadInteractive(scene.ResourcePath);
+            if (loader == null) {
+                GD.Print("Ocorreu um erro ao carregar a cena");
+                return;
+            }
+            while (true) {
+                Error error = loader.Poll();
+                if (error == Error.Ok) {
+                    if (currentScene != null) {
+                        currentScene.QueueFree();
+                    }
+                    loadingBar.Value = ((float)loader.GetStage())/loader.GetStageCount() * 100;
+                } else if (error == Error.FileEof) {
+                    await ToSignal(GetTree().CreateTimer(1f), "timeout");
+                    ShowScene(loader.GetResource() as PackedScene);
+                    return;
                 }
             }
         }
+
+        // public override void _Process(float delta)
+        // {
+        //     if (isLoading) {
+        //         if ((bool)resourceQueueObj.Call("is_ready", currentSceneResource.ResourcePath)) {
+        //             ShowScene((PackedScene) resourceQueueObj.Call("get_resource", currentSceneResource.ResourcePath));
+        //         } else {
+        //             UpdateProgress(resourceQueueObj.Call("get_progress", currentSceneResource.ResourcePath));
+        //         }
+        //     }
+        // }
 
         public void ShowScene(PackedScene scene) 
         {
@@ -67,12 +92,7 @@ namespace CrazyEaters.Managers
             isLoading = false;
 
             loading.Visible = false;
-            loading.SetProcess(false);
-        }
-
-        public void UpdateProgress(object progress) 
-        {
-            GD.Print("progress: " + progress);
+            // loading.SetProcess(false);
         }
 
         public void Clean() {

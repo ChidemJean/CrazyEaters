@@ -19,16 +19,6 @@ scaleFactor = 0.7
 [node name="SaveSystem" type="Node" parent="."]
 script = ExtResource( 4 )
 
-[node name="SceneSwitcher" type="Control" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-script = ExtResource( 5 )
-scenes = {
-"habitat_scene": ExtResource( 1 ),
-"sandbox_test": ExtResource( 6 )
-}
-loadingPath = NodePath("../Loading")
-
 [node name="Loading" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -63,3 +53,13 @@ margin_right = 1080.0
 margin_bottom = 1270.0
 rect_min_size = Vector2( 0, 90 )
 theme = ExtResource( 14 )
+
+[node name="SceneSwitcher" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 5 )
+scenes = {
+"habitat_scene": ExtResource( 1 ),
+"sandbox_test": ExtResource( 6 )
+}
+loadingPath = NodePath("../Loading")
