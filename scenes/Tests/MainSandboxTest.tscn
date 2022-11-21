@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://scenes/SandboxTest.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/Tests/SandboxTest.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/Managers/CEScene.cs" type="Script" id=2]
 [ext_resource path="res://assets/fonts/CrazyEaters.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://prefabs/ui/Label.tscn" type="PackedScene" id=4]

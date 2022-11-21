@@ -22,3 +22,4 @@ conditionsToUnblock = {
 price = 10
 coinType = 1
 calories = 200
+recipeItems = PoolStringArray(  )

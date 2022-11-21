@@ -24,6 +24,7 @@ namespace CrazyEaters.Characters
       [Export] StreamTexture[] eyeTextures;
       [Export] CharacterControllerMode controllerMode = CharacterControllerMode.IA;
       [Export] StatusesCharacter statusesResource;
+      [Export] PackedScene tombstone;
 
       List<CrazyEaters.Save.StatusCharacter> statuses;
 
@@ -62,6 +63,12 @@ namespace CrazyEaters.Characters
          CharacterStatusEventData status = (CharacterStatusEventData) param;
          if (status.name == "health" && statusesResource.statuses["health"].curValue == 0) {
             isDead = true;
+            // spawn tombstone
+            if (tombstone != null) {
+               var tombNode = tombstone.Instance<Tombstone>();
+               gm.currentMainNode3D?.AddChild(tombNode);
+               tombNode.GlobalTranslation = new Vector3(this.GlobalTransform.origin + new Vector3(0, 10f, 0));
+            }
             QueueFree();
          }
       }
@@ -214,5 +221,6 @@ namespace CrazyEaters.Characters
          }
          return idleTime;
       }
+
    }
 }
