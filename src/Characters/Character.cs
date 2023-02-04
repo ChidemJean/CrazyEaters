@@ -11,6 +11,7 @@ namespace CrazyEaters.Characters
    using CrazyEaters.Characters.States;
    using CrazyEaters.Controllers;
    using CrazyEaters.DependencyInjection;
+   using CrazyEaters.Entities;
 
    public class Character : BaseCharacter
    {
@@ -63,13 +64,17 @@ namespace CrazyEaters.Characters
          CharacterStatusEventData status = (CharacterStatusEventData) param;
          if (status.name == "health" && statusesResource.statuses["health"].curValue == 0) {
             isDead = true;
-            // spawn tombstone
-            if (tombstone != null) {
-               var tombNode = tombstone.Instance<Tombstone>();
-               gm.currentMainNode3D?.AddChild(tombNode);
-               tombNode.GlobalTranslation = new Vector3(this.GlobalTransform.origin + new Vector3(0, 10f, 0));
-            }
+            SpawnTombstone();
             QueueFree();
+         }
+      }
+
+      public void SpawnTombstone()
+      {
+         if (tombstone != null) {
+            var tombNode = tombstone.Instance<Tombstone>();
+            gm.currentMainNode3D?.AddChild(tombNode);
+            tombNode.GlobalTranslation = new Vector3(this.GlobalTransform.origin + new Vector3(0, 10f, 0));
          }
       }
 
@@ -194,6 +199,15 @@ namespace CrazyEaters.Characters
          }
       }
 
+      public void UpdateStatus(string statusKey, int variation)
+      {
+         StatusCharacter status = null;
+         statusesResource.statuses.TryGetValue(statusKey, out status);
+         if (status == null) return;
+         status.curValue = Mathf.Clamp(status.curValue + variation, 0, status.max);
+         gm.TriggerEvent(GameEvent.UpdateCharacterStatus, new CharacterStatusEventData(statusKey, variation));
+      }
+
       public override void OnNavmeshChanged()
       {
          
@@ -222,5 +236,15 @@ namespace CrazyEaters.Characters
          return idleTime;
       }
 
+      public override void _ExitTree()
+      {
+         gm.StopListening(GameEvent.UpdateCharacterStatus, OnUpdateStatus);
+      }
+
+      public override void Eat(Food food)
+      {
+         base.Eat(food);
+         UpdateStatus("hungry", food.GetCalories());
+      }
    }
 }

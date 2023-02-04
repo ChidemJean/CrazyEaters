@@ -1,5 +1,82 @@
-[gd_scene format=2]
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://assets/themes/Theme.tres" type="Theme" id=1]
+[ext_resource path="res://assets/materials/ui/Rainbow.tres" type="Material" id=2]
+[ext_resource path="res://assets/materials/ui/Shine.tres" type="Material" id=3]
+[ext_resource path="res://assets/textures/UI/coin.png" type="Texture" id=4]
+[ext_resource path="res://assets/fonts/baloom.tres" type="DynamicFont" id=5]
+[ext_resource path="res://assets/fonts/BalooTamma-Regular.ttf" type="DynamicFontData" id=6]
+
+[sub_resource type="DynamicFont" id=4]
+size = 60
+outline_size = 4
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 6 )
 
 [node name="Home" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+
+[node name="Back" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.168627, 0.0470588, 0.207843, 1 )
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+margin_bottom = 178.0
+custom_constants/margin_top = 30
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+margin_top = 30.0
+margin_right = 1080.0
+margin_bottom = 178.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_constants/separation = 40
+alignment = 1
+
+[node name="Level" type="Control" parent="MarginContainer/HBoxContainer"]
+margin_left = 195.0
+margin_right = 645.0
+margin_bottom = 148.0
+rect_min_size = Vector2( 450, 0 )
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/Level"]
+material = ExtResource( 2 )
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_top = -52.0
+margin_right = 250.0
+margin_bottom = 52.0
+theme = ExtResource( 1 )
+custom_fonts/font = ExtResource( 5 )
+text = "John Doe"
+valign = 1
+
+[node name="Coins" type="Control" parent="MarginContainer/HBoxContainer"]
+margin_left = 685.0
+margin_right = 885.0
+margin_bottom = 148.0
+rect_min_size = Vector2( 200, 0 )
+
+[node name="Menu" type="Button" parent="MarginContainer/HBoxContainer/Coins"]
+material = ExtResource( 3 )
+margin_left = -86.0
+margin_right = 108.0
+margin_bottom = 197.0
+icon = ExtResource( 4 )
+flat = true
+icon_align = 1
+expand_icon = true
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/Coins"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 53.0
+margin_top = -33.0
+margin_right = 152.0
+margin_bottom = 71.0
+theme = ExtResource( 1 )
+custom_fonts/font = SubResource( 4 )
+text = "250"

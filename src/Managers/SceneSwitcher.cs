@@ -63,7 +63,6 @@ namespace CrazyEaters.Managers
                     }
                     loadingBar.Value = ((float)loader.GetStage())/loader.GetStageCount() * 100;
                 } else if (error == Error.FileEof) {
-                    await ToSignal(GetTree().CreateTimer(1f), "timeout");
                     ShowScene(loader.GetResource() as PackedScene);
                     return;
                 }

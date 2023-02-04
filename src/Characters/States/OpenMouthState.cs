@@ -48,11 +48,13 @@ namespace CrazyEaters.Characters.States
 
       public async void CloseMouth()
       {
-         SceneTreeTween tween = character.GetTree().CreateTween();
-         tween.TweenProperty(character.AnimTree, "parameters/OpenMouth/add_amount", 0f, .5f)?.SetEase(Tween.EaseType.Out);
-         await character.ToSignal(tween, "finished");
-         character.openMouth = false;
-         active = false;
+         if (!character.IsQueuedForDeletion()) {
+            SceneTreeTween tween = character.GetTree().CreateTween();
+            tween.TweenProperty(character.AnimTree, "parameters/OpenMouth/add_amount", 0f, .5f)?.SetEase(Tween.EaseType.Out);
+            await character.ToSignal(tween, "finished");
+            character.openMouth = false;
+            active = false;
+         }
       }
    }
 }

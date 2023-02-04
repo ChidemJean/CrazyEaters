@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=2]
+[gd_scene load_steps=45 format=2]
 
 [ext_resource path="res://assets/models/character.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/Characters/Character.cs" type="Script" id=2]
@@ -108,7 +108,7 @@ animation = "walk-loop"
 [sub_resource type="AnimationNodeTimeScale" id=10]
 
 [sub_resource type="AnimationNodeBlendTree" id=11]
-graph_offset = Vector2( -330.028, -154.694 )
+graph_offset = Vector2( -221.186, -218.299 )
 nodes/Animation/node = SubResource( 27 )
 nodes/Animation/position = Vector2( 1440, 220 )
 "nodes/Animation 2/node" = SubResource( 29 )
@@ -152,17 +152,13 @@ nodes/WalkAnim/position = Vector2( -200, -20 )
 nodes/WalkScale/node = SubResource( 10 )
 nodes/WalkScale/position = Vector2( -60, -20 )
 nodes/output/position = Vector2( 1660, 60 )
-node_connections = [ "output", 0, "CloseMouth", "Eat", 0, "Land", "Eat", 1, "EatAnim", "IdleFoot", 0, "State", "IdleFoot", 1, "Animation 2", "CloseMouth", 0, "Eat", "CloseMouth", 1, "Animation", "IdlePose", 0, "IdleHead", "IdlePose", 1, "Animation 4", "IdleHead", 0, "IdleFoot", "IdleHead", 1, "Animation 3", "Land", 0, "IdlePose", "Land", 1, "JumpDown", "IdleScale", 0, "IdleAnim", "Walk", 0, "IdleScale", "Walk", 1, "WalkScale", "WalkScale", 0, "WalkAnim", "OpenMouth", 0, "Walk", "OpenMouth", 1, "OpenMouthAnim", "State", 0, "OpenMouth", "State", 1, "Jump" ]
+node_connections = [ "Land", 0, "IdlePose", "Land", 1, "JumpDown", "IdlePose", 0, "IdleHead", "IdlePose", 1, "Animation 4", "CloseMouth", 0, "Eat", "CloseMouth", 1, "Animation", "IdleScale", 0, "IdleAnim", "WalkScale", 0, "WalkAnim", "Walk", 0, "IdleScale", "Walk", 1, "WalkScale", "IdleFoot", 0, "State", "IdleFoot", 1, "Animation 2", "State", 0, "OpenMouth", "State", 1, "Jump", "IdleHead", 0, "IdleFoot", "IdleHead", 1, "Animation 3", "OpenMouth", 0, "Walk", "OpenMouth", 1, "OpenMouthAnim", "Eat", 0, "Land", "Eat", 1, "EatAnim", "output", 0, "CloseMouth" ]
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=20]
 
 [sub_resource type="CapsuleShape" id=4]
 radius = 1.75083
 height = 6.1113
-
-[sub_resource type="CylinderShape" id=3]
-height = 11.4252
-radius = 3.1957
 
 [sub_resource type="SpatialMaterial" id=5]
 flags_unshaded = true
@@ -177,7 +173,6 @@ collision_layer = 8
 collision_mask = 6
 script = ExtResource( 2 )
 animTreePath = NodePath("character/AnimationTreeWithBlend")
-sensorAreaPath = NodePath("Sensor")
 sensorMouthPath = NodePath("character/Armature/Skeleton/Mouth/MouthSensor")
 viewFieldPath = NodePath("ViewField")
 navigationAgentPath = NodePath("NavigationAgent")
@@ -192,13 +187,13 @@ labelVelPath = NodePath("")
 transform = Transform( 0.17, 0, 0, 0, 0.17, 0, 0, 0, 0.17, 0, 0, 0 )
 
 [node name="Skeleton" parent="character/Armature" index="0"]
-bones/17/bound_children = [  ]
+bones/18/bound_children = [ NodePath("Mouth") ]
 
 [node name="Cube" parent="character/Armature/Skeleton" index="0"]
 material/0 = ExtResource( 9 )
 
 [node name="Eyes" parent="character/Armature/Skeleton" index="1"]
-transform = Transform( 1, -3.27826e-07, -2.96533e-06, 2.07126e-06, -0.575192, 0.818018, 6.25849e-07, -0.818021, -0.575195, -0.0953012, 8.67225, -1.40382 )
+transform = Transform( 1, -1.63913e-07, -3.02494e-06, 2.08057e-06, -0.630779, 0.775962, 4.76837e-07, -0.775965, -0.630783, -0.0953018, 8.55677, -1.75618 )
 
 [node name="character_eye" parent="character/Armature/Skeleton/Eyes/REye" index="0"]
 transform = Transform( 1, -7.36793e-07, -2.54251e-07, 7.21542e-07, 0.87976, 0.475423, 6.75092e-07, -0.475425, 0.879753, -0.0732958, 0.0953681, 0.116553 )
@@ -207,7 +202,7 @@ transform = Transform( 1, -7.36793e-07, -2.54251e-07, 7.21542e-07, 0.87976, 0.47
 transform = Transform( 1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0 )
 
 [node name="Mouth" type="BoneAttachment" parent="character/Armature/Skeleton" index="2"]
-transform = Transform( 1, -1.49012e-06, 2.45869e-07, 1.52737e-07, 0.379489, 0.925195, 1.19209e-06, -0.9252, 0.379491, -0.0952981, 5.43291, -1.44976 )
+transform = Transform( 1, -1.43051e-06, 5.21541e-08, 2.07685e-07, 0.314117, 0.949384, 1.2219e-06, -0.949388, 0.314118, -0.0952982, 5.3221, -1.57635 )
 bone_name = "mouth_down"
 
 [node name="MouthSensor" type="Area" parent="character/Armature/Skeleton/Mouth"]
@@ -248,15 +243,6 @@ transform = Transform( 0.17, 2.91038e-10, -4.68375e-17, 0, -7.43094e-09, -0.17, 
 shape = SubResource( 4 )
 
 [node name="NavigationAgent" type="NavigationAgent" parent="."]
-
-[node name="Sensor" type="Area" parent="."]
-transform = Transform( 0.17, 0, 0, 0, 0.17, 0, 0, 0, 0.17, 0, 0, 0 )
-visible = false
-collision_mask = 7
-
-[node name="CollisionShape" type="CollisionShape" parent="Sensor"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.31535, -0.0892117 )
-shape = SubResource( 3 )
 
 [node name="ig" type="ImmediateGeometry" parent="."]
 material_override = SubResource( 5 )

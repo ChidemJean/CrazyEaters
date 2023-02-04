@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/tombstone.jpg-8086a89ebad102b817f1b6d6a574cee8.s3tc.stex"
-path.etc2="res://.import/tombstone.jpg-8086a89ebad102b817f1b6d6a574cee8.etc2.stex"
+path.s3tc="res://.import/noiseTexture.png-03a7fdee5bdfed3d1274e76e0aa9a546.s3tc.stex"
+path.etc2="res://.import/noiseTexture.png-03a7fdee5bdfed3d1274e76e0aa9a546.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/models/imported/tombstone.jpg"
-dest_files=[ "res://.import/tombstone.jpg-8086a89ebad102b817f1b6d6a574cee8.s3tc.stex", "res://.import/tombstone.jpg-8086a89ebad102b817f1b6d6a574cee8.etc2.stex" ]
+source_file="res://scenes/Tests/noiseTexture.png"
+dest_files=[ "res://.import/noiseTexture.png-03a7fdee5bdfed3d1274e76e0aa9a546.s3tc.stex", "res://.import/noiseTexture.png-03a7fdee5bdfed3d1274e76e0aa9a546.etc2.stex" ]
 
 [params]
 
@@ -25,7 +25,7 @@ flags/repeat=true
 flags/filter=true
 flags/mipmaps=true
 flags/anisotropic=false
-flags/srgb=1
+flags/srgb=2
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false

@@ -17,7 +17,6 @@ namespace CrazyEaters.Characters
       [Export] protected float jumpSpeed = 20f;
       [Export] protected Vector3 velocity;
       [Export] protected NodePath animTreePath;
-      [Export] protected NodePath sensorAreaPath;
       [Export] protected NodePath sensorMouthPath;
       [Export] protected NodePath worldPath;
       [Export] protected NodePath viewFieldPath;
@@ -33,7 +32,6 @@ namespace CrazyEaters.Characters
       protected AnimationPlayer animationPlayer;
       public AnimationTree AnimTree => animationTree;
       protected AnimationNodeStateMachinePlayback stateMachine;
-      protected Area sensorArea;
       protected Area sensorMouth;
       protected Area viewField;
       protected float _speed;
@@ -70,7 +68,6 @@ namespace CrazyEaters.Characters
          gameManager = GetNode<GameManager>("/root/GameManager");
          gravity = gameManager.gravityVector * gameManager.gravityMagnitude * gravityScale;
          world = GetNode<CrazyEaters.Sandbox.World>(worldPath);
-         sensorArea = GetNode<Area>(sensorAreaPath);
          sensorMouth = GetNode<Area>(sensorMouthPath);
          viewField = GetNode<Area>(viewFieldPath);
 
@@ -87,7 +84,7 @@ namespace CrazyEaters.Characters
          ig = GetNode<ImmediateGeometry>(igPath);
 
          navmesh.Connect("bake_finished", this, nameof(OnNavmeshChanged));
-         sensorArea.Connect("body_entered", this, nameof(OnBodyEnteredMouth));
+         sensorMouth.Connect("body_entered", this, nameof(OnBodyEnteredMouth));
          viewField.Connect("body_entered", this, nameof(OnBodyEnteredViewField));
          // navigationAgent.SetTargetLocation(targetIALocation);
 
@@ -112,32 +109,7 @@ namespace CrazyEaters.Characters
 
       public abstract void OnNavmeshChanged();
       public abstract float IdleAnimationVariations(float idleTime);
-      public async void OnBodyEnteredMouth(Node body)
-      {
-         if (body is Food)
-         {
-            EatAnimation();
-         }
-      }
-      public void OnBodyEnteredViewField(Node body)
-      {
-         if (body is Food)
-         {
-            openMouth = true;
-         }
-      }
 
-      public void MoveAnimation(bool moving)
-      {
-         // if (moving && stateMachine.GetCurrentNode() != "walk" && stateMachine.GetCurrentNode() != "start_walk" && IsOnFloor() && canWalk)
-         // {
-         //    stateMachine.Start("start_walk");
-         // }
-         // else if (moveDir.x == 0 && moveDir.z == 0 && stateMachine.GetCurrentNode() != "eat" && !stateMachine.GetCurrentNode().Contains("idle"))
-         // {
-         //    stateMachine.Start("idle");
-         // }
-      }
       public void Jump()
       {
          if (IsOnFloor())
@@ -249,8 +221,6 @@ namespace CrazyEaters.Characters
          }
          isFloor = isOnFloor;
 
-         MoveAnimation(moveDir != Vector3.Zero);
-
          if (pathIA != null && pathIA.Length > 0)
          {
             Vector3 look = (pathIA[pathNodeIA]);
@@ -267,6 +237,27 @@ namespace CrazyEaters.Characters
       {
          await Task.Delay(TimeSpan.FromSeconds(.57f));
          canWalk = true;
+      }
+
+      public void OnBodyEnteredViewField(Node body)
+      {
+         if (body is Food)
+         {
+            openMouth = true;
+         }
+      }
+      
+      public void OnBodyEnteredMouth(Node body)
+      {
+         if (body is Food)
+         {
+            Eat((Food) body);
+         }
+      }
+
+      public virtual void Eat(Food food)
+      {
+         EatAnimation();
       }
 
       public async void EatAnimation()

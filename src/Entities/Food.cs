@@ -23,6 +23,11 @@ namespace CrazyEaters.Entities
             rb = this;
         }
 
+        public int GetCalories()
+        {
+            return foodData.calories;
+        }
+
         void IThrowable.Drop(Vector3 force, Vector3 origin)
         {
             // GetParent().RemoveChild(this);
