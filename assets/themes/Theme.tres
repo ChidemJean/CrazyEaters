@@ -1,6 +1,6 @@
 [gd_resource type="Theme" load_steps=9 format=2]
 
-[ext_resource path="res://assets/fonts/CrazyEaterFont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/fonts/baloom.tres" type="DynamicFont" id=1]
 [ext_resource path="res://assets/textures/UI/check_button_off_dis.png" type="Texture" id=2]
 [ext_resource path="res://assets/textures/UI/check_button_off.png" type="Texture" id=3]
 [ext_resource path="res://assets/textures/UI/check_button_on.png" type="Texture" id=4]

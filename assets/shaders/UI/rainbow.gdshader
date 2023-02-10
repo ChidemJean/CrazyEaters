@@ -62,5 +62,7 @@ void fragment() {
 		rainbow = vec3(1., 0., x);
 	}
 	vec4 color = texture(TEXTURE, UV);
-	COLOR = mix(color, vec4(rainbow, color.a), strength);
+	vec4 fColor = mix(color, vec4(rainbow, color.a), strength);
+	
+	COLOR = vec4(min(COLOR.rgb, fColor.rgb), fColor.a);
 }
