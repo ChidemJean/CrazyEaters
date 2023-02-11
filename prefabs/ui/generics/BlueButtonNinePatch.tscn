@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://src/UI/Generics/BlueButtonNinePatch.cs" type="Script" id=1]
+[ext_resource path="res://assets/textures/UI/button_blue.png" type="Texture" id=2]
+[ext_resource path="res://assets/textures/UI/button_blue_pressed.png" type="Texture" id=3]
+
+[node name="BlueButtonNinePatch" type="NinePatchRect"]
+margin_right = 80.0
+margin_bottom = 80.0
+mouse_filter = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 2 )
+patch_margin_left = 40
+patch_margin_right = 40
+script = ExtResource( 1 )
+texturePressed = ExtResource( 3 )
+textureNormal = ExtResource( 2 )
+
+[connection signal="gui_input" from="." to="." method="OnGuiInput"]

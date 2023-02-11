@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://assets/themes/Theme.tres" type="Theme" id=1]
 [ext_resource path="res://assets/materials/ui/Rainbow.tres" type="Material" id=2]
@@ -16,10 +16,8 @@
 [ext_resource path="res://assets/textures/UI/user_xp_bar.png" type="Texture" id=14]
 [ext_resource path="res://assets/textures/UI/button_green.png" type="Texture" id=15]
 [ext_resource path="res://assets/textures/UI/plus_gray.png" type="Texture" id=16]
-[ext_resource path="res://assets/textures/UI/button_blue.png" type="Texture" id=17]
 [ext_resource path="res://assets/textures/UI/cog_gray.png" type="Texture" id=18]
 [ext_resource path="res://assets/textures/UI/button_green_pressed.png" type="Texture" id=19]
-[ext_resource path="res://assets/textures/UI/button_blue_pressed.png" type="Texture" id=20]
 [ext_resource path="res://assets/textures/UI/front_menu_bottom.png" type="Texture" id=21]
 [ext_resource path="res://assets/textures/UI/back_menu_bottom.png" type="Texture" id=22]
 [ext_resource path="res://assets/textures/UI/middle_menu_bottom.png" type="Texture" id=23]
@@ -30,6 +28,7 @@
 [ext_resource path="res://assets/textures/UI/brown_circle_hole.png" type="Texture" id=28]
 [ext_resource path="res://assets/textures/UI/dotted_square.png" type="Texture" id=29]
 [ext_resource path="res://src/Managers/CEScene.cs" type="Script" id=30]
+[ext_resource path="res://prefabs/ui/generics/BlueButtonNinePatch.tscn" type="PackedScene" id=31]
 
 [sub_resource type="DynamicFont" id=8]
 size = 40
@@ -74,7 +73,7 @@ use_filter = true
 font_data = ExtResource( 6 )
 
 [sub_resource type="DynamicFont" id=11]
-size = 62
+size = 50
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
 use_filter = true
@@ -245,10 +244,9 @@ margin_bottom = 152.0
 [node name="Container" type="HBoxContainer" parent="Header/LeftHead"]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -623.0
-margin_top = -20.0
-margin_right = -3.0
-margin_bottom = 92.0
+margin_left = -620.0
+margin_top = -26.0
+margin_bottom = 86.0
 custom_constants/separation = 16
 alignment = 2
 
@@ -394,25 +392,32 @@ texture = ExtResource( 16 )
 expand = true
 stretch_mode = 6
 
-[node name="ConfigButton" type="TextureButton" parent="Header/LeftHead/Container"]
+[node name="ConfigHolder" type="Control" parent="Header/LeftHead/Container"]
 margin_left = 540.0
 margin_right = 620.0
 margin_bottom = 112.0
 rect_min_size = Vector2( 80, 80 )
-texture_normal = ExtResource( 17 )
-texture_pressed = ExtResource( 20 )
-expand = true
-stretch_mode = 5
 
-[node name="TextureRect" type="TextureRect" parent="Header/LeftHead/Container/ConfigButton"]
+[node name="ConfigBtn" parent="Header/LeftHead/Container/ConfigHolder" instance=ExtResource( 31 )]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -26.0
-margin_top = -32.0
-margin_right = 24.0
-margin_bottom = 18.0
+margin_left = -40.0
+margin_top = -40.0
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 80, 80 )
+
+[node name="TextureRect" type="TextureRect" parent="Header/LeftHead/Container/ConfigHolder/ConfigBtn"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -25.0
+margin_top = -33.0
+margin_right = 25.0
+margin_bottom = 17.0
 rect_min_size = Vector2( 50, 50 )
 texture = ExtResource( 18 )
 expand = true
@@ -538,26 +543,23 @@ stretch_mode = 6
 [node name="Control" type="CenterContainer" parent="Saves"]
 margin_top = 680.0
 margin_right = 1080.0
-margin_bottom = 860.0
+margin_bottom = 840.0
 
-[node name="NinePatchRect" type="NinePatchRect" parent="Saves/Control"]
-margin_left = 360.0
-margin_right = 720.0
-margin_bottom = 180.0
-rect_min_size = Vector2( 360, 180 )
-texture = ExtResource( 17 )
-patch_margin_left = 120
-patch_margin_right = 120
+[node name="EnterSaveBtn" parent="Saves/Control" instance=ExtResource( 31 )]
+margin_left = 390.0
+margin_right = 690.0
+margin_bottom = 160.0
+rect_min_size = Vector2( 300, 160 )
 
-[node name="Label" type="Label" parent="Saves/Control/NinePatchRect"]
+[node name="Label" type="Label" parent="Saves/Control/EnterSaveBtn"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -90.0
-margin_top = -65.0
-margin_right = 85.0
-margin_bottom = 39.0
+margin_left = -20.0
+margin_top = -23.0
+margin_right = 20.0
+margin_bottom = -9.0
 grow_horizontal = 2
 grow_vertical = 2
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
@@ -565,11 +567,12 @@ custom_constants/shadow_offset_y = 5
 custom_fonts/font = SubResource( 11 )
 text = "Entrar"
 align = 1
+valign = 1
 
 [node name="SavesDotsCtn" type="HBoxContainer" parent="Saves"]
-margin_top = 890.0
+margin_top = 870.0
 margin_right = 1080.0
-margin_bottom = 1000.0
+margin_bottom = 980.0
 grow_horizontal = 2
 grow_vertical = 2
 custom_constants/separation = 30
@@ -695,3 +698,5 @@ rect_min_size = Vector2( 60, 60 )
 texture = ExtResource( 16 )
 expand = true
 stretch_mode = 6
+
+[editable path="Saves/Control/EnterSaveBtn"]
