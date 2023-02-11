@@ -7,6 +7,9 @@ namespace CrazyEaters.Managers
     public class SceneSwitcher : Node
     {
         [Export]
+        public string initialScene = "";
+
+        [Export]
         public Dictionary<string, PackedScene> scenes = new Dictionary<string, PackedScene>();
         
         [Export]
@@ -34,7 +37,7 @@ namespace CrazyEaters.Managers
             // resourceQueueObj = (Godot.Object) resourceQueue.New();
             // resourceQueueObj.Call("start");
 
-            ChangeScene("habitat_scene");
+            ChangeScene(initialScene);
         }
 
         public void ChangeScene(string key) {
@@ -87,7 +90,9 @@ namespace CrazyEaters.Managers
             
             currentScene = scene.Instance<CEScene>();
             AddChild(currentScene);
-            gameManager.hud.ChangeViewport3d(currentScene.viewport3d);
+            if (currentScene.viewport3d != null) {
+                gameManager.hud.ChangeViewport3d(currentScene.viewport3d);
+            }
             isLoading = false;
 
             loading.Visible = false;

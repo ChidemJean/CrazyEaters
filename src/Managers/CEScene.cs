@@ -17,7 +17,7 @@ namespace CrazyEaters.Managers
 
         public override void _EnterTree()
         {
-            viewport3d = GetNodeOrNull<Viewport>(viewport3dPath);
+            if (viewport3dPath != null) viewport3d = GetNodeOrNull<Viewport>(viewport3dPath);
             gameManager = GetNode<GameManager>("/root/GameManager");
             saveSystemNode = GetNode<SaveSystemNode>("/root/MainNode/SaveSystem");
         }

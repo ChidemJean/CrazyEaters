@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://assets/themes/Theme.tres" type="Theme" id=1]
 [ext_resource path="res://assets/materials/ui/Rainbow.tres" type="Material" id=2]
@@ -9,7 +9,7 @@
 [ext_resource path="res://assets/textures/UI/beans.png" type="Texture" id=7]
 [ext_resource path="res://assets/textures/background_wood.png" type="Texture" id=8]
 [ext_resource path="res://assets/textures/radial_shadows.png" type="Texture" id=9]
-[ext_resource path="res://assets/textures/Training_Camp.png" type="Texture" id=10]
+[ext_resource path="res://assets/textures/UI/save_placeholder.png" type="Texture" id=10]
 [ext_resource path="res://assets/textures/UI/border_user_level.png" type="Texture" id=11]
 [ext_resource path="res://assets/textures/UI/back_user_thumb.png" type="Texture" id=12]
 [ext_resource path="res://assets/textures/UI/back_user_level.png" type="Texture" id=13]
@@ -24,11 +24,18 @@
 [ext_resource path="res://assets/textures/UI/back_menu_bottom.png" type="Texture" id=22]
 [ext_resource path="res://assets/textures/UI/middle_menu_bottom.png" type="Texture" id=23]
 [ext_resource path="res://assets/textures/UI/game-console.png" type="Texture" id=24]
+[ext_resource path="res://assets/textures/UI/brown_circle.png" type="Texture" id=25]
+[ext_resource path="res://assets/textures/UI/radial_white_small.png" type="Texture" id=26]
+[ext_resource path="res://assets/textures/UI/white_circle_hole.png" type="Texture" id=27]
+[ext_resource path="res://assets/textures/UI/brown_circle_hole.png" type="Texture" id=28]
+[ext_resource path="res://assets/textures/UI/dotted_square.png" type="Texture" id=29]
+[ext_resource path="res://src/Managers/CEScene.cs" type="Script" id=30]
 
 [sub_resource type="DynamicFont" id=8]
 size = 40
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
 font_data = ExtResource( 6 )
 
 [sub_resource type="DynamicFont" id=5]
@@ -66,9 +73,24 @@ outline_color = Color( 0, 0, 0, 1 )
 use_filter = true
 font_data = ExtResource( 6 )
 
+[sub_resource type="DynamicFont" id=11]
+size = 62
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = ExtResource( 6 )
+
+[sub_resource type="DynamicFont" id=10]
+size = 42
+outline_size = 3
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = ExtResource( 6 )
+
 [node name="Home" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 30 )
 
 [node name="Back" type="TextureRect" parent="."]
 modulate = Color( 0.658824, 0.658824, 0.658824, 1 )
@@ -396,16 +418,6 @@ texture = ExtResource( 18 )
 expand = true
 stretch_mode = 6
 
-[node name="TextureRect" type="TextureRect" parent="."]
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-margin_top = -401.0
-margin_bottom = 252.0
-texture = ExtResource( 10 )
-expand = true
-stretch_mode = 6
-
 [node name="BottomToolbar" type="Control" parent="."]
 anchor_top = 1.0
 anchor_right = 1.0
@@ -502,5 +514,184 @@ margin_right = 82.0
 margin_bottom = 215.0
 rect_min_size = Vector2( 180, 180 )
 texture = ExtResource( 24 )
+expand = true
+stretch_mode = 6
+
+[node name="Saves" type="VBoxContainer" parent="."]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_top = -416.0
+margin_bottom = 184.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_constants/separation = 30
+
+[node name="TextureRect" type="TextureRect" parent="Saves"]
+margin_right = 1080.0
+margin_bottom = 650.0
+rect_min_size = Vector2( 0, 650 )
+texture = ExtResource( 10 )
+expand = true
+stretch_mode = 6
+
+[node name="Control" type="CenterContainer" parent="Saves"]
+margin_top = 680.0
+margin_right = 1080.0
+margin_bottom = 860.0
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Saves/Control"]
+margin_left = 360.0
+margin_right = 720.0
+margin_bottom = 180.0
+rect_min_size = Vector2( 360, 180 )
+texture = ExtResource( 17 )
+patch_margin_left = 120
+patch_margin_right = 120
+
+[node name="Label" type="Label" parent="Saves/Control/NinePatchRect"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -90.0
+margin_top = -65.0
+margin_right = 85.0
+margin_bottom = 39.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_y = 5
+custom_fonts/font = SubResource( 11 )
+text = "Entrar"
+align = 1
+
+[node name="SavesDotsCtn" type="HBoxContainer" parent="Saves"]
+margin_top = 890.0
+margin_right = 1080.0
+margin_bottom = 1000.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_constants/separation = 30
+alignment = 1
+
+[node name="SaveDot" type="Control" parent="Saves/SavesDotsCtn"]
+margin_left = 297.0
+margin_right = 391.0
+margin_bottom = 110.0
+rect_min_size = Vector2( 94, 94 )
+
+[node name="TextureRect" type="TextureProgress" parent="Saves/SavesDotsCtn/SaveDot"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -47.0
+margin_top = -47.0
+margin_right = 47.0
+margin_bottom = 47.0
+value = 40.0
+texture_under = ExtResource( 28 )
+texture_progress = ExtResource( 27 )
+fill_mode = 5
+
+[node name="Label" type="Label" parent="Saves/SavesDotsCtn/SaveDot/TextureRect"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -11.0
+margin_top = -37.0
+margin_right = 11.0
+margin_bottom = 37.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_y = 5
+custom_fonts/font = SubResource( 10 )
+text = "2"
+
+[node name="SaveDot2" type="Control" parent="Saves/SavesDotsCtn"]
+margin_left = 421.0
+margin_right = 475.0
+margin_bottom = 110.0
+rect_min_size = Vector2( 54, 54 )
+
+[node name="SaveDot" type="TextureProgress" parent="Saves/SavesDotsCtn/SaveDot2"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -27.0
+margin_top = -27.0
+margin_right = 27.0
+margin_bottom = 27.0
+rect_min_size = Vector2( 40, 40 )
+value = 85.0
+texture_under = ExtResource( 25 )
+texture_progress = ExtResource( 26 )
+fill_mode = 5
+
+[node name="SaveDot3" type="Control" parent="Saves/SavesDotsCtn"]
+margin_left = 505.0
+margin_right = 559.0
+margin_bottom = 110.0
+rect_min_size = Vector2( 54, 54 )
+
+[node name="SaveDot" type="TextureProgress" parent="Saves/SavesDotsCtn/SaveDot3"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -27.0
+margin_top = -27.0
+margin_right = 27.0
+margin_bottom = 27.0
+rect_min_size = Vector2( 40, 40 )
+value = 85.0
+texture_under = ExtResource( 25 )
+texture_progress = ExtResource( 26 )
+fill_mode = 5
+
+[node name="SaveDot4" type="Control" parent="Saves/SavesDotsCtn"]
+margin_left = 589.0
+margin_right = 643.0
+margin_bottom = 110.0
+rect_min_size = Vector2( 54, 54 )
+
+[node name="SaveDot" type="TextureProgress" parent="Saves/SavesDotsCtn/SaveDot4"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -27.0
+margin_top = -27.0
+margin_right = 27.0
+margin_bottom = 27.0
+rect_min_size = Vector2( 40, 40 )
+value = 85.0
+texture_under = ExtResource( 25 )
+texture_progress = ExtResource( 26 )
+fill_mode = 5
+
+[node name="TextureButton" type="TextureButton" parent="Saves/SavesDotsCtn"]
+modulate = Color( 1, 1, 1, 0.494118 )
+margin_left = 673.0
+margin_right = 783.0
+margin_bottom = 110.0
+rect_min_size = Vector2( 110, 110 )
+texture_normal = ExtResource( 29 )
+expand = true
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="Saves/SavesDotsCtn/TextureButton"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -30.0
+margin_top = -30.0
+margin_right = 30.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 60, 60 )
+texture = ExtResource( 16 )
 expand = true
 stretch_mode = 6

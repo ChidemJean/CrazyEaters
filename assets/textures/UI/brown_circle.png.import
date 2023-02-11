@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Training_Camp.png-2cd7ed3686e80ed0b041b0dc533b22c8.stex"
+path="res://.import/brown_circle.png-10751fcbbd619d92e535e9d448e790f8.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/Training_Camp.png"
-dest_files=[ "res://.import/Training_Camp.png-2cd7ed3686e80ed0b041b0dc533b22c8.stex" ]
+source_file="res://assets/textures/UI/brown_circle.png"
+dest_files=[ "res://.import/brown_circle.png-10751fcbbd619d92e535e9d448e790f8.stex" ]
 
 [params]
 

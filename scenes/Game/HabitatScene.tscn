@@ -276,6 +276,9 @@ numPoints = 5
 timeBetweenPoints = 0.2
 throwablePath = NodePath("../../Hamburguer")
 
+[node name="Skeleton" parent="CameraPivot/spatula/Armature" index="0"]
+bones/4/bound_children = [ NodePath("BoneAttachment") ]
+
 [node name="BoneAttachment" parent="CameraPivot/spatula/Armature/Skeleton" index="1"]
 transform = Transform( 0.997886, 0.0615615, 0.0208422, -0.061768, 0.998046, 0.0094159, -0.0202219, -0.0106834, 0.999738, -0.248285, 3.04844, 0.0488994 )
 
