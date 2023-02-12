@@ -1,0 +1,79 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://assets/textures/UI/game-console.png" type="Texture" id=1]
+[ext_resource path="res://assets/textures/UI/back_item_bottom.png" type="Texture" id=2]
+[ext_resource path="res://assets/fonts/BalooTamma-Regular.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://assets/textures/UI/radial_shine.png" type="Texture" id=4]
+[ext_resource path="res://src/UI/MenuTabItem.cs" type="Script" id=5]
+
+[sub_resource type="DynamicFont" id=12]
+size = 38
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = ExtResource( 3 )
+
+[node name="MenuTabItem" type="Control"]
+margin_right = 220.0
+margin_bottom = 272.0
+rect_min_size = Vector2( 215, 0 )
+script = ExtResource( 5 )
+bgPath = NodePath("TextureRect")
+labelPath = NodePath("TextureRect/Label")
+shinePath = NodePath("TextureRect/TextureRect")
+iconPath = NodePath("TextureRect/TextureButton")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+self_modulate = Color( 0.717647, 0.717647, 0.717647, 1 )
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -110.0
+margin_top = -283.0
+margin_right = 110.0
+rect_min_size = Vector2( 220, 0 )
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 6
+
+[node name="TextureRect" type="TextureRect" parent="TextureRect"]
+self_modulate = Color( 1, 1, 1, 0 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 25.0
+margin_bottom = -57.0
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 6
+
+[node name="TextureButton" type="TextureRect" parent="TextureRect"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -79.5
+margin_top = -252.0
+margin_right = 72.5
+margin_bottom = -123.0
+texture = ExtResource( 1 )
+expand = true
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="TextureRect"]
+self_modulate = Color( 1, 1, 1, 0 )
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -50.0
+margin_top = -66.0
+margin_right = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_y = 5
+custom_fonts/font = SubResource( 12 )
+text = "Jogar"
+align = 1
+valign = 1

@@ -6,7 +6,9 @@ namespace CrazyEaters.Managers
     public enum GameEvent { 
         UpdateCharacterStatus,
         FoodEatFinish,
-        GameModeChange
+        GameModeChange,
+        MenuBottomItemClick,
+        ChangePanel
     };
 
     public class CharacterStatusEventData {

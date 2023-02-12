@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scenes/Game/GameScene.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/textures/UI/logo_chidem_games.fw.png" type="Texture" id=2]
@@ -7,6 +7,8 @@
 [ext_resource path="res://src/Managers/SceneSwitcher.cs" type="Script" id=5]
 [ext_resource path="res://scenes/Tests/MainSandboxTest.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/Home/HomeScene.tscn" type="PackedScene" id=7]
+[ext_resource path="res://assets/textures/radial_shadows.png" type="Texture" id=8]
+[ext_resource path="res://assets/textures/background_wood.png" type="Texture" id=9]
 [ext_resource path="res://assets/themes/Theme.tres" type="Theme" id=14]
 
 [node name="MainNode" type="Control"]
@@ -26,14 +28,21 @@ anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Back" type="ColorRect" parent="Loading"]
+[node name="Back2" type="TextureRect" parent="Loading"]
+modulate = Color( 0.658824, 0.658824, 0.658824, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-color = Color( 0.211765, 0.12549, 0.243137, 1 )
+texture = ExtResource( 9 )
+stretch_mode = 2
 
-[node name="VBox" type="VBoxContainer" parent="Loading/Back"]
+[node name="Back3" type="TextureRect" parent="Loading"]
+modulate = Color( 0.745098, 0.745098, 0.745098, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 8 )
+expand = true
+
+[node name="VBox" type="VBoxContainer" parent="Loading"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
@@ -41,14 +50,14 @@ size_flags_vertical = 3
 custom_constants/separation = 150
 alignment = 1
 
-[node name="Logo" type="TextureRect" parent="Loading/Back/VBox"]
+[node name="Logo" type="TextureRect" parent="Loading/VBox"]
 margin_top = 650.0
 margin_right = 1080.0
 margin_bottom = 1030.0
 texture = ExtResource( 2 )
 stretch_mode = 6
 
-[node name="Progress" type="ProgressBar" parent="Loading/Back/VBox"]
+[node name="Progress" type="ProgressBar" parent="Loading/VBox"]
 margin_top = 1180.0
 margin_right = 1080.0
 margin_bottom = 1270.0

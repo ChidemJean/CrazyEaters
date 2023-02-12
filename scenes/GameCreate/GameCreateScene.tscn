@@ -1,5 +1,183 @@
-[gd_scene format=2]
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://assets/textures/radial_shadows.png" type="Texture" id=1]
+[ext_resource path="res://assets/textures/background_wood.png" type="Texture" id=2]
+[ext_resource path="res://assets/fonts/BalooTamma-Regular.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://assets/textures/UI/cog_gray.png" type="Texture" id=4]
+[ext_resource path="res://prefabs/ui/generics/BlueButtonNinePatch.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/textures/UI/back_close_btn.png" type="Texture" id=6]
+[ext_resource path="res://assets/textures/UI/plus_gray.png" type="Texture" id=7]
+
+[sub_resource type="DynamicFont" id=1]
+size = 50
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = ExtResource( 3 )
 
 [node name="GameCreate" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+
+[node name="Back" type="TextureRect" parent="."]
+modulate = Color( 0.658824, 0.658824, 0.658824, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 2 )
+stretch_mode = 2
+
+[node name="Back2" type="TextureRect" parent="."]
+modulate = Color( 0.745098, 0.745098, 0.745098, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 1 )
+expand = true
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+margin_bottom = 823.0
+color = Color( 0.564706, 0.298039, 0.756863, 1 )
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+anchor_right = 1.0
+margin_bottom = 796.0
+color = Color( 0.756863, 0.447059, 0.980392, 1 )
+
+[node name="Header" type="MarginContainer" parent="."]
+anchor_right = 1.0
+margin_bottom = 139.0
+custom_constants/margin_right = 30
+custom_constants/margin_top = 52
+custom_constants/margin_left = 30
+custom_constants/margin_bottom = 36
+
+[node name="LeftHead" type="Control" parent="Header"]
+margin_left = 30.0
+margin_top = 52.0
+margin_right = 1050.0
+margin_bottom = 103.0
+
+[node name="Container" type="HBoxContainer" parent="Header/LeftHead"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -620.0
+margin_top = -26.0
+margin_bottom = 86.0
+custom_constants/separation = 16
+alignment = 2
+
+[node name="ConfigHolder" type="Control" parent="Header/LeftHead/Container"]
+margin_left = 540.0
+margin_right = 620.0
+margin_bottom = 112.0
+rect_min_size = Vector2( 80, 80 )
+
+[node name="ConfigBtn" parent="Header/LeftHead/Container/ConfigHolder" instance=ExtResource( 5 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -40.0
+margin_top = -40.0
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 80, 80 )
+
+[node name="TextureRect" type="TextureRect" parent="Header/LeftHead/Container/ConfigHolder/ConfigBtn"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -25.0
+margin_top = -33.0
+margin_right = 25.0
+margin_bottom = 17.0
+rect_min_size = Vector2( 50, 50 )
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 6
+
+[node name="Control" type="MarginContainer" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -250.0
+custom_constants/margin_right = 50
+custom_constants/margin_top = 30
+custom_constants/margin_left = 50
+custom_constants/margin_bottom = 50
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+margin_left = 50.0
+margin_top = 30.0
+margin_right = 1030.0
+margin_bottom = 200.0
+custom_constants/separation = 100
+
+[node name="BlueButtonNinePatch" parent="Control/HBoxContainer" instance=ExtResource( 5 )]
+margin_right = 440.0
+margin_bottom = 170.0
+
+[node name="Label" type="Label" parent="Control/HBoxContainer/BlueButtonNinePatch"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -23.0
+margin_right = 20.0
+margin_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_y = 5
+custom_fonts/font = SubResource( 1 )
+text = "Voltar"
+align = 1
+valign = 1
+
+[node name="BlueButtonNinePatch2" parent="Control/HBoxContainer" instance=ExtResource( 5 )]
+margin_left = 540.0
+margin_right = 980.0
+margin_bottom = 170.0
+
+[node name="Label" type="Label" parent="Control/HBoxContainer/BlueButtonNinePatch2"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -23.0
+margin_right = 20.0
+margin_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_y = 5
+custom_fonts/font = SubResource( 1 )
+text = "Próximo"
+align = 1
+valign = 1
+
+[node name="TextureButton" type="TextureButton" parent="."]
+margin_right = 150.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 150, 150 )
+texture_normal = ExtResource( 6 )
+expand = true
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="TextureButton"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -54.0
+margin_top = -52.0
+margin_right = 20.0
+margin_bottom = 16.0
+rect_rotation = -32.8
+rect_pivot_offset = Vector2( 43, 39 )
+texture = ExtResource( 7 )
+expand = true
+stretch_mode = 6
