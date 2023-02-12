@@ -35,6 +35,7 @@ namespace CrazyEaters.UI
         float initialLabelY;
         Color initialSelfModulateBg;
         Color initialSelfModulateShine;
+        Vector2 initialScale;
 
         public override void _Ready()
         {
@@ -50,12 +51,13 @@ namespace CrazyEaters.UI
             initialSelfModulateShine = shine.SelfModulate;
             initialIconY = icon.RectPosition.y;
             initialLabelY = label.RectPosition.y;
+            initialScale = icon.RectScale;
         }
 
         public void OnPanelChange(object param)
         {
-            string key = (string) param;
-            if (key == tabPanelKey) {
+            ChangePanelEventData data = (ChangePanelEventData) param;
+            if (data.key == tabPanelKey) {
                 Activate();
                 return;
             }
@@ -75,10 +77,11 @@ namespace CrazyEaters.UI
             tween.SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Quad);
             tween.TweenProperty(bg, "margin_top", initialMarginTop * 1.3f, .3f);
             tween.Parallel().TweenProperty(bg, "self_modulate", new Color(1,1,1,1), .3f);
-            tween.Parallel().TweenProperty(shine, "self_modulate:a", .5f, .3f);
-            tween.Parallel().TweenProperty(icon, "rect_position:y", initialIconY * .75f, .3f);
+            tween.Parallel().TweenProperty(shine, "self_modulate:a", .4f, .3f);
+            tween.Parallel().TweenProperty(icon, "rect_position:y", initialIconY * 1.2f, .3f);
+            tween.Parallel().TweenProperty(icon, "rect_scale", new Vector2(1.15f, 1.15f), .4f).SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Elastic);
             tween.Parallel().TweenProperty(label, "self_modulate:a", 1f, .3f);
-            tween.Parallel().TweenProperty(label, "rect_position:y", initialLabelY * .5f, .3f);
+            tween.Parallel().TweenProperty(label, "rect_position:y", initialLabelY * .82f, .3f);
         }
         public async void Deactivate()
         {
@@ -92,6 +95,7 @@ namespace CrazyEaters.UI
             tween.Parallel().TweenProperty(bg, "self_modulate", initialSelfModulateBg, .25f);
             tween.Parallel().TweenProperty(shine, "self_modulate:a", initialSelfModulateShine.a, .25f);
             tween.Parallel().TweenProperty(icon, "rect_position:y", initialIconY, .25f);
+            tween.Parallel().TweenProperty(icon, "rect_scale", initialScale, .25f);
             tween.Parallel().TweenProperty(label, "self_modulate:a", 0f, .25f);
             tween.Parallel().TweenProperty(label, "rect_position:y", initialLabelY, .25f);
         }

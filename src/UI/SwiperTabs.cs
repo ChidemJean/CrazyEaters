@@ -14,6 +14,8 @@ namespace CrazyEaters.UI
 
         [Export]
         public NodePath targetRailPath;
+        [Export]
+        public string initialTabKey;
         [Inject] 
         private GameManager gameManager;
         public Control tabContainer;
@@ -35,6 +37,7 @@ namespace CrazyEaters.UI
             PopulateTabs();
             Connect("gui_input", this, nameof(OnGuiInput));
             gameManager.StartListening(GameEvent.MenuBottomItemClick, OnItemClick);
+            AnimateToPanel(initialTabKey);
         }
 
         public void PopulateTabs()
@@ -96,7 +99,7 @@ namespace CrazyEaters.UI
             if (key == null) {
                 key = ((PanelTabItem)panels[toIndex]).key;
             }
-            gameManager.TriggerEvent(GameEvent.ChangePanel, key);
+            gameManager.TriggerEvent(GameEvent.ChangePanel, new ChangePanelEventData(key, toIndex));
 
             var pT = tween.TweenProperty(targetRail, "rect_global_position:x", toIndex * RectSize.x * -1, .4f);
             await ToSignal(pT, "finished");

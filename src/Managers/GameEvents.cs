@@ -21,4 +21,15 @@ namespace CrazyEaters.Managers
             this.newValue = newValue;
         }
     }
+
+    public class ChangePanelEventData {
+        public string key;
+        public int index;
+
+        public ChangePanelEventData(string key, int index)
+        {
+            this.key = key;
+            this.index = index;
+        }
+    }
 }

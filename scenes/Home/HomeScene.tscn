@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=2]
+[gd_scene load_steps=44 format=2]
 
 [ext_resource path="res://assets/themes/Theme.tres" type="Theme" id=1]
 [ext_resource path="res://assets/materials/ui/Rainbow.tres" type="Material" id=2]
@@ -34,6 +34,7 @@
 [ext_resource path="res://src/UI/Utils/ScreenResizer.cs" type="Script" id=32]
 [ext_resource path="res://src/UI/SwiperTabs.cs" type="Script" id=33]
 [ext_resource path="res://src/UI/PanelTabItem.cs" type="Script" id=34]
+[ext_resource path="res://src/UI/HighlightMenuSelected.cs" type="Script" id=35]
 
 [sub_resource type="DynamicFont" id=11]
 size = 50
@@ -117,12 +118,13 @@ mouse_filter = 1
 script = ExtResource( 33 )
 tabContainerPath = NodePath("../BottomToolbar/Middle/HBoxContainer")
 targetRailPath = NodePath("HBoxContainer")
+initialTabKey = "play"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ContainerTabContents"]
 anchor_bottom = 1.0
 margin_right = 1080.0
 
-[node name="Saves" type="VBoxContainer" parent="ContainerTabContents/HBoxContainer"]
+[node name="Shop" type="VBoxContainer" parent="ContainerTabContents/HBoxContainer"]
 margin_right = 1080.0
 margin_bottom = 1920.0
 grow_horizontal = 2
@@ -132,6 +134,31 @@ custom_constants/separation = 30
 alignment = 1
 script = ExtResource( 34 )
 key = "shop"
+
+[node name="ScreenResizer" type="Node" parent="ContainerTabContents/HBoxContainer/Shop"]
+script = ExtResource( 32 )
+fullRectGuiderPath = NodePath("../../..")
+
+[node name="TextureRect" type="TextureRect" parent="ContainerTabContents/HBoxContainer/Shop"]
+margin_top = 635.0
+margin_right = 1080.0
+margin_bottom = 1285.0
+rect_min_size = Vector2( 0, 650 )
+texture = ExtResource( 10 )
+expand = true
+stretch_mode = 6
+
+[node name="Saves" type="VBoxContainer" parent="ContainerTabContents/HBoxContainer"]
+margin_left = 1084.0
+margin_right = 2164.0
+margin_bottom = 1920.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 1080, 0 )
+custom_constants/separation = 30
+alignment = 1
+script = ExtResource( 34 )
+key = "play"
 
 [node name="ScreenResizer" type="Node" parent="ContainerTabContents/HBoxContainer/Saves"]
 script = ExtResource( 32 )
@@ -305,191 +332,7 @@ texture = ExtResource( 16 )
 expand = true
 stretch_mode = 6
 
-[node name="Saves2" type="VBoxContainer" parent="ContainerTabContents/HBoxContainer"]
-margin_left = 1084.0
-margin_right = 2164.0
-margin_bottom = 1920.0
-grow_horizontal = 2
-grow_vertical = 2
-rect_min_size = Vector2( 1080, 0 )
-custom_constants/separation = 30
-alignment = 1
-script = ExtResource( 34 )
-key = "play"
-
-[node name="ScreenResizer" type="Node" parent="ContainerTabContents/HBoxContainer/Saves2"]
-script = ExtResource( 32 )
-fullRectGuiderPath = NodePath("../../..")
-
-[node name="TextureRect" type="TextureRect" parent="ContainerTabContents/HBoxContainer/Saves2"]
-margin_top = 470.0
-margin_right = 1080.0
-margin_bottom = 1120.0
-rect_min_size = Vector2( 0, 650 )
-texture = ExtResource( 10 )
-expand = true
-stretch_mode = 6
-
-[node name="Control" type="CenterContainer" parent="ContainerTabContents/HBoxContainer/Saves2"]
-margin_top = 1150.0
-margin_right = 1080.0
-margin_bottom = 1310.0
-
-[node name="EnterSaveBtn" parent="ContainerTabContents/HBoxContainer/Saves2/Control" instance=ExtResource( 31 )]
-margin_left = 390.0
-margin_right = 690.0
-margin_bottom = 160.0
-rect_min_size = Vector2( 300, 160 )
-
-[node name="Label" type="Label" parent="ContainerTabContents/HBoxContainer/Saves2/Control/EnterSaveBtn"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -23.0
-margin_right = 20.0
-margin_bottom = -9.0
-grow_horizontal = 2
-grow_vertical = 2
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_constants/shadow_offset_y = 5
-custom_fonts/font = SubResource( 11 )
-text = "Entrar"
-align = 1
-valign = 1
-
-[node name="SavesDotsCtn" type="HBoxContainer" parent="ContainerTabContents/HBoxContainer/Saves2"]
-margin_top = 1340.0
-margin_right = 1080.0
-margin_bottom = 1450.0
-grow_horizontal = 2
-grow_vertical = 2
-custom_constants/separation = 30
-alignment = 1
-
-[node name="SaveDot" type="Control" parent="ContainerTabContents/HBoxContainer/Saves2/SavesDotsCtn"]
-margin_left = 297.0
-margin_right = 391.0
-margin_bottom = 110.0
-rect_min_size = Vector2( 94, 94 )
-
-[node name="TextureRect" type="TextureProgress" parent="ContainerTabContents/HBoxContainer/Saves2/SavesDotsCtn/SaveDot"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -47.0
-margin_top = -47.0
-margin_right = 47.0
-margin_bottom = 47.0
-value = 40.0
-texture_under = ExtResource( 28 )
-texture_progress = ExtResource( 27 )
-fill_mode = 5
-
-[node name="Label" type="Label" parent="ContainerTabContents/HBoxContainer/Saves2/SavesDotsCtn/SaveDot/TextureRect"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -11.0
-margin_top = -37.0
-margin_right = 11.0
-margin_bottom = 37.0
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_constants/shadow_offset_y = 5
-custom_fonts/font = SubResource( 10 )
-text = "2"
-
-[node name="SaveDot2" type="Control" parent="ContainerTabContents/HBoxContainer/Saves2/SavesDotsCtn"]
-margin_left = 421.0
-margin_right = 475.0
-margin_bottom = 110.0
-rect_min_size = Vector2( 54, 54 )
-
-[node name="SaveDot" type="TextureProgress" parent="ContainerTabContents/HBoxContainer/Saves2/SavesDotsCtn/SaveDot2"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -27.0
-margin_top = -27.0
-margin_right = 27.0
-margin_bottom = 27.0
-rect_min_size = Vector2( 40, 40 )
-value = 85.0
-texture_under = ExtResource( 25 )
-texture_progress = ExtResource( 26 )
-fill_mode = 5
-
-[node name="SaveDot3" type="Control" parent="ContainerTabContents/HBoxContainer/Saves2/SavesDotsCtn"]
-margin_left = 505.0
-margin_right = 559.0
-margin_bottom = 110.0
-rect_min_size = Vector2( 54, 54 )
-
-[node name="SaveDot" type="TextureProgress" parent="ContainerTabContents/HBoxContainer/Saves2/SavesDotsCtn/SaveDot3"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -27.0
-margin_top = -27.0
-margin_right = 27.0
-margin_bottom = 27.0
-rect_min_size = Vector2( 40, 40 )
-value = 85.0
-texture_under = ExtResource( 25 )
-texture_progress = ExtResource( 26 )
-fill_mode = 5
-
-[node name="SaveDot4" type="Control" parent="ContainerTabContents/HBoxContainer/Saves2/SavesDotsCtn"]
-margin_left = 589.0
-margin_right = 643.0
-margin_bottom = 110.0
-rect_min_size = Vector2( 54, 54 )
-
-[node name="SaveDot" type="TextureProgress" parent="ContainerTabContents/HBoxContainer/Saves2/SavesDotsCtn/SaveDot4"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -27.0
-margin_top = -27.0
-margin_right = 27.0
-margin_bottom = 27.0
-rect_min_size = Vector2( 40, 40 )
-value = 85.0
-texture_under = ExtResource( 25 )
-texture_progress = ExtResource( 26 )
-fill_mode = 5
-
-[node name="TextureButton" type="TextureButton" parent="ContainerTabContents/HBoxContainer/Saves2/SavesDotsCtn"]
-modulate = Color( 1, 1, 1, 0.494118 )
-margin_left = 673.0
-margin_right = 783.0
-margin_bottom = 110.0
-rect_min_size = Vector2( 110, 110 )
-texture_normal = ExtResource( 29 )
-expand = true
-stretch_mode = 5
-
-[node name="TextureRect" type="TextureRect" parent="ContainerTabContents/HBoxContainer/Saves2/SavesDotsCtn/TextureButton"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -30.0
-margin_top = -30.0
-margin_right = 30.0
-margin_bottom = 30.0
-rect_min_size = Vector2( 60, 60 )
-texture = ExtResource( 16 )
-expand = true
-stretch_mode = 6
-
-[node name="Saves3" type="VBoxContainer" parent="ContainerTabContents/HBoxContainer"]
+[node name="Inventory" type="VBoxContainer" parent="ContainerTabContents/HBoxContainer"]
 margin_left = 2168.0
 margin_right = 3248.0
 margin_bottom = 1920.0
@@ -501,179 +344,20 @@ alignment = 1
 script = ExtResource( 34 )
 key = "inventory"
 
-[node name="ScreenResizer" type="Node" parent="ContainerTabContents/HBoxContainer/Saves3"]
+[node name="ScreenResizer" type="Node" parent="ContainerTabContents/HBoxContainer/Inventory"]
 script = ExtResource( 32 )
 fullRectGuiderPath = NodePath("../../..")
 
-[node name="TextureRect" type="TextureRect" parent="ContainerTabContents/HBoxContainer/Saves3"]
-margin_top = 470.0
+[node name="TextureRect" type="TextureRect" parent="ContainerTabContents/HBoxContainer/Inventory"]
+margin_top = 635.0
 margin_right = 1080.0
-margin_bottom = 1120.0
+margin_bottom = 1285.0
 rect_min_size = Vector2( 0, 650 )
 texture = ExtResource( 10 )
 expand = true
 stretch_mode = 6
 
-[node name="Control" type="CenterContainer" parent="ContainerTabContents/HBoxContainer/Saves3"]
-margin_top = 1150.0
-margin_right = 1080.0
-margin_bottom = 1310.0
-
-[node name="EnterSaveBtn" parent="ContainerTabContents/HBoxContainer/Saves3/Control" instance=ExtResource( 31 )]
-margin_left = 390.0
-margin_right = 690.0
-margin_bottom = 160.0
-rect_min_size = Vector2( 300, 160 )
-
-[node name="Label" type="Label" parent="ContainerTabContents/HBoxContainer/Saves3/Control/EnterSaveBtn"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -23.0
-margin_right = 20.0
-margin_bottom = -9.0
-grow_horizontal = 2
-grow_vertical = 2
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_constants/shadow_offset_y = 5
-custom_fonts/font = SubResource( 11 )
-text = "Entrar"
-align = 1
-valign = 1
-
-[node name="SavesDotsCtn" type="HBoxContainer" parent="ContainerTabContents/HBoxContainer/Saves3"]
-margin_top = 1340.0
-margin_right = 1080.0
-margin_bottom = 1450.0
-grow_horizontal = 2
-grow_vertical = 2
-custom_constants/separation = 30
-alignment = 1
-
-[node name="SaveDot" type="Control" parent="ContainerTabContents/HBoxContainer/Saves3/SavesDotsCtn"]
-margin_left = 297.0
-margin_right = 391.0
-margin_bottom = 110.0
-rect_min_size = Vector2( 94, 94 )
-
-[node name="TextureRect" type="TextureProgress" parent="ContainerTabContents/HBoxContainer/Saves3/SavesDotsCtn/SaveDot"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -47.0
-margin_top = -47.0
-margin_right = 47.0
-margin_bottom = 47.0
-value = 40.0
-texture_under = ExtResource( 28 )
-texture_progress = ExtResource( 27 )
-fill_mode = 5
-
-[node name="Label" type="Label" parent="ContainerTabContents/HBoxContainer/Saves3/SavesDotsCtn/SaveDot/TextureRect"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -11.0
-margin_top = -37.0
-margin_right = 11.0
-margin_bottom = 37.0
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_constants/shadow_offset_y = 5
-custom_fonts/font = SubResource( 10 )
-text = "2"
-
-[node name="SaveDot2" type="Control" parent="ContainerTabContents/HBoxContainer/Saves3/SavesDotsCtn"]
-margin_left = 421.0
-margin_right = 475.0
-margin_bottom = 110.0
-rect_min_size = Vector2( 54, 54 )
-
-[node name="SaveDot" type="TextureProgress" parent="ContainerTabContents/HBoxContainer/Saves3/SavesDotsCtn/SaveDot2"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -27.0
-margin_top = -27.0
-margin_right = 27.0
-margin_bottom = 27.0
-rect_min_size = Vector2( 40, 40 )
-value = 85.0
-texture_under = ExtResource( 25 )
-texture_progress = ExtResource( 26 )
-fill_mode = 5
-
-[node name="SaveDot3" type="Control" parent="ContainerTabContents/HBoxContainer/Saves3/SavesDotsCtn"]
-margin_left = 505.0
-margin_right = 559.0
-margin_bottom = 110.0
-rect_min_size = Vector2( 54, 54 )
-
-[node name="SaveDot" type="TextureProgress" parent="ContainerTabContents/HBoxContainer/Saves3/SavesDotsCtn/SaveDot3"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -27.0
-margin_top = -27.0
-margin_right = 27.0
-margin_bottom = 27.0
-rect_min_size = Vector2( 40, 40 )
-value = 85.0
-texture_under = ExtResource( 25 )
-texture_progress = ExtResource( 26 )
-fill_mode = 5
-
-[node name="SaveDot4" type="Control" parent="ContainerTabContents/HBoxContainer/Saves3/SavesDotsCtn"]
-margin_left = 589.0
-margin_right = 643.0
-margin_bottom = 110.0
-rect_min_size = Vector2( 54, 54 )
-
-[node name="SaveDot" type="TextureProgress" parent="ContainerTabContents/HBoxContainer/Saves3/SavesDotsCtn/SaveDot4"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -27.0
-margin_top = -27.0
-margin_right = 27.0
-margin_bottom = 27.0
-rect_min_size = Vector2( 40, 40 )
-value = 85.0
-texture_under = ExtResource( 25 )
-texture_progress = ExtResource( 26 )
-fill_mode = 5
-
-[node name="TextureButton" type="TextureButton" parent="ContainerTabContents/HBoxContainer/Saves3/SavesDotsCtn"]
-modulate = Color( 1, 1, 1, 0.494118 )
-margin_left = 673.0
-margin_right = 783.0
-margin_bottom = 110.0
-rect_min_size = Vector2( 110, 110 )
-texture_normal = ExtResource( 29 )
-expand = true
-stretch_mode = 5
-
-[node name="TextureRect" type="TextureRect" parent="ContainerTabContents/HBoxContainer/Saves3/SavesDotsCtn/TextureButton"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -30.0
-margin_top = -30.0
-margin_right = 30.0
-margin_bottom = 30.0
-rect_min_size = Vector2( 60, 60 )
-texture = ExtResource( 16 )
-expand = true
-stretch_mode = 6
-
-[node name="Saves4" type="VBoxContainer" parent="ContainerTabContents/HBoxContainer"]
+[node name="Scenarios" type="VBoxContainer" parent="ContainerTabContents/HBoxContainer"]
 margin_left = 3252.0
 margin_right = 4332.0
 margin_bottom = 1920.0
@@ -685,179 +369,20 @@ alignment = 1
 script = ExtResource( 34 )
 key = "scenarios"
 
-[node name="ScreenResizer" type="Node" parent="ContainerTabContents/HBoxContainer/Saves4"]
+[node name="ScreenResizer" type="Node" parent="ContainerTabContents/HBoxContainer/Scenarios"]
 script = ExtResource( 32 )
 fullRectGuiderPath = NodePath("../../..")
 
-[node name="TextureRect" type="TextureRect" parent="ContainerTabContents/HBoxContainer/Saves4"]
-margin_top = 470.0
+[node name="TextureRect" type="TextureRect" parent="ContainerTabContents/HBoxContainer/Scenarios"]
+margin_top = 635.0
 margin_right = 1080.0
-margin_bottom = 1120.0
+margin_bottom = 1285.0
 rect_min_size = Vector2( 0, 650 )
 texture = ExtResource( 10 )
 expand = true
 stretch_mode = 6
 
-[node name="Control" type="CenterContainer" parent="ContainerTabContents/HBoxContainer/Saves4"]
-margin_top = 1150.0
-margin_right = 1080.0
-margin_bottom = 1310.0
-
-[node name="EnterSaveBtn" parent="ContainerTabContents/HBoxContainer/Saves4/Control" instance=ExtResource( 31 )]
-margin_left = 390.0
-margin_right = 690.0
-margin_bottom = 160.0
-rect_min_size = Vector2( 300, 160 )
-
-[node name="Label" type="Label" parent="ContainerTabContents/HBoxContainer/Saves4/Control/EnterSaveBtn"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -23.0
-margin_right = 20.0
-margin_bottom = -9.0
-grow_horizontal = 2
-grow_vertical = 2
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_constants/shadow_offset_y = 5
-custom_fonts/font = SubResource( 11 )
-text = "Entrar"
-align = 1
-valign = 1
-
-[node name="SavesDotsCtn" type="HBoxContainer" parent="ContainerTabContents/HBoxContainer/Saves4"]
-margin_top = 1340.0
-margin_right = 1080.0
-margin_bottom = 1450.0
-grow_horizontal = 2
-grow_vertical = 2
-custom_constants/separation = 30
-alignment = 1
-
-[node name="SaveDot" type="Control" parent="ContainerTabContents/HBoxContainer/Saves4/SavesDotsCtn"]
-margin_left = 297.0
-margin_right = 391.0
-margin_bottom = 110.0
-rect_min_size = Vector2( 94, 94 )
-
-[node name="TextureRect" type="TextureProgress" parent="ContainerTabContents/HBoxContainer/Saves4/SavesDotsCtn/SaveDot"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -47.0
-margin_top = -47.0
-margin_right = 47.0
-margin_bottom = 47.0
-value = 40.0
-texture_under = ExtResource( 28 )
-texture_progress = ExtResource( 27 )
-fill_mode = 5
-
-[node name="Label" type="Label" parent="ContainerTabContents/HBoxContainer/Saves4/SavesDotsCtn/SaveDot/TextureRect"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -11.0
-margin_top = -37.0
-margin_right = 11.0
-margin_bottom = 37.0
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_constants/shadow_offset_y = 5
-custom_fonts/font = SubResource( 10 )
-text = "2"
-
-[node name="SaveDot2" type="Control" parent="ContainerTabContents/HBoxContainer/Saves4/SavesDotsCtn"]
-margin_left = 421.0
-margin_right = 475.0
-margin_bottom = 110.0
-rect_min_size = Vector2( 54, 54 )
-
-[node name="SaveDot" type="TextureProgress" parent="ContainerTabContents/HBoxContainer/Saves4/SavesDotsCtn/SaveDot2"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -27.0
-margin_top = -27.0
-margin_right = 27.0
-margin_bottom = 27.0
-rect_min_size = Vector2( 40, 40 )
-value = 85.0
-texture_under = ExtResource( 25 )
-texture_progress = ExtResource( 26 )
-fill_mode = 5
-
-[node name="SaveDot3" type="Control" parent="ContainerTabContents/HBoxContainer/Saves4/SavesDotsCtn"]
-margin_left = 505.0
-margin_right = 559.0
-margin_bottom = 110.0
-rect_min_size = Vector2( 54, 54 )
-
-[node name="SaveDot" type="TextureProgress" parent="ContainerTabContents/HBoxContainer/Saves4/SavesDotsCtn/SaveDot3"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -27.0
-margin_top = -27.0
-margin_right = 27.0
-margin_bottom = 27.0
-rect_min_size = Vector2( 40, 40 )
-value = 85.0
-texture_under = ExtResource( 25 )
-texture_progress = ExtResource( 26 )
-fill_mode = 5
-
-[node name="SaveDot4" type="Control" parent="ContainerTabContents/HBoxContainer/Saves4/SavesDotsCtn"]
-margin_left = 589.0
-margin_right = 643.0
-margin_bottom = 110.0
-rect_min_size = Vector2( 54, 54 )
-
-[node name="SaveDot" type="TextureProgress" parent="ContainerTabContents/HBoxContainer/Saves4/SavesDotsCtn/SaveDot4"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -27.0
-margin_top = -27.0
-margin_right = 27.0
-margin_bottom = 27.0
-rect_min_size = Vector2( 40, 40 )
-value = 85.0
-texture_under = ExtResource( 25 )
-texture_progress = ExtResource( 26 )
-fill_mode = 5
-
-[node name="TextureButton" type="TextureButton" parent="ContainerTabContents/HBoxContainer/Saves4/SavesDotsCtn"]
-modulate = Color( 1, 1, 1, 0.494118 )
-margin_left = 673.0
-margin_right = 783.0
-margin_bottom = 110.0
-rect_min_size = Vector2( 110, 110 )
-texture_normal = ExtResource( 29 )
-expand = true
-stretch_mode = 5
-
-[node name="TextureRect" type="TextureRect" parent="ContainerTabContents/HBoxContainer/Saves4/SavesDotsCtn/TextureButton"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -30.0
-margin_top = -30.0
-margin_right = 30.0
-margin_bottom = 30.0
-rect_min_size = Vector2( 60, 60 )
-texture = ExtResource( 16 )
-expand = true
-stretch_mode = 6
-
-[node name="Saves5" type="VBoxContainer" parent="ContainerTabContents/HBoxContainer"]
+[node name="Multiplayer" type="VBoxContainer" parent="ContainerTabContents/HBoxContainer"]
 margin_left = 4336.0
 margin_right = 5416.0
 margin_bottom = 1920.0
@@ -869,175 +394,16 @@ alignment = 1
 script = ExtResource( 34 )
 key = "multiplayer"
 
-[node name="ScreenResizer" type="Node" parent="ContainerTabContents/HBoxContainer/Saves5"]
+[node name="ScreenResizer" type="Node" parent="ContainerTabContents/HBoxContainer/Multiplayer"]
 script = ExtResource( 32 )
 fullRectGuiderPath = NodePath("../../..")
 
-[node name="TextureRect" type="TextureRect" parent="ContainerTabContents/HBoxContainer/Saves5"]
-margin_top = 470.0
+[node name="TextureRect" type="TextureRect" parent="ContainerTabContents/HBoxContainer/Multiplayer"]
+margin_top = 635.0
 margin_right = 1080.0
-margin_bottom = 1120.0
+margin_bottom = 1285.0
 rect_min_size = Vector2( 0, 650 )
 texture = ExtResource( 10 )
-expand = true
-stretch_mode = 6
-
-[node name="Control" type="CenterContainer" parent="ContainerTabContents/HBoxContainer/Saves5"]
-margin_top = 1150.0
-margin_right = 1080.0
-margin_bottom = 1310.0
-
-[node name="EnterSaveBtn" parent="ContainerTabContents/HBoxContainer/Saves5/Control" instance=ExtResource( 31 )]
-margin_left = 390.0
-margin_right = 690.0
-margin_bottom = 160.0
-rect_min_size = Vector2( 300, 160 )
-
-[node name="Label" type="Label" parent="ContainerTabContents/HBoxContainer/Saves5/Control/EnterSaveBtn"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -23.0
-margin_right = 20.0
-margin_bottom = -9.0
-grow_horizontal = 2
-grow_vertical = 2
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_constants/shadow_offset_y = 5
-custom_fonts/font = SubResource( 11 )
-text = "Entrar"
-align = 1
-valign = 1
-
-[node name="SavesDotsCtn" type="HBoxContainer" parent="ContainerTabContents/HBoxContainer/Saves5"]
-margin_top = 1340.0
-margin_right = 1080.0
-margin_bottom = 1450.0
-grow_horizontal = 2
-grow_vertical = 2
-custom_constants/separation = 30
-alignment = 1
-
-[node name="SaveDot" type="Control" parent="ContainerTabContents/HBoxContainer/Saves5/SavesDotsCtn"]
-margin_left = 297.0
-margin_right = 391.0
-margin_bottom = 110.0
-rect_min_size = Vector2( 94, 94 )
-
-[node name="TextureRect" type="TextureProgress" parent="ContainerTabContents/HBoxContainer/Saves5/SavesDotsCtn/SaveDot"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -47.0
-margin_top = -47.0
-margin_right = 47.0
-margin_bottom = 47.0
-value = 40.0
-texture_under = ExtResource( 28 )
-texture_progress = ExtResource( 27 )
-fill_mode = 5
-
-[node name="Label" type="Label" parent="ContainerTabContents/HBoxContainer/Saves5/SavesDotsCtn/SaveDot/TextureRect"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -11.0
-margin_top = -37.0
-margin_right = 11.0
-margin_bottom = 37.0
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_constants/shadow_offset_y = 5
-custom_fonts/font = SubResource( 10 )
-text = "2"
-
-[node name="SaveDot2" type="Control" parent="ContainerTabContents/HBoxContainer/Saves5/SavesDotsCtn"]
-margin_left = 421.0
-margin_right = 475.0
-margin_bottom = 110.0
-rect_min_size = Vector2( 54, 54 )
-
-[node name="SaveDot" type="TextureProgress" parent="ContainerTabContents/HBoxContainer/Saves5/SavesDotsCtn/SaveDot2"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -27.0
-margin_top = -27.0
-margin_right = 27.0
-margin_bottom = 27.0
-rect_min_size = Vector2( 40, 40 )
-value = 85.0
-texture_under = ExtResource( 25 )
-texture_progress = ExtResource( 26 )
-fill_mode = 5
-
-[node name="SaveDot3" type="Control" parent="ContainerTabContents/HBoxContainer/Saves5/SavesDotsCtn"]
-margin_left = 505.0
-margin_right = 559.0
-margin_bottom = 110.0
-rect_min_size = Vector2( 54, 54 )
-
-[node name="SaveDot" type="TextureProgress" parent="ContainerTabContents/HBoxContainer/Saves5/SavesDotsCtn/SaveDot3"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -27.0
-margin_top = -27.0
-margin_right = 27.0
-margin_bottom = 27.0
-rect_min_size = Vector2( 40, 40 )
-value = 85.0
-texture_under = ExtResource( 25 )
-texture_progress = ExtResource( 26 )
-fill_mode = 5
-
-[node name="SaveDot4" type="Control" parent="ContainerTabContents/HBoxContainer/Saves5/SavesDotsCtn"]
-margin_left = 589.0
-margin_right = 643.0
-margin_bottom = 110.0
-rect_min_size = Vector2( 54, 54 )
-
-[node name="SaveDot" type="TextureProgress" parent="ContainerTabContents/HBoxContainer/Saves5/SavesDotsCtn/SaveDot4"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -27.0
-margin_top = -27.0
-margin_right = 27.0
-margin_bottom = 27.0
-rect_min_size = Vector2( 40, 40 )
-value = 85.0
-texture_under = ExtResource( 25 )
-texture_progress = ExtResource( 26 )
-fill_mode = 5
-
-[node name="TextureButton" type="TextureButton" parent="ContainerTabContents/HBoxContainer/Saves5/SavesDotsCtn"]
-modulate = Color( 1, 1, 1, 0.494118 )
-margin_left = 673.0
-margin_right = 783.0
-margin_bottom = 110.0
-rect_min_size = Vector2( 110, 110 )
-texture_normal = ExtResource( 29 )
-expand = true
-stretch_mode = 5
-
-[node name="TextureRect" type="TextureRect" parent="ContainerTabContents/HBoxContainer/Saves5/SavesDotsCtn/TextureButton"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -30.0
-margin_top = -30.0
-margin_right = 30.0
-margin_bottom = 30.0
-rect_min_size = Vector2( 60, 60 )
-texture = ExtResource( 16 )
 expand = true
 stretch_mode = 6
 
@@ -1402,101 +768,116 @@ tabPanelKey = "shop"
 [node name="TextureRect" parent="BottomToolbar/Middle/HBoxContainer/MenuTabItem" index="0"]
 margin_left = -109.5
 margin_right = 110.5
-margin_bottom = 119.0
+margin_bottom = 101.0
 
 [node name="TextureButton" parent="BottomToolbar/Middle/HBoxContainer/MenuTabItem/TextureRect" index="1"]
-margin_left = -78.0
-margin_top = -304.0
-margin_right = 74.0
-margin_bottom = -175.0
+margin_top = -272.0
+margin_bottom = -143.0
 
-[node name="MenuTabItem5" parent="BottomToolbar/Middle/HBoxContainer" instance=ExtResource( 17 )]
+[node name="Label" parent="BottomToolbar/Middle/HBoxContainer/MenuTabItem/TextureRect" index="2"]
+text = "Loja"
+
+[node name="MenuTabItem2" parent="BottomToolbar/Middle/HBoxContainer" instance=ExtResource( 17 )]
 margin_left = 217.0
 margin_right = 432.0
 margin_bottom = 228.0
 tabPanelKey = "play"
 
-[node name="TextureRect" parent="BottomToolbar/Middle/HBoxContainer/MenuTabItem5" index="0"]
+[node name="TextureRect" parent="BottomToolbar/Middle/HBoxContainer/MenuTabItem2" index="0"]
 margin_left = -109.5
 margin_right = 110.5
-margin_bottom = 119.0
+margin_bottom = 101.0
 
-[node name="TextureButton" parent="BottomToolbar/Middle/HBoxContainer/MenuTabItem5/TextureRect" index="1"]
-margin_left = -78.0
-margin_top = -304.0
-margin_right = 74.0
-margin_bottom = -175.0
+[node name="TextureButton" parent="BottomToolbar/Middle/HBoxContainer/MenuTabItem2/TextureRect" index="1"]
+margin_top = -272.0
+margin_bottom = -143.0
 
-[node name="MenuTabItem2" parent="BottomToolbar/Middle/HBoxContainer" instance=ExtResource( 17 )]
+[node name="MenuTabItem3" parent="BottomToolbar/Middle/HBoxContainer" instance=ExtResource( 17 )]
 margin_left = 432.0
 margin_right = 647.0
 margin_bottom = 228.0
 tabPanelKey = "inventory"
 
-[node name="TextureRect" parent="BottomToolbar/Middle/HBoxContainer/MenuTabItem2" index="0"]
+[node name="TextureRect" parent="BottomToolbar/Middle/HBoxContainer/MenuTabItem3" index="0"]
 margin_left = -109.5
 margin_right = 110.5
-margin_bottom = 119.0
+margin_bottom = 101.0
 
-[node name="TextureButton" parent="BottomToolbar/Middle/HBoxContainer/MenuTabItem2/TextureRect" index="1"]
-margin_left = -78.0
-margin_top = -304.0
-margin_right = 74.0
-margin_bottom = -175.0
+[node name="TextureButton" parent="BottomToolbar/Middle/HBoxContainer/MenuTabItem3/TextureRect" index="1"]
+margin_top = -272.0
+margin_bottom = -143.0
 
-[node name="MenuTabItem3" parent="BottomToolbar/Middle/HBoxContainer" instance=ExtResource( 17 )]
+[node name="Label" parent="BottomToolbar/Middle/HBoxContainer/MenuTabItem3/TextureRect" index="2"]
+text = "Inventário"
+
+[node name="MenuTabItem4" parent="BottomToolbar/Middle/HBoxContainer" instance=ExtResource( 17 )]
 margin_left = 647.0
 margin_right = 862.0
 margin_bottom = 228.0
 tabPanelKey = "scenarios"
 
-[node name="TextureRect" parent="BottomToolbar/Middle/HBoxContainer/MenuTabItem3" index="0"]
+[node name="TextureRect" parent="BottomToolbar/Middle/HBoxContainer/MenuTabItem4" index="0"]
 margin_left = -109.5
 margin_right = 110.5
-margin_bottom = 119.0
+margin_bottom = 101.0
 
-[node name="TextureButton" parent="BottomToolbar/Middle/HBoxContainer/MenuTabItem3/TextureRect" index="1"]
-margin_left = -78.0
-margin_top = -304.0
-margin_right = 74.0
-margin_bottom = -175.0
+[node name="TextureButton" parent="BottomToolbar/Middle/HBoxContainer/MenuTabItem4/TextureRect" index="1"]
+margin_top = -272.0
+margin_bottom = -143.0
 
-[node name="MenuTabItem4" parent="BottomToolbar/Middle/HBoxContainer" instance=ExtResource( 17 )]
+[node name="Label" parent="BottomToolbar/Middle/HBoxContainer/MenuTabItem4/TextureRect" index="2"]
+text = "Cenários"
+
+[node name="MenuTabItem5" parent="BottomToolbar/Middle/HBoxContainer" instance=ExtResource( 17 )]
 margin_left = 862.0
 margin_right = 1077.0
 margin_bottom = 228.0
 tabPanelKey = "multiplayer"
 
-[node name="TextureRect" parent="BottomToolbar/Middle/HBoxContainer/MenuTabItem4" index="0"]
+[node name="TextureRect" parent="BottomToolbar/Middle/HBoxContainer/MenuTabItem5" index="0"]
 margin_left = -109.5
 margin_right = 110.5
-margin_bottom = 119.0
+margin_bottom = 101.0
 
-[node name="TextureButton" parent="BottomToolbar/Middle/HBoxContainer/MenuTabItem4/TextureRect" index="1"]
-margin_left = -78.0
-margin_top = -304.0
-margin_right = 74.0
-margin_bottom = -175.0
+[node name="TextureButton" parent="BottomToolbar/Middle/HBoxContainer/MenuTabItem5/TextureRect" index="1"]
+margin_top = -272.0
+margin_bottom = -143.0
+
+[node name="Label" parent="BottomToolbar/Middle/HBoxContainer/MenuTabItem5/TextureRect" index="2"]
+text = "Amigos"
 
 [node name="TextureRect" type="ColorRect" parent="BottomToolbar/Middle"]
+anchor_left = 0.5
 anchor_top = 1.0
-anchor_right = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
+margin_left = -540.0
 margin_top = -18.0
+margin_right = 540.0
 color = Color( 0.478431, 0.27451, 0.137255, 1 )
 
-[node name="TextureRect" type="TextureRect" parent="BottomToolbar/Middle/TextureRect"]
-margin_left = 194.0
-margin_top = -28.0
-margin_right = 230.0
+[node name="HighlightMenuSelected" type="Control" parent="BottomToolbar/Middle/TextureRect"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = -22.0
+margin_top = -37.0
+margin_right = 240.0
+margin_bottom = 3.0
+rect_min_size = Vector2( 262, 0 )
+script = ExtResource( 35 )
+
+[node name="TextureRect" type="TextureRect" parent="BottomToolbar/Middle/TextureRect/HighlightMenuSelected"]
+margin_right = 36.0
+margin_bottom = 28.0
 texture = ExtResource( 20 )
 expand = true
 stretch_mode = 6
 
-[node name="TextureRect2" type="TextureRect" parent="BottomToolbar/Middle/TextureRect"]
-margin_left = 419.0
-margin_top = -28.0
-margin_right = 455.0
+[node name="TextureRect2" type="TextureRect" parent="BottomToolbar/Middle/TextureRect/HighlightMenuSelected"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -36.0
+margin_bottom = 28.0
 texture = ExtResource( 20 )
 expand = true
 stretch_mode = 6
@@ -1542,12 +923,8 @@ expand = true
 stretch_mode = 6
 
 [editable path="ContainerTabContents/HBoxContainer/Saves/Control/EnterSaveBtn"]
-[editable path="ContainerTabContents/HBoxContainer/Saves2/Control/EnterSaveBtn"]
-[editable path="ContainerTabContents/HBoxContainer/Saves3/Control/EnterSaveBtn"]
-[editable path="ContainerTabContents/HBoxContainer/Saves4/Control/EnterSaveBtn"]
-[editable path="ContainerTabContents/HBoxContainer/Saves5/Control/EnterSaveBtn"]
 [editable path="BottomToolbar/Middle/HBoxContainer/MenuTabItem"]
-[editable path="BottomToolbar/Middle/HBoxContainer/MenuTabItem5"]
 [editable path="BottomToolbar/Middle/HBoxContainer/MenuTabItem2"]
 [editable path="BottomToolbar/Middle/HBoxContainer/MenuTabItem3"]
 [editable path="BottomToolbar/Middle/HBoxContainer/MenuTabItem4"]
+[editable path="BottomToolbar/Middle/HBoxContainer/MenuTabItem5"]

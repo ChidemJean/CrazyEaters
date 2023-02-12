@@ -31,7 +31,7 @@ namespace CrazyEaters.Managers
         {
             gameManager = GetNode<GameManager>("/root/GameManager");
             loading = GetNode<Control>(loadingPath);
-            loadingBar = loading.GetNode<ProgressBar>("Back/VBox/Progress");
+            loadingBar = loading.GetNode<ProgressBar>("VBox/Progress");
 
             // GDScript resourceQueue = (GDScript) GD.Load("res://resource_queue.gd");
             // resourceQueueObj = (Godot.Object) resourceQueue.New();
