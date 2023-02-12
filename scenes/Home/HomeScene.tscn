@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=2]
+[gd_scene load_steps=54 format=2]
 
 [ext_resource path="res://assets/themes/Theme.tres" type="Theme" id=1]
 [ext_resource path="res://assets/materials/ui/Rainbow.tres" type="Material" id=2]
@@ -21,7 +21,7 @@
 [ext_resource path="res://assets/textures/UI/button_green_pressed.png" type="Texture" id=19]
 [ext_resource path="res://assets/textures/UI/corner_menu_item.png" type="Texture" id=20]
 [ext_resource path="res://assets/textures/UI/front_menu_bottom.png" type="Texture" id=21]
-[ext_resource path="res://assets/textures/UI/back_menu_bottom.png" type="Texture" id=22]
+[ext_resource path="res://assets/textures/UI/shadow_w_screen.png" type="Texture" id=22]
 [ext_resource path="res://assets/textures/UI/middle_menu_bottom.png" type="Texture" id=23]
 [ext_resource path="res://assets/textures/UI/game-console.png" type="Texture" id=24]
 [ext_resource path="res://assets/textures/UI/brown_circle.png" type="Texture" id=25]
@@ -35,6 +35,13 @@
 [ext_resource path="res://src/UI/SwiperTabs.cs" type="Script" id=33]
 [ext_resource path="res://src/UI/PanelTabItem.cs" type="Script" id=34]
 [ext_resource path="res://src/UI/HighlightMenuSelected.cs" type="Script" id=35]
+[ext_resource path="res://assets/textures/UI/back_title.png" type="Texture" id=36]
+[ext_resource path="res://assets/textures/UI/arrow_icon_silhouette.png" type="Texture" id=37]
+[ext_resource path="res://assets/textures/UI/block_icon_silhouette.png" type="Texture" id=38]
+[ext_resource path="res://assets/textures/UI/trap_icon_silhouette.png" type="Texture" id=39]
+[ext_resource path="res://assets/textures/UI/food_icon.png" type="Texture" id=40]
+[ext_resource path="res://assets/textures/UI/square_dotted_rounded.png" type="Texture" id=41]
+[ext_resource path="res://assets/textures/UI/qrcode_icon.png" type="Texture" id=42]
 
 [sub_resource type="DynamicFont" id=11]
 size = 50
@@ -50,6 +57,27 @@ outline_color = Color( 0, 0, 0, 1 )
 use_filter = true
 font_data = ExtResource( 6 )
 
+[sub_resource type="DynamicFont" id=12]
+size = 48
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = ExtResource( 6 )
+
+[sub_resource type="DynamicFont" id=14]
+size = 54
+outline_size = 4
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = ExtResource( 6 )
+
+[sub_resource type="DynamicFont" id=13]
+size = 50
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = ExtResource( 6 )
+
 [sub_resource type="DynamicFont" id=8]
 size = 40
 outline_size = 2
@@ -58,28 +86,28 @@ use_filter = true
 font_data = ExtResource( 6 )
 
 [sub_resource type="DynamicFont" id=5]
-size = 34
+size = 38
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
 use_filter = true
 font_data = ExtResource( 6 )
 
 [sub_resource type="DynamicFont" id=6]
-size = 22
+size = 26
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
 use_filter = true
 font_data = ExtResource( 6 )
 
 [sub_resource type="DynamicFont" id=7]
-size = 22
+size = 26
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
 use_filter = true
 font_data = ExtResource( 6 )
 
 [sub_resource type="DynamicFont" id=4]
-size = 32
+size = 34
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
 use_filter = true
@@ -111,6 +139,14 @@ anchor_bottom = 1.0
 texture = ExtResource( 9 )
 expand = true
 
+[node name="HeaderShadow" type="TextureRect" parent="."]
+self_modulate = Color( 1, 1, 1, 0.431373 )
+anchor_right = 1.0
+margin_bottom = 301.0
+texture = ExtResource( 22 )
+expand = true
+flip_v = true
+
 [node name="ContainerTabContents" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -122,7 +158,9 @@ initialTabKey = "play"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ContainerTabContents"]
 anchor_bottom = 1.0
-margin_right = 1080.0
+margin_left = -2166.0
+margin_right = 3250.0
+mouse_filter = 2
 
 [node name="Shop" type="VBoxContainer" parent="ContainerTabContents/HBoxContainer"]
 margin_right = 1080.0
@@ -339,8 +377,7 @@ margin_bottom = 1920.0
 grow_horizontal = 2
 grow_vertical = 2
 rect_min_size = Vector2( 1080, 0 )
-custom_constants/separation = 30
-alignment = 1
+mouse_filter = 2
 script = ExtResource( 34 )
 key = "inventory"
 
@@ -348,14 +385,425 @@ key = "inventory"
 script = ExtResource( 32 )
 fullRectGuiderPath = NodePath("../../..")
 
-[node name="TextureRect" type="TextureRect" parent="ContainerTabContents/HBoxContainer/Inventory"]
-margin_top = 635.0
+[node name="TitleBar" type="ColorRect" parent="ContainerTabContents/HBoxContainer/Inventory"]
 margin_right = 1080.0
-margin_bottom = 1285.0
-rect_min_size = Vector2( 0, 650 )
-texture = ExtResource( 10 )
+margin_bottom = 326.0
+rect_min_size = Vector2( 0, 326 )
+mouse_filter = 2
+color = Color( 0.478431, 0.27451, 0.137255, 1 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ContainerTabContents/HBoxContainer/Inventory/TitleBar"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 28.0
+margin_top = -136.0
+margin_right = -29.0
+margin_bottom = -25.0
+custom_constants/separation = 40
+alignment = 1
+
+[node name="NinePatchRect" type="NinePatchRect" parent="ContainerTabContents/HBoxContainer/Inventory/TitleBar/HBoxContainer"]
+self_modulate = Color( 1, 1, 1, 0.690196 )
+margin_right = 579.0
+margin_bottom = 111.0
+size_flags_horizontal = 3
+texture = ExtResource( 36 )
+patch_margin_left = 40
+patch_margin_top = 40
+patch_margin_right = 40
+patch_margin_bottom = 40
+
+[node name="Label" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/TitleBar/HBoxContainer/NinePatchRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 38.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_y = 6
+custom_fonts/font = SubResource( 12 )
+text = "Inventário"
+valign = 1
+
+[node name="CategoriesItems" type="HBoxContainer" parent="ContainerTabContents/HBoxContainer/Inventory/TitleBar/HBoxContainer"]
+margin_left = 619.0
+margin_right = 1023.0
+margin_bottom = 111.0
+custom_constants/separation = 12
+alignment = 2
+
+[node name="ProjectilesTab" type="TextureButton" parent="ContainerTabContents/HBoxContainer/Inventory/TitleBar/HBoxContainer/CategoriesItems"]
+margin_right = 92.0
+margin_bottom = 111.0
+rect_min_size = Vector2( 92, 92 )
+texture_normal = ExtResource( 37 )
 expand = true
-stretch_mode = 6
+stretch_mode = 5
+
+[node name="BlocksTab" type="TextureButton" parent="ContainerTabContents/HBoxContainer/Inventory/TitleBar/HBoxContainer/CategoriesItems"]
+margin_left = 104.0
+margin_right = 196.0
+margin_bottom = 111.0
+rect_min_size = Vector2( 92, 92 )
+texture_normal = ExtResource( 38 )
+expand = true
+stretch_mode = 5
+
+[node name="TrapsTab" type="TextureButton" parent="ContainerTabContents/HBoxContainer/Inventory/TitleBar/HBoxContainer/CategoriesItems"]
+margin_left = 208.0
+margin_right = 300.0
+margin_bottom = 111.0
+rect_min_size = Vector2( 92, 92 )
+texture_normal = ExtResource( 39 )
+expand = true
+stretch_mode = 5
+
+[node name="FoodsTab" type="TextureButton" parent="ContainerTabContents/HBoxContainer/Inventory/TitleBar/HBoxContainer/CategoriesItems"]
+margin_left = 312.0
+margin_right = 404.0
+margin_bottom = 111.0
+rect_min_size = Vector2( 92, 92 )
+texture_normal = ExtResource( 40 )
+expand = true
+stretch_mode = 5
+
+[node name="Control" type="Control" parent="ContainerTabContents/HBoxContainer/Inventory"]
+margin_top = 330.0
+margin_right = 1080.0
+margin_bottom = 1920.0
+mouse_filter = 2
+size_flags_vertical = 3
+
+[node name="Scroll" type="ScrollContainer" parent="ContainerTabContents/HBoxContainer/Inventory/Control"]
+anchor_right = 0.998
+anchor_bottom = 0.894
+margin_right = 2.15991
+margin_bottom = 8.53992
+mouse_filter = 1
+size_flags_horizontal = 3
+size_flags_vertical = 0
+scroll_horizontal_enabled = false
+
+[node name="MarginContainer" type="MarginContainer" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll"]
+margin_right = 1068.0
+margin_bottom = 2587.0
+mouse_filter = 2
+size_flags_horizontal = 3
+custom_constants/margin_right = 40
+custom_constants/margin_top = 40
+custom_constants/margin_left = 40
+custom_constants/margin_bottom = 100
+
+[node name="GridContainer" type="GridContainer" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer"]
+margin_left = 40.0
+margin_top = 40.0
+margin_right = 1028.0
+margin_bottom = 2487.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_right = 192.0
+margin_bottom = 53.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label2" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 57.0
+margin_right = 192.0
+margin_bottom = 110.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label3" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 114.0
+margin_right = 192.0
+margin_bottom = 167.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label4" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 171.0
+margin_right = 192.0
+margin_bottom = 224.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label5" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 228.0
+margin_right = 192.0
+margin_bottom = 281.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label6" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 285.0
+margin_right = 192.0
+margin_bottom = 338.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label7" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 342.0
+margin_right = 192.0
+margin_bottom = 395.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label8" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 399.0
+margin_right = 192.0
+margin_bottom = 452.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label9" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 456.0
+margin_right = 192.0
+margin_bottom = 509.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label10" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 513.0
+margin_right = 192.0
+margin_bottom = 566.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label11" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 570.0
+margin_right = 192.0
+margin_bottom = 623.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label12" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 627.0
+margin_right = 192.0
+margin_bottom = 680.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label13" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 684.0
+margin_right = 192.0
+margin_bottom = 737.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label14" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 741.0
+margin_right = 192.0
+margin_bottom = 794.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label15" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 798.0
+margin_right = 192.0
+margin_bottom = 851.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label16" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 855.0
+margin_right = 192.0
+margin_bottom = 908.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label17" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 912.0
+margin_right = 192.0
+margin_bottom = 965.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label18" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 969.0
+margin_right = 192.0
+margin_bottom = 1022.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label19" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 1026.0
+margin_right = 192.0
+margin_bottom = 1079.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label20" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 1083.0
+margin_right = 192.0
+margin_bottom = 1136.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label21" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 1140.0
+margin_right = 192.0
+margin_bottom = 1193.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label22" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 1197.0
+margin_right = 192.0
+margin_bottom = 1250.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label23" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 1254.0
+margin_right = 192.0
+margin_bottom = 1307.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label24" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 1311.0
+margin_right = 192.0
+margin_bottom = 1364.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label25" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 1368.0
+margin_right = 192.0
+margin_bottom = 1421.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label26" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 1425.0
+margin_right = 192.0
+margin_bottom = 1478.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label27" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 1482.0
+margin_right = 192.0
+margin_bottom = 1535.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label28" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 1539.0
+margin_right = 192.0
+margin_bottom = 1592.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label29" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 1596.0
+margin_right = 192.0
+margin_bottom = 1649.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label30" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 1653.0
+margin_right = 192.0
+margin_bottom = 1706.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label31" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 1710.0
+margin_right = 192.0
+margin_bottom = 1763.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label32" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 1767.0
+margin_right = 192.0
+margin_bottom = 1820.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label33" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 1824.0
+margin_right = 192.0
+margin_bottom = 1877.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label34" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 1881.0
+margin_right = 192.0
+margin_bottom = 1934.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label35" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 1938.0
+margin_right = 192.0
+margin_bottom = 1991.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label36" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 1995.0
+margin_right = 192.0
+margin_bottom = 2048.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label37" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 2052.0
+margin_right = 192.0
+margin_bottom = 2105.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label38" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 2109.0
+margin_right = 192.0
+margin_bottom = 2162.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label39" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 2166.0
+margin_right = 192.0
+margin_bottom = 2219.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label40" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 2223.0
+margin_right = 192.0
+margin_bottom = 2276.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label41" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 2280.0
+margin_right = 192.0
+margin_bottom = 2333.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label42" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 2337.0
+margin_right = 192.0
+margin_bottom = 2390.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
+
+[node name="Label43" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Control/Scroll/MarginContainer/GridContainer"]
+margin_top = 2394.0
+margin_right = 192.0
+margin_bottom = 2447.0
+custom_fonts/font = ExtResource( 5 )
+text = "TESTE SCROLL"
 
 [node name="Scenarios" type="VBoxContainer" parent="ContainerTabContents/HBoxContainer"]
 margin_left = 3252.0
@@ -364,8 +812,6 @@ margin_bottom = 1920.0
 grow_horizontal = 2
 grow_vertical = 2
 rect_min_size = Vector2( 1080, 0 )
-custom_constants/separation = 30
-alignment = 1
 script = ExtResource( 34 )
 key = "scenarios"
 
@@ -373,14 +819,181 @@ key = "scenarios"
 script = ExtResource( 32 )
 fullRectGuiderPath = NodePath("../../..")
 
-[node name="TextureRect" type="TextureRect" parent="ContainerTabContents/HBoxContainer/Scenarios"]
-margin_top = 635.0
+[node name="TitleBar" type="ColorRect" parent="ContainerTabContents/HBoxContainer/Scenarios"]
 margin_right = 1080.0
-margin_bottom = 1285.0
-rect_min_size = Vector2( 0, 650 )
-texture = ExtResource( 10 )
+margin_bottom = 326.0
+rect_min_size = Vector2( 0, 326 )
+mouse_filter = 2
+color = Color( 0.478431, 0.27451, 0.137255, 1 )
+
+[node name="NinePatchRect" type="NinePatchRect" parent="ContainerTabContents/HBoxContainer/Scenarios/TitleBar"]
+self_modulate = Color( 1, 1, 1, 0.690196 )
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 53.0
+margin_top = -136.0
+margin_right = -47.0
+margin_bottom = -31.0
+texture = ExtResource( 36 )
+patch_margin_left = 40
+patch_margin_top = 40
+patch_margin_right = 40
+patch_margin_bottom = 40
+
+[node name="Label" type="Label" parent="ContainerTabContents/HBoxContainer/Scenarios/TitleBar/NinePatchRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 38.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_y = 6
+custom_fonts/font = SubResource( 12 )
+text = "Cenários salvos"
+align = 1
+valign = 1
+
+[node name="Control" type="Control" parent="ContainerTabContents/HBoxContainer/Scenarios"]
+margin_top = 330.0
+margin_right = 1080.0
+margin_bottom = 1920.0
+mouse_filter = 2
+size_flags_vertical = 3
+
+[node name="Scroll" type="ScrollContainer" parent="ContainerTabContents/HBoxContainer/Scenarios/Control"]
+anchor_right = 0.998
+anchor_bottom = 0.894
+margin_right = 2.15991
+margin_bottom = 8.53992
+mouse_filter = 1
+size_flags_horizontal = 3
+size_flags_vertical = 0
+scroll_horizontal_enabled = false
+
+[node name="MarginContainer" type="MarginContainer" parent="ContainerTabContents/HBoxContainer/Scenarios/Control/Scroll"]
+margin_right = 1080.0
+margin_bottom = 522.0
+mouse_filter = 2
+size_flags_horizontal = 3
+custom_constants/margin_right = 40
+custom_constants/margin_top = 40
+custom_constants/margin_left = 40
+custom_constants/margin_bottom = 100
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ContainerTabContents/HBoxContainer/Scenarios/Control/Scroll/MarginContainer"]
+margin_left = 40.0
+margin_top = 40.0
+margin_right = 1040.0
+margin_bottom = 422.0
+custom_constants/separation = 35
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ContainerTabContents/HBoxContainer/Scenarios/Control/Scroll/MarginContainer/VBoxContainer"]
+margin_right = 1000.0
+margin_bottom = 260.0
+custom_constants/separation = 25
+
+[node name="TextureButton" type="NinePatchRect" parent="ContainerTabContents/HBoxContainer/Scenarios/Control/Scroll/MarginContainer/VBoxContainer/HBoxContainer"]
+self_modulate = Color( 1, 1, 1, 0.141176 )
+margin_right = 487.0
+margin_bottom = 260.0
+rect_min_size = Vector2( 120, 260 )
+size_flags_horizontal = 3
+texture = ExtResource( 41 )
+patch_margin_left = 45
+patch_margin_top = 58
+patch_margin_right = 45
+patch_margin_bottom = 58
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ContainerTabContents/HBoxContainer/Scenarios/Control/Scroll/MarginContainer/VBoxContainer/HBoxContainer/TextureButton"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/separation = 25
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="ContainerTabContents/HBoxContainer/Scenarios/Control/Scroll/MarginContainer/VBoxContainer/HBoxContainer/TextureButton/HBoxContainer"]
+margin_left = 107.0
+margin_right = 207.0
+margin_bottom = 260.0
+rect_min_size = Vector2( 100, 100 )
+texture = ExtResource( 16 )
 expand = true
 stretch_mode = 6
+
+[node name="Label" type="Label" parent="ContainerTabContents/HBoxContainer/Scenarios/Control/Scroll/MarginContainer/VBoxContainer/HBoxContainer/TextureButton/HBoxContainer"]
+margin_left = 232.0
+margin_top = 83.0
+margin_right = 379.0
+margin_bottom = 177.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_y = 8
+custom_fonts/font = SubResource( 14 )
+text = "CRIAR"
+
+[node name="TextureButton2" type="NinePatchRect" parent="ContainerTabContents/HBoxContainer/Scenarios/Control/Scroll/MarginContainer/VBoxContainer/HBoxContainer"]
+self_modulate = Color( 1, 1, 1, 0.141176 )
+margin_left = 512.0
+margin_right = 1000.0
+margin_bottom = 260.0
+rect_min_size = Vector2( 120, 260 )
+size_flags_horizontal = 3
+texture = ExtResource( 41 )
+patch_margin_left = 45
+patch_margin_top = 58
+patch_margin_right = 45
+patch_margin_bottom = 58
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ContainerTabContents/HBoxContainer/Scenarios/Control/Scroll/MarginContainer/VBoxContainer/HBoxContainer/TextureButton2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/separation = 25
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="ContainerTabContents/HBoxContainer/Scenarios/Control/Scroll/MarginContainer/VBoxContainer/HBoxContainer/TextureButton2/HBoxContainer"]
+margin_left = 78.0
+margin_right = 178.0
+margin_bottom = 260.0
+rect_min_size = Vector2( 100, 100 )
+texture = ExtResource( 42 )
+expand = true
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="ContainerTabContents/HBoxContainer/Scenarios/Control/Scroll/MarginContainer/VBoxContainer/HBoxContainer/TextureButton2/HBoxContainer"]
+margin_left = 203.0
+margin_top = 83.0
+margin_right = 409.0
+margin_bottom = 177.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_y = 8
+custom_fonts/font = SubResource( 14 )
+text = "QRCODE"
+
+[node name="Label" type="Label" parent="ContainerTabContents/HBoxContainer/Scenarios/Control/Scroll/MarginContainer/VBoxContainer"]
+modulate = Color( 1, 0.341176, 0.341176, 1 )
+margin_top = 295.0
+margin_right = 1000.0
+margin_bottom = 382.0
+size_flags_horizontal = 3
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_y = 5
+custom_fonts/font = SubResource( 13 )
+text = "Nenhum cenário salvo !"
+align = 1
+valign = 1
+
+[node name="GridContainer" type="GridContainer" parent="ContainerTabContents/HBoxContainer/Scenarios/Control/Scroll/MarginContainer"]
+margin_left = 40.0
+margin_top = 40.0
+margin_right = 1040.0
+margin_bottom = 422.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Multiplayer" type="VBoxContainer" parent="ContainerTabContents/HBoxContainer"]
 margin_left = 4336.0
@@ -419,10 +1032,11 @@ custom_constants/margin_bottom = 36
 margin_left = 30.0
 margin_top = 52.0
 margin_right = 1050.0
-margin_bottom = 152.0
+margin_bottom = 172.0
 custom_constants/separation = 0
 
 [node name="UserIcon" type="Control" parent="Header/User"]
+visible = false
 margin_right = 100.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 100, 100 )
@@ -437,10 +1051,9 @@ expand = true
 stretch_mode = 6
 
 [node name="LevelXP" type="TextureRect" parent="Header/User"]
-margin_left = 100.0
-margin_right = 420.0
-margin_bottom = 100.0
-rect_min_size = Vector2( 320, 0 )
+margin_right = 360.0
+margin_bottom = 120.0
+rect_min_size = Vector2( 360, 120 )
 texture = ExtResource( 11 )
 expand = true
 stretch_mode = 6
@@ -448,11 +1061,11 @@ stretch_mode = 6
 [node name="LevelContainer" type="TextureRect" parent="Header/User/LevelXP"]
 anchor_top = 0.5
 anchor_bottom = 0.5
-margin_left = 11.0
-margin_top = -40.0
-margin_right = 75.0
-margin_bottom = 38.0
-rect_min_size = Vector2( 60, 78 )
+margin_left = 12.0
+margin_top = -41.0
+margin_right = 84.0
+margin_bottom = 37.0
+rect_min_size = Vector2( 72, 72 )
 texture = ExtResource( 13 )
 expand = true
 stretch_mode = 6
@@ -469,10 +1082,10 @@ valign = 1
 
 [node name="XPBar" type="NinePatchRect" parent="Header/User/LevelXP"]
 anchor_right = 1.0
-margin_left = 72.0
-margin_top = 12.0
-margin_right = -198.0
-margin_bottom = 36.0
+margin_left = 81.0
+margin_top = 17.0
+margin_right = -189.0
+margin_bottom = 45.0
 rect_min_size = Vector2( 0, 24 )
 texture = ExtResource( 14 )
 patch_margin_left = 25
@@ -504,9 +1117,8 @@ grow_horizontal = 0
 alignment = 2
 
 [node name="currentXP" type="Label" parent="Header/User/LevelXP/HBoxContainer"]
-margin_left = 5.0
-margin_right = 59.0
-margin_bottom = 59.0
+margin_right = 60.0
+margin_bottom = 66.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_y = 3
 custom_fonts/font = SubResource( 5 )
@@ -515,10 +1127,10 @@ align = 2
 
 [node name="bar" type="Label" parent="Header/User/LevelXP/HBoxContainer"]
 modulate = Color( 1, 1, 1, 0.513726 )
-margin_left = 63.0
+margin_left = 64.0
 margin_top = 10.0
-margin_right = 71.0
-margin_bottom = 49.0
+margin_right = 73.0
+margin_bottom = 56.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_y = 3
 custom_fonts/font = SubResource( 6 )
@@ -527,10 +1139,10 @@ align = 2
 
 [node name="totalXP" type="Label" parent="Header/User/LevelXP/HBoxContainer"]
 modulate = Color( 1, 1, 1, 0.513726 )
-margin_left = 75.0
+margin_left = 77.0
 margin_top = 10.0
-margin_right = 98.0
-margin_bottom = 49.0
+margin_right = 103.0
+margin_bottom = 56.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_y = 3
 custom_fonts/font = SubResource( 7 )
@@ -541,22 +1153,21 @@ align = 2
 margin_left = 30.0
 margin_top = 52.0
 margin_right = 1050.0
-margin_bottom = 152.0
+margin_bottom = 172.0
 
 [node name="Container" type="HBoxContainer" parent="Header/LeftHead"]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -620.0
-margin_top = -26.0
-margin_bottom = 86.0
+margin_left = -641.0
+margin_top = -18.0
+margin_bottom = 94.0
 custom_constants/separation = 16
 alignment = 2
 
 [node name="BoxCoins" type="HBoxContainer" parent="Header/LeftHead/Container"]
-margin_left = 50.0
-margin_right = 279.0
+margin_right = 257.0
 margin_bottom = 112.0
-custom_constants/separation = 5
+custom_constants/separation = 8
 alignment = 2
 
 [node name="Control" type="Control" parent="Header/LeftHead/Container/BoxCoins"]
@@ -571,42 +1182,36 @@ color = Color( 0, 0, 0, 0.611765 )
 
 [node name="Icon" type="TextureRect" parent="Header/LeftHead/Container/BoxCoins"]
 material = ExtResource( 3 )
-margin_left = 5.0
-margin_right = 69.0
+margin_left = 8.0
+margin_right = 81.0
 margin_bottom = 112.0
-rect_min_size = Vector2( 64, 0 )
+rect_min_size = Vector2( 73, 0 )
 texture = ExtResource( 4 )
 expand = true
 stretch_mode = 6
 
 [node name="Label" type="Label" parent="Header/LeftHead/Container/BoxCoins"]
-margin_left = 74.0
-margin_top = 28.0
-margin_right = 174.0
-margin_bottom = 84.0
+margin_left = 89.0
+margin_top = 26.0
+margin_right = 189.0
+margin_bottom = 85.0
 rect_min_size = Vector2( 100, 0 )
 theme = ExtResource( 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_y = 3
 custom_fonts/font = SubResource( 4 )
-text = "250"
+text = "523"
 align = 2
 
 [node name="ButtonWrap" type="Control" parent="Header/LeftHead/Container/BoxCoins"]
-margin_left = 179.0
-margin_right = 229.0
+margin_left = 197.0
+margin_right = 257.0
 margin_bottom = 112.0
-rect_min_size = Vector2( 50, 0 )
+rect_min_size = Vector2( 60, 0 )
 
 [node name="MoreCoinsButton" type="TextureButton" parent="Header/LeftHead/Container/BoxCoins/ButtonWrap"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -26.5
-margin_right = 25.0
-margin_bottom = 18.5
+anchor_right = 1.0
+anchor_bottom = 1.0
 rect_min_size = Vector2( 45, 45 )
 texture_normal = ExtResource( 15 )
 texture_pressed = ExtResource( 19 )
@@ -614,20 +1219,24 @@ expand = true
 stretch_mode = 5
 
 [node name="MoreIcon" type="TextureRect" parent="Header/LeftHead/Container/BoxCoins/ButtonWrap/MoreCoinsButton"]
-margin_left = 10.0
-margin_top = 6.5
-margin_right = 34.0
-margin_bottom = 30.5
-rect_min_size = Vector2( 24, 24 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -15.0
+margin_top = -22.0
+margin_right = 14.0
+margin_bottom = 10.0
+rect_min_size = Vector2( 29, 29 )
 texture = ExtResource( 16 )
 expand = true
 stretch_mode = 6
 
 [node name="BoxBeans" type="HBoxContainer" parent="Header/LeftHead/Container"]
-margin_left = 295.0
-margin_right = 524.0
+margin_left = 273.0
+margin_right = 530.0
 margin_bottom = 112.0
-custom_constants/separation = 5
+custom_constants/separation = 8
 alignment = 2
 
 [node name="Control" type="Control" parent="Header/LeftHead/Container/BoxBeans"]
@@ -642,42 +1251,36 @@ color = Color( 0, 0, 0, 0.611765 )
 
 [node name="Icon" type="TextureRect" parent="Header/LeftHead/Container/BoxBeans"]
 material = ExtResource( 3 )
-margin_left = 5.0
-margin_right = 69.0
+margin_left = 8.0
+margin_right = 81.0
 margin_bottom = 112.0
-rect_min_size = Vector2( 64, 0 )
+rect_min_size = Vector2( 73, 0 )
 texture = ExtResource( 7 )
 expand = true
 stretch_mode = 6
 
 [node name="Label" type="Label" parent="Header/LeftHead/Container/BoxBeans"]
-margin_left = 74.0
-margin_top = 28.0
-margin_right = 174.0
-margin_bottom = 84.0
+margin_left = 89.0
+margin_top = 26.0
+margin_right = 189.0
+margin_bottom = 85.0
 rect_min_size = Vector2( 100, 0 )
 theme = ExtResource( 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_y = 3
 custom_fonts/font = SubResource( 4 )
-text = "250"
+text = "18"
 align = 2
 
 [node name="ButtonWrap" type="Control" parent="Header/LeftHead/Container/BoxBeans"]
-margin_left = 179.0
-margin_right = 229.0
+margin_left = 197.0
+margin_right = 257.0
 margin_bottom = 112.0
-rect_min_size = Vector2( 50, 0 )
+rect_min_size = Vector2( 60, 0 )
 
 [node name="MoreCoinsButton" type="TextureButton" parent="Header/LeftHead/Container/BoxBeans/ButtonWrap"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -26.5
-margin_right = 25.0
-margin_bottom = 18.5
+anchor_right = 1.0
+anchor_bottom = 1.0
 rect_min_size = Vector2( 45, 45 )
 texture_normal = ExtResource( 15 )
 texture_pressed = ExtResource( 19 )
@@ -685,20 +1288,24 @@ expand = true
 stretch_mode = 5
 
 [node name="MoreIcon" type="TextureRect" parent="Header/LeftHead/Container/BoxBeans/ButtonWrap/MoreCoinsButton"]
-margin_left = 10.0
-margin_top = 6.5
-margin_right = 34.0
-margin_bottom = 30.5
-rect_min_size = Vector2( 24, 24 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -15.0
+margin_top = -22.0
+margin_right = 14.0
+margin_bottom = 10.0
+rect_min_size = Vector2( 29, 29 )
 texture = ExtResource( 16 )
 expand = true
 stretch_mode = 6
 
 [node name="ConfigHolder" type="Control" parent="Header/LeftHead/Container"]
-margin_left = 540.0
-margin_right = 620.0
+margin_left = 546.0
+margin_right = 641.0
 margin_bottom = 112.0
-rect_min_size = Vector2( 80, 80 )
+rect_min_size = Vector2( 95, 95 )
 
 [node name="ConfigBtn" parent="Header/LeftHead/Container/ConfigHolder" instance=ExtResource( 31 )]
 anchor_left = 0.5
@@ -709,7 +1316,7 @@ margin_left = -40.0
 margin_top = -40.0
 margin_right = 40.0
 margin_bottom = 40.0
-rect_min_size = Vector2( 80, 80 )
+rect_min_size = Vector2( 90, 90 )
 
 [node name="TextureRect" type="TextureRect" parent="Header/LeftHead/Container/ConfigHolder/ConfigBtn"]
 anchor_left = 0.5
@@ -717,10 +1324,10 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -25.0
-margin_top = -33.0
-margin_right = 25.0
-margin_bottom = 17.0
-rect_min_size = Vector2( 50, 50 )
+margin_top = -34.0
+margin_right = 27.0
+margin_bottom = 18.0
+rect_min_size = Vector2( 52, 52 )
 texture = ExtResource( 18 )
 expand = true
 stretch_mode = 6
@@ -733,13 +1340,8 @@ grow_vertical = 0
 rect_min_size = Vector2( 0, 320 )
 
 [node name="Back" type="TextureRect" parent="BottomToolbar"]
-visible = false
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -130.0
-margin_top = 12.0
-margin_right = 126.0
-margin_bottom = 80.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 rect_min_size = Vector2( 240, 0 )
 texture = ExtResource( 22 )
 expand = true

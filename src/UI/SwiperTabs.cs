@@ -37,7 +37,7 @@ namespace CrazyEaters.UI
             PopulateTabs();
             Connect("gui_input", this, nameof(OnGuiInput));
             gameManager.StartListening(GameEvent.MenuBottomItemClick, OnItemClick);
-            AnimateToPanel(initialTabKey);
+            AnimateToPanel();
         }
 
         public void PopulateTabs()
