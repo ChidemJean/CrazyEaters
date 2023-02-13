@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=2]
+[gd_scene load_steps=60 format=2]
 
 [ext_resource path="res://assets/themes/Theme.tres" type="Theme" id=1]
 [ext_resource path="res://assets/materials/ui/Rainbow.tres" type="Material" id=2]
@@ -45,6 +45,9 @@
 [ext_resource path="res://prefabs/ui/ItemInventory.tscn" type="PackedScene" id=43]
 [ext_resource path="res://assets/textures/UI/user_add.png" type="Texture" id=44]
 [ext_resource path="res://prefabs/ui/Friend.tscn" type="PackedScene" id=45]
+[ext_resource path="res://assets/textures/UI/offline_icon.png" type="Texture" id=46]
+[ext_resource path="res://assets/textures/UI/friends_icon.png" type="Texture" id=47]
+[ext_resource path="res://assets/textures/UI/shop_icon.png" type="Texture" id=48]
 
 [sub_resource type="DynamicFont" id=12]
 size = 48
@@ -1113,6 +1116,9 @@ margin_top = 155.0
 margin_right = 988.0
 margin_bottom = 275.0
 
+[node name="TextureRect" parent="ContainerTabContents/HBoxContainer/Multiplayer/Content/Scroll/MarginContainer/VBoxContainer/Friend2/TextureRect" index="0"]
+texture = ExtResource( 46 )
+
 [node name="Label" parent="ContainerTabContents/HBoxContainer/Multiplayer/Content/Scroll/MarginContainer/VBoxContainer/Friend2" index="1"]
 margin_right = 522.0
 text = "Lula, O Molusco"
@@ -1132,6 +1138,9 @@ margin_right = 988.0
 margin_top = 310.0
 margin_right = 988.0
 margin_bottom = 430.0
+
+[node name="TextureRect" parent="ContainerTabContents/HBoxContainer/Multiplayer/Content/Scroll/MarginContainer/VBoxContainer/Friend3/TextureRect" index="0"]
+texture = ExtResource( 46 )
 
 [node name="Label" parent="ContainerTabContents/HBoxContainer/Multiplayer/Content/Scroll/MarginContainer/VBoxContainer/Friend3" index="1"]
 margin_right = 606.0
@@ -1567,6 +1576,7 @@ margin_bottom = 101.0
 [node name="TextureButton" parent="BottomToolbar/Middle/HBoxContainer/MenuTabItem/TextureRect" index="1"]
 margin_top = -272.0
 margin_bottom = -143.0
+texture = ExtResource( 48 )
 
 [node name="Label" parent="BottomToolbar/Middle/HBoxContainer/MenuTabItem/TextureRect" index="2"]
 text = "Loja"
@@ -1636,6 +1646,7 @@ margin_bottom = 101.0
 [node name="TextureButton" parent="BottomToolbar/Middle/HBoxContainer/MenuTabItem5/TextureRect" index="1"]
 margin_top = -272.0
 margin_bottom = -143.0
+texture = ExtResource( 47 )
 
 [node name="Label" parent="BottomToolbar/Middle/HBoxContainer/MenuTabItem5/TextureRect" index="2"]
 text = "Amigos"
