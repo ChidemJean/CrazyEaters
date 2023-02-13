@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=2]
+[gd_scene load_steps=57 format=2]
 
 [ext_resource path="res://assets/themes/Theme.tres" type="Theme" id=1]
 [ext_resource path="res://assets/materials/ui/Rainbow.tres" type="Material" id=2]
@@ -43,6 +43,8 @@
 [ext_resource path="res://assets/textures/UI/square_dotted_rounded.png" type="Texture" id=41]
 [ext_resource path="res://assets/textures/UI/qrcode_icon.png" type="Texture" id=42]
 [ext_resource path="res://prefabs/ui/ItemInventory.tscn" type="PackedScene" id=43]
+[ext_resource path="res://assets/textures/UI/user_add.png" type="Texture" id=44]
+[ext_resource path="res://prefabs/ui/Friend.tscn" type="PackedScene" id=45]
 
 [sub_resource type="DynamicFont" id=12]
 size = 48
@@ -244,7 +246,7 @@ size_flags_vertical = 0
 scroll_horizontal_enabled = false
 
 [node name="MarginContainer" type="MarginContainer" parent="ContainerTabContents/HBoxContainer/Shop/Content/Scroll"]
-margin_right = 1068.0
+margin_right = 1080.0
 margin_bottom = 227.0
 mouse_filter = 2
 size_flags_horizontal = 3
@@ -532,6 +534,7 @@ custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_y = 6
 custom_fonts/font = SubResource( 12 )
 text = "Inventário"
+align = 1
 valign = 1
 
 [node name="CategoriesItems" type="HBoxContainer" parent="ContainerTabContents/HBoxContainer/Inventory/TitleBar/HBoxContainer"]
@@ -832,7 +835,7 @@ size_flags_vertical = 0
 scroll_horizontal_enabled = false
 
 [node name="MarginContainer" type="MarginContainer" parent="ContainerTabContents/HBoxContainer/Scenarios/Content/Scroll"]
-margin_right = 1068.0
+margin_right = 1080.0
 margin_bottom = 522.0
 mouse_filter = 2
 size_flags_horizontal = 3
@@ -989,22 +992,29 @@ anchor_bottom = 1.0
 mouse_filter = 2
 color = Color( 0.478431, 0.27451, 0.137255, 1 )
 
-[node name="NinePatchRect" type="NinePatchRect" parent="ContainerTabContents/HBoxContainer/Multiplayer/TitleBar"]
-self_modulate = Color( 1, 1, 1, 0.690196 )
+[node name="HBoxContainer" type="HBoxContainer" parent="ContainerTabContents/HBoxContainer/Multiplayer/TitleBar"]
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 38.0
+margin_left = 28.0
 margin_top = -136.0
-margin_right = -40.0
+margin_right = -29.0
 margin_bottom = -25.0
+custom_constants/separation = 40
+alignment = 1
+
+[node name="NinePatchRect" type="NinePatchRect" parent="ContainerTabContents/HBoxContainer/Multiplayer/TitleBar/HBoxContainer"]
+self_modulate = Color( 1, 1, 1, 0.690196 )
+margin_right = 858.0
+margin_bottom = 111.0
+size_flags_horizontal = 3
 texture = ExtResource( 36 )
 patch_margin_left = 40
 patch_margin_top = 40
 patch_margin_right = 40
 patch_margin_bottom = 40
 
-[node name="Label" type="Label" parent="ContainerTabContents/HBoxContainer/Multiplayer/TitleBar/NinePatchRect"]
+[node name="Label" type="Label" parent="ContainerTabContents/HBoxContainer/Multiplayer/TitleBar/HBoxContainer/NinePatchRect"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 38.0
@@ -1017,6 +1027,34 @@ custom_fonts/font = SubResource( 12 )
 text = "Multiplayer"
 align = 1
 valign = 1
+
+[node name="CategoriesItems" type="HBoxContainer" parent="ContainerTabContents/HBoxContainer/Multiplayer/TitleBar/HBoxContainer"]
+margin_left = 898.0
+margin_right = 1023.0
+margin_bottom = 111.0
+custom_constants/separation = 12
+alignment = 2
+
+[node name="BlueButtonNinePatch" parent="ContainerTabContents/HBoxContainer/Multiplayer/TitleBar/HBoxContainer/CategoriesItems" instance=ExtResource( 31 )]
+margin_right = 125.0
+margin_bottom = 111.0
+rect_min_size = Vector2( 125, 0 )
+texture = ExtResource( 15 )
+texturePressed = ExtResource( 19 )
+textureNormal = ExtResource( 15 )
+
+[node name="TextureRect" type="TextureRect" parent="ContainerTabContents/HBoxContainer/Multiplayer/TitleBar/HBoxContainer/CategoriesItems/BlueButtonNinePatch"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -39.0
+margin_top = -45.0
+margin_right = 31.0
+margin_bottom = 27.0
+texture = ExtResource( 44 )
+expand = true
+stretch_mode = 6
 
 [node name="Content" type="Control" parent="ContainerTabContents/HBoxContainer/Multiplayer"]
 margin_top = 356.0
@@ -1037,7 +1075,7 @@ scroll_horizontal_enabled = false
 
 [node name="MarginContainer" type="MarginContainer" parent="ContainerTabContents/HBoxContainer/Multiplayer/Content/Scroll"]
 margin_right = 1068.0
-margin_bottom = 227.0
+margin_bottom = 2275.0
 mouse_filter = 2
 size_flags_horizontal = 3
 custom_constants/margin_right = 40
@@ -1048,11 +1086,12 @@ custom_constants/margin_bottom = 100
 [node name="VBoxContainer" type="VBoxContainer" parent="ContainerTabContents/HBoxContainer/Multiplayer/Content/Scroll/MarginContainer"]
 margin_left = 40.0
 margin_top = 40.0
-margin_right = 1040.0
-margin_bottom = 127.0
+margin_right = 1028.0
+margin_bottom = 2175.0
 custom_constants/separation = 35
 
 [node name="Label" type="Label" parent="ContainerTabContents/HBoxContainer/Multiplayer/Content/Scroll/MarginContainer/VBoxContainer"]
+visible = false
 modulate = Color( 1, 0.341176, 0.341176, 1 )
 margin_right = 1000.0
 margin_bottom = 87.0
@@ -1064,14 +1103,114 @@ text = "Você ainda não tem amigos."
 align = 1
 valign = 1
 
-[node name="GridContainer" type="GridContainer" parent="ContainerTabContents/HBoxContainer/Multiplayer/Content/Scroll/MarginContainer"]
-margin_left = 40.0
-margin_top = 40.0
-margin_right = 1040.0
-margin_bottom = 127.0
-mouse_filter = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
+[node name="Friend" parent="ContainerTabContents/HBoxContainer/Multiplayer/Content/Scroll/MarginContainer/VBoxContainer" instance=ExtResource( 45 )]
+margin_top = 0.0
+margin_right = 988.0
+margin_bottom = 120.0
+
+[node name="Friend2" parent="ContainerTabContents/HBoxContainer/Multiplayer/Content/Scroll/MarginContainer/VBoxContainer" instance=ExtResource( 45 )]
+margin_top = 155.0
+margin_right = 988.0
+margin_bottom = 275.0
+
+[node name="Label" parent="ContainerTabContents/HBoxContainer/Multiplayer/Content/Scroll/MarginContainer/VBoxContainer/Friend2" index="1"]
+margin_right = 522.0
+text = "Lula, O Molusco"
+
+[node name="LevelContainer" parent="ContainerTabContents/HBoxContainer/Multiplayer/Content/Scroll/MarginContainer/VBoxContainer/Friend2" index="2"]
+margin_left = 557.0
+margin_right = 637.0
+
+[node name="Level" parent="ContainerTabContents/HBoxContainer/Multiplayer/Content/Scroll/MarginContainer/VBoxContainer/Friend2/LevelContainer" index="0"]
+text = "6"
+
+[node name="Control" parent="ContainerTabContents/HBoxContainer/Multiplayer/Content/Scroll/MarginContainer/VBoxContainer/Friend2" index="3"]
+margin_left = 672.0
+margin_right = 988.0
+
+[node name="Friend3" parent="ContainerTabContents/HBoxContainer/Multiplayer/Content/Scroll/MarginContainer/VBoxContainer" instance=ExtResource( 45 )]
+margin_top = 310.0
+margin_right = 988.0
+margin_bottom = 430.0
+
+[node name="Label" parent="ContainerTabContents/HBoxContainer/Multiplayer/Content/Scroll/MarginContainer/VBoxContainer/Friend3" index="1"]
+margin_right = 606.0
+text = "Jucilaine proplayer"
+
+[node name="LevelContainer" parent="ContainerTabContents/HBoxContainer/Multiplayer/Content/Scroll/MarginContainer/VBoxContainer/Friend3" index="2"]
+margin_left = 641.0
+margin_right = 721.0
+
+[node name="Control" parent="ContainerTabContents/HBoxContainer/Multiplayer/Content/Scroll/MarginContainer/VBoxContainer/Friend3" index="3"]
+margin_left = 756.0
+margin_right = 988.0
+
+[node name="Friend4" parent="ContainerTabContents/HBoxContainer/Multiplayer/Content/Scroll/MarginContainer/VBoxContainer" instance=ExtResource( 45 )]
+margin_top = 465.0
+margin_right = 988.0
+margin_bottom = 585.0
+
+[node name="Label" parent="ContainerTabContents/HBoxContainer/Multiplayer/Content/Scroll/MarginContainer/VBoxContainer/Friend4" index="1"]
+margin_right = 511.0
+text = "Mario, aquele..."
+
+[node name="LevelContainer" parent="ContainerTabContents/HBoxContainer/Multiplayer/Content/Scroll/MarginContainer/VBoxContainer/Friend4" index="2"]
+margin_left = 546.0
+margin_right = 626.0
+
+[node name="Control" parent="ContainerTabContents/HBoxContainer/Multiplayer/Content/Scroll/MarginContainer/VBoxContainer/Friend4" index="3"]
+margin_left = 661.0
+margin_right = 988.0
+
+[node name="Friend5" parent="ContainerTabContents/HBoxContainer/Multiplayer/Content/Scroll/MarginContainer/VBoxContainer" instance=ExtResource( 45 )]
+margin_top = 620.0
+margin_right = 988.0
+margin_bottom = 740.0
+
+[node name="Friend6" parent="ContainerTabContents/HBoxContainer/Multiplayer/Content/Scroll/MarginContainer/VBoxContainer" instance=ExtResource( 45 )]
+margin_top = 775.0
+margin_right = 988.0
+margin_bottom = 895.0
+
+[node name="Friend7" parent="ContainerTabContents/HBoxContainer/Multiplayer/Content/Scroll/MarginContainer/VBoxContainer" instance=ExtResource( 45 )]
+margin_top = 930.0
+margin_right = 988.0
+margin_bottom = 1050.0
+
+[node name="Friend8" parent="ContainerTabContents/HBoxContainer/Multiplayer/Content/Scroll/MarginContainer/VBoxContainer" instance=ExtResource( 45 )]
+margin_top = 1085.0
+margin_right = 988.0
+margin_bottom = 1205.0
+
+[node name="Friend9" parent="ContainerTabContents/HBoxContainer/Multiplayer/Content/Scroll/MarginContainer/VBoxContainer" instance=ExtResource( 45 )]
+margin_top = 1240.0
+margin_right = 988.0
+margin_bottom = 1360.0
+
+[node name="Friend10" parent="ContainerTabContents/HBoxContainer/Multiplayer/Content/Scroll/MarginContainer/VBoxContainer" instance=ExtResource( 45 )]
+margin_top = 1395.0
+margin_right = 988.0
+margin_bottom = 1515.0
+
+[node name="Friend11" parent="ContainerTabContents/HBoxContainer/Multiplayer/Content/Scroll/MarginContainer/VBoxContainer" instance=ExtResource( 45 )]
+margin_top = 1550.0
+margin_right = 988.0
+margin_bottom = 1670.0
+
+[node name="Friend12" parent="ContainerTabContents/HBoxContainer/Multiplayer/Content/Scroll/MarginContainer/VBoxContainer" instance=ExtResource( 45 )]
+margin_top = 1705.0
+margin_right = 988.0
+margin_bottom = 1825.0
+
+[node name="Friend13" parent="ContainerTabContents/HBoxContainer/Multiplayer/Content/Scroll/MarginContainer/VBoxContainer" instance=ExtResource( 45 )]
+margin_top = 1860.0
+margin_right = 988.0
+margin_bottom = 1980.0
+
+[node name="Friend14" parent="ContainerTabContents/HBoxContainer/Multiplayer/Content/Scroll/MarginContainer/VBoxContainer" instance=ExtResource( 45 )]
+margin_top = 2015.0
+margin_right = 988.0
+margin_bottom = 2135.0
 
 [node name="Header" type="MarginContainer" parent="."]
 anchor_right = 1.0
@@ -1578,6 +1717,10 @@ expand = true
 stretch_mode = 6
 
 [editable path="ContainerTabContents/HBoxContainer/Saves/Control/EnterSaveBtn"]
+[editable path="ContainerTabContents/HBoxContainer/Multiplayer/TitleBar/HBoxContainer/CategoriesItems/BlueButtonNinePatch"]
+[editable path="ContainerTabContents/HBoxContainer/Multiplayer/Content/Scroll/MarginContainer/VBoxContainer/Friend2"]
+[editable path="ContainerTabContents/HBoxContainer/Multiplayer/Content/Scroll/MarginContainer/VBoxContainer/Friend3"]
+[editable path="ContainerTabContents/HBoxContainer/Multiplayer/Content/Scroll/MarginContainer/VBoxContainer/Friend4"]
 [editable path="BottomToolbar/Middle/HBoxContainer/MenuTabItem"]
 [editable path="BottomToolbar/Middle/HBoxContainer/MenuTabItem2"]
 [editable path="BottomToolbar/Middle/HBoxContainer/MenuTabItem3"]
