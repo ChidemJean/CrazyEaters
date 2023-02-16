@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=2]
+[gd_scene load_steps=69 format=2]
 
 [ext_resource path="res://assets/themes/Theme.tres" type="Theme" id=1]
 [ext_resource path="res://assets/materials/ui/Rainbow.tres" type="Material" id=2]
@@ -50,6 +50,12 @@
 [ext_resource path="res://assets/textures/UI/shop_icon.png" type="Texture" id=48]
 [ext_resource path="res://assets/textures/UI/inventory_icon.png" type="Texture" id=49]
 [ext_resource path="res://assets/textures/UI/scenarios_icon.png" type="Texture" id=50]
+[ext_resource path="res://assets/textures/UI/quests_icon.png" type="Texture" id=51]
+[ext_resource path="res://prefabs/ui/NotificationQtd.tscn" type="PackedScene" id=52]
+[ext_resource path="res://assets/materials/ui/BlurWithColor.tres" type="Material" id=53]
+[ext_resource path="res://src/UI/QuestsContainer.cs" type="Script" id=54]
+[ext_resource path="res://prefabs/ui/QuestItem.tscn" type="PackedScene" id=55]
+[ext_resource path="res://src/UI/OpenQuestsButton.cs" type="Script" id=56]
 
 [sub_resource type="DynamicFont" id=12]
 size = 48
@@ -123,6 +129,13 @@ font_data = ExtResource( 6 )
 
 [sub_resource type="DynamicFont" id=9]
 size = 40
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = ExtResource( 6 )
+
+[sub_resource type="DynamicFont" id=15]
+size = 60
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
 use_filter = true
@@ -304,19 +317,45 @@ key = "play"
 script = ExtResource( 32 )
 fullRectGuiderPath = NodePath("../../..")
 
-[node name="TextureRect" type="TextureRect" parent="ContainerTabContents/HBoxContainer/Saves"]
-margin_top = 470.0
+[node name="MarginContainer" type="MarginContainer" parent="ContainerTabContents/HBoxContainer/Saves"]
+margin_top = 335.0
 margin_right = 1080.0
-margin_bottom = 1120.0
+margin_bottom = 575.0
+custom_constants/margin_right = 50
+custom_constants/margin_left = 50
+custom_constants/margin_bottom = 80
+
+[node name="Control2" type="HBoxContainer" parent="ContainerTabContents/HBoxContainer/Saves/MarginContainer"]
+margin_left = 50.0
+margin_right = 1030.0
+margin_bottom = 160.0
+rect_min_size = Vector2( 0, 150 )
+custom_constants/separation = 45
+
+[node name="TextureRect" type="TextureRect" parent="ContainerTabContents/HBoxContainer/Saves/MarginContainer/Control2"]
+margin_right = 160.0
+margin_bottom = 160.0
+rect_min_size = Vector2( 160, 160 )
+texture = ExtResource( 51 )
+expand = true
+stretch_mode = 6
+script = ExtResource( 56 )
+
+[node name="NinePatchRect" parent="ContainerTabContents/HBoxContainer/Saves/MarginContainer/Control2/TextureRect" instance=ExtResource( 52 )]
+
+[node name="TextureRect" type="TextureRect" parent="ContainerTabContents/HBoxContainer/Saves"]
+margin_top = 605.0
+margin_right = 1080.0
+margin_bottom = 1255.0
 rect_min_size = Vector2( 0, 650 )
 texture = ExtResource( 10 )
 expand = true
 stretch_mode = 6
 
 [node name="Control" type="CenterContainer" parent="ContainerTabContents/HBoxContainer/Saves"]
-margin_top = 1150.0
+margin_top = 1285.0
 margin_right = 1080.0
-margin_bottom = 1310.0
+margin_bottom = 1445.0
 
 [node name="EnterSaveBtn" parent="ContainerTabContents/HBoxContainer/Saves/Control" instance=ExtResource( 31 )]
 margin_left = 390.0
@@ -343,9 +382,9 @@ align = 1
 valign = 1
 
 [node name="SavesDotsCtn" type="HBoxContainer" parent="ContainerTabContents/HBoxContainer/Saves"]
-margin_top = 1340.0
+margin_top = 1475.0
 margin_right = 1080.0
-margin_bottom = 1450.0
+margin_bottom = 1585.0
 grow_horizontal = 2
 grow_vertical = 2
 custom_constants/separation = 30
@@ -1010,7 +1049,7 @@ alignment = 1
 
 [node name="NinePatchRect" type="NinePatchRect" parent="ContainerTabContents/HBoxContainer/Multiplayer/TitleBar/HBoxContainer"]
 self_modulate = Color( 1, 1, 1, 0.690196 )
-margin_right = 858.0
+margin_right = 721.0
 margin_bottom = 111.0
 size_flags_horizontal = 3
 texture = ExtResource( 36 )
@@ -1034,7 +1073,7 @@ align = 1
 valign = 1
 
 [node name="CategoriesItems" type="HBoxContainer" parent="ContainerTabContents/HBoxContainer/Multiplayer/TitleBar/HBoxContainer"]
-margin_left = 898.0
+margin_left = 761.0
 margin_right = 1023.0
 margin_bottom = 111.0
 custom_constants/separation = 12
@@ -1049,6 +1088,28 @@ texturePressed = ExtResource( 19 )
 textureNormal = ExtResource( 15 )
 
 [node name="TextureRect" type="TextureRect" parent="ContainerTabContents/HBoxContainer/Multiplayer/TitleBar/HBoxContainer/CategoriesItems/BlueButtonNinePatch"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -39.0
+margin_top = -45.0
+margin_right = 31.0
+margin_bottom = 27.0
+texture = ExtResource( 44 )
+expand = true
+stretch_mode = 6
+
+[node name="BlueButtonNinePatch2" parent="ContainerTabContents/HBoxContainer/Multiplayer/TitleBar/HBoxContainer/CategoriesItems" instance=ExtResource( 31 )]
+margin_left = 137.0
+margin_right = 262.0
+margin_bottom = 111.0
+rect_min_size = Vector2( 125, 0 )
+texture = ExtResource( 15 )
+texturePressed = ExtResource( 19 )
+textureNormal = ExtResource( 15 )
+
+[node name="TextureRect" type="TextureRect" parent="ContainerTabContents/HBoxContainer/Multiplayer/TitleBar/HBoxContainer/CategoriesItems/BlueButtonNinePatch2"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -1652,6 +1713,14 @@ margin_top = -272.0
 margin_bottom = -143.0
 texture = ExtResource( 47 )
 
+[node name="NinePatchRect" parent="BottomToolbar/Middle/HBoxContainer/MenuTabItem5/TextureRect/TextureButton" index="0" instance=ExtResource( 52 )]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -47.5001
+margin_top = -14.7727
+margin_right = 12.4999
+margin_bottom = 51.2273
+
 [node name="Label" parent="BottomToolbar/Middle/HBoxContainer/MenuTabItem5/TextureRect" index="2"]
 text = "Amigos"
 
@@ -1731,8 +1800,181 @@ texture = ExtResource( 24 )
 expand = true
 stretch_mode = 6
 
+[node name="QuestsContainer" type="ColorRect" parent="."]
+visible = false
+material = ExtResource( 53 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0 )
+script = ExtResource( 54 )
+panelPath = NodePath("QuestsPanel")
+titleContainerPath = NodePath("QuestsPanel/TitleBottomPanel")
+bgColorOpen = Color( 0, 0, 0, 0.807843 )
+
+[node name="QuestsPanel" type="ColorRect" parent="QuestsContainer"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 30.0
+margin_top = 180.0
+margin_right = -27.0
+margin_bottom = 1395.0
+color = Color( 0.273438, 0.154693, 0.0747681, 1 )
+
+[node name="TitleBottomPanel" type="ColorRect" parent="QuestsContainer/QuestsPanel"]
+anchor_right = 1.0
+margin_top = -181.0
+color = Color( 0.329412, 0.188235, 0.0941176, 0 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="QuestsContainer/QuestsPanel/TitleBottomPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Title" type="TextureRect" parent="QuestsContainer/QuestsPanel/TitleBottomPanel/HBoxContainer"]
+margin_right = 669.0
+margin_bottom = 181.0
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="QuestsContainer/QuestsPanel/TitleBottomPanel/HBoxContainer/Title"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 45
+custom_constants/margin_top = 20
+custom_constants/margin_left = 45
+custom_constants/margin_bottom = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="QuestsContainer/QuestsPanel/TitleBottomPanel/HBoxContainer/Title/MarginContainer"]
+margin_left = 45.0
+margin_top = 20.0
+margin_right = 624.0
+margin_bottom = 161.0
+custom_constants/separation = 35
+
+[node name="TextureRect" type="TextureRect" parent="QuestsContainer/QuestsPanel/TitleBottomPanel/HBoxContainer/Title/MarginContainer/HBoxContainer"]
+margin_right = 70.0
+margin_bottom = 141.0
+rect_min_size = Vector2( 70, 0 )
+texture = ExtResource( 51 )
+expand = true
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="QuestsContainer/QuestsPanel/TitleBottomPanel/HBoxContainer/Title/MarginContainer/HBoxContainer"]
+margin_left = 105.0
+margin_top = 18.0
+margin_right = 299.0
+margin_bottom = 122.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_y = 5
+custom_fonts/font = SubResource( 15 )
+text = "Quests"
+valign = 1
+
+[node name="CloseButton" type="Control" parent="QuestsContainer/QuestsPanel/TitleBottomPanel/HBoxContainer"]
+margin_left = 673.0
+margin_right = 1023.0
+margin_bottom = 181.0
+rect_min_size = Vector2( 350, 0 )
+
+[node name="BlueButtonNinePatch" parent="QuestsContainer/QuestsPanel/TitleBottomPanel/HBoxContainer/CloseButton" instance=ExtResource( 31 )]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -165.0
+margin_top = -58.5
+margin_right = -45.0
+margin_bottom = 61.5
+rect_min_size = Vector2( 120, 120 )
+
+[node name="TextureRect" type="TextureRect" parent="QuestsContainer/QuestsPanel/TitleBottomPanel/HBoxContainer/CloseButton/BlueButtonNinePatch"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 23.0
+margin_top = 11.0
+margin_right = -23.0
+margin_bottom = -35.0
+rect_rotation = -48.0
+rect_pivot_offset = Vector2( 37, 37 )
+texture = ExtResource( 16 )
+expand = true
+stretch_mode = 6
+
+[node name="ScrollContainer" type="ScrollContainer" parent="QuestsContainer/QuestsPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="MarginContainer" type="MarginContainer" parent="QuestsContainer/QuestsPanel/ScrollContainer"]
+margin_right = 1023.0
+margin_bottom = 2192.0
+size_flags_horizontal = 3
+custom_constants/margin_right = 36
+custom_constants/margin_top = 36
+custom_constants/margin_left = 36
+custom_constants/margin_bottom = 36
+
+[node name="VBoxContainer" type="VBoxContainer" parent="QuestsContainer/QuestsPanel/ScrollContainer/MarginContainer"]
+margin_left = 36.0
+margin_top = 36.0
+margin_right = 987.0
+margin_bottom = 2156.0
+custom_constants/separation = 25
+
+[node name="QuestItem" parent="QuestsContainer/QuestsPanel/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource( 55 )]
+margin_right = 939.0
+
+[node name="QuestItem2" parent="QuestsContainer/QuestsPanel/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource( 55 )]
+margin_top = 195.0
+margin_right = 939.0
+margin_bottom = 365.0
+
+[node name="QuestItem3" parent="QuestsContainer/QuestsPanel/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource( 55 )]
+margin_top = 390.0
+margin_right = 939.0
+margin_bottom = 560.0
+
+[node name="QuestItem4" parent="QuestsContainer/QuestsPanel/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource( 55 )]
+margin_top = 585.0
+margin_right = 939.0
+margin_bottom = 755.0
+
+[node name="QuestItem5" parent="QuestsContainer/QuestsPanel/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource( 55 )]
+margin_top = 780.0
+margin_right = 939.0
+margin_bottom = 950.0
+
+[node name="QuestItem6" parent="QuestsContainer/QuestsPanel/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource( 55 )]
+margin_top = 975.0
+margin_right = 939.0
+margin_bottom = 1145.0
+
+[node name="QuestItem7" parent="QuestsContainer/QuestsPanel/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource( 55 )]
+margin_top = 1170.0
+margin_right = 939.0
+margin_bottom = 1340.0
+
+[node name="QuestItem8" parent="QuestsContainer/QuestsPanel/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource( 55 )]
+margin_top = 1365.0
+margin_right = 939.0
+margin_bottom = 1535.0
+
+[node name="QuestItem9" parent="QuestsContainer/QuestsPanel/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource( 55 )]
+margin_top = 1560.0
+margin_right = 939.0
+margin_bottom = 1730.0
+
+[node name="QuestItem10" parent="QuestsContainer/QuestsPanel/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource( 55 )]
+margin_top = 1755.0
+margin_right = 939.0
+margin_bottom = 1925.0
+
+[node name="QuestItem11" parent="QuestsContainer/QuestsPanel/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource( 55 )]
+margin_top = 1950.0
+margin_right = 939.0
+margin_bottom = 2120.0
+
 [editable path="ContainerTabContents/HBoxContainer/Saves/Control/EnterSaveBtn"]
 [editable path="ContainerTabContents/HBoxContainer/Multiplayer/TitleBar/HBoxContainer/CategoriesItems/BlueButtonNinePatch"]
+[editable path="ContainerTabContents/HBoxContainer/Multiplayer/TitleBar/HBoxContainer/CategoriesItems/BlueButtonNinePatch2"]
 [editable path="ContainerTabContents/HBoxContainer/Multiplayer/Content/Scroll/MarginContainer/VBoxContainer/Friend2"]
 [editable path="ContainerTabContents/HBoxContainer/Multiplayer/Content/Scroll/MarginContainer/VBoxContainer/Friend3"]
 [editable path="ContainerTabContents/HBoxContainer/Multiplayer/Content/Scroll/MarginContainer/VBoxContainer/Friend4"]

@@ -1,0 +1,261 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://assets/fonts/BalooTamma-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://assets/shaders/UI/shine_horizontal.gdshader" type="Shader" id=2]
+[ext_resource path="res://prefabs/ui/generics/BlueButtonNinePatch.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/UI/QuestItem.cs" type="Script" id=4]
+[ext_resource path="res://assets/textures/UI/coin.png" type="Texture" id=7]
+[ext_resource path="res://assets/textures/UI/border_brown.png" type="Texture" id=9]
+[ext_resource path="res://assets/textures/UI/white_box_bordered.png" type="Texture" id=10]
+[ext_resource path="res://scenes/Home/ShineHorizonal.tres" type="Material" id=11]
+[ext_resource path="res://assets/textures/UI/green_box_bordered.png" type="Texture" id=12]
+[ext_resource path="res://assets/textures/UI/white_box_bordered_50.png" type="Texture" id=14]
+
+[sub_resource type="DynamicFont" id=16]
+size = 38
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+extra_spacing_top = -14
+extra_spacing_bottom = -14
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=19]
+size = 30
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+extra_spacing_top = -10
+extra_spacing_bottom = 5
+font_data = ExtResource( 1 )
+
+[sub_resource type="ShaderMaterial" id=20]
+shader = ExtResource( 2 )
+shader_param/shine_color = Color( 1, 1, 1, 1 )
+shader_param/shine_size = 1.0
+shader_param/shine_angle = 89.9
+shader_param/speed = 0.1
+
+[sub_resource type="DynamicFont" id=21]
+size = 30
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=17]
+size = 34
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=18]
+size = 38
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = ExtResource( 1 )
+
+[sub_resource type="Animation" id=22]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("VBoxContainer/Bar/NinePatchRect2/TextureRect:material:shader_param/shine_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.01 ]
+}
+
+[sub_resource type="Animation" id=23]
+resource_name = "full_bar_shining"
+length = 3.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("VBoxContainer/Bar/NinePatchRect2/TextureRect:material:shader_param/shine_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.2, 3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.01, 0.6, 1.0 ]
+}
+
+[node name="QuestItem" type="HBoxContainer"]
+margin_right = 951.0
+margin_bottom = 170.0
+custom_constants/separation = 15
+script = ExtResource( 4 )
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_right = 170.0
+margin_bottom = 170.0
+rect_min_size = Vector2( 170, 170 )
+texture = ExtResource( 9 )
+expand = true
+stretch_mode = 6
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 185.0
+margin_right = 686.0
+margin_bottom = 170.0
+size_flags_horizontal = 3
+custom_constants/separation = 25
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+margin_top = 21.0
+margin_right = 501.0
+margin_bottom = 59.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_y = 5
+custom_fonts/font = SubResource( 16 )
+text = "Jogue 30mins diariamente"
+autowrap = true
+
+[node name="Label2" type="Label" parent="VBoxContainer"]
+visible = false
+margin_top = 47.0
+margin_right = 540.0
+margin_bottom = 95.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_y = 5
+custom_fonts/font = SubResource( 19 )
+text = "10 / 30"
+autowrap = true
+
+[node name="Bar" type="NinePatchRect" parent="VBoxContainer"]
+self_modulate = Color( 0.438477, 0.316666, 0.238079, 1 )
+margin_top = 84.0
+margin_right = 501.0
+margin_bottom = 149.0
+rect_min_size = Vector2( 0, 65 )
+texture = ExtResource( 10 )
+patch_margin_left = 20
+patch_margin_top = 20
+patch_margin_right = 20
+patch_margin_bottom = 20
+
+[node name="NinePatchRect2" type="Control" parent="VBoxContainer/Bar"]
+material = SubResource( 20 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -10.0
+margin_right = 1.0
+
+[node name="TextureRect" type="NinePatchRect" parent="VBoxContainer/Bar/NinePatchRect2"]
+material = ExtResource( 11 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 12 )
+patch_margin_left = 20
+patch_margin_top = 20
+patch_margin_right = 20
+patch_margin_bottom = 20
+
+[node name="NinePatchRect" type="NinePatchRect" parent="VBoxContainer/Bar/NinePatchRect2"]
+self_modulate = Color( 1, 1, 1, 0.427451 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 9.0
+margin_right = -18.0
+margin_bottom = -26.0
+texture = ExtResource( 14 )
+patch_margin_left = 15
+patch_margin_top = 15
+patch_margin_right = 15
+patch_margin_bottom = 15
+
+[node name="Label2" type="Label" parent="VBoxContainer/Bar/NinePatchRect2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 20.0
+margin_right = -30.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_y = 5
+custom_fonts/font = SubResource( 21 )
+text = "10 / 30"
+valign = 1
+autowrap = true
+
+[node name="Control" type="Control" parent="."]
+margin_left = 701.0
+margin_right = 951.0
+margin_bottom = 170.0
+rect_min_size = Vector2( 250, 0 )
+
+[node name="BlueButtonNinePatch" parent="Control" instance=ExtResource( 3 )]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -245.0
+margin_top = -75.0
+margin_right = 0.0
+margin_bottom = 95.0
+rect_min_size = Vector2( 245, 170 )
+IsDisabled = true
+
+[node name="Control" type="Control" parent="Control/BlueButtonNinePatch"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="Control/BlueButtonNinePatch/Control"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -57.5
+margin_top = 15.0
+margin_right = 57.5
+margin_bottom = 74.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_y = 5
+custom_fonts/font = SubResource( 17 )
+text = "Coletar"
+align = 1
+valign = 1
+
+[node name="ColorRect" type="HBoxContainer" parent="Control/BlueButtonNinePatch/Control"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -61.0
+margin_top = -116.0
+margin_right = 61.0
+margin_bottom = -50.0
+grow_horizontal = 2
+
+[node name="Icon" type="TextureRect" parent="Control/BlueButtonNinePatch/Control/ColorRect"]
+margin_right = 60.0
+margin_bottom = 66.0
+rect_min_size = Vector2( 60, 60 )
+texture = ExtResource( 7 )
+expand = true
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="Control/BlueButtonNinePatch/Control/ColorRect"]
+margin_left = 64.0
+margin_right = 122.0
+margin_bottom = 66.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_y = 5
+custom_fonts/font = SubResource( 18 )
+text = "120"
+align = 1
+valign = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 22 )
+anims/full_bar_shining = SubResource( 23 )

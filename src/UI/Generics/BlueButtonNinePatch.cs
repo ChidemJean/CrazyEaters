@@ -12,13 +12,40 @@ namespace CrazyEaters.UI.Generics
         public Texture textureNormal;
 
         [Export]
+        public Texture textureDisabledPressed;
+
+        [Export]
+        public Texture textureDisabledNormal;
+
+        [Export]
         public float offsetYChildOnPressed = .07f;
+
+        [Export]
+        public bool IsDisabled {
+            get { return this.isDisabled; }
+            set {
+                this.isDisabled = value;
+                Texture = this.isDisabled ? textureDisabledNormal : textureNormal;
+            }
+        }
+        private bool isDisabled = false;
+
+        [Export]
+        public bool IsShinig {
+            get { return this.isShinig; }
+            set {
+                this.isShinig = value;
+                UseParentMaterial = !this.isShinig;
+            }
+        }
+        private bool isShinig = false;
 
         private Texture originalTexture;
 
         public override void _Ready()
         {
-            Texture = textureNormal;
+            Texture = isDisabled ? textureDisabledNormal : textureNormal;
+            UseParentMaterial = !this.isShinig;
         }
 
         public void OnGuiInput(InputEvent @event) 
@@ -34,7 +61,7 @@ namespace CrazyEaters.UI.Generics
 
         public void PressedEffect() 
         {
-            Texture = texturePressed;
+            Texture = isDisabled ? textureDisabledPressed : texturePressed;
             Control firstChild = GetChildOrNull<Control>(0);
             if (firstChild != null) {
                 firstChild.RectPosition = new Vector2(firstChild.RectPosition.x, firstChild.RectPosition.y + RectSize.y * offsetYChildOnPressed);
@@ -42,7 +69,7 @@ namespace CrazyEaters.UI.Generics
         }
         public void UnpressedEffect() 
         {
-            Texture = textureNormal;
+            Texture = isDisabled ? textureDisabledNormal : textureNormal;
             Control firstChild = GetChildOrNull<Control>(0);
             if (firstChild != null) {
                 firstChild.RectPosition = new Vector2(firstChild.RectPosition.x, firstChild.RectPosition.y - RectSize.y * offsetYChildOnPressed);
