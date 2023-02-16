@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=2]
+[gd_scene load_steps=72 format=2]
 
 [ext_resource path="res://assets/themes/Theme.tres" type="Theme" id=1]
 [ext_resource path="res://assets/materials/ui/Rainbow.tres" type="Material" id=2]
@@ -9,7 +9,7 @@
 [ext_resource path="res://assets/textures/UI/beans.png" type="Texture" id=7]
 [ext_resource path="res://assets/textures/background_wood.png" type="Texture" id=8]
 [ext_resource path="res://assets/textures/radial_shadows.png" type="Texture" id=9]
-[ext_resource path="res://assets/textures/UI/save_placeholder.png" type="Texture" id=10]
+[ext_resource path="res://assets/textures/UI/eater.png" type="Texture" id=10]
 [ext_resource path="res://assets/textures/UI/border_user_level.png" type="Texture" id=11]
 [ext_resource path="res://assets/textures/UI/back_user_thumb.png" type="Texture" id=12]
 [ext_resource path="res://assets/textures/UI/back_user_level.png" type="Texture" id=13]
@@ -56,6 +56,9 @@
 [ext_resource path="res://src/UI/QuestsContainer.cs" type="Script" id=54]
 [ext_resource path="res://prefabs/ui/QuestItem.tscn" type="PackedScene" id=55]
 [ext_resource path="res://src/UI/OpenQuestsButton.cs" type="Script" id=56]
+[ext_resource path="res://assets/textures/UI/button_red.png" type="Texture" id=57]
+[ext_resource path="res://assets/textures/UI/button_red_pressed.png" type="Texture" id=58]
+[ext_resource path="res://assets/textures/UI/invitation_icone.png" type="Texture" id=59]
 
 [sub_resource type="DynamicFont" id=12]
 size = 48
@@ -397,6 +400,7 @@ margin_bottom = 110.0
 rect_min_size = Vector2( 94, 94 )
 
 [node name="TextureRect" type="TextureProgress" parent="ContainerTabContents/HBoxContainer/Saves/SavesDotsCtn/SaveDot"]
+self_modulate = Color( 1, 0, 0, 1 )
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -405,7 +409,7 @@ margin_left = -47.0
 margin_top = -47.0
 margin_right = 47.0
 margin_bottom = 47.0
-value = 40.0
+value = 20.0
 texture_under = ExtResource( 28 )
 texture_progress = ExtResource( 27 )
 fill_mode = 5
@@ -431,6 +435,7 @@ margin_bottom = 110.0
 rect_min_size = Vector2( 54, 54 )
 
 [node name="SaveDot" type="TextureProgress" parent="ContainerTabContents/HBoxContainer/Saves/SavesDotsCtn/SaveDot2"]
+self_modulate = Color( 0.329412, 1, 0.0823529, 1 )
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -452,6 +457,7 @@ margin_bottom = 110.0
 rect_min_size = Vector2( 54, 54 )
 
 [node name="SaveDot" type="TextureProgress" parent="ContainerTabContents/HBoxContainer/Saves/SavesDotsCtn/SaveDot3"]
+self_modulate = Color( 0.329412, 1, 0.0823529, 1 )
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -473,6 +479,7 @@ margin_bottom = 110.0
 rect_min_size = Vector2( 54, 54 )
 
 [node name="SaveDot" type="TextureProgress" parent="ContainerTabContents/HBoxContainer/Saves/SavesDotsCtn/SaveDot4"]
+self_modulate = Color( 0.329412, 1, 0.0823529, 1 )
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -1083,22 +1090,30 @@ alignment = 2
 margin_right = 125.0
 margin_bottom = 111.0
 rect_min_size = Vector2( 125, 0 )
-texture = ExtResource( 15 )
-texturePressed = ExtResource( 19 )
-textureNormal = ExtResource( 15 )
+texture = ExtResource( 57 )
+texturePressed = ExtResource( 58 )
+textureNormal = ExtResource( 57 )
 
 [node name="TextureRect" type="TextureRect" parent="ContainerTabContents/HBoxContainer/Multiplayer/TitleBar/HBoxContainer/CategoriesItems/BlueButtonNinePatch"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -39.0
+margin_left = -37.0
 margin_top = -45.0
-margin_right = 31.0
+margin_right = 33.0
 margin_bottom = 27.0
-texture = ExtResource( 44 )
+texture = ExtResource( 59 )
 expand = true
 stretch_mode = 6
+
+[node name="NinePatchRect" parent="ContainerTabContents/HBoxContainer/Multiplayer/TitleBar/HBoxContainer/CategoriesItems/BlueButtonNinePatch" instance=ExtResource( 52 )]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -48.0
+margin_top = -12.0
+margin_right = 1.0
+margin_bottom = 40.0
 
 [node name="BlueButtonNinePatch2" parent="ContainerTabContents/HBoxContainer/Multiplayer/TitleBar/HBoxContainer/CategoriesItems" instance=ExtResource( 31 )]
 margin_left = 137.0
@@ -1886,6 +1901,9 @@ margin_top = -58.5
 margin_right = -45.0
 margin_bottom = 61.5
 rect_min_size = Vector2( 120, 120 )
+texture = ExtResource( 57 )
+texturePressed = ExtResource( 58 )
+textureNormal = ExtResource( 57 )
 
 [node name="TextureRect" type="TextureRect" parent="QuestsContainer/QuestsPanel/TitleBottomPanel/HBoxContainer/CloseButton/BlueButtonNinePatch"]
 anchor_right = 1.0
@@ -1944,6 +1962,9 @@ margin_right = 939.0
 [node name="BlueButtonNinePatch" parent="QuestsContainer/QuestsPanel/ScrollContainer/MarginContainer/VBoxContainer/QuestItem2/Control" index="0"]
 IsDisabled = false
 IsShinig = true
+
+[node name="Label" parent="QuestsContainer/QuestsPanel/ScrollContainer/MarginContainer/VBoxContainer/QuestItem2/Control/BlueButtonNinePatch/Control" index="0"]
+visible = true
 
 [node name="QuestItem3" parent="QuestsContainer/QuestsPanel/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource( 55 )]
 margin_top = 390.0

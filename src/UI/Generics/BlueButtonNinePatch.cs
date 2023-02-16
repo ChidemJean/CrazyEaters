@@ -26,6 +26,7 @@ namespace CrazyEaters.UI.Generics
             set {
                 this.isDisabled = value;
                 Texture = this.isDisabled ? textureDisabledNormal : textureNormal;
+                SelfModulate = new Color(SelfModulate.r, SelfModulate.g, SelfModulate.b, this.isDisabled ? .2f : 1f);
             }
         }
         private bool isDisabled = false;

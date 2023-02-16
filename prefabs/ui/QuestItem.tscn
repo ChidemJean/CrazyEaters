@@ -36,14 +36,14 @@ use_filter = true
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=17]
-size = 34
+size = 40
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
 use_filter = true
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=18]
-size = 38
+size = 40
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
 use_filter = true
@@ -152,8 +152,7 @@ patch_margin_bottom = 20
 [node name="NinePatchRect2" type="Control" parent="VBoxContainer/Bar"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -10.0
-margin_right = 1.0
+margin_right = -315.0
 
 [node name="TextureRect" type="NinePatchRect" parent="VBoxContainer/Bar/NinePatchRect2"]
 material = ExtResource( 11 )
@@ -202,11 +201,11 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-margin_left = -245.0
+margin_left = -220.0
 margin_top = -75.0
 margin_right = 0.0
-margin_bottom = 95.0
-rect_min_size = Vector2( 245, 170 )
+margin_bottom = 75.0
+rect_min_size = Vector2( 220, 150 )
 IsDisabled = true
 
 [node name="Control" type="Control" parent="Control/BlueButtonNinePatch"]
@@ -215,44 +214,47 @@ anchor_bottom = 1.0
 mouse_filter = 2
 
 [node name="Label" type="Label" parent="Control/BlueButtonNinePatch/Control"]
+visible = false
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -57.5
-margin_top = 15.0
-margin_right = 57.5
-margin_bottom = 74.0
+margin_left = -78.5
+margin_top = -26.0
+margin_right = 78.5
+margin_bottom = 49.0
 grow_horizontal = 2
 grow_vertical = 2
+rect_rotation = -4.4
+rect_pivot_offset = Vector2( 62, 30 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_y = 5
 custom_fonts/font = SubResource( 17 )
-text = "Coletar"
+text = "Coletar!"
 align = 1
 valign = 1
 
 [node name="ColorRect" type="HBoxContainer" parent="Control/BlueButtonNinePatch/Control"]
 anchor_left = 0.5
-anchor_top = 1.0
+anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 1.0
-margin_left = -61.0
-margin_top = -116.0
-margin_right = 61.0
-margin_bottom = -50.0
+anchor_bottom = 0.5
+margin_left = -64.5
+margin_top = -44.0
+margin_right = 65.5
+margin_bottom = 25.0
 grow_horizontal = 2
 
 [node name="Icon" type="TextureRect" parent="Control/BlueButtonNinePatch/Control/ColorRect"]
-margin_right = 60.0
-margin_bottom = 66.0
-rect_min_size = Vector2( 60, 60 )
+margin_right = 65.0
+margin_bottom = 69.0
+rect_min_size = Vector2( 65, 65 )
 texture = ExtResource( 7 )
 expand = true
 stretch_mode = 6
 
 [node name="Label" type="Label" parent="Control/BlueButtonNinePatch/Control/ColorRect"]
-margin_left = 64.0
-margin_right = 122.0
-margin_bottom = 66.0
+margin_left = 69.0
+margin_right = 130.0
+margin_bottom = 69.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_y = 5
 custom_fonts/font = SubResource( 18 )

@@ -13,16 +13,6 @@ namespace CrazyEaters.UI
         {
             animPlayer = GetNode<AnimationPlayer>(animPlayerPath);
             animPlayer.Play("full_bar_shining");
-            // Connect("visibility_changed", this, nameof(OnVisibilityChanged));
         }
-
-        // public void OnVisibilityChanged()
-        // {
-        //     if (Visible) {
-        //         animPlayer.Play();
-        //         return;
-        //     }
-        //     animPlayer.Stop();
-        // }
     }
 }
