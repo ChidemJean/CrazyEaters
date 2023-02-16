@@ -4,7 +4,7 @@
 
 [resource]
 shader = ExtResource( 1 )
-shader_param/shine_color = Color( 1, 0.941176, 0.133333, 1 )
+shader_param/shine_color = Color( 1, 0.941176, 0.133333, 0 )
 shader_param/shine_size = 0.01
 shader_param/shine_angle = 89.9
 shader_param/speed = 0.1

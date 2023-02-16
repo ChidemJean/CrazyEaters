@@ -9,7 +9,8 @@ namespace CrazyEaters.Managers
         GameModeChange,
         MenuBottomItemClick,
         ChangePanel,
-        OpenQuestsPanel
+        OpenQuestsPanel,
+        CloseQuestsPanel,
     };
 
     public class CharacterStatusEventData {

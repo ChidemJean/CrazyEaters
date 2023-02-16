@@ -60,6 +60,7 @@ namespace CrazyEaters.UI
         public void OnGuiInput(InputEvent @event)
         {
             if (@event is InputEventMouseButton) {
+                if (((InputEventMouseButton) @event).ButtonIndex != (int) ButtonList.Left) return;
                 pressed = ((InputEventMouseButton) @event).IsPressed();
                 if (!pressed) AnimateToPanel();
                 return;

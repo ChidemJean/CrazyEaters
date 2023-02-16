@@ -19,7 +19,7 @@ namespace CrazyEaters.UI
         {
             if (@event is InputEventMouseButton) {
                 InputEventMouseButton _event = (InputEventMouseButton) @event;
-                if (_event.ButtonIndex == 0 && !_event.IsPressed()) {
+                if (_event.ButtonIndex == (int) ButtonList.Left && !_event.IsPressed()) {
                     gameManager.TriggerEvent(GameEvent.OpenQuestsPanel, "");
                 }
             }

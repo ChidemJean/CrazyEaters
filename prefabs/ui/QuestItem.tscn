@@ -1,7 +1,6 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://assets/fonts/BalooTamma-Regular.ttf" type="DynamicFontData" id=1]
-[ext_resource path="res://assets/shaders/UI/shine_horizontal.gdshader" type="Shader" id=2]
 [ext_resource path="res://prefabs/ui/generics/BlueButtonNinePatch.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/UI/QuestItem.cs" type="Script" id=4]
 [ext_resource path="res://assets/textures/UI/coin.png" type="Texture" id=7]
@@ -29,13 +28,6 @@ extra_spacing_top = -10
 extra_spacing_bottom = 5
 font_data = ExtResource( 1 )
 
-[sub_resource type="ShaderMaterial" id=20]
-shader = ExtResource( 2 )
-shader_param/shine_color = Color( 1, 1, 1, 1 )
-shader_param/shine_size = 1.0
-shader_param/shine_angle = 89.9
-shader_param/speed = 0.1
-
 [sub_resource type="DynamicFont" id=21]
 size = 30
 outline_size = 2
@@ -60,7 +52,7 @@ font_data = ExtResource( 1 )
 [sub_resource type="Animation" id=22]
 length = 0.001
 tracks/0/type = "value"
-tracks/0/path = NodePath("VBoxContainer/Bar/NinePatchRect2/TextureRect:material:shader_param/shine_size")
+tracks/0/path = NodePath("VBoxContainer/Bar/NinePatchRect2/TextureRect:material:shader_param/shine_color")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -69,12 +61,12 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ 0.01 ]
+"values": [ Color( 1, 0.941176, 0.133333, 0 ) ]
 }
 
 [sub_resource type="Animation" id=23]
 resource_name = "full_bar_shining"
-length = 3.0
+length = 3.5
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("VBoxContainer/Bar/NinePatchRect2/TextureRect:material:shader_param/shine_size")
@@ -83,10 +75,22 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1.2, 3 ),
+"times": PoolRealArray( 0, 1.2, 2.8, 3.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.01, 0.6, 1.0, 1.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("VBoxContainer/Bar/NinePatchRect2/TextureRect:material:shader_param/shine_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 2.8, 3.5 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ 0.01, 0.6, 1.0 ]
+"values": [ Color( 1, 0.941176, 0.133333, 0.784314 ), Color( 1, 0.941176, 0.133333, 0.862745 ), Color( 1, 0.941176, 0.133333, 0 ) ]
 }
 
 [node name="QuestItem" type="HBoxContainer"]
@@ -94,6 +98,7 @@ margin_right = 951.0
 margin_bottom = 170.0
 custom_constants/separation = 15
 script = ExtResource( 4 )
+animPlayerPath = NodePath("AnimationPlayer")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 margin_right = 170.0
@@ -145,7 +150,6 @@ patch_margin_right = 20
 patch_margin_bottom = 20
 
 [node name="NinePatchRect2" type="Control" parent="VBoxContainer/Bar"]
-material = SubResource( 20 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = -10.0

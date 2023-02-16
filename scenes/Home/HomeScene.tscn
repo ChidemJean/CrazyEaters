@@ -1805,11 +1805,12 @@ visible = false
 material = ExtResource( 53 )
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0, 0, 0, 0 )
+color = Color( 1, 1, 1, 0 )
 script = ExtResource( 54 )
 panelPath = NodePath("QuestsPanel")
 titleContainerPath = NodePath("QuestsPanel/TitleBottomPanel")
-bgColorOpen = Color( 0, 0, 0, 0.807843 )
+bgColorOpen = Color( 0, 0, 0, 1 )
+buttonClosePath = NodePath("QuestsPanel/TitleBottomPanel/HBoxContainer/CloseButton/BlueButtonNinePatch")
 
 [node name="QuestsPanel" type="ColorRect" parent="QuestsContainer"]
 anchor_top = 1.0
@@ -1927,6 +1928,23 @@ margin_top = 195.0
 margin_right = 939.0
 margin_bottom = 365.0
 
+[node name="VBoxContainer" parent="QuestsContainer/QuestsPanel/ScrollContainer/MarginContainer/VBoxContainer/QuestItem2" index="1"]
+margin_right = 674.0
+
+[node name="Label" parent="QuestsContainer/QuestsPanel/ScrollContainer/MarginContainer/VBoxContainer/QuestItem2/VBoxContainer" index="0"]
+margin_right = 489.0
+
+[node name="Bar" parent="QuestsContainer/QuestsPanel/ScrollContainer/MarginContainer/VBoxContainer/QuestItem2/VBoxContainer" index="2"]
+margin_right = 489.0
+
+[node name="Control" parent="QuestsContainer/QuestsPanel/ScrollContainer/MarginContainer/VBoxContainer/QuestItem2" index="2"]
+margin_left = 689.0
+margin_right = 939.0
+
+[node name="BlueButtonNinePatch" parent="QuestsContainer/QuestsPanel/ScrollContainer/MarginContainer/VBoxContainer/QuestItem2/Control" index="0"]
+IsDisabled = false
+IsShinig = true
+
 [node name="QuestItem3" parent="QuestsContainer/QuestsPanel/ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource( 55 )]
 margin_top = 390.0
 margin_right = 939.0
@@ -1983,3 +2001,4 @@ margin_bottom = 2120.0
 [editable path="BottomToolbar/Middle/HBoxContainer/MenuTabItem3"]
 [editable path="BottomToolbar/Middle/HBoxContainer/MenuTabItem4"]
 [editable path="BottomToolbar/Middle/HBoxContainer/MenuTabItem5"]
+[editable path="QuestsContainer/QuestsPanel/ScrollContainer/MarginContainer/VBoxContainer/QuestItem2"]

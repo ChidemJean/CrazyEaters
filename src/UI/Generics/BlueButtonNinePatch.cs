@@ -42,6 +42,8 @@ namespace CrazyEaters.UI.Generics
 
         private Texture originalTexture;
 
+        [Signal] public delegate void click(bool pressed);
+
         public override void _Ready()
         {
             Texture = isDisabled ? textureDisabledNormal : textureNormal;
@@ -51,11 +53,14 @@ namespace CrazyEaters.UI.Generics
         public void OnGuiInput(InputEvent @event) 
         {
             if (@event is InputEventMouseButton) {
+                if (((InputEventMouseButton) @event).ButtonIndex != (int) ButtonList.Left) return;
                 if (((InputEventMouseButton) @event).IsPressed()) {
                     PressedEffect();
+                    EmitSignal("click", true);
                     return;
                 }
                 UnpressedEffect();
+                EmitSignal("click", false);
             }
         }
 

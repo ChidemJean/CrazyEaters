@@ -26,6 +26,7 @@ font_data = ExtResource( 5 )
 margin_right = 235.0
 margin_bottom = 320.0
 rect_min_size = Vector2( 235, 320 )
+mouse_filter = 1
 script = ExtResource( 8 )
 ctnRarityPath = NodePath("RarityCtn")
 shineTextPath = NodePath("Shine")
