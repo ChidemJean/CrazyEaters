@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://prefabs/LabelChunk.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/materials/sandbox_shockwave.tres" type="Material" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://assets/materials/sandbox.tres" type="Material" id=4]
 [ext_resource path="res://src/Sandbox/World.cs" type="Script" id=5]
 [ext_resource path="res://prefabs/env/Skybox.tscn" type="PackedScene" id=6]
+[ext_resource path="res://assets/models/imported/eucalyptus.glb" type="PackedScene" id=7]
+[ext_resource path="res://assets/models/imported/coconut.glb" type="PackedScene" id=8]
 [ext_resource path="res://assets/models/spatula.tscn" type="PackedScene" id=9]
 [ext_resource path="res://assets/textures/UI/thumbs/thumb_hamb_teste.png" type="Texture" id=10]
 [ext_resource path="res://prefabs/items/foods/Hamburguer.tscn" type="PackedScene" id=11]
@@ -13,6 +15,8 @@
 [ext_resource path="res://src/Tools/ExplosionTap.cs" type="Script" id=13]
 [ext_resource path="res://prefabs/utils/LineRenderer.tscn" type="PackedScene" id=14]
 [ext_resource path="res://assets/materials/prototype/orange.tres" type="Material" id=15]
+[ext_resource path="res://assets/models/imported/pine.glb" type="PackedScene" id=16]
+[ext_resource path="res://assets/models/imported/tree.glb" type="PackedScene" id=17]
 [ext_resource path="res://conf/HabitatSceneEnv.tres" type="Environment" id=18]
 [ext_resource path="res://assets/physics/explosion.tres" type="Shape" id=20]
 [ext_resource path="res://src/Controllers/CameraRotator.cs" type="Script" id=21]
@@ -252,7 +256,7 @@ directional_shadow_blend_splits = true
 
 [node name="DayNightAnimation" type="AnimationPlayer" parent="."]
 autoplay = "DayNight"
-playback_speed = 6.0
+playback_speed = 0.15
 anims/DayNight = SubResource( 12 )
 anims/RESET = SubResource( 13 )
 
@@ -275,9 +279,6 @@ lineRendererPath = NodePath("../../LineRenderer")
 numPoints = 5
 timeBetweenPoints = 0.2
 throwablePath = NodePath("../../Hamburguer")
-
-[node name="Skeleton" parent="CameraPivot/spatula/Armature" index="0"]
-bones/4/bound_children = [ NodePath("BoneAttachment") ]
 
 [node name="BoneAttachment" parent="CameraPivot/spatula/Armature/Skeleton" index="1"]
 transform = Transform( 0.997886, 0.0615615, 0.0208422, -0.061768, 0.998046, 0.0094159, -0.0202219, -0.0106834, 0.999738, -0.248285, 3.04844, 0.0488994 )
@@ -312,6 +313,18 @@ impulseForce = 50.0
 
 [node name="Scenario" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+
+[node name="pine" parent="Scenario" instance=ExtResource( 16 )]
+transform = Transform( 0.22, 0, 0, 0, 0.22, 0, 0, 0, 0.22, -7, 0, 0 )
+
+[node name="coconut" parent="Scenario" instance=ExtResource( 8 )]
+transform = Transform( 0.24, 0, 0, 0, 0.24, 0, 0, 0, 0.24, 0, 0, 0 )
+
+[node name="eucalyptus" parent="Scenario" instance=ExtResource( 7 )]
+transform = Transform( 0.16, 0, 0, 0, 0.16, 0, 0, 0, 0.16, 7, 0, 0 )
+
+[node name="tree" parent="Scenario" instance=ExtResource( 17 )]
+transform = Transform( 0.07, 0, 0, 0, 0.07, 0, 0, 0, 0.07, -4, 0, -6 )
 
 [node name="GridPlanes" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.93877, 0 )

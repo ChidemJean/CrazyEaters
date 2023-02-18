@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://scenes/Game/GameScene.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/textures/UI/logo_chidem_games.fw.png" type="Texture" id=2]
@@ -9,7 +9,17 @@
 [ext_resource path="res://scenes/Home/HomeScene.tscn" type="PackedScene" id=7]
 [ext_resource path="res://assets/textures/radial_shadows.png" type="Texture" id=8]
 [ext_resource path="res://assets/textures/background_wood.png" type="Texture" id=9]
+[ext_resource path="res://src/Debug/DevControls.cs" type="Script" id=10]
+[ext_resource path="res://assets/fonts/baloom.tres" type="DynamicFont" id=11]
+[ext_resource path="res://assets/materials/ui/BlurWithColor.tres" type="Material" id=12]
+[ext_resource path="res://assets/textures/UI/button_red.png" type="Texture" id=13]
 [ext_resource path="res://assets/themes/Theme.tres" type="Theme" id=14]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+content_margin_left = 45.0
+content_margin_right = 45.0
+content_margin_top = 5.0
+content_margin_bottom = 5.0
 
 [node name="MainNode" type="Control"]
 anchor_right = 1.0
@@ -18,6 +28,9 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 3 )
 scaleFactor = 0.7
+
+[node name="DEV" type="Node" parent="."]
+script = ExtResource( 10 )
 
 [node name="SaveSystem" type="Node" parent="."]
 script = ExtResource( 4 )
@@ -75,3 +88,70 @@ scenes = {
 "sandbox_test": ExtResource( 6 )
 }
 loadingPath = NodePath("../Loading")
+
+[node name="CLI" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="CMDS" type="ColorRect" parent="CLI"]
+material = ExtResource( 12 )
+margin_right = 1080.0
+margin_bottom = 1796.0
+size_flags_vertical = 3
+color = Color( 0, 0, 0, 1 )
+
+[node name="TextureButton" type="TextureRect" parent="CLI/CMDS"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -105.0
+margin_top = 20.0
+margin_right = -25.0
+margin_bottom = 100.0
+texture = ExtResource( 13 )
+expand = true
+stretch_mode = 6
+
+[node name="MarginContainer" type="MarginContainer" parent="CLI/CMDS"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 45
+custom_constants/margin_top = 80
+custom_constants/margin_left = 45
+custom_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CLI/CMDS/MarginContainer"]
+margin_left = 45.0
+margin_top = 80.0
+margin_right = 1035.0
+margin_bottom = 1786.0
+
+[node name="Label" type="Label" parent="CLI/CMDS/MarginContainer/VBoxContainer"]
+margin_right = 990.0
+margin_bottom = 53.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = ExtResource( 11 )
+text = "--- CLI Chidem Games ---"
+
+[node name="InputBg" type="ColorRect" parent="CLI"]
+margin_top = 1800.0
+margin_right = 1080.0
+margin_bottom = 1920.0
+rect_min_size = Vector2( 0, 120 )
+color = Color( 0, 0, 0, 1 )
+
+[node name="MarginContainer" type="MarginContainer" parent="CLI/InputBg"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+
+[node name="Input" type="LineEdit" parent="CLI/InputBg/MarginContainer"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 1070.0
+margin_bottom = 110.0
+custom_fonts/font = ExtResource( 11 )
+custom_styles/normal = SubResource( 1 )
+placeholder_text = "Digite o comando aqui"
