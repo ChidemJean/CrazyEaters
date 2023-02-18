@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://scenes/Game/GameScene.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/textures/UI/logo_chidem_games.fw.png" type="Texture" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://assets/materials/ui/BlurWithColor.tres" type="Material" id=12]
 [ext_resource path="res://assets/textures/UI/button_red.png" type="Texture" id=13]
 [ext_resource path="res://assets/themes/Theme.tres" type="Theme" id=14]
+[ext_resource path="res://src/Debug/CLI.cs" type="Script" id=15]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 content_margin_left = 45.0
@@ -90,8 +91,17 @@ scenes = {
 loadingPath = NodePath("../Loading")
 
 [node name="CLI" type="VBoxContainer" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = 6.0
+margin_top = -1930.0
+margin_right = 6.0
+margin_bottom = -1930.0
+script = ExtResource( 15 )
+cmdLabelPath = NodePath("CMDS/MarginContainer/VBoxContainer/Label")
+inputPath = NodePath("InputBg/MarginContainer/Input")
+closePath = NodePath("CMDS/TextureButton")
 
 [node name="CMDS" type="ColorRect" parent="CLI"]
 material = ExtResource( 12 )

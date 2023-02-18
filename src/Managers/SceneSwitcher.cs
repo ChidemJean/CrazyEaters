@@ -33,6 +33,8 @@ namespace CrazyEaters.Managers
             loading = GetNode<Control>(loadingPath);
             loadingBar = loading.GetNode<ProgressBar>("VBox/Progress");
 
+            gameManager.StartListening(GameEvent.ChangeScene, OnChangeScene);
+
             // GDScript resourceQueue = (GDScript) GD.Load("res://resource_queue.gd");
             // resourceQueueObj = (Godot.Object) resourceQueue.New();
             // resourceQueueObj.Call("start");
@@ -40,7 +42,13 @@ namespace CrazyEaters.Managers
             ChangeScene(initialScene);
         }
 
+        public void OnChangeScene(object scene)
+        {
+            ChangeScene((string) scene);
+        }
+
         public void ChangeScene(string key) {
+            if (!scenes.ContainsKey(key)) return;
             currentSceneResource = scenes[key];
             if (currentSceneResource != null) {
                 isLoading = true;
@@ -105,6 +113,11 @@ namespace CrazyEaters.Managers
                 RemoveChild(child);
                 child.QueueFree();
             }
+        }
+
+        public override void _ExitTree()
+        {
+            gameManager.StopListening(GameEvent.ChangeScene, OnChangeScene);
         }
 
     }

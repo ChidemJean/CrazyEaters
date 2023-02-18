@@ -11,6 +11,7 @@ namespace CrazyEaters.Managers
         ChangePanel,
         OpenQuestsPanel,
         CloseQuestsPanel,
+        ChangeScene,
     };
 
     public class CharacterStatusEventData {
