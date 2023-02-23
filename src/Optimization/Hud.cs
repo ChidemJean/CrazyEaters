@@ -15,7 +15,7 @@ namespace CrazyEaters.Optimization
 
         public override void _Ready()
         {
-            Connect("size_changed", this, nameof(OnViewportSizeChanged));
+            Connect("resized", this, nameof(OnViewportSizeChanged));
         }
 
         public void ChangeViewport3d(Viewport viewport) {

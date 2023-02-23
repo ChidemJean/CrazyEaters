@@ -12,6 +12,8 @@ namespace CrazyEaters.Managers
         OpenQuestsPanel,
         CloseQuestsPanel,
         ChangeScene,
+        InNight,
+        InDay,
     };
 
     public class CharacterStatusEventData {

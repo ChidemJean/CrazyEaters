@@ -5,7 +5,7 @@
 [ext_resource path="res://src/Optimization/Hud.cs" type="Script" id=3]
 [ext_resource path="res://src/Save/SaveSystemNode.cs" type="Script" id=4]
 [ext_resource path="res://src/Managers/SceneSwitcher.cs" type="Script" id=5]
-[ext_resource path="res://scenes/Tests/MainSandboxTest.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/GameCreate/GameCreateScene.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/Home/HomeScene.tscn" type="PackedScene" id=7]
 [ext_resource path="res://assets/textures/radial_shadows.png" type="Texture" id=8]
 [ext_resource path="res://assets/textures/background_wood.png" type="Texture" id=9]
@@ -84,9 +84,9 @@ anchor_bottom = 1.0
 script = ExtResource( 5 )
 initialScene = "home_scene"
 scenes = {
+"game_create_scene": ExtResource( 6 ),
 "habitat_scene": ExtResource( 1 ),
-"home_scene": ExtResource( 7 ),
-"sandbox_test": ExtResource( 6 )
+"home_scene": ExtResource( 7 )
 }
 loadingPath = NodePath("../Loading")
 

@@ -44,7 +44,11 @@ namespace CrazyEaters.Managers
 
         public void OnChangeScene(object scene)
         {
-            ChangeScene((string) scene);
+            string sceneStr = (string) scene;
+            if (!sceneStr.Contains("_scene")) {
+                sceneStr += "_scene";
+            }
+            ChangeScene(sceneStr);
         }
 
         public void ChangeScene(string key) {
@@ -61,21 +65,28 @@ namespace CrazyEaters.Managers
 
         public async void LoadScene(PackedScene scene)
         {
-            var loader = ResourceLoader.LoadInteractive(scene.ResourcePath);
-            if (loader == null) {
-                GD.Print("Ocorreu um erro ao carregar a cena");
-                return;
-            }
-            while (true) {
-                Error error = loader.Poll();
-                if (error == Error.Ok) {
-                    if (currentScene != null) {
-                        currentScene.QueueFree();
-                    }
-                    loadingBar.Value = ((float)loader.GetStage())/loader.GetStageCount() * 100;
-                } else if (error == Error.FileEof) {
-                    ShowScene(loader.GetResource() as PackedScene);
+            if (ResourceLoader.HasCached(scene.ResourcePath)){
+                if (currentScene != null) {
+                    currentScene.QueueFree();
+                }
+                ShowScene(ResourceLoader.Load<PackedScene>(scene.ResourcePath));
+            } else {
+                var loader = ResourceLoader.LoadInteractive(scene.ResourcePath);
+                if (loader == null) {
+                    GD.Print("Ocorreu um erro ao carregar a cena");
                     return;
+                }
+                while (true) {
+                    Error error = loader.Poll();
+                    if (error == Error.Ok) {
+                        if (currentScene != null) {
+                            currentScene.QueueFree();
+                        }
+                        loadingBar.Value = ((float)loader.GetStage())/loader.GetStageCount() * 100;
+                    } else if (error == Error.FileEof) {
+                        ShowScene(loader.GetResource() as PackedScene);
+                        return;
+                    }
                 }
             }
         }

@@ -18,10 +18,7 @@ namespace CrazyEaters.Characters
       [Export] protected Vector3 velocity;
       [Export] protected NodePath animTreePath;
       [Export] protected NodePath sensorMouthPath;
-      [Export] protected NodePath worldPath;
       [Export] protected NodePath viewFieldPath;
-
-      protected CrazyEaters.Sandbox.World world;
       protected Vector3 gravity;
       protected Vector3? moveTo = null;
       protected bool moving = false;
@@ -67,7 +64,6 @@ namespace CrazyEaters.Characters
       {
          gameManager = GetNode<GameManager>("/root/GameManager");
          gravity = gameManager.gravityVector * gameManager.gravityMagnitude * gravityScale;
-         world = GetNode<CrazyEaters.Sandbox.World>(worldPath);
          sensorMouth = GetNode<Area>(sensorMouthPath);
          viewField = GetNode<Area>(viewFieldPath);
 
@@ -78,8 +74,8 @@ namespace CrazyEaters.Characters
          rng = new RandomNumberGenerator();
          rng.Randomize();
          // IA
-         navigation = world.navigation;
-         navmesh = world.navmesh;
+         navigation = GetParent<Navigation>();
+         navmesh = navigation.GetNode<NavigationMeshInstance>("Navmesh");
          navigationAgent = GetNode<NavigationAgent>(navigationAgentPath);
          ig = GetNode<ImmediateGeometry>(igPath);
 

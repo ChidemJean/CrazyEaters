@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/models/imported/iron_fence.glb" type="PackedScene" id=1]
+[ext_resource path="res://assets/models/imported/iron_bars.material" type="Material" id=2]
+[ext_resource path="res://assets/textures/iron_fence.png" type="Texture" id=3]
+
+[sub_resource type="SpatialMaterial" id=1]
+flags_transparent = true
+params_cull_mode = 2
+params_depth_draw_mode = 3
+albedo_texture = ExtResource( 3 )
+uv1_scale = Vector3( 8, 8, 8 )
+
+[node name="IronFence" instance=ExtResource( 1 )]
+transform = Transform( 0.24, 0, 0, 0, 0.24, 0, 0, 0, 0.24, 0, 0, 0 )
+
+[node name="Cube" parent="." index="0"]
+material/0 = ExtResource( 2 )
+material/1 = SubResource( 1 )

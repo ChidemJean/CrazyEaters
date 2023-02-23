@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://assets/models/imported/light_pole.glb" type="PackedScene" id=1]
+[ext_resource path="res://assets/models/imported/cone_light.glb" type="PackedScene" id=2]
+[ext_resource path="res://src/Props/NightLight.cs" type="Script" id=3]
+
+[sub_resource type="Gradient" id=6]
+interpolation_mode = 2
+colors = PoolColorArray( 1, 1, 1, 0.25098, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture2D" id=5]
+gradient = SubResource( 6 )
+fill = 1
+fill_from = Vector2( 0.495833, 0.495833 )
+fill_to = Vector2( 0.195833, 0.8125 )
+
+[sub_resource type="SpatialMaterial" id=3]
+flags_transparent = true
+flags_unshaded = true
+flags_do_not_receive_shadows = true
+flags_disable_ambient_light = true
+albedo_texture = SubResource( 5 )
+
+[node name="light_pole" instance=ExtResource( 1 )]
+transform = Transform( 0.13, 0, 0, 0, 0.13, 0, 0, 0, 0.13, 0.0483894, -0.0962257, 0.00338745 )
+script = ExtResource( 3 )
+lightPath = NodePath("SpotLight")
+meshConePath = NodePath("cone_light/Cone")
+
+[node name="SpotLight" type="SpotLight" parent="." index="1"]
+transform = Transform( 2, 0, 0, 0, -0.0193031, 1.99991, 0, -1.99991, -0.0193031, 0, 41.5575, -18.731 )
+light_energy = 0.0
+spot_range = 7.8322
+spot_angle = 41.4961
+
+[node name="cone_light" parent="." index="2" instance=ExtResource( 2 )]
+transform = Transform( 6, 0, 0, 0, 6, 0, 0, 0, 6, 0.163386, -1.35687, -18.7017 )
+
+[node name="Cone" parent="cone_light" index="0"]
+visible = false
+material/0 = SubResource( 3 )
+
+[editable path="cone_light"]

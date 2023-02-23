@@ -1,10 +1,10 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=31 format=2]
 
-[ext_resource path="res://prefabs/LabelChunk.tscn" type="PackedScene" id=1]
-[ext_resource path="res://assets/materials/sandbox_shockwave.tres" type="Material" id=2]
-[ext_resource path="res://resources/blocks_data.tres" type="Resource" id=3]
-[ext_resource path="res://assets/materials/sandbox.tres" type="Material" id=4]
-[ext_resource path="res://src/Sandbox/World.cs" type="Script" id=5]
+[ext_resource path="res://prefabs/scenario/ApocalipseScenario.tscn" type="PackedScene" id=1]
+[ext_resource path="res://prefabs/props/IronFence.tscn" type="PackedScene" id=2]
+[ext_resource path="res://prefabs/EnemySpawnPoint.tscn" type="PackedScene" id=3]
+[ext_resource path="res://prefabs/props/LightPole.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/Animations/DayNightAnimation.cs" type="Script" id=5]
 [ext_resource path="res://prefabs/env/Skybox.tscn" type="PackedScene" id=6]
 [ext_resource path="res://assets/models/imported/eucalyptus.glb" type="PackedScene" id=7]
 [ext_resource path="res://assets/models/imported/coconut.glb" type="PackedScene" id=8]
@@ -15,8 +15,6 @@
 [ext_resource path="res://src/Tools/ExplosionTap.cs" type="Script" id=13]
 [ext_resource path="res://prefabs/utils/LineRenderer.tscn" type="PackedScene" id=14]
 [ext_resource path="res://assets/materials/prototype/orange.tres" type="Material" id=15]
-[ext_resource path="res://assets/models/imported/pine.glb" type="PackedScene" id=16]
-[ext_resource path="res://assets/models/imported/tree.glb" type="PackedScene" id=17]
 [ext_resource path="res://conf/HabitatSceneEnv.tres" type="Environment" id=18]
 [ext_resource path="res://assets/physics/explosion.tres" type="Shape" id=20]
 [ext_resource path="res://src/Controllers/CameraRotator.cs" type="Script" id=21]
@@ -113,6 +111,23 @@ tracks/6/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Vector3( 0, 1, 0 ), Vector3( 0, 1, 0.528 ), Vector3( 0, -1, 1 ), Vector3( 0, -1, -0.076 ), Vector3( 0, 1, 0.528 ) ]
+}
+tracks/7/type = "method"
+tracks/7/path = NodePath("DayNightAnimation")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 31.2, 100.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "OnNight"
+}, {
+"args": [  ],
+"method": "OnDay"
+} ]
 }
 
 [sub_resource type="Animation" id=13]
@@ -215,12 +230,15 @@ material = ExtResource( 23 )
 size = Vector2( 18, 18 )
 
 [sub_resource type="NavigationMesh" id=20]
+vertices = PoolVector3Array( -8.35597, 6.86426, -6.47857, -8.35597, 6.86426, -12.9286, -14.956, 6.86426, -12.9286, -14.956, 6.86426, -12.9286, -21.556, 6.86426, -12.9286, -21.556, 6.86426, -6.47857, -21.556, 6.86426, -6.47857, -21.556, 6.86426, 0.121428, -14.956, 6.86426, 0.121428, -14.956, 6.86426, 0.121428, -8.35597, 6.86426, 0.121428, -8.35597, 6.86426, -6.47857, -14.956, 6.86426, 0.121428, -8.35597, 6.86426, -6.47857, -14.956, 6.86426, -12.9286, -21.556, 6.86426, -6.47857, -14.956, 6.86426, 0.121428, -14.956, 6.86426, -12.9286, 3.94403, 9.74426, -4.82857, 3.94403, 9.74426, -9.62857, -7.75597, 9.74426, -9.62857, 3.94403, 9.74426, -4.82857, -7.75597, 9.74426, -9.62857, -7.75597, 9.74426, -4.82857, 9.04403, 9.20426, -3.17857, 9.19403, 8.84426, -2.27857, 10.094, 8.66426, -2.27857, 9.04403, 9.20426, -3.17857, 10.094, 8.66426, -2.27857, 10.094, 9.02426, -4.22857, 9.04403, 9.20426, -3.17857, 10.094, 9.02426, -4.22857, 6.94403, 9.56426, -4.22857, 7.99403, 9.02426, -3.70357, 7.99403, 9.02426, -4.22857, 5.29403, 9.92426, -3.17857, 9.04403, 9.20426, -3.17857, 6.94403, 9.56426, -4.22857, 6.54403, 9.92426, -3.17857, 7.79403, 9.20426, -3.17857, 7.99403, 9.02426, -3.70357, 5.29403, 9.92426, -4.67857, 5.29403, 9.92426, -3.17857, 6.94403, 9.56426, -4.22857, 5.29403, 9.92426, -4.67857, 6.94403, 9.56426, -4.22857, 6.94403, 9.74426, -4.82857, 3.94403, 9.74426, -4.82857, 5.29403, 9.92426, -4.67857, 6.94403, 9.74426, -4.82857, 6.94403, 9.74426, -4.82857, 9.34403, 9.74426, -4.82857, 9.34403, 9.74426, -9.62857, 6.94403, 9.74426, -4.82857, 9.34403, 9.74426, -9.62857, 3.94403, 9.74426, -9.62857, 3.94403, 9.74426, -4.82857, 6.94403, 9.74426, -4.82857, 3.94403, 9.74426, -9.62857, 10.544, 9.74426, -4.82857, 10.694, 9.74426, -3.77857, 14.444, 9.74426, -3.92857, 9.34403, 9.74426, -9.62857, 9.34403, 9.74426, -4.82857, 10.544, 9.74426, -4.82857, 10.544, 9.74426, -4.82857, 14.444, 9.74426, -3.92857, 14.444, 9.74426, -9.62857, 10.544, 9.74426, -4.82857, 14.444, 9.74426, -9.62857, 9.34403, 9.74426, -9.62857, 10.094, 8.66426, -2.27857, 9.19403, 8.84426, -2.27857, 9.19403, 8.48426, -1.67857, 13.394, 8.30426, 2.67143, 13.394, 8.66426, 2.37143, 11.444, 8.30426, 2.67143, 8.59403, 8.30426, -1.67857, 8.59403, 8.30426, -2.57857, 4.84403, 8.30426, -2.57857, 10.094, 8.30426, 2.52143, 10.094, 8.66426, -2.27857, 9.19403, 8.48426, -1.67857, 10.094, 8.30426, -1.07857, 10.094, 8.30426, 2.52143, 9.19403, 8.48426, -1.67857, 8.59403, 8.30426, -1.67857, 4.84403, 8.30426, -2.57857, 4.69403, 8.30426, -4.22857, -0.705973, 7.76426, -4.22857, 14.444, 8.30426, 9.57143, 14.444, 8.30426, 2.67143, 13.394, 8.30426, 2.67143, 10.094, 8.30426, 2.52143, 8.59403, 8.30426, -1.67857, 4.84403, 8.30426, -2.57857, 14.444, 8.30426, 9.57143, 13.394, 8.30426, 2.67143, 11.444, 8.30426, 2.67143, 4.84403, 8.30426, -2.57857, -0.705973, 7.76426, -4.22857, -0.855972, 7.76426, 2.67143, 14.444, 8.30426, 9.57143, 11.444, 8.30426, 2.67143, 10.094, 8.30426, 2.52143, 6.79403, 8.30426, 9.57143, 14.444, 8.30426, 9.57143, 10.094, 8.30426, 2.52143, -0.855972, 7.76426, 2.67143, -0.855972, 7.76426, 9.57143, 6.79403, 8.30426, 9.57143, 3.51546, 7.76426, 6.61429, 4.24403, 7.76426, 9.57143, 5.51903, 8.30426, 9.57143, -0.855972, 7.76426, 2.67143, 6.79403, 8.30426, 9.57143, 10.094, 8.30426, 2.52143, 4.61903, 8.30426, 2.59643, 1.88153, 7.76426, 2.63393, 3.51546, 7.76426, 6.61429, 5.11106, 7.94426, 6.2108, 6.60504, 8.30426, 4.69161, 4.84403, 8.30426, -2.57857, -0.855972, 7.76426, 2.67143, 10.094, 8.30426, 2.52143, 1.88153, 7.76426, 2.63393, 4.61903, 8.30426, 2.59643, 3.58103, 8.30426, 0.160427, 10.994, 9.74426, 0.271427, 11.144, 9.74426, 0.421427, 12.044, 9.74426, 0.421427, 10.994, 9.74426, 0.271427, 12.044, 9.74426, 0.421427, 12.344, 9.74426, 0.421427, 10.994, 9.74426, 0.271427, 12.344, 9.74426, 0.421427, 13.094, 9.74426, 0.421427, 10.994, 9.74426, 0.271427, 13.094, 9.74426, 0.421427, 13.244, 9.74426, 0.421427, 10.994, 9.74426, 0.271427, 13.244, 9.74426, 0.421427, 14.144, 9.74426, 0.421427, 10.994, 9.74426, 0.271427, 14.144, 9.74426, 0.421427, 14.444, 9.74426, 0.421427, 10.994, 9.74426, 0.271427, 14.444, 9.74426, 0.421427, 14.444, 9.74426, -3.92857, 10.694, 9.74426, -3.77857, 10.994, 9.74426, 0.271427, 14.444, 9.74426, -3.92857, 13.244, 9.74426, 0.421427, 13.094, 9.74426, 0.421427, 13.094, 9.74426, 1.02143, 13.394, 9.74426, 1.32143, 13.244, 9.74426, 0.421427, 13.094, 9.74426, 1.02143, 14.444, 9.74426, 0.421427, 14.144, 9.74426, 0.421427, 14.144, 9.74426, 1.17143, 14.444, 9.38426, 1.77143, 14.444, 9.74426, 0.421427, 14.144, 9.74426, 1.17143, 12.344, 9.74426, 0.421427, 12.044, 9.74426, 0.421427, 12.044, 9.74426, 1.17143, 12.344, 9.74426, 1.32143, 12.344, 9.74426, 0.421427, 12.044, 9.74426, 1.17143, 13.394, 9.74426, 1.32143, 13.094, 9.74426, 1.02143, 12.344, 9.74426, 1.32143, 12.344, 9.74426, 1.32143, 12.044, 9.74426, 1.17143, 11.294, 9.74426, 1.32143, 11.294, 9.74426, 1.32143, 11.144, 9.74426, 0.421427, 10.994, 9.74426, 0.271427, 11.294, 9.74426, 1.32143, 10.994, 9.74426, 0.271427, 10.844, 9.20426, 2.07143, 10.919, 9.74426, 1.17143, 14.444, 9.38426, 1.77143, 14.144, 9.74426, 1.17143, 13.394, 9.74426, 1.32143, 12.344, 9.74426, 1.32143, 11.294, 9.74426, 1.32143, 10.844, 9.20426, 2.07143, 12.344, 9.74426, 1.32143, 10.844, 9.20426, 2.07143, 14.444, 9.38426, 1.77143, 13.244, 9.38426, 1.87143, 13.394, 9.74426, 1.32143, 12.344, 9.74426, 1.32143, 14.444, 9.38426, 1.77143 )
+polygons = [ PoolIntArray( 2, 1, 0 ), PoolIntArray( 5, 4, 3 ), PoolIntArray( 8, 7, 6 ), PoolIntArray( 11, 10, 9 ), PoolIntArray( 14, 13, 12 ), PoolIntArray( 17, 16, 15 ), PoolIntArray( 20, 19, 18 ), PoolIntArray( 23, 22, 21 ), PoolIntArray( 26, 25, 24 ), PoolIntArray( 29, 28, 27 ), PoolIntArray( 32, 34, 33 ), PoolIntArray( 33, 34, 30 ), PoolIntArray( 30, 34, 31 ), PoolIntArray( 36, 39, 40 ), PoolIntArray( 40, 39, 37 ), PoolIntArray( 37, 39, 38 ), PoolIntArray( 37, 38, 35 ), PoolIntArray( 43, 42, 41 ), PoolIntArray( 46, 45, 44 ), PoolIntArray( 47, 49, 48 ), PoolIntArray( 52, 51, 50 ), PoolIntArray( 55, 54, 53 ), PoolIntArray( 58, 57, 56 ), PoolIntArray( 61, 60, 59 ), PoolIntArray( 64, 63, 62 ), PoolIntArray( 66, 65, 67 ), PoolIntArray( 70, 69, 68 ), PoolIntArray( 73, 72, 71 ), PoolIntArray( 76, 75, 74 ), PoolIntArray( 79, 78, 77 ), PoolIntArray( 81, 83, 82 ), PoolIntArray( 82, 83, 80 ), PoolIntArray( 86, 85, 84 ), PoolIntArray( 87, 89, 88 ), PoolIntArray( 92, 91, 90 ), PoolIntArray( 95, 94, 93 ), PoolIntArray( 98, 97, 96 ), PoolIntArray( 101, 100, 99 ), PoolIntArray( 104, 103, 102 ), PoolIntArray( 107, 106, 105 ), PoolIntArray( 110, 113, 111 ), PoolIntArray( 111, 113, 112 ), PoolIntArray( 111, 112, 109 ), PoolIntArray( 111, 109, 108 ), PoolIntArray( 115, 121, 116 ), PoolIntArray( 116, 121, 117 ), PoolIntArray( 117, 119, 118 ), PoolIntArray( 118, 119, 114 ), PoolIntArray( 119, 120, 115 ), PoolIntArray( 115, 120, 121 ), PoolIntArray( 121, 120, 117 ), PoolIntArray( 117, 120, 119 ), PoolIntArray( 126, 122, 124 ), PoolIntArray( 122, 127, 123 ), PoolIntArray( 123, 127, 125 ), PoolIntArray( 125, 127, 126 ), PoolIntArray( 126, 127, 122 ), PoolIntArray( 130, 129, 128 ), PoolIntArray( 133, 132, 131 ), PoolIntArray( 136, 135, 134 ), PoolIntArray( 139, 138, 137 ), PoolIntArray( 142, 141, 140 ), PoolIntArray( 145, 144, 143 ), PoolIntArray( 146, 148, 147 ), PoolIntArray( 151, 150, 149 ), PoolIntArray( 154, 153, 152 ), PoolIntArray( 155, 157, 156 ), PoolIntArray( 160, 159, 158 ), PoolIntArray( 163, 162, 161 ), PoolIntArray( 166, 165, 164 ), PoolIntArray( 169, 168, 167 ), PoolIntArray( 172, 171, 170 ), PoolIntArray( 175, 174, 173 ), PoolIntArray( 178, 177, 176 ), PoolIntArray( 181, 182, 179 ), PoolIntArray( 179, 182, 180 ), PoolIntArray( 185, 184, 183 ), PoolIntArray( 188, 187, 186 ), PoolIntArray( 191, 192, 189 ), PoolIntArray( 189, 192, 190 ), PoolIntArray( 195, 194, 193 ) ]
 geometry_parsed_geometry_type = 1
 cell_size = 0.15
 cell_height = 0.18
 agent_radius = 0.2
 agent_max_slope = 70.0
 polygon_verts_per_poly = 3.0
+detail_sample_distance = 10.04
 
 [sub_resource type="Resource" id=21]
 resource_local_to_scene = true
@@ -256,9 +274,10 @@ directional_shadow_blend_splits = true
 
 [node name="DayNightAnimation" type="AnimationPlayer" parent="."]
 autoplay = "DayNight"
-playback_speed = 0.15
+playback_speed = 2.0
 anims/DayNight = SubResource( 12 )
 anims/RESET = SubResource( 13 )
+script = ExtResource( 5 )
 
 [node name="CameraPivot" type="Spatial" parent="."]
 script = ExtResource( 21 )
@@ -279,6 +298,9 @@ lineRendererPath = NodePath("../../LineRenderer")
 numPoints = 5
 timeBetweenPoints = 0.2
 throwablePath = NodePath("../../Hamburguer")
+
+[node name="Skeleton" parent="CameraPivot/spatula/Armature" index="0"]
+bones/4/bound_children = [ NodePath("BoneAttachment") ]
 
 [node name="BoneAttachment" parent="CameraPivot/spatula/Armature/Skeleton" index="1"]
 transform = Transform( 0.997886, 0.0615615, 0.0208422, -0.061768, 0.998046, 0.0094159, -0.0202219, -0.0106834, 0.999738, -0.248285, 3.04844, 0.0488994 )
@@ -310,21 +332,6 @@ rayCollisionMask = 4
 script = ExtResource( 13 )
 shapeExplosion = ExtResource( 20 )
 impulseForce = 50.0
-
-[node name="Scenario" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
-
-[node name="pine" parent="Scenario" instance=ExtResource( 16 )]
-transform = Transform( 0.22, 0, 0, 0, 0.22, 0, 0, 0, 0.22, -7, 0, 0 )
-
-[node name="coconut" parent="Scenario" instance=ExtResource( 8 )]
-transform = Transform( 0.24, 0, 0, 0, 0.24, 0, 0, 0, 0.24, 0, 0, 0 )
-
-[node name="eucalyptus" parent="Scenario" instance=ExtResource( 7 )]
-transform = Transform( 0.16, 0, 0, 0, 0.16, 0, 0, 0, 0.16, 7, 0, 0 )
-
-[node name="tree" parent="Scenario" instance=ExtResource( 17 )]
-transform = Transform( 0.07, 0, 0, 0, 0.07, 0, 0, 0, 0.07, -4, 0, -6 )
 
 [node name="GridPlanes" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.93877, 0 )
@@ -365,23 +372,56 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6.70755, 0 )
 [node name="Navmesh" type="NavigationMeshInstance" parent="Navigation"]
 navmesh = SubResource( 20 )
 
-[node name="World" type="Node" parent="Navigation/Navmesh"]
-script = ExtResource( 5 )
-blocksRefs = ExtResource( 3 )
-shaderMaterial = ExtResource( 2 )
-material = ExtResource( 4 )
-chunkCollisionLayer = 4
-chunkLabel = ExtResource( 1 )
-tweenPath = NodePath("../../../Tween")
-navigationPath = NodePath("../..")
+[node name="Scenario" type="Spatial" parent="Navigation/Navmesh"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.74054, 7.70755, -1.93319 )
+
+[node name="coconut" parent="Navigation/Navmesh/Scenario" instance=ExtResource( 8 )]
+transform = Transform( 0.19, 0, 0, 0, 0.19, 0, 0, 0, 0.19, -8.46416, -0.168289, 9.62467 )
+
+[node name="eucalyptus" parent="Navigation/Navmesh/Scenario" instance=ExtResource( 7 )]
+transform = Transform( 0.13, 0, 0, 0, 0.13, 0, 0, 0, 0.13, 5.12113, 0.382159, 4.62228 )
+
+[node name="apocalipse_scenario" parent="Navigation/Navmesh/Scenario" instance=ExtResource( 1 )]
+
+[node name="IronFence" parent="Navigation/Navmesh/Scenario" instance=ExtResource( 2 )]
+transform = Transform( 0.24, 0, 0, 0, 0.24, 0, 0, 0, 0.24, -19.0985, 1.84493, 2.05172 )
+
+[node name="IronFence8" parent="Navigation/Navmesh/Scenario" instance=ExtResource( 2 )]
+transform = Transform( -0.00943909, 0, 0.239814, 0, 0.24, 0, -0.239814, 0, -0.00943909, -17.013, 1.84493, -0.195613 )
+
+[node name="IronFence2" parent="Navigation/Navmesh/Scenario" instance=ExtResource( 2 )]
+transform = Transform( 0.24, 0, 0, 0, 0.24, 0, 0, 0, 0.24, -23.0944, 1.84493, 2.05172 )
+
+[node name="IronFence3" parent="Navigation/Navmesh/Scenario" instance=ExtResource( 2 )]
+transform = Transform( 0.0994546, 0.135405, -0.171389, 0.0216141, 0.181294, 0.155773, 0.217351, -0.0799866, 0.0629327, -29.6916, 1.58699, 0.0696999 )
+
+[node name="IronFence4" parent="Navigation/Navmesh/Scenario" instance=ExtResource( 2 )]
+transform = Transform( 0.24, 0, 0, 0, 0.24, 0, 0, 0, 0.24, -27.075, 1.84493, 2.05172 )
+
+[node name="IronFence5" parent="Navigation/Navmesh/Scenario" instance=ExtResource( 2 )]
+transform = Transform( 0.24, 0, 0, 0, 0.24, 0, 0, 0, 0.24, -19.0985, 1.84493, -11.2446 )
+
+[node name="IronFence6" parent="Navigation/Navmesh/Scenario" instance=ExtResource( 2 )]
+transform = Transform( 0.24, 0, 0, 0, 0.24, 0, 0, 0, 0.24, -23.0944, 1.84493, -11.2446 )
+
+[node name="IronFence7" parent="Navigation/Navmesh/Scenario" instance=ExtResource( 2 )]
+transform = Transform( 0.24, 0, 0, 0, 0.24, 0, 0, 0, 0.24, -27.075, 1.84493, -11.2446 )
+
+[node name="MeshInstance" parent="Navigation/Navmesh/Scenario" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -33.2199, 1.59482, -9.11291 )
+
+[node name="light_pole" parent="Navigation/Navmesh/Scenario" instance=ExtResource( 4 )]
+transform = Transform( 0.08, 0, 0, 0, 0.08, 0, 0, 0, 0.08, 1.75988, 1.81459, -3.10435 )
+
+[node name="light_pole2" parent="Navigation/Navmesh/Scenario" instance=ExtResource( 4 )]
+transform = Transform( -0.0799941, 0, -0.000971776, 0, 0.08, 0, 0.000971776, 0, -0.0799941, -17.4767, 1.81459, -7.69817 )
 
 [node name="CharacterKB" parent="Navigation" instance=ExtResource( 26 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.09958, 60.8977, -0.960174 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2795, 14.0168, 1.72584 )
 speed = 4.0
 speedFactor = 10.0
 gravityScale = 0.4
 jumpSpeed = 10.0
-worldPath = NodePath("../Navmesh/World")
 
 [node name="Hamburguer" parent="." instance=ExtResource( 11 )]
 transform = Transform( 0.0202218, 0.0106834, -0.999738, -0.0617681, 0.998046, 0.0094159, 0.997886, 0.0615615, 0.0208422, -0.00979732, -2.57539, 29.67 )

@@ -1,0 +1,17 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://src/Sandbox/World.cs" type="Script" id=1]
+[ext_resource path="res://resources/blocks_data.tres" type="Resource" id=2]
+[ext_resource path="res://prefabs/LabelChunk.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/materials/sandbox_shockwave.tres" type="Material" id=4]
+[ext_resource path="res://assets/materials/sandbox.tres" type="Material" id=5]
+
+[node name="World" type="Node"]
+script = ExtResource( 1 )
+blocksRefs = ExtResource( 2 )
+shaderMaterial = ExtResource( 4 )
+material = ExtResource( 5 )
+chunkCollisionLayer = 4
+chunkLabel = ExtResource( 3 )
+tweenPath = NodePath("../../../Tween")
+navigationPath = NodePath("../..")

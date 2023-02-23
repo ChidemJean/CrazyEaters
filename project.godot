@@ -57,7 +57,7 @@ window/stretch/aspect="expand"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/MonoCustomResourceRegistry/plugin.cfg", "res://addons/bone_editor/plugin.cfg", "res://addons/proton_trail/plugin.cfg", "res://addons/scatter/plugin.cfg" )
+enabled=PoolStringArray(  )
 
 [layer_names]
 
@@ -66,6 +66,10 @@ enabled=PoolStringArray( "res://addons/MonoCustomResourceRegistry/plugin.cfg", "
 3d_physics/layer_4="Character"
 3d_physics/layer_5="Launcher"
 3d_physics/layer_7="Food"
+
+[mono]
+
+project/assembly_name="CrazyEatersGodot"
 
 [physics]
 
