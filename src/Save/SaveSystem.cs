@@ -9,6 +9,25 @@ namespace CrazyEaters.Save
 
     public static class SaveSystem
     {
+        /*  TODO:
+            SAVE PARA CONFIGURAÇÂO DOs CENARIOs: 
+                --- id do character, nome, idade, acessorios e seus status;
+                --- id dos blocos e suas posicoes;
+                --- id do launcher;
+            SAVE DE CONTA:
+                --- nickname;
+                --- level;
+                --- xp;
+                --- id quest e data de conclusão;
+                --- ids entities unblocked;
+                --- yellow coins;
+                --- jelly gems;
+            SAVE DE INVENTARIO:
+                --- ids de entities e suas qtds;
+            SAVE DE MULTIPLAYER:
+                --- friends nick;
+                --- convites;
+        */
         public static Task SaveGame(GameData gameData)
         {
             return Task.Run(() => { 

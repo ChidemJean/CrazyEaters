@@ -19,7 +19,6 @@ namespace CrazyEaters.Optimization
         }
 
         public void ChangeViewport3d(Viewport viewport) {
-            GD.Print("CHANGED VIEW 3D");
             this.currentScale = scaleFactor;
             this.viewport3d = viewport;
             this.viewport3d.GetTexture().Flags = ((uint)Texture.FlagsEnum.Filter);
@@ -29,13 +28,11 @@ namespace CrazyEaters.Optimization
 
         public void OnViewportSizeChanged()
         {
-            GD.Print("RESIZED");
             UpdateViewport3DSize(this.currentScale);
         }
 
         public void UpdateViewport3DSize(float value, string type = "LOAD")
         {
-            GD.Print("UPDATING VIEW3D: " + value);
             if (this.viewport3d != null) {
                 float scaleFactorClamped = Mathf.Clamp(value, 0.2f, 1f);
                 this.viewport3d.Size = GetViewport().Size * scaleFactorClamped;

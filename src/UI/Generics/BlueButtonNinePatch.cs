@@ -1,10 +1,15 @@
 using Godot;
 using System;
+using CrazyEaters.DependencyInjection;
+using CrazyEaters.Managers;
 
 namespace CrazyEaters.UI.Generics 
 {
     public class BlueButtonNinePatch : NinePatchRect
     {
+        [Inject]
+        AudioStreamManager audioStreamManager;
+
         [Export]
         public Texture texturePressed;
 
@@ -19,6 +24,12 @@ namespace CrazyEaters.UI.Generics
 
         [Export]
         public float offsetYChildOnPressed = .07f;
+
+        [Export]
+        public bool emitSound = true;
+
+        [Export]
+        public string soundKey = "button_click";
 
         [Export]
         public bool IsDisabled {
@@ -47,6 +58,7 @@ namespace CrazyEaters.UI.Generics
 
         public override void _Ready()
         {
+            this.ResolveDependencies();
             Texture = isDisabled ? textureDisabledNormal : textureNormal;
             UseParentMaterial = !this.isShinig;
         }
@@ -75,6 +87,8 @@ namespace CrazyEaters.UI.Generics
         }
         public void UnpressedEffect() 
         {
+            if (emitSound) audioStreamManager.Play(soundKey);
+
             Texture = isDisabled ? textureDisabledNormal : textureNormal;
             Control firstChild = GetChildOrNull<Control>(0);
             if (firstChild != null) {

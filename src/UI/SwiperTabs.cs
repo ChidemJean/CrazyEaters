@@ -18,6 +18,8 @@ namespace CrazyEaters.UI
         public string initialTabKey;
         [Inject] 
         private GameManager gameManager;
+        [Inject] 
+        private AudioStreamManager audioStreamManager;
         public Control tabContainer;
         public Control targetRail;
         public Godot.Collections.Array tabs;
@@ -28,6 +30,7 @@ namespace CrazyEaters.UI
         private float percentOffset = .15f;
 
         SceneTreeTween tween;
+        int currentIndex = 0;
 
         public override void _Ready()
         {
@@ -89,22 +92,23 @@ namespace CrazyEaters.UI
 
         public async void AnimateToPanel(string key = null)
         {
+            int toIndex = key != null ? GetIndexPanelByKey(key) : Mathf.Clamp(Mathf.RoundToInt(targetRail.RectGlobalPosition.x * -1 / RectSize.x), 0, panels.Count - 1);
+            if (key == null) {
+                key = ((PanelTabItem)panels[toIndex]).key;
+            }
             if (tween != null) {
                 tween.Kill();
             }
             tween = CreateTween();
             tween.SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Quad);
-
-            int toIndex = key != null ? GetIndexPanelByKey(key) : Mathf.Clamp(Mathf.RoundToInt(targetRail.RectGlobalPosition.x * -1 / RectSize.x), 0, panels.Count - 1);
-
-            if (key == null) {
-                key = ((PanelTabItem)panels[toIndex]).key;
-            }
             gameManager.TriggerEvent(GameEvent.ChangePanel, new ChangePanelEventData(key, toIndex));
-
+            if (toIndex != currentIndex) {
+                audioStreamManager.Play("hit_air");
+            }
             var pT = tween.TweenProperty(targetRail, "rect_global_position:x", toIndex * RectSize.x * -1, .4f);
             await ToSignal(pT, "finished");
             isMoving = false;
+            currentIndex = toIndex;
         }
 
         public int GetIndexPanelByKey(string key)

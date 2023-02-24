@@ -16,6 +16,7 @@ maxStack = 0
 rarity = 0
 conditionsToUnblock = {
 }
+coinType = 1
 gridSize = Vector3( 3, 3, 1 )
 life = 100
 price = 0.0

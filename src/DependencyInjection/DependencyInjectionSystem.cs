@@ -25,6 +25,7 @@ namespace CrazyEaters.DependencyInjection
             dependencies.Add(typeof(SceneSwitcher).ToString(), "/root/MainNode/SceneSwitcher");
             dependencies.Add(typeof(GameManager).ToString(), "/root/GameManager");
             dependencies.Add(typeof(SaveSystemNode).ToString(), "/root/MainNode/SaveSystem");
+            dependencies.Add(typeof(AudioStreamManager).ToString(), "/root/MainNode/AudioStreamManager");
         }
 
         public Node Resolve<T>(T type) where T : class

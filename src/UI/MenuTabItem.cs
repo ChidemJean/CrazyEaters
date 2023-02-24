@@ -104,6 +104,7 @@ namespace CrazyEaters.UI
         {
             if (!(@event is InputEventMouseButton)) return;
             InputEventMouseButton _event = (InputEventMouseButton) @event;
+            if (_event.IsPressed()) return;
             gameManager.TriggerEvent(GameEvent.MenuBottomItemClick, tabPanelKey);
         }
 

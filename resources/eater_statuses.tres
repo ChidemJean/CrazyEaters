@@ -4,7 +4,7 @@
 [ext_resource path="res://resources/characters/bath_status.tres" type="Resource" id=2]
 [ext_resource path="res://resources/characters/scary_status.tres" type="Resource" id=3]
 [ext_resource path="res://resources/characters/health_status.tres" type="Resource" id=4]
-[ext_resource path="res://src/Resources/StatusesCharacter.cs" type="Script" id=5]
+[ext_resource path="res://src/Resources/Collections/StatusesCharacter.cs" type="Script" id=5]
 [ext_resource path="res://resources/characters/happiness_status.tres" type="Resource" id=6]
 
 [resource]

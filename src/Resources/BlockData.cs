@@ -6,7 +6,7 @@ namespace CrazyEaters.Resources
     using CrazyEaters.Resources;
 
     [RegisteredType(nameof(BlockData), "res://assets/textures/UI/icons/icon_block.png", nameof(Resource))]
-    public class BlockData : EntityData
+    public class BlockData : BuyableEntityData
     {
         public enum BlockType { Unique, Group };
 
