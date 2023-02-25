@@ -18,21 +18,71 @@ namespace CrazyEaters.Save
                 --- nickname;
                 --- level;
                 --- xp;
-                --- id quest e data de conclusão;
-                --- ids entities unblocked;
                 --- yellow coins;
                 --- jelly gems;
+                --- id quest e data de conclusão;
+                --- ids entities unblocked;
             SAVE DE INVENTARIO:
                 --- ids de entities e suas qtds;
             SAVE DE MULTIPLAYER:
                 --- friends nick;
                 --- convites;
         */
-        public static Task SaveGame(GameData gameData)
+
+        const string HABITATS_SAVE_KEY = "habitats";
+        const string ACCOUNT_SAVE_KEY = "account";
+        const string INVENTORY_SAVE_KEY = "inventory";
+        const string MULTIPLAYER_SAVE_KEY = "multiplayer";
+
+        public static async void SaveHabitatsData(HabitatsGameData habitatsData)
+        {
+            await SaveSystem.SaveGame(habitatsData, HABITATS_SAVE_KEY);
+        }
+
+        public static async void SaveUserData(AccountData accountData)
+        {
+            await SaveSystem.SaveGame(accountData, ACCOUNT_SAVE_KEY);
+        }
+
+        public static async void SaveInventoryData(InventoryData inventoryData)
+        {
+            await SaveSystem.SaveGame(inventoryData, INVENTORY_SAVE_KEY);
+        }
+
+        public static async void SaveMultiplayerData(MultiplayerData multiplayerData)
+        {
+            await SaveSystem.SaveGame(multiplayerData, MULTIPLAYER_SAVE_KEY);
+        }
+
+        public static async Task<HabitatsGameData> LoadHabitatsData()
+        {
+            GameData data = await SaveSystem.LoadGame(HABITATS_SAVE_KEY);
+            return (HabitatsGameData) data;
+        }
+
+        public static async Task<AccountData> LoadUserData()
+        {
+            GameData data = await SaveSystem.LoadGame(ACCOUNT_SAVE_KEY);
+            return (AccountData) data;
+        }
+
+        public static async Task<InventoryData> LoadInventoryData()
+        {
+            GameData data = await SaveSystem.LoadGame(INVENTORY_SAVE_KEY);
+            return (InventoryData) data;
+        }
+
+        public static async Task<MultiplayerData> LoadMultiplayerData()
+        {
+            GameData data = await SaveSystem.LoadGame(MULTIPLAYER_SAVE_KEY);
+            return (MultiplayerData) data;
+        }
+
+        private static Task SaveGame(GameData gameData, string identifier)
         {
             return Task.Run(() => { 
                 BinaryFormatter binaryFormatter = new BinaryFormatter();
-                string path = Godot.OS.GetUserDataDir() + "/game.save";
+                string path = Godot.OS.GetUserDataDir() + $"/{identifier}.save";
                 FileStream fileStream = new FileStream(path, FileMode.Create);
 
                 binaryFormatter.Serialize(fileStream, gameData);
@@ -40,10 +90,10 @@ namespace CrazyEaters.Save
             });
         }
 
-        public static Task<GameData> LoadGame()
+        private static Task<GameData> LoadGame(string identifier)
         {
             return Task.Run(() => { 
-                string path = Godot.OS.GetUserDataDir() + "/game.save";
+                string path = Godot.OS.GetUserDataDir() + $"/{identifier}.save";
                 if (File.Exists(path)) {
                     BinaryFormatter binaryFormatter = new BinaryFormatter();
                     FileStream fileStream = new FileStream(path, FileMode.Open);

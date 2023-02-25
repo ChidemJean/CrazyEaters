@@ -5,8 +5,10 @@ size = Vector3( 4, 0.5, 4 )
 
 [sub_resource type="SpatialMaterial" id=2]
 flags_transparent = true
-albedo_color = Color( 1, 0.305882, 0.215686, 0.823529 )
+flags_unshaded = true
+albedo_color = Color( 1, 0.137255, 0.137255, 0.890196 )
 
 [node name="MeshInstance" type="MeshInstance"]
+transform = Transform( 0.640906, 0, 0, 0, 1, 0, 0, 0, 0.639502, 0, 0, 0 )
 mesh = SubResource( 1 )
 material/0 = SubResource( 2 )

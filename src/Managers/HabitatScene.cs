@@ -20,8 +20,6 @@ namespace CrazyEaters.Managers
         NodePath placementControllerPath;
         [Export]
         public bool inEditMode = false;
-        [Export]
-        BlocksData blocksData;
 
         public Spatial main3DNode;
         public Camera camera;
@@ -43,15 +41,10 @@ namespace CrazyEaters.Managers
             gameManager.currentMainNode3D = main3DNode;
         }
 
-        public BlocksData GetBlocksData()
-        {
-            return this.blocksData;
-        }
-
         public BlockData RetrieveBlockDataFromId(int blockId)
         {
             BlockData data = null;
-            this.blocksData.blocks.TryGetValue(blockId + "", out data);
+            // this.blocksData.blocks.TryGetValue(blockId + "", out data);
             return data;
         }
     }

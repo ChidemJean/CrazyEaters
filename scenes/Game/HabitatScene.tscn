@@ -373,14 +373,14 @@ transform = Transform( 0.24, 0, 0, 0, 0.24, 0, 0, 0, 0.24, -23.0944, 1.84493, -1
 [node name="IronFence7" parent="Navigation/Navmesh/Scenario" instance=ExtResource( 2 )]
 transform = Transform( 0.24, 0, 0, 0, 0.24, 0, 0, 0, 0.24, -27.075, 1.84493, -11.2446 )
 
-[node name="MeshInstance" parent="Navigation/Navmesh/Scenario" instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -33.2199, 1.59482, -9.11291 )
-
 [node name="light_pole" parent="Navigation/Navmesh/Scenario" instance=ExtResource( 4 )]
 transform = Transform( 0.08, 0, 0, 0, 0.08, 0, 0, 0, 0.08, 1.75988, 1.81459, -3.10435 )
 
 [node name="light_pole2" parent="Navigation/Navmesh/Scenario" instance=ExtResource( 4 )]
 transform = Transform( -0.0799941, 0, -0.000971776, 0, 0.08, 0, 0.000971776, 0, -0.0799941, -17.4767, 1.81459, -7.69817 )
+
+[node name="MeshInstance" parent="Navigation/Navmesh/Scenario" instance=ExtResource( 3 )]
+transform = Transform( 0.640906, 0, 0, 0, 1, 0, 0, 0, 0.639502, -32.2242, 1.62828, -9.44412 )
 
 [node name="CharacterKB" parent="Navigation" instance=ExtResource( 26 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2795, 14.0168, 1.72584 )
