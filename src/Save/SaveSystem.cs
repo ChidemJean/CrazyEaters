@@ -34,24 +34,24 @@ namespace CrazyEaters.Save
         const string INVENTORY_SAVE_KEY = "inventory";
         const string MULTIPLAYER_SAVE_KEY = "multiplayer";
 
-        public static async void SaveHabitatsData(HabitatsGameData habitatsData)
+        public static async Task<bool> SaveHabitatsData(HabitatsGameData habitatsData)
         {
-            await SaveSystem.SaveGame(habitatsData, HABITATS_SAVE_KEY);
+            return await SaveSystem.SaveGame(habitatsData, HABITATS_SAVE_KEY);
         }
 
-        public static async void SaveUserData(AccountData accountData)
+        public static async Task<bool> SaveUserData(AccountData accountData)
         {
-            await SaveSystem.SaveGame(accountData, ACCOUNT_SAVE_KEY);
+            return await SaveSystem.SaveGame(accountData, ACCOUNT_SAVE_KEY);
         }
 
-        public static async void SaveInventoryData(InventoryData inventoryData)
+        public static async Task<bool> SaveInventoryData(InventoryData inventoryData)
         {
-            await SaveSystem.SaveGame(inventoryData, INVENTORY_SAVE_KEY);
+            return await SaveSystem.SaveGame(inventoryData, INVENTORY_SAVE_KEY);
         }
 
-        public static async void SaveMultiplayerData(MultiplayerData multiplayerData)
+        public static async Task<bool> SaveMultiplayerData(MultiplayerData multiplayerData)
         {
-            await SaveSystem.SaveGame(multiplayerData, MULTIPLAYER_SAVE_KEY);
+            return await SaveSystem.SaveGame(multiplayerData, MULTIPLAYER_SAVE_KEY);
         }
 
         public static async Task<HabitatsGameData> LoadHabitatsData()
@@ -78,15 +78,20 @@ namespace CrazyEaters.Save
             return (MultiplayerData) data;
         }
 
-        private static Task SaveGame(GameData gameData, string identifier)
+        private static Task<bool> SaveGame(GameData gameData, string identifier)
         {
-            return Task.Run(() => { 
-                BinaryFormatter binaryFormatter = new BinaryFormatter();
-                string path = Godot.OS.GetUserDataDir() + $"/{identifier}.save";
-                FileStream fileStream = new FileStream(path, FileMode.Create);
+            return Task.Run<bool>(() => { 
+                try {
+                    BinaryFormatter binaryFormatter = new BinaryFormatter();
+                    string path = Godot.OS.GetUserDataDir() + $"/{identifier}.save";
+                    FileStream fileStream = new FileStream(path, FileMode.Create);
 
-                binaryFormatter.Serialize(fileStream, gameData);
-                fileStream.Close();
+                    binaryFormatter.Serialize(fileStream, gameData);
+                    fileStream.Close();
+                } catch (System.Exception e) {
+                    return false;
+                }
+                return true;
             });
         }
 

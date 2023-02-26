@@ -26,6 +26,9 @@ namespace CrazyEaters.DependencyInjection
             dependencies.Add(typeof(GameManager).ToString(), "/root/GameManager");
             dependencies.Add(typeof(SaveSystemNode).ToString(), "/root/MainNode/SaveSystem");
             dependencies.Add(typeof(AudioStreamManager).ToString(), "/root/MainNode/AudioStreamManager");
+            dependencies.Add(typeof(AccountManager).ToString(), "/root/MainNode/AccountManager");
+            dependencies.Add(typeof(ItemsManager).ToString(), "/root/MainNode/ItemsManager");
+            dependencies.Add(typeof(QuestsManager).ToString(), "/root/MainNode/QuestsManager");
         }
 
         public Node Resolve<T>(T type) where T : class

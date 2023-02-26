@@ -39,5 +39,8 @@ namespace CrazyEaters.Resources
 
         [Export]
         public Dictionary<string, EntityUnblockCondition> conditionsToUnblock = new Dictionary<string, EntityUnblockCondition>();
+
+        public int _qtd;
+        public bool _blocked;
     }
 }

@@ -1,0 +1,89 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://assets/themes/Theme.tres" type="Theme" id=1]
+[ext_resource path="res://assets/fonts/BalooTamma-Regular.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://assets/textures/UI/coin.png" type="Texture" id=3]
+[ext_resource path="res://assets/textures/UI/button_green_pressed.png" type="Texture" id=4]
+[ext_resource path="res://assets/textures/UI/button_green.png" type="Texture" id=5]
+[ext_resource path="res://assets/materials/ui/Shine.tres" type="Material" id=6]
+[ext_resource path="res://assets/textures/UI/plus_gray.png" type="Texture" id=7]
+[ext_resource path="res://src/UI/BoxCoins.cs" type="Script" id=8]
+
+[sub_resource type="DynamicFont" id=4]
+size = 34
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = ExtResource( 2 )
+
+[node name="BoxCoins" type="HBoxContainer"]
+margin_right = 257.0
+margin_bottom = 112.0
+custom_constants/separation = 8
+alignment = 2
+script = ExtResource( 8 )
+labelPath = NodePath("Label")
+iconPath = NodePath("Icon")
+btnPath = NodePath("ButtonWrap/MoreCoinsButton")
+
+[node name="Control" type="Control" parent="."]
+margin_bottom = 112.0
+
+[node name="TextureRect" type="ColorRect" parent="Control"]
+margin_left = 17.0
+margin_top = 33.0
+margin_right = 219.0
+margin_bottom = 72.0
+color = Color( 0, 0, 0, 0.611765 )
+
+[node name="Icon" type="TextureRect" parent="."]
+material = ExtResource( 6 )
+margin_left = 8.0
+margin_right = 81.0
+margin_bottom = 112.0
+rect_min_size = Vector2( 73, 0 )
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="."]
+margin_left = 89.0
+margin_top = 26.0
+margin_right = 189.0
+margin_bottom = 85.0
+rect_min_size = Vector2( 100, 0 )
+theme = ExtResource( 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_y = 3
+custom_fonts/font = SubResource( 4 )
+text = "523"
+align = 2
+
+[node name="ButtonWrap" type="Control" parent="."]
+margin_left = 197.0
+margin_right = 257.0
+margin_bottom = 112.0
+rect_min_size = Vector2( 60, 0 )
+
+[node name="MoreCoinsButton" type="TextureButton" parent="ButtonWrap"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 45, 45 )
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 4 )
+expand = true
+stretch_mode = 5
+
+[node name="MoreIcon" type="TextureRect" parent="ButtonWrap/MoreCoinsButton"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -15.0
+margin_top = -22.0
+margin_right = 14.0
+margin_bottom = 10.0
+rect_min_size = Vector2( 29, 29 )
+texture = ExtResource( 7 )
+expand = true
+stretch_mode = 6

@@ -1,0 +1,173 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://assets/themes/Theme.tres" type="Theme" id=1]
+[ext_resource path="res://assets/fonts/baloom.tres" type="DynamicFont" id=2]
+[ext_resource path="res://assets/fonts/BalooTamma-Regular.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://assets/materials/ui/Rainbow.tres" type="Material" id=4]
+[ext_resource path="res://assets/textures/UI/border_user_level.png" type="Texture" id=5]
+[ext_resource path="res://assets/textures/UI/back_user_level.png" type="Texture" id=6]
+[ext_resource path="res://assets/textures/UI/back_user_thumb.png" type="Texture" id=7]
+[ext_resource path="res://assets/textures/UI/user_xp_bar.png" type="Texture" id=8]
+[ext_resource path="res://src/UI/UserInfs.cs" type="Script" id=9]
+
+[sub_resource type="DynamicFont" id=8]
+size = 40
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 38
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 26
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=7]
+size = 26
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = ExtResource( 3 )
+
+[node name="User" type="HBoxContainer"]
+margin_left = 30.0
+margin_top = 52.0
+margin_right = 1050.0
+margin_bottom = 172.0
+custom_constants/separation = 0
+script = ExtResource( 9 )
+nicknameLabelPath = NodePath("LevelXP/Username")
+levelLabelPath = NodePath("LevelXP/LevelContainer/Level")
+xpLabelPath = NodePath("LevelXP/HBoxContainer/currentXP")
+xpNextLevelLabelPath = NodePath("LevelXP/HBoxContainer/totalXP")
+xpBarPath = NodePath("LevelXP/XPBarContainer/XPBar")
+
+[node name="UserIcon" type="Control" parent="."]
+visible = false
+margin_right = 100.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 100, 100 )
+
+[node name="Thumb" type="TextureRect" parent="UserIcon"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -20.0
+margin_bottom = -20.0
+texture = ExtResource( 7 )
+expand = true
+stretch_mode = 6
+
+[node name="LevelXP" type="TextureRect" parent="."]
+margin_right = 360.0
+margin_bottom = 120.0
+rect_min_size = Vector2( 360, 120 )
+texture = ExtResource( 5 )
+expand = true
+stretch_mode = 6
+
+[node name="LevelContainer" type="TextureRect" parent="LevelXP"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 12.0
+margin_top = -41.0
+margin_right = 84.0
+margin_bottom = 37.0
+rect_min_size = Vector2( 72, 72 )
+texture = ExtResource( 6 )
+expand = true
+stretch_mode = 6
+
+[node name="Level" type="Label" parent="LevelXP/LevelContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_y = 3
+custom_fonts/font = SubResource( 8 )
+text = "1"
+align = 1
+valign = 1
+
+[node name="XPBarContainer" type="Control" parent="LevelXP"]
+margin_left = 81.0
+margin_top = 11.0
+margin_right = 121.0
+margin_bottom = 51.0
+rect_min_size = Vector2( 268, 0 )
+
+[node name="XPBar" type="NinePatchRect" parent="LevelXP/XPBarContainer"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_top = -14.0
+margin_right = 50.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 0, 24 )
+texture = ExtResource( 8 )
+patch_margin_left = 25
+patch_margin_right = 25
+
+[node name="Username" type="Label" parent="LevelXP"]
+material = ExtResource( 4 )
+anchor_right = 1.0
+margin_left = 23.0
+margin_top = -33.0
+margin_right = -14.0
+margin_bottom = 20.0
+theme = ExtResource( 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_y = 3
+custom_fonts/font = ExtResource( 2 )
+text = "John Doe"
+valign = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="LevelXP"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -98.0
+margin_top = -26.5
+margin_bottom = 26.5
+grow_horizontal = 0
+alignment = 2
+
+[node name="currentXP" type="Label" parent="LevelXP/HBoxContainer"]
+margin_right = 60.0
+margin_bottom = 66.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_y = 3
+custom_fonts/font = SubResource( 5 )
+text = "325"
+align = 2
+
+[node name="bar" type="Label" parent="LevelXP/HBoxContainer"]
+modulate = Color( 1, 1, 1, 0.513726 )
+margin_left = 64.0
+margin_top = 10.0
+margin_right = 73.0
+margin_bottom = 56.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_y = 3
+custom_fonts/font = SubResource( 6 )
+text = "/"
+align = 2
+
+[node name="totalXP" type="Label" parent="LevelXP/HBoxContainer"]
+modulate = Color( 1, 1, 1, 0.513726 )
+margin_left = 77.0
+margin_top = 10.0
+margin_right = 103.0
+margin_bottom = 56.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_y = 3
+custom_fonts/font = SubResource( 7 )
+text = "1K"
+align = 2

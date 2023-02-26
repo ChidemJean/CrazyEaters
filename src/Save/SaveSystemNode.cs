@@ -19,15 +19,44 @@ namespace CrazyEaters.Save
             gameManager = GetNode<GameManager>("/root/GameManager");
         }
 
-        public async void SaveGame(Action OnSaveEnd) {
-            gameManager.gameData = ToGameData();
-            await SaveSystem.SaveGame(gameManager.gameData);
+        public async void SaveAccount(AccountData accountData, Action OnSaveEnd) {
+            await SaveSystem.SaveUserData(accountData);
             OnSaveEnd();
         }
 
-        public async void LoadGame(Action<GameData> OnLoad) {
-            gameManager.gameData = await SaveSystem.LoadGame();
-            OnLoad(gameManager.gameData);
+        public async void LoadAccount(Action<AccountData> OnLoad) {
+            var data = await SaveSystem.LoadUserData();
+            OnLoad(data);
+        }
+
+        public async void SaveHabitats(HabitatsGameData habitatsGameData, Action OnSaveEnd) {
+            await SaveSystem.SaveHabitatsData(habitatsGameData);
+            OnSaveEnd();
+        }
+
+        public async void LoadHabitats(Action<HabitatsGameData> OnLoad) {
+            var data = await SaveSystem.LoadHabitatsData();
+            OnLoad(data);
+        }
+
+        public async void SaveInventory(InventoryData inventoryData, Action OnSaveEnd) {
+            await SaveSystem.SaveInventoryData(inventoryData);
+            OnSaveEnd();
+        }
+
+        public async void LoadInventory(Action<InventoryData> OnLoad) {
+            var data = await SaveSystem.LoadInventoryData();
+            OnLoad(data);
+        }
+
+        public async void SaveMultiplayer(MultiplayerData multiplayerData, Action OnSaveEnd) {
+            await SaveSystem.SaveMultiplayerData(multiplayerData);
+            OnSaveEnd();
+        }
+
+        public async void LoadMultiplayer(Action<MultiplayerData> OnLoad) {
+            var data = await SaveSystem.LoadMultiplayerData();
+            OnLoad(data);
         }
 
         public GameData ToGameData() {

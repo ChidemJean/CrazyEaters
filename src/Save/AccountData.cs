@@ -25,14 +25,14 @@ namespace CrazyEaters.Save
     [System.Serializable]
     public class UnblockedEntityData
     {
-        public int id;
+        public string id;
         public string datetimeUnblocked;
     }
 
     [System.Serializable]
     public class QuestData
     {
-        public int id;
+        public string id;
         public string datetimeOpen;
         public string datetimeCompleted;
         public string duration;

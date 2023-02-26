@@ -22,16 +22,17 @@ namespace CrazyEaters.Managers
             saveSystemNode = GetNode<SaveSystemNode>("/root/MainNode/SaveSystem");
         }
 
+        // TODO:
         public void Save(GameData gameData, Action OnSave = null)
         {
-            saveSystemNode.SaveGame(OnSave);
+            // saveSystemNode.SaveGame(OnSave);
         }
 
         public void Load(Action<GameData> OnLoad)
         {
-            saveSystemNode.LoadGame((GameData gameData) => {
-                OnLoad.Invoke(gameData);
-            });
+            // saveSystemNode.LoadGame((GameData gameData) => {
+            //     OnLoad.Invoke(gameData);
+            // });
         }
     }
 }

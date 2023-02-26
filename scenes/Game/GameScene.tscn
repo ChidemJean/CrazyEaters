@@ -1,9 +1,8 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://src/Resources/FoodData.cs" type="Script" id=1]
 [ext_resource path="res://assets/textures/UI/radial_gradient_scene.png" type="Texture" id=2]
 [ext_resource path="res://assets/textures/UI/thumbs/thumb_hamb_teste.png" type="Texture" id=3]
-[ext_resource path="res://resources/blocks_data.tres" type="Resource" id=4]
 [ext_resource path="res://src/Managers/HabitatScene.cs" type="Script" id=5]
 [ext_resource path="res://scenes/Game/HabitatScene.tscn" type="PackedScene" id=6]
 [ext_resource path="res://prefabs/ui/HUD_Habitat.tscn" type="PackedScene" id=7]
@@ -46,7 +45,6 @@ main3DNodePath = NodePath("ViewportContainer/Viewport/HabitatScene")
 cameraPath = NodePath("ViewportContainer/Viewport/HabitatScene/CameraPivot/Camera")
 gameViewportPath = NodePath("ViewportContainer/Viewport")
 placementControllerPath = NodePath("ViewportContainer/Viewport/HabitatScene/PlacementController")
-blocksData = ExtResource( 4 )
 
 [node name="TextureRect" type="TextureRect" parent="."]
 anchor_right = 1.0
@@ -86,14 +84,10 @@ transform = Transform( -0.515891, 0.856654, -3.74456e-08, 3.82137e-15, 4.37114e-
 [node name="BoneAttachment" parent="ViewportContainer/Viewport/HabitatScene/CameraPivot/spatula/Armature/Skeleton" index="1"]
 transform = Transform( 0.997886, 0.0615615, 0.0208422, -0.061768, 0.998046, 0.0094159, -0.0202219, -0.0106834, 0.999738, -0.248285, 3.04844, 0.0488994 )
 
-[node name="World" parent="ViewportContainer/Viewport/HabitatScene/Navigation/Navmesh" index="0"]
-btnBakePath = NodePath("../../../../../../DebugPanel/VBoxContainer/Bake")
-labelDirPath = NodePath("../../../../../../DebugPanel/VBoxContainer/Label2")
-
 [node name="CharacterKB" parent="ViewportContainer/Viewport/HabitatScene/Navigation" index="1"]
 labelVelPath = NodePath("../../../../../DebugPanel/VBoxContainer/Label")
 
-[node name="Hamburguer" parent="ViewportContainer/Viewport/HabitatScene" index="11"]
+[node name="Hamburguer" parent="ViewportContainer/Viewport/HabitatScene" index="9"]
 foodData = SubResource( 1 )
 
 [node name="DebugPanel" type="MarginContainer" parent="."]
@@ -111,7 +105,7 @@ custom_constants/margin_bottom = 40
 margin_left = 40.0
 margin_top = 40.0
 margin_right = 532.0
-margin_bottom = 174.0
+margin_bottom = 187.0
 size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="DebugPanel/VBoxContainer"]

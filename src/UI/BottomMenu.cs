@@ -37,12 +37,6 @@ namespace CrazyEaters.UI
         public PackedScene inventoryItemPrefab;
 
         [Export]
-        public BlocksData blocksData;
-
-        [Export]
-        public BuyablesData buyablesData;
-
-        [Export]
         public float timeToOpenModeBtns = 3f;
 
         private Control offsetControl;
@@ -286,13 +280,13 @@ namespace CrazyEaters.UI
             if (blockItemsContainer.GetChildCount() > 0) {
                 return;
             }
-            foreach (string key in blocksData.blocks.Keys) {
-                BlockData blockData = blocksData.blocks[key];
-                BlockItem item = blockItemPrefab.Instance<BlockItem>();
-                blockItemsContainer.AddChild(item);
-                item.SetBlockData(blockData);
-                item.bottomMenu = this;
-            }
+            // foreach (string key in blocksData.blocks.Keys) {
+            //     BlockData blockData = blocksData.blocks[key];
+            //     BlockItem item = blockItemPrefab.Instance<BlockItem>();
+            //     blockItemsContainer.AddChild(item);
+            //     item.SetBlockData(blockData);
+            //     item.bottomMenu = this;
+            // }
         }
 
         public void ShowInventoryItems()
@@ -300,12 +294,12 @@ namespace CrazyEaters.UI
             if (inventoryItemsContainer.GetChildCount() > 0) {
                 return;
             }
-            foreach (BuyableEntityData data in buyablesData.buyables) {
-                InventoryItem inventoryItem = inventoryItemPrefab.Instance<InventoryItem>();
-                inventoryItemsContainer.AddChild(inventoryItem);
-                inventoryItem.SetBuyableData(data);
-                inventoryItem.bottomMenu = this;
-            }
+            // foreach (BuyableEntityData data in buyablesData.buyables) {
+            //     InventoryItem inventoryItem = inventoryItemPrefab.Instance<InventoryItem>();
+            //     inventoryItemsContainer.AddChild(inventoryItem);
+            //     inventoryItem.SetBuyableData(data);
+            //     inventoryItem.bottomMenu = this;
+            // }
         }
 
         public void ShowRecipesItems()
@@ -313,9 +307,9 @@ namespace CrazyEaters.UI
             if (recipesItemsContainer.GetChildCount() > 0) {
                 return;
             }
-            foreach (BuyableEntityData key in buyablesData.buyables) {
+            // foreach (BuyableEntityData key in buyablesData.buyables) {
                 
-            }
+            // }
         }
 
         public void ChangeBlock(BlockItem item)

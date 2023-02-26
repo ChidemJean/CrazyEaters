@@ -64,10 +64,11 @@ namespace CrazyEaters.UI
             gameManager.inputMode = GameManager.InputMode.SCENE;
         }
 
+        //TODO:
         public void Quit() {
-            saveSystemNode.SaveGame(() => {
+            // saveSystemNode.SaveGame(() => {
                 GetTree().Quit();
-            });
+            // });
         }
 
         public void OnUpdateViewport3DScale(string type, float value) {

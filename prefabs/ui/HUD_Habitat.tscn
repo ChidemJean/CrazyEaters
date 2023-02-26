@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://assets/textures/prototype/UI/arrowUp.png" type="Texture" id=1]
 [ext_resource path="res://src/UI/Debug/DebugCheck.cs" type="Script" id=2]
@@ -18,13 +18,11 @@
 [ext_resource path="res://assets/textures/prototype/UI/cross.png" type="Texture" id=16]
 [ext_resource path="res://src/UI/BottomMenu.cs" type="Script" id=17]
 [ext_resource path="res://prefabs/ui/BlockUI.tscn" type="PackedScene" id=18]
-[ext_resource path="res://resources/blocks_data.tres" type="Resource" id=19]
 [ext_resource path="res://prefabs/ui/StatusCharacterUI.tscn" type="PackedScene" id=20]
 [ext_resource path="res://src/UI/CharacterStatusBar.cs" type="Script" id=21]
 [ext_resource path="res://resources/eater_statuses.tres" type="Resource" id=22]
 [ext_resource path="res://assets/textures/UI/radial_progress_white.png" type="Texture" id=23]
 [ext_resource path="res://prefabs/ui/BtnMode.tscn" type="PackedScene" id=24]
-[ext_resource path="res://resources/buyables_data.tres" type="Resource" id=25]
 [ext_resource path="res://prefabs/ui/InventoryUI.tscn" type="PackedScene" id=26]
 
 [sub_resource type="StyleBoxFlat" id=15]
@@ -182,8 +180,6 @@ inventoryItemsContainerPath = NodePath("VBoxContainer/ContentPanel/MarginContain
 recipesItemsContainerPath = NodePath("VBoxContainer/ContentPanel/MarginContainer/RecipesGrid")
 blockItemPrefab = ExtResource( 18 )
 inventoryItemPrefab = ExtResource( 26 )
-blocksData = ExtResource( 19 )
-buyablesData = ExtResource( 25 )
 timeToOpenModeBtns = 0.6
 
 [node name="VBoxContainer" type="VBoxContainer" parent="BottomMenu"]
@@ -256,6 +252,9 @@ modulate = Color( 1, 1, 1, 0 )
 gameMode = 3
 
 [node name="Label" parent="BottomMenu/VBoxContainer/SlideTrigger/CharacterStatusBar/SliderUp/BtnModeBuild/LabelWrapper" index="0"]
+margin_top = 0.0
+margin_right = 81.0
+margin_bottom = 40.0
 custom_fonts/font = SubResource( 16 )
 text = "Build"
 
@@ -264,6 +263,9 @@ modulate = Color( 1, 1, 1, 0 )
 gameMode = 1
 
 [node name="Label" parent="BottomMenu/VBoxContainer/SlideTrigger/CharacterStatusBar/SliderUp/BtnModeLauncher/LabelWrapper" index="0"]
+margin_top = 0.0
+margin_right = 172.0
+margin_bottom = 40.0
 custom_fonts/font = SubResource( 17 )
 text = "Launcher"
 
@@ -272,6 +274,9 @@ modulate = Color( 1, 1, 1, 0 )
 gameMode = 2
 
 [node name="Label" parent="BottomMenu/VBoxContainer/SlideTrigger/CharacterStatusBar/SliderUp/BtnModeCook/LabelWrapper" index="0"]
+margin_top = 0.0
+margin_right = 85.0
+margin_bottom = 40.0
 custom_fonts/font = SubResource( 18 )
 text = "Cook"
 
@@ -513,7 +518,7 @@ custom_constants/margin_bottom = 15
 margin_left = 15.0
 margin_top = 15.0
 margin_right = 999.0
-margin_bottom = 61.0
+margin_bottom = 74.0
 size_flags_horizontal = 3
 custom_constants/separation = 30
 alignment = 1
