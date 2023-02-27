@@ -3,6 +3,7 @@ namespace CrazyEaters.Managers
     using Godot;
     using Godot.Collections;
     using System;
+    using CrazyEaters.Save;
 
     public class SceneSwitcher : Node
     {
@@ -18,6 +19,7 @@ namespace CrazyEaters.Managers
         Control loading;
 
         GameManager gameManager;
+        SaveSystemNode saveSystemNode;
 
         public CEScene currentScene = null;
         private PackedScene currentSceneResource = null;
@@ -30,6 +32,7 @@ namespace CrazyEaters.Managers
         public override void _Ready()
         {
             gameManager = GetNode<GameManager>("/root/GameManager");
+            saveSystemNode = GetNode<SaveSystemNode>("/root/MainNode/SaveSystem");
             loading = GetNode<Control>(loadingPath);
             loadingBar = loading.GetNode<ProgressBar>("VBox/Progress");
 
@@ -39,6 +42,15 @@ namespace CrazyEaters.Managers
             // resourceQueueObj = (Godot.Object) resourceQueue.New();
             // resourceQueueObj.Call("start");
 
+            saveSystemNode.LoadHabitats(OnHabitatsLoaded);
+        }
+
+        public void OnHabitatsLoaded(HabitatsGameData habitats)
+        {
+            if (habitats == null) {
+                ChangeScene("game_create_scene");
+                return;
+            }
             ChangeScene(initialScene);
         }
 

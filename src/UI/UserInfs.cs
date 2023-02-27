@@ -7,6 +7,7 @@ namespace CrazyEaters.UI
 {
     public class UserInfs : Control
     {
+        [Inject] private GameManager gameManager;
         [Inject] private AccountManager accountManager;
         [Export] private NodePath nicknameLabelPath;
         [Export] private NodePath levelLabelPath;
@@ -30,6 +31,8 @@ namespace CrazyEaters.UI
             xpLabel = GetNode<Label>(xpLabelPath);
             xpNextLevelLabel = GetNode<Label>(xpNextLevelLabelPath);
             xpBar = GetNode<NinePatchRect>(xpBarPath);
+            gameManager.StartListening(GameEvent.LevelUpdate, OnLevelUpdate);
+            gameManager.StartListening(GameEvent.XpUpdate, OnXpUpdate);
 
             SetupData();
         }
@@ -53,7 +56,25 @@ namespace CrazyEaters.UI
             }
             tween = GetTree().CreateTween();
             tween.TweenProperty(xpBar, "rect_size:x", totalW * ptg, 1f);
-            GD.Print(ptg);
+        }
+
+        public void OnLevelUpdate(object _level) 
+        {
+            int level = (int) _level;
+            levelLabel.Text = level.ToString();
+        }
+
+        public void OnXpUpdate(object _xp) 
+        {
+            int xp = (int) _xp;
+            xpLabel.Text = xp.ToString();
+            UpdateXpBarUI();
+        }
+
+        public override void _ExitTree()
+        {
+            gameManager.StopListening(GameEvent.LevelUpdate, OnLevelUpdate);
+            gameManager.StopListening(GameEvent.XpUpdate, OnXpUpdate);
         }
     }
 }

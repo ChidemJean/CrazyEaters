@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://assets/textures/radial_shadows.png" type="Texture" id=1]
 [ext_resource path="res://assets/textures/background_wood.png" type="Texture" id=2]
@@ -8,6 +8,44 @@
 [ext_resource path="res://assets/textures/UI/back_close_btn.png" type="Texture" id=6]
 [ext_resource path="res://assets/textures/UI/plus_gray.png" type="Texture" id=7]
 [ext_resource path="res://src/Managers/GameCreateScene.cs" type="Script" id=8]
+[ext_resource path="res://assets/textures/UI/radial_shine.png" type="Texture" id=9]
+[ext_resource path="res://assets/textures/UI/arrow.png" type="Texture" id=10]
+[ext_resource path="res://assets/textures/UI/eater.png" type="Texture" id=11]
+[ext_resource path="res://assets/fonts/baloom.tres" type="DynamicFont" id=12]
+[ext_resource path="res://assets/textures/UI/shadow_radial.png" type="Texture" id=13]
+[ext_resource path="res://assets/textures/UI/square_rounded.png" type="Texture" id=14]
+[ext_resource path="res://prefabs/ui/CharacterStat.tscn" type="PackedScene" id=15]
+[ext_resource path="res://assets/textures/UI/shadow_w_screen.png" type="Texture" id=16]
+[ext_resource path="res://src/UI/EaterStep.cs" type="Script" id=17]
+
+[sub_resource type="DynamicFont" id=2]
+size = 35
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+extra_spacing_top = -6
+extra_spacing_bottom = -6
+font_data = ExtResource( 3 )
+
+[sub_resource type="StyleBoxEmpty" id=3]
+
+[sub_resource type="DynamicFont" id=4]
+size = 58
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+extra_spacing_top = -20
+extra_spacing_bottom = -20
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 30
+outline_size = 4
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+extra_spacing_top = -4
+extra_spacing_bottom = -12
+font_data = ExtResource( 3 )
 
 [sub_resource type="DynamicFont" id=1]
 size = 50
@@ -20,6 +58,7 @@ font_data = ExtResource( 3 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 8 )
+closeBtnPath = NodePath("TextureButton")
 
 [node name="Back" type="TextureRect" parent="."]
 modulate = Color( 0.658824, 0.658824, 0.658824, 1 )
@@ -35,28 +74,282 @@ anchor_bottom = 1.0
 texture = ExtResource( 1 )
 expand = true
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="Eater" type="Control" parent="."]
 anchor_right = 1.0
-margin_bottom = 823.0
-color = Color( 0.564706, 0.298039, 0.756863, 1 )
+anchor_bottom = 1.0
+script = ExtResource( 17 )
+headerPath = NodePath("Header")
+footerPath = NodePath("../Footer")
 
-[node name="ColorRect2" type="ColorRect" parent="."]
+[node name="Header" type="Control" parent="Eater"]
 anchor_right = 1.0
-margin_bottom = 796.0
-color = Color( 0.756863, 0.447059, 0.980392, 1 )
+margin_top = -800.0
+margin_bottom = -800.0
+
+[node name="Shadow" type="TextureRect" parent="Eater/Header"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 753.0
+margin_bottom = 1010.0
+texture = ExtResource( 16 )
+expand = true
+flip_v = true
+
+[node name="Main2" type="ColorRect" parent="Eater/Header"]
+anchor_right = 1.0
+margin_top = -206.0
+margin_bottom = 879.0
+color = Color( 0.478431, 0.27451, 0.137255, 1 )
+
+[node name="TextureRect" type="TextureRect" parent="Eater/Header/Main2"]
+self_modulate = Color( 1, 1, 1, 0.34902 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 61.0
+margin_bottom = -24.0
+texture = ExtResource( 9 )
+expand = true
+stretch_mode = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="Eater/Header/Main2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_top = 300
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Eater/Header/Main2/MarginContainer"]
+margin_top = 300.0
+margin_right = 1080.0
+margin_bottom = 1085.0
+
+[node name="Control" type="Control" parent="Eater/Header/Main2/MarginContainer/VBoxContainer"]
+margin_right = 1080.0
+margin_bottom = 550.0
+rect_min_size = Vector2( 0, 550 )
+
+[node name="TextureRect" type="TextureRect" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/Control"]
+self_modulate = Color( 1, 1, 1, 0.27451 )
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -157.0
+margin_top = -102.0
+margin_right = 121.0
+margin_bottom = 38.0
+texture = ExtResource( 13 )
+expand = true
+stretch_mode = 6
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/Control"]
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_constants/separation = 120
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/Control/HBoxContainer"]
+modulate = Color( 0.4, 0.4, 0.4, 0.67451 )
+margin_right = 300.0
+margin_bottom = 550.0
+rect_min_size = Vector2( 300, 0 )
+texture = ExtResource( 11 )
+expand = true
+stretch_mode = 6
+
+[node name="TextureRect2" type="TextureRect" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/Control/HBoxContainer"]
+margin_left = 420.0
+margin_right = 870.0
+margin_bottom = 550.0
+rect_min_size = Vector2( 450, 0 )
+texture = ExtResource( 11 )
+expand = true
+stretch_mode = 6
+
+[node name="TextureRect3" type="TextureRect" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/Control/HBoxContainer"]
+modulate = Color( 0.4, 0.4, 0.4, 0.67451 )
+margin_left = 990.0
+margin_right = 1290.0
+margin_bottom = 550.0
+rect_min_size = Vector2( 300, 0 )
+texture = ExtResource( 11 )
+expand = true
+stretch_mode = 6
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Eater/Header/Main2/MarginContainer/VBoxContainer"]
+margin_top = 554.0
+margin_right = 1080.0
+margin_bottom = 785.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/HBoxContainer"]
+margin_right = 690.0
+margin_bottom = 231.0
+rect_min_size = Vector2( 690, 0 )
+custom_constants/margin_right = 40
+custom_constants/margin_left = 40
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer"]
+margin_left = 40.0
+margin_right = 650.0
+margin_bottom = 231.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Label" type="Label" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+margin_top = 54.0
+margin_right = 610.0
+margin_bottom = 103.0
+custom_colors/font_color = Color( 1, 0.952941, 0.160784, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_y = 5
+custom_fonts/font = SubResource( 2 )
+text = "Raro"
+
+[node name="Control" type="Control" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+margin_top = 107.0
+margin_right = 610.0
+margin_bottom = 177.0
+rect_min_size = Vector2( 0, 70 )
+
+[node name="Name" type="LineEdit" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 12 )
+custom_styles/normal = SubResource( 3 )
+
+[node name="Label2" type="Label" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_y = 5
+custom_fonts/font = SubResource( 4 )
+text = "Default eater"
+autowrap = true
+
+[node name="MarginContainer2" type="MarginContainer" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/HBoxContainer"]
+margin_left = 694.0
+margin_right = 1080.0
+margin_bottom = 231.0
+custom_constants/margin_right = 40
+custom_constants/margin_left = 40
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer2"]
+margin_left = 40.0
+margin_right = 346.0
+margin_bottom = 231.0
+size_flags_horizontal = 3
+custom_constants/separation = 18
+
+[node name="TextureRect" type="TextureRect" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer2/HBoxContainer"]
+modulate = Color( 0, 0, 0, 1 )
+self_modulate = Color( 1, 1, 1, 0.447059 )
+margin_right = 90.0
+margin_bottom = 231.0
+rect_min_size = Vector2( 90, 0 )
+texture = ExtResource( 11 )
+expand = true
+stretch_mode = 6
+
+[node name="TextureRect2" type="TextureRect" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer2/HBoxContainer"]
+modulate = Color( 0, 0, 0, 1 )
+self_modulate = Color( 1, 1, 1, 0.447059 )
+margin_left = 108.0
+margin_right = 198.0
+margin_bottom = 231.0
+rect_min_size = Vector2( 90, 0 )
+texture = ExtResource( 11 )
+expand = true
+stretch_mode = 6
+
+[node name="TextureRect3" type="TextureRect" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer2/HBoxContainer"]
+modulate = Color( 0, 0, 0, 1 )
+self_modulate = Color( 1, 1, 1, 0.447059 )
+margin_left = 216.0
+margin_right = 306.0
+margin_bottom = 231.0
+rect_min_size = Vector2( 90, 0 )
+texture = ExtResource( 11 )
+expand = true
+stretch_mode = 6
+
+[node name="Stats" type="ScrollContainer" parent="Eater"]
+anchor_right = 1.0
+margin_top = 897.0
+margin_bottom = 1517.0
+rect_min_size = Vector2( 0, 620 )
+
+[node name="MarginContainer" type="MarginContainer" parent="Eater/Stats"]
+margin_right = 1080.0
+margin_bottom = 560.0
+size_flags_horizontal = 3
+custom_constants/margin_right = 45
+custom_constants/margin_top = 25
+custom_constants/margin_left = 45
+custom_constants/margin_bottom = 25
+
+[node name="GridContainer" type="GridContainer" parent="Eater/Stats/MarginContainer"]
+margin_left = 45.0
+margin_top = 25.0
+margin_right = 1035.0
+margin_bottom = 535.0
+size_flags_horizontal = 3
+custom_constants/vseparation = 30
+custom_constants/hseparation = 30
+columns = 2
+
+[node name="NinePatchRect" parent="Eater/Stats/MarginContainer/GridContainer" instance=ExtResource( 15 )]
+margin_right = 480.0
+
+[node name="NinePatchRect2" parent="Eater/Stats/MarginContainer/GridContainer" instance=ExtResource( 15 )]
+margin_left = 510.0
+margin_right = 990.0
+
+[node name="NinePatchRect3" parent="Eater/Stats/MarginContainer/GridContainer" instance=ExtResource( 15 )]
+margin_top = 180.0
+margin_right = 480.0
+margin_bottom = 330.0
+
+[node name="NinePatchRect4" parent="Eater/Stats/MarginContainer/GridContainer" instance=ExtResource( 15 )]
+margin_left = 510.0
+margin_top = 180.0
+margin_right = 990.0
+margin_bottom = 330.0
+
+[node name="NinePatchRect5" parent="Eater/Stats/MarginContainer/GridContainer" instance=ExtResource( 15 )]
+margin_top = 360.0
+margin_right = 480.0
+margin_bottom = 510.0
+
+[node name="NinePatchRect6" parent="Eater/Stats/MarginContainer/GridContainer" instance=ExtResource( 15 )]
+margin_left = 510.0
+margin_top = 360.0
+margin_right = 990.0
+margin_bottom = 510.0
+
+[node name="Habitat" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Launcher" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
 
 [node name="Header" type="MarginContainer" parent="."]
 anchor_right = 1.0
 margin_bottom = 139.0
-custom_constants/margin_right = 30
+custom_constants/margin_right = 55
 custom_constants/margin_top = 52
-custom_constants/margin_left = 30
+custom_constants/margin_left = 45
 custom_constants/margin_bottom = 36
 
 [node name="LeftHead" type="Control" parent="Header"]
-margin_left = 30.0
+margin_left = 45.0
 margin_top = 52.0
-margin_right = 1050.0
+margin_right = 1025.0
 margin_bottom = 103.0
 
 [node name="Container" type="HBoxContainer" parent="Header/LeftHead"]
@@ -99,67 +392,189 @@ texture = ExtResource( 4 )
 expand = true
 stretch_mode = 6
 
-[node name="Control" type="MarginContainer" parent="."]
+[node name="Footer" type="VBoxContainer" parent="."]
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -250.0
+margin_top = -4.0
+margin_bottom = 340.0
+
+[node name="Dots" type="MarginContainer" parent="Footer"]
+margin_right = 1080.0
+margin_bottom = 100.0
+grow_vertical = 0
+rect_min_size = Vector2( 0, 50 )
+custom_constants/margin_right = 62
+custom_constants/margin_top = 30
+custom_constants/margin_left = 62
+custom_constants/margin_bottom = 30
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Footer/Dots"]
+margin_left = 62.0
+margin_top = 30.0
+margin_right = 1018.0
+margin_bottom = 70.0
+custom_constants/separation = 50
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Footer/Dots/HBoxContainer"]
+self_modulate = Color( 0.286275, 0.886275, 0.0941176, 1 )
+margin_right = 285.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+texture = ExtResource( 14 )
+patch_margin_left = 20
+patch_margin_top = 20
+patch_margin_right = 20
+patch_margin_bottom = 20
+
+[node name="Label" type="Label" parent="Footer/Dots/HBoxContainer/NinePatchRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 5 )
+text = "Eater"
+align = 1
+valign = 1
+
+[node name="NinePatchRect2" type="NinePatchRect" parent="Footer/Dots/HBoxContainer"]
+modulate = Color( 1, 1, 1, 0.337255 )
+self_modulate = Color( 0, 0, 0, 1 )
+margin_left = 335.0
+margin_right = 620.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+texture = ExtResource( 14 )
+patch_margin_left = 20
+patch_margin_top = 20
+patch_margin_right = 20
+patch_margin_bottom = 20
+
+[node name="Label" type="Label" parent="Footer/Dots/HBoxContainer/NinePatchRect2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 5 )
+text = "Habitat"
+align = 1
+valign = 1
+
+[node name="NinePatchRect3" type="NinePatchRect" parent="Footer/Dots/HBoxContainer"]
+modulate = Color( 1, 1, 1, 0.337255 )
+self_modulate = Color( 0, 0, 0, 1 )
+margin_left = 670.0
+margin_right = 956.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+texture = ExtResource( 14 )
+patch_margin_left = 20
+patch_margin_top = 20
+patch_margin_right = 20
+patch_margin_bottom = 20
+
+[node name="Label" type="Label" parent="Footer/Dots/HBoxContainer/NinePatchRect3"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 5 )
+text = "Lançador"
+align = 1
+valign = 1
+
+[node name="Buttons" type="MarginContainer" parent="Footer"]
+margin_top = 104.0
+margin_right = 1080.0
+margin_bottom = 344.0
+rect_min_size = Vector2( 0, 240 )
 custom_constants/margin_right = 50
 custom_constants/margin_top = 30
 custom_constants/margin_left = 50
 custom_constants/margin_bottom = 50
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Footer/Buttons"]
 margin_left = 50.0
 margin_top = 30.0
 margin_right = 1030.0
-margin_bottom = 200.0
-custom_constants/separation = 100
+margin_bottom = 190.0
+custom_constants/separation = 130
 
-[node name="BlueButtonNinePatch" parent="Control/HBoxContainer" instance=ExtResource( 5 )]
-margin_right = 440.0
-margin_bottom = 170.0
+[node name="BackContainer" type="Control" parent="Footer/Buttons/HBoxContainer"]
+margin_right = 425.0
+margin_bottom = 160.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="Control/HBoxContainer/BlueButtonNinePatch"]
-anchor_left = 0.5
+[node name="BlueButtonNinePatch" parent="Footer/Buttons/HBoxContainer/BackContainer" instance=ExtResource( 5 )]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 0.0
+margin_bottom = 0.0
+
+[node name="Control" type="Control" parent="Footer/Buttons/HBoxContainer/BackContainer/BlueButtonNinePatch"]
+anchor_right = 1.0
+margin_top = -3.0
+margin_bottom = 113.0
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="Footer/Buttons/HBoxContainer/BackContainer/BlueButtonNinePatch/Control"]
+anchor_left = 1.0
 anchor_top = 0.5
-anchor_right = 0.5
+anchor_right = 1.0
 anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -23.0
-margin_right = 20.0
-margin_bottom = -9.0
+margin_left = -276.0
+margin_top = -29.0
+margin_right = -69.0
+margin_bottom = 58.0
 grow_horizontal = 2
 grow_vertical = 2
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_y = 5
 custom_fonts/font = SubResource( 1 )
 text = "Voltar"
-align = 1
+align = 2
 valign = 1
 
-[node name="BlueButtonNinePatch2" parent="Control/HBoxContainer" instance=ExtResource( 5 )]
-margin_left = 540.0
-margin_right = 980.0
-margin_bottom = 170.0
+[node name="TextureRect" type="TextureRect" parent="Footer/Buttons/HBoxContainer/BackContainer/BlueButtonNinePatch/Control"]
+margin_left = 47.0
+margin_top = 37.0
+margin_right = 117.0
+margin_bottom = 107.0
+texture = ExtResource( 10 )
+expand = true
+flip_h = true
 
-[node name="Label" type="Label" parent="Control/HBoxContainer/BlueButtonNinePatch2"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -23.0
-margin_right = 20.0
-margin_bottom = -9.0
+[node name="BlueButtonNinePatch2" parent="Footer/Buttons/HBoxContainer" instance=ExtResource( 5 )]
+margin_left = 555.0
+margin_right = 980.0
+margin_bottom = 160.0
+
+[node name="Control" type="Control" parent="Footer/Buttons/HBoxContainer/BlueButtonNinePatch2"]
+anchor_right = 1.0
+margin_top = -3.0
+margin_bottom = 113.0
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="Footer/Buttons/HBoxContainer/BlueButtonNinePatch2/Control"]
+margin_left = 55.0
+margin_top = 29.0
+margin_right = 285.0
+margin_bottom = 116.0
 grow_horizontal = 2
 grow_vertical = 2
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_y = 5
 custom_fonts/font = SubResource( 1 )
 text = "Próximo"
-align = 1
 valign = 1
+
+[node name="TextureRect" type="TextureRect" parent="Footer/Buttons/HBoxContainer/BlueButtonNinePatch2/Control"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -122.0
+margin_top = 36.0
+margin_right = -52.0
+margin_bottom = 106.0
+texture = ExtResource( 10 )
+expand = true
 
 [node name="TextureButton" type="TextureButton" parent="."]
 margin_right = 150.0
@@ -174,11 +589,11 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -54.0
-margin_top = -52.0
-margin_right = 20.0
-margin_bottom = 16.0
-rect_rotation = -32.8
+margin_left = -58.0
+margin_top = -44.0
+margin_right = 16.0
+margin_bottom = 24.0
+rect_rotation = 46.3
 rect_pivot_offset = Vector2( 43, 39 )
 texture = ExtResource( 7 )
 expand = true

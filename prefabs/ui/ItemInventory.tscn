@@ -43,16 +43,16 @@ expand = true
 stretch_mode = 6
 
 [node name="Shine" type="TextureRect" parent="."]
-self_modulate = Color( 1, 1, 1, 0.423529 )
+self_modulate = Color( 1, 1, 1, 0.717647 )
 use_parent_material = true
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -164.5
-margin_top = -120.0
+margin_top = -111.0
 margin_right = 164.5
-margin_bottom = 108.0
+margin_bottom = 117.0
 texture = ExtResource( 2 )
 expand = true
 stretch_mode = 6
@@ -62,10 +62,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -98.5
-margin_top = -104.0
-margin_right = 96.5
-margin_bottom = 75.0
+margin_left = -104.5
+margin_top = -109.0
+margin_right = 102.5
+margin_bottom = 117.0
 rect_min_size = Vector2( 180, 150 )
 texture = ExtResource( 3 )
 expand = true
@@ -73,10 +73,10 @@ stretch_mode = 6
 
 [node name="Type" type="TextureRect" parent="."]
 use_parent_material = true
-margin_left = 23.0
-margin_top = 16.0
-margin_right = 61.0
-margin_bottom = 49.0
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 58.0
+margin_bottom = 56.0
 rect_min_size = Vector2( 36, 36 )
 texture = ExtResource( 4 )
 expand = true
@@ -87,8 +87,8 @@ use_parent_material = true
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -93.0
-margin_bottom = -6.0
+margin_top = -85.0
+margin_bottom = 2.0
 custom_colors/font_color_shadow = Color( 0.376471, 0.235294, 0.152941, 1 )
 custom_constants/shadow_offset_y = 5
 custom_fonts/font = SubResource( 1 )
@@ -98,9 +98,9 @@ valign = 1
 
 [node name="RarityCtn" type="HBoxContainer" parent="."]
 margin_left = 76.0
-margin_top = 9.0
+margin_top = 12.0
 margin_right = 134.0
-margin_bottom = 37.0
+margin_bottom = 40.0
 custom_constants/separation = 6
 
 [node name="Common" type="TextureRect" parent="RarityCtn"]

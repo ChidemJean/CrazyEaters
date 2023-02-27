@@ -88,7 +88,7 @@ tracks/4/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 0.827451, 0.372549, 1 ), Color( 0.407843, 0.694118, 1, 1 ), Color( 0.407843, 0.694118, 1, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("CameraPivot/SpotLight:light_energy")
+tracks/5/path = NodePath("CameraPivot/Camera/SpotLight:light_energy")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -192,7 +192,7 @@ tracks/4/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("CameraPivot/SpotLight:light_energy")
+tracks/5/path = NodePath("CameraPivot/Camera/SpotLight:light_energy")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -285,28 +285,32 @@ environment = ExtResource( 18 )
 fov = 60.8724
 far = 250.0
 
-[node name="spatula" parent="CameraPivot" instance=ExtResource( 9 )]
-transform = Transform( -6.55671e-09, 0, -0.15, 0, 0.15, 0, 0.15, 0, -6.55671e-09, 0, -4.21551, 30.146 )
+[node name="spatula" parent="CameraPivot/Camera" instance=ExtResource( 9 )]
+transform = Transform( -6.55671e-09, 0, -0.15, 0, 0.15, 0, 0.15, 0, -6.55671e-09, 0, -2.98007, -5.9178 )
 throwPower = 240.0
 spatulaMask = 16
-lineRendererPath = NodePath("../../LineRenderer")
+lineRendererPath = NodePath("../../../LineRenderer")
 numPoints = 5
 timeBetweenPoints = 0.2
-throwablePath = NodePath("../../Hamburguer")
+throwablePath = NodePath("../../../Hamburguer")
 
-[node name="BoneAttachment" parent="CameraPivot/spatula/Armature/Skeleton" index="1"]
+[node name="Skeleton" parent="CameraPivot/Camera/spatula/Armature" index="0"]
+bones/4/bound_children = [ NodePath("BoneAttachment") ]
+
+[node name="BoneAttachment" parent="CameraPivot/Camera/spatula/Armature/Skeleton" index="1"]
 transform = Transform( 0.997886, 0.0615615, 0.0208422, -0.061768, 0.998046, 0.0094159, -0.0202219, -0.0106834, 0.999738, -0.248285, 3.04844, 0.0488994 )
 
-[node name="CollisionShape" parent="CameraPivot/spatula/Armature/Skeleton/BoneAttachment/Area" index="0"]
+[node name="CollisionShape" parent="CameraPivot/Camera/spatula/Armature/Skeleton/BoneAttachment/Area" index="0"]
 transform = Transform( 1, 0, 0, 0, 1, 8.14907e-10, 3.72529e-09, 3.49246e-10, 1, 0, 0, 0 )
 
-[node name="MeshInstance" type="MeshInstance" parent="CameraPivot"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.76166, 30.0896 )
+[node name="MeshInstance" type="MeshInstance" parent="CameraPivot/Camera"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.52622, -5.9742 )
 mesh = SubResource( 23 )
+skeleton = NodePath("../..")
 material/0 = ExtResource( 15 )
 
-[node name="SpotLight" type="SpotLight" parent="CameraPivot"]
-transform = Transform( 1, 0, 0, 0, 0.453773, 0.891117, 0, -0.891117, 0.453773, 0.057744, -1.2962, 30.7733 )
+[node name="SpotLight" type="SpotLight" parent="CameraPivot/Camera"]
+transform = Transform( 1, 0, 0, 0, 0.453773, 0.891117, 0, -0.891117, 0.453773, 0.057744, -0.06076, -5.2905 )
 light_energy = 0.0
 
 [node name="LineRenderer" parent="." instance=ExtResource( 14 )]
@@ -392,5 +396,5 @@ foodData = SubResource( 21 )
 
 [node name="Skybox" parent="." instance=ExtResource( 6 )]
 
-[editable path="CameraPivot/spatula"]
-[editable path="CameraPivot/spatula/spatula_base"]
+[editable path="CameraPivot/Camera/spatula"]
+[editable path="CameraPivot/Camera/spatula/spatula_base"]

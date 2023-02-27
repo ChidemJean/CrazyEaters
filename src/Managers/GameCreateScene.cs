@@ -5,20 +5,19 @@ namespace CrazyEaters.Managers
 {
     public class GameCreateScene : CEScene
     {
-        // Declare member variables here. Examples:
-        // private int a = 2;
-        // private string b = "text";
+        [Export] private NodePath closeBtnPath;
 
-        // Called when the node enters the scene tree for the first time.
+        private TextureButton closeBtn;
+
         public override void _Ready()
         {
-            
+            closeBtn = GetNode<TextureButton>(closeBtnPath);
+            closeBtn.Connect("button_up", this, nameof(OnCloseClick));
         }
 
-    //  // Called every frame. 'delta' is the elapsed time since the previous frame.
-    //  public override void _Process(float delta)
-    //  {
-    //      
-    //  }
+        public void OnCloseClick()
+        {
+            gameManager.TriggerEvent(GameEvent.ChangeScene, "home");
+        }
     }
 }

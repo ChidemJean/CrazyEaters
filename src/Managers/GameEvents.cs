@@ -14,6 +14,10 @@ namespace CrazyEaters.Managers
         ChangeScene,
         InNight,
         InDay,
+        LevelUpdate,
+        XpUpdate,
+        CoinsUpdate,
+        BeansUpdate,
     };
 
     public class CharacterStatusEventData {

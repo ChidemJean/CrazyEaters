@@ -1,8 +1,10 @@
-[gd_scene load_steps=60 format=2]
+[gd_scene load_steps=61 format=2]
 
 [ext_resource path="res://prefabs/ui/BoxCoins.tscn" type="PackedScene" id=1]
 [ext_resource path="res://prefabs/ui/UserInfs.tscn" type="PackedScene" id=2]
 [ext_resource path="res://prefabs/ui/BoxBeans.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/Managers/HomeScene.cs" type="Script" id=4]
+[ext_resource path="res://src/UI/NewGameButton.cs" type="Script" id=5]
 [ext_resource path="res://assets/fonts/BalooTamma-Regular.ttf" type="DynamicFontData" id=6]
 [ext_resource path="res://assets/textures/background_wood.png" type="Texture" id=8]
 [ext_resource path="res://assets/textures/radial_shadows.png" type="Texture" id=9]
@@ -22,7 +24,6 @@
 [ext_resource path="res://assets/textures/UI/white_circle_hole.png" type="Texture" id=27]
 [ext_resource path="res://assets/textures/UI/brown_circle_hole.png" type="Texture" id=28]
 [ext_resource path="res://assets/textures/UI/dotted_square.png" type="Texture" id=29]
-[ext_resource path="res://src/Managers/CEScene.cs" type="Script" id=30]
 [ext_resource path="res://prefabs/ui/generics/BlueButtonNinePatch.tscn" type="PackedScene" id=31]
 [ext_resource path="res://src/UI/Utils/ScreenResizer.cs" type="Script" id=32]
 [ext_resource path="res://src/UI/SwiperTabs.cs" type="Script" id=33]
@@ -105,7 +106,7 @@ font_data = ExtResource( 6 )
 [node name="Home" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 30 )
+script = ExtResource( 4 )
 
 [node name="Back" type="TextureRect" parent="."]
 modulate = Color( 0.658824, 0.658824, 0.658824, 1 )
@@ -225,7 +226,7 @@ size_flags_vertical = 0
 scroll_horizontal_enabled = false
 
 [node name="MarginContainer" type="MarginContainer" parent="ContainerTabContents/HBoxContainer/Shop/Content/Scroll"]
-margin_right = 1080.0
+margin_right = 1068.0
 margin_bottom = 227.0
 mouse_filter = 2
 size_flags_horizontal = 3
@@ -461,6 +462,7 @@ rect_min_size = Vector2( 110, 110 )
 texture_normal = ExtResource( 29 )
 expand = true
 stretch_mode = 5
+script = ExtResource( 5 )
 
 [node name="TextureRect" type="TextureRect" parent="ContainerTabContents/HBoxContainer/Saves/SavesDotsCtn/TextureButton"]
 anchor_left = 0.5
@@ -844,7 +846,7 @@ size_flags_vertical = 0
 scroll_horizontal_enabled = false
 
 [node name="MarginContainer" type="MarginContainer" parent="ContainerTabContents/HBoxContainer/Scenarios/Content/Scroll"]
-margin_right = 1080.0
+margin_right = 1068.0
 margin_bottom = 522.0
 mouse_filter = 2
 size_flags_horizontal = 3
@@ -1629,7 +1631,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="MarginContainer" type="MarginContainer" parent="QuestsContainer/QuestsPanel/ScrollContainer"]
-margin_right = 1023.0
+margin_right = 562.0
 margin_bottom = 2192.0
 size_flags_horizontal = 3
 custom_constants/margin_right = 36

@@ -19,9 +19,9 @@ namespace CrazyEaters.Save
             gameManager = GetNode<GameManager>("/root/GameManager");
         }
 
-        public async void SaveAccount(AccountData accountData, Action OnSaveEnd) {
+        public async void SaveAccount(AccountData accountData, Action OnSaveEnd = null) {
             await SaveSystem.SaveUserData(accountData);
-            OnSaveEnd();
+            if (OnSaveEnd != null) OnSaveEnd();
         }
 
         public async void LoadAccount(Action<AccountData> OnLoad) {
@@ -29,9 +29,9 @@ namespace CrazyEaters.Save
             OnLoad(data);
         }
 
-        public async void SaveHabitats(HabitatsGameData habitatsGameData, Action OnSaveEnd) {
+        public async void SaveHabitats(HabitatsGameData habitatsGameData, Action OnSaveEnd = null) {
             await SaveSystem.SaveHabitatsData(habitatsGameData);
-            OnSaveEnd();
+            if (OnSaveEnd != null) OnSaveEnd();
         }
 
         public async void LoadHabitats(Action<HabitatsGameData> OnLoad) {
@@ -39,9 +39,9 @@ namespace CrazyEaters.Save
             OnLoad(data);
         }
 
-        public async void SaveInventory(InventoryData inventoryData, Action OnSaveEnd) {
+        public async void SaveInventory(InventoryData inventoryData, Action OnSaveEnd = null) {
             await SaveSystem.SaveInventoryData(inventoryData);
-            OnSaveEnd();
+            if (OnSaveEnd != null) OnSaveEnd();
         }
 
         public async void LoadInventory(Action<InventoryData> OnLoad) {
@@ -49,9 +49,9 @@ namespace CrazyEaters.Save
             OnLoad(data);
         }
 
-        public async void SaveMultiplayer(MultiplayerData multiplayerData, Action OnSaveEnd) {
+        public async void SaveMultiplayer(MultiplayerData multiplayerData, Action OnSaveEnd = null) {
             await SaveSystem.SaveMultiplayerData(multiplayerData);
-            OnSaveEnd();
+            if (OnSaveEnd != null) OnSaveEnd();
         }
 
         public async void LoadMultiplayer(Action<MultiplayerData> OnLoad) {
