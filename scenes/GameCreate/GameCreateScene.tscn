@@ -28,7 +28,7 @@
 [ext_resource path="res://assets/textures/UI/check.png" type="Texture" id=26]
 [ext_resource path="res://src/UI/GameCreateDotStep.cs" type="Script" id=27]
 [ext_resource path="res://src/UI/LauncherStep.cs" type="Script" id=28]
-[ext_resource path="res://src/UI/LauncherItem.tscn" type="PackedScene" id=29]
+[ext_resource path="res://prefabs/ui/LauncherItem.tscn" type="PackedScene" id=29]
 [ext_resource path="res://src/UI/HabitatStep.cs" type="Script" id=30]
 
 [sub_resource type="DynamicFont" id=6]
@@ -97,6 +97,9 @@ footerPath = NodePath("Footer")
 backBtnPath = NodePath("Footer/Buttons/HBoxContainer/BackContainer/BackBtn")
 nextBtnPath = NodePath("Footer/Buttons/HBoxContainer/NextBtn")
 finishBtnPath = NodePath("Footer/Buttons/HBoxContainer/FinishBtn")
+dotNormalColor = Color( 0, 0, 0, 0.352941 )
+dotSelectedColor = Color( 0.261719, 0.913483, 1, 1 )
+dotCompletedColor = Color( 0.286275, 0.886275, 0.0941176, 1 )
 
 [node name="Back" type="TextureRect" parent="."]
 modulate = Color( 0.658824, 0.658824, 0.658824, 1 )
@@ -964,7 +967,6 @@ margin_bottom = 70.0
 custom_constants/separation = 50
 
 [node name="EaterDot" type="NinePatchRect" parent="Footer/Dots/HBoxContainer"]
-self_modulate = Color( 0.286275, 0.886275, 0.0941176, 1 )
 margin_right = 285.0
 margin_bottom = 40.0
 mouse_filter = 0
@@ -987,8 +989,6 @@ align = 1
 valign = 1
 
 [node name="HabitatDot" type="NinePatchRect" parent="Footer/Dots/HBoxContainer"]
-modulate = Color( 1, 1, 1, 0.337255 )
-self_modulate = Color( 0, 0, 0, 1 )
 margin_left = 335.0
 margin_right = 620.0
 margin_bottom = 40.0
@@ -1012,8 +1012,6 @@ align = 1
 valign = 1
 
 [node name="LauncherDot" type="NinePatchRect" parent="Footer/Dots/HBoxContainer"]
-modulate = Color( 1, 1, 1, 0.337255 )
-self_modulate = Color( 0, 0, 0, 1 )
 margin_left = 670.0
 margin_right = 956.0
 margin_bottom = 40.0

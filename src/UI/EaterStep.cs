@@ -25,5 +25,14 @@ namespace CrazyEaters.UI
             tween.SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Elastic);
             tween.TweenProperty(header, "rect_position:y", 0f, .95f);
         }
+
+        public override async void Hide(int dir, bool animate)
+        {
+            base.Hide(dir, animate);
+        }
+        public override async void Show(int dir, bool animate)
+        {
+            base.Show(dir, animate);
+        }
     }
 }

@@ -9,6 +9,8 @@ namespace CrazyEaters.UI
 
         [Signal] public delegate void click(GameCreateDotStep dot);
 
+        private SceneTreeTween tween;
+
         public string TargetId {
             get {
                 return targetId;
@@ -28,6 +30,15 @@ namespace CrazyEaters.UI
                     EmitSignal("click", this);
                 }
             }
+        }
+
+        public void ChangeDotColor(Color color)
+        {
+            if (tween != null) {
+                tween.Kill();
+            }
+            tween = GetTree().CreateTween();
+            tween.TweenProperty(this, "self_modulate", color, .4f);
         }
 
     }
