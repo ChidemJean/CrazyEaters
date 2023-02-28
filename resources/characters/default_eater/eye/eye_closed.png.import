@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/habitat_1.png-258459ad86ac9d1944f7ef80110ab46a.stex"
+path="res://.import/eye_closed.png-460f175e8a695a316be32c494925f537.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/UI/habitats/habitat_1.png"
-dest_files=[ "res://.import/habitat_1.png-258459ad86ac9d1944f7ef80110ab46a.stex" ]
+source_file="res://resources/characters/default_eater/eye/eye_closed.png"
+dest_files=[ "res://.import/eye_closed.png-460f175e8a695a316be32c494925f537.stex" ]
 
 [params]
 

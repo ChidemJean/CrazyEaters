@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=7 format=2]
+
+[ext_resource path="res://src/Resources/Collections/StatusesCharacter.cs" type="Script" id=1]
+[ext_resource path="res://resources/characters/default_eater/ages/1 - egg/statuses/hungry_status.tres" type="Resource" id=2]
+[ext_resource path="res://resources/characters/default_eater/ages/1 - egg/statuses/bath_status.tres" type="Resource" id=3]
+[ext_resource path="res://resources/characters/default_eater/ages/1 - egg/statuses/happiness_status.tres" type="Resource" id=4]
+[ext_resource path="res://resources/characters/default_eater/ages/1 - egg/statuses/health_status.tres" type="Resource" id=5]
+[ext_resource path="res://resources/characters/default_eater/ages/1 - egg/statuses/scary_status.tres" type="Resource" id=6]
+
+[resource]
+script = ExtResource( 1 )
+statuses = {
+"bath": ExtResource( 3 ),
+"happiness": ExtResource( 4 ),
+"health": ExtResource( 5 ),
+"hungry": ExtResource( 2 ),
+"scary": ExtResource( 6 )
+}

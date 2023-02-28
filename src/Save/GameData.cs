@@ -20,6 +20,7 @@ namespace CrazyEaters.Save
     {
         public string name;
         public int age;
+        public string createdAt;
         public string id;
         public List<AccessoryData> accessories;
     }

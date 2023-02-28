@@ -7,6 +7,7 @@ namespace CrazyEaters.Resources
     [RegisteredType(nameof(HabitatData), "res://assets/textures/UI/icons/icon_block.png", nameof(Resource))]
     public class HabitatData : BuyableEntityData
     {
-
+        [Export] public int maxBlocks;
+        [Export] public int enemySpawnPoints;
     }
 }

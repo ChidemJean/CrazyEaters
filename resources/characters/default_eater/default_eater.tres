@@ -1,0 +1,24 @@
+[gd_resource type="Resource" load_steps=6 format=2]
+
+[ext_resource path="res://src/Resources/CharacterData.cs" type="Script" id=1]
+[ext_resource path="res://resources/characters/default_eater/ages/3 - adult/adult_age.tres" type="Resource" id=2]
+[ext_resource path="res://resources/characters/default_eater/ages/2 - kid/kid_age.tres" type="Resource" id=3]
+[ext_resource path="res://resources/characters/default_eater/ages/1 - egg/egg_age.tres" type="Resource" id=4]
+[ext_resource path="res://assets/textures/UI/eater.png" type="Texture" id=5]
+
+[resource]
+script = ExtResource( 1 )
+id = "default_eater"
+name = "Default eater"
+description = ""
+thumb = ExtResource( 5 )
+blocked = false
+unblockedByDefault = true
+stackable = false
+maxStack = 0
+rarity = 0
+conditionsToUnblock = {
+}
+price = 0
+coinType = 1
+agesData = [ ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ) ]

@@ -1,0 +1,259 @@
+[gd_scene load_steps=45 format=2]
+
+[ext_resource path="res://assets/models/imported/Material_003.material" type="Material" id=1]
+[ext_resource path="res://src/Characters/Character.cs" type="Script" id=2]
+[ext_resource path="res://resources/eater_statuses.tres" type="Resource" id=3]
+[ext_resource path="res://assets/models/character.tscn" type="PackedScene" id=4]
+[ext_resource path="res://prefabs/characters/Tombstone.tscn" type="PackedScene" id=5]
+[ext_resource path="res://resources/characters/default_eater/eye/eye.png" type="Texture" id=6]
+[ext_resource path="res://resources/characters/default_eater/eye/eye_high.png" type="Texture" id=7]
+[ext_resource path="res://resources/characters/default_eater/eye/eye_mid.png" type="Texture" id=8]
+[ext_resource path="res://resources/characters/default_eater/eye/eye_center.png" type="Texture" id=9]
+[ext_resource path="res://resources/characters/default_eater/eye/eye_closed.png" type="Texture" id=10]
+
+[sub_resource type="SphereShape" id=6]
+radius = 1.94176
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=40]
+
+[sub_resource type="AnimationNodeAnimation" id=29]
+animation = "idle_foot"
+
+[sub_resource type="AnimationNodeAnimation" id=30]
+animation = "idle_head"
+
+[sub_resource type="AnimationNodeAnimation" id=31]
+animation = "idle_pose"
+
+[sub_resource type="AnimationNodeAnimation" id=27]
+animation = "close_mouth"
+
+[sub_resource type="AnimationNodeOneShot" id=28]
+
+[sub_resource type="AnimationNodeOneShot" id=26]
+filter_enabled = true
+filters = [ "Armature/Skeleton:Bone", "Armature/Skeleton:arm.r", "Armature/Skeleton:chest", "Armature/Skeleton:elbow_point.r", "Armature/Skeleton:finger_big.r", "Armature/Skeleton:finger_min.r", "Armature/Skeleton:forearm.r", "Armature/Skeleton:hand.r", "Armature/Skeleton:head", "Armature/Skeleton:main", "Armature/Skeleton:mouth_down", "Armature/Skeleton:mouth_up", "Armature/Skeleton:neck", "Armature/Skeleton:root", "Armature/Skeleton:shoulder.r", "Armature/Skeleton:thumb.r" ]
+
+[sub_resource type="AnimationNodeAnimation" id=25]
+animation = "eat"
+
+[sub_resource type="AnimationNodeAnimation" id=7]
+animation = "idle-loop"
+
+[sub_resource type="AnimationNodeOneShot" id=32]
+
+[sub_resource type="AnimationNodeOneShot" id=33]
+
+[sub_resource type="AnimationNodeOneShot" id=34]
+
+[sub_resource type="AnimationNodeTimeScale" id=8]
+
+[sub_resource type="AnimationNodeAnimation" id=15]
+animation = "jump-loop"
+
+[sub_resource type="AnimationNodeAnimation" id=16]
+animation = "jump"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=17]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachine" id=18]
+states/jump/node = SubResource( 16 )
+states/jump/position = Vector2( 239, 202 )
+states/jump-loop/node = SubResource( 15 )
+states/jump-loop/position = Vector2( 455, 210 )
+transitions = [ "jump", "jump-loop", SubResource( 17 ) ]
+start_node = "jump"
+
+[sub_resource type="AnimationNodeAnimation" id=12]
+animation = "jump_down"
+
+[sub_resource type="AnimationNodeOneShot" id=14]
+
+[sub_resource type="AnimationNodeAdd2" id=38]
+
+[sub_resource type="AnimationNodeAnimation" id=22]
+animation = "open_mouth"
+
+[sub_resource type="AnimationNodeAnimation" id=35]
+animation = "opened_mouth-loop"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=36]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachine" id=24]
+states/open_mouth/node = SubResource( 22 )
+states/open_mouth/position = Vector2( 167, 164 )
+states/opened_mouth-loop/node = SubResource( 35 )
+states/opened_mouth-loop/position = Vector2( 399, 165 )
+transitions = [ "open_mouth", "opened_mouth-loop", SubResource( 36 ) ]
+start_node = "open_mouth"
+
+[sub_resource type="AnimationNodeTransition" id=19]
+input_count = 3
+input_0/name = "walk"
+input_0/auto_advance = false
+input_1/name = "jump"
+input_1/auto_advance = false
+input_2/name = "open_mouth"
+input_2/auto_advance = false
+
+[sub_resource type="AnimationNodeBlend2" id=13]
+
+[sub_resource type="AnimationNodeAnimation" id=9]
+animation = "walk-loop"
+
+[sub_resource type="AnimationNodeTimeScale" id=10]
+
+[sub_resource type="AnimationNodeBlendTree" id=11]
+graph_offset = Vector2( -208.918, -75.6501 )
+nodes/Animation/node = SubResource( 27 )
+nodes/Animation/position = Vector2( 1440, 220 )
+"nodes/Animation 2/node" = SubResource( 29 )
+"nodes/Animation 2/position" = Vector2( 640, 560 )
+"nodes/Animation 3/node" = SubResource( 30 )
+"nodes/Animation 3/position" = Vector2( 840, 560 )
+"nodes/Animation 4/node" = SubResource( 31 )
+"nodes/Animation 4/position" = Vector2( 1040, 560 )
+nodes/CloseMouth/node = SubResource( 28 )
+nodes/CloseMouth/position = Vector2( 1440, 60 )
+nodes/Eat/node = SubResource( 26 )
+nodes/Eat/position = Vector2( 1240, 60 )
+nodes/EatAnim/node = SubResource( 25 )
+nodes/EatAnim/position = Vector2( 1260, 220 )
+nodes/IdleAnim/node = SubResource( 7 )
+nodes/IdleAnim/position = Vector2( -200, -140 )
+nodes/IdleFoot/node = SubResource( 32 )
+nodes/IdleFoot/position = Vector2( 640, 400 )
+nodes/IdleHead/node = SubResource( 33 )
+nodes/IdleHead/position = Vector2( 840, 400 )
+nodes/IdlePose/node = SubResource( 34 )
+nodes/IdlePose/position = Vector2( 1040, 400 )
+nodes/IdleScale/node = SubResource( 8 )
+nodes/IdleScale/position = Vector2( -60, -140 )
+nodes/Jump/node = SubResource( 18 )
+nodes/Jump/position = Vector2( 160, 300 )
+nodes/JumpDown/node = SubResource( 12 )
+nodes/JumpDown/position = Vector2( 1040, 220 )
+nodes/Land/node = SubResource( 14 )
+nodes/Land/position = Vector2( 1040, 60 )
+nodes/OpenMouth/node = SubResource( 38 )
+nodes/OpenMouth/position = Vector2( 380, 20 )
+nodes/OpenMouthAnim/node = SubResource( 24 )
+nodes/OpenMouthAnim/position = Vector2( 160, 180 )
+nodes/State/node = SubResource( 19 )
+nodes/State/position = Vector2( 600, 160 )
+nodes/Walk/node = SubResource( 13 )
+nodes/Walk/position = Vector2( 100, -100 )
+nodes/WalkAnim/node = SubResource( 9 )
+nodes/WalkAnim/position = Vector2( -200, -20 )
+nodes/WalkScale/node = SubResource( 10 )
+nodes/WalkScale/position = Vector2( -60, -20 )
+nodes/output/position = Vector2( 1660, 60 )
+node_connections = [ "output", 0, "CloseMouth", "Eat", 0, "Land", "Eat", 1, "EatAnim", "IdleHead", 0, "IdleFoot", "IdleHead", 1, "Animation 3", "IdleFoot", 0, "State", "IdleFoot", 1, "Animation 2", "WalkScale", 0, "WalkAnim", "IdlePose", 0, "IdleHead", "IdlePose", 1, "Animation 4", "IdleScale", 0, "IdleAnim", "OpenMouth", 0, "Walk", "OpenMouth", 1, "OpenMouthAnim", "State", 0, "OpenMouth", "State", 1, "Jump", "Walk", 0, "IdleScale", "Walk", 1, "WalkScale", "Land", 0, "IdlePose", "Land", 1, "JumpDown", "CloseMouth", 0, "Eat", "CloseMouth", 1, "Animation" ]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=20]
+
+[sub_resource type="CapsuleShape" id=4]
+radius = 1.75083
+height = 6.1113
+
+[sub_resource type="SpatialMaterial" id=5]
+flags_unshaded = true
+albedo_color = Color( 1, 0, 0, 1 )
+
+[sub_resource type="SphereShape" id=37]
+radius = 3.38544
+
+[node name="CharacterKB" type="KinematicBody"]
+transform = Transform( 0.999995, 0, 0.00324631, 0, 1, 0, -0.00324631, 0, 0.999995, 0, 0, 0 )
+collision_layer = 8
+collision_mask = 6
+script = ExtResource( 2 )
+animTreePath = NodePath("character/AnimationTreeWithBlend")
+sensorMouthPath = NodePath("character/Armature/Skeleton/Mouth/MouthSensor")
+viewFieldPath = NodePath("ViewField")
+navigationAgentPath = NodePath("NavigationAgent")
+igPath = NodePath("ig")
+eyePath = NodePath("character/Armature/Skeleton/Eyes/REye/character_eye/Sphere")
+eyeTextures = [ ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ) ]
+statusesResource = ExtResource( 3 )
+tombstone = ExtResource( 5 )
+labelVelPath = NodePath("")
+
+[node name="character" parent="." instance=ExtResource( 4 )]
+transform = Transform( 0.17, 0, 0, 0, 0.17, 0, 0, 0, 0.17, 0, 0, 0 )
+
+[node name="Skeleton" parent="character/Armature" index="0"]
+bones/17/bound_children = [  ]
+
+[node name="Cube" parent="character/Armature/Skeleton" index="0"]
+material/0 = ExtResource( 1 )
+
+[node name="Eyes" parent="character/Armature/Skeleton" index="1"]
+transform = Transform( 1, -1.57952e-06, -2.68221e-07, 2.01166e-07, 0.0422917, 0.999106, 1.01328e-06, -0.99911, 0.0422914, -0.0952901, 8.89431, -0.759584 )
+
+[node name="character_eye" parent="character/Armature/Skeleton/Eyes/REye" index="0"]
+transform = Transform( 1, -7.36793e-07, -2.54251e-07, 7.21542e-07, 0.87976, 0.475423, 6.75092e-07, -0.475425, 0.879753, -0.0732958, 0.0953681, 0.116553 )
+
+[node name="Sphere" parent="character/Armature/Skeleton/Eyes/REye/character_eye" index="0"]
+transform = Transform( 1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0 )
+
+[node name="Mouth" type="BoneAttachment" parent="character/Armature/Skeleton" index="2"]
+transform = Transform( 1, -9.83477e-07, 1.20699e-06, -1.19209e-06, 0.165981, 0.986129, 1.46031e-06, -0.986133, 0.165981, -0.0952938, 5.52546, -1.50738 )
+bone_name = "mouth_down"
+
+[node name="MouthSensor" type="Area" parent="character/Armature/Skeleton/Mouth"]
+transform = Transform( 1, -4.16767e-08, -2.66009e-08, -1.86265e-08, 0.99516, 0.0982758, 9.66247e-08, -0.0982761, 0.995158, -0.000863798, 0.306892, 0.848641 )
+collision_mask = 64
+
+[node name="CollisionShape" type="CollisionShape" parent="character/Armature/Skeleton/Mouth/MouthSensor"]
+transform = Transform( 1, 8.31205e-08, -1.49477e-07, 4.00469e-08, 0.991997, 0.126258, 1.62632e-07, -0.126258, 0.991998, 0.000961013, 0.700423, 0.0735097 )
+shape = SubResource( 6 )
+
+[node name="AnimationPlayer" parent="character" index="1"]
+playback_speed = 1.2
+
+[node name="AnimationTree" parent="character" index="2"]
+root_motion_track = NodePath("Armature/Skeleton:root")
+parameters/playback = SubResource( 40 )
+
+[node name="AnimationTreeWithBlend" type="AnimationTree" parent="character"]
+tree_root = SubResource( 11 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/CloseMouth/active = false
+parameters/Eat/active = false
+parameters/IdleFoot/active = false
+parameters/IdleHead/active = false
+parameters/IdlePose/active = false
+parameters/IdleScale/scale = 1.19
+parameters/Jump/playback = SubResource( 20 )
+parameters/Land/active = false
+parameters/OpenMouth/add_amount = 0.0
+parameters/OpenMouthAnim/playback = SubResource( 20 )
+parameters/State/current = 0
+parameters/Walk/blend_amount = 0.0
+parameters/WalkScale/scale = 1.0
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 0.17, 2.91038e-10, -4.68375e-17, 0, -7.43094e-09, -0.17, -2.91038e-10, 0.17, -7.43094e-09, -0.00040984, 0.785543, 0.0100294 )
+shape = SubResource( 4 )
+
+[node name="NavigationAgent" type="NavigationAgent" parent="."]
+
+[node name="ig" type="ImmediateGeometry" parent="."]
+material_override = SubResource( 5 )
+
+[node name="ViewField" type="Area" parent="."]
+transform = Transform( 1, 0, 9.31323e-10, 0, 1, 0, -9.31323e-10, 0, 1, 0, 0.467689, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="ViewField"]
+transform = Transform( 1, 0, 2.32831e-10, 0, 1, 0, -2.32831e-10, 0, 1, 0, 0, 0 )
+shape = SubResource( 37 )
+
+[editable path="character"]
+[editable path="character/Armature/Skeleton/Eyes/REye/character_eye"]
+[editable path="character/Armature/Skeleton/Eyes/LEye/character_eye"]

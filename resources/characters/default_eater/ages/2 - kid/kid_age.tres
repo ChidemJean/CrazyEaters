@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://src/Resources/CharacterAgeData.cs" type="Script" id=1]
+[ext_resource path="res://resources/characters/default_eater/ages/2 - kid/statuses.tres" type="Resource" id=2]
+
+[resource]
+script = ExtResource( 1 )
+name = "Criança"
+timeToEvolve = null
+statusesCharacter = ExtResource( 2 )

@@ -10,6 +10,10 @@ namespace CrazyEaters.Managers
 {
     public class ItemsManager : Node
     {
+        [Export] public CustomRarity commonCustom;
+        [Export] public CustomRarity uncommonCustom;
+        [Export] public CustomRarity epicCustom;
+        [Export] public CustomRarity superCustom;
         [Export] private BuyablesData allItems;
         [Inject] private SaveSystemNode saveSystemNode;
 

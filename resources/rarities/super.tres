@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://src/Resources/CustomRarity.cs" type="Script" id=1]
+[ext_resource path="res://assets/materials/ui/Rainbow.tres" type="Material" id=2]
+
+[resource]
+script = ExtResource( 1 )
+name = "Lendário"
+color = Color( 0, 0, 0, 1 )
+material = ExtResource( 2 )

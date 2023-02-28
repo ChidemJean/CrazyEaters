@@ -17,7 +17,7 @@
 [ext_resource path="res://prefabs/ui/CharacterStat.tscn" type="PackedScene" id=15]
 [ext_resource path="res://assets/textures/UI/shadow_w_screen.png" type="Texture" id=16]
 [ext_resource path="res://src/UI/EaterStep.cs" type="Script" id=17]
-[ext_resource path="res://assets/textures/UI/habitats/habitat_1.png" type="Texture" id=18]
+[ext_resource path="res://resources/habitats/apocalypse_habitat/habitat_1.png" type="Texture" id=18]
 [ext_resource path="res://assets/textures/UI/share.png" type="Texture" id=19]
 [ext_resource path="res://assets/textures/UI/button_red.png" type="Texture" id=20]
 [ext_resource path="res://assets/textures/UI/button_red_pressed.png" type="Texture" id=21]
@@ -178,19 +178,19 @@ custom_constants/separation = 12
 alignment = 1
 
 [node name="Label" type="Label" parent="Eater/Header/Main/MarginContainer/VBoxContainer/Current/HBoxContainer"]
-margin_left = 489.0
+margin_left = 496.0
 margin_top = 13.0
-margin_right = 519.0
+margin_right = 529.0
 margin_bottom = 107.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_y = 5
 custom_fonts/font = SubResource( 6 )
-text = "8"
+text = "0"
 
 [node name="Label2" type="Label" parent="Eater/Header/Main/MarginContainer/VBoxContainer/Current/HBoxContainer"]
-margin_left = 531.0
+margin_left = 541.0
 margin_top = 32.0
-margin_right = 542.0
+margin_right = 552.0
 margin_bottom = 88.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
@@ -199,15 +199,15 @@ custom_fonts/font = SubResource( 7 )
 text = "/"
 
 [node name="Label3" type="Label" parent="Eater/Header/Main/MarginContainer/VBoxContainer/Current/HBoxContainer"]
-margin_left = 554.0
+margin_left = 564.0
 margin_top = 32.0
-margin_right = 590.0
+margin_right = 583.0
 margin_bottom = 88.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_y = 5
 custom_fonts/font = SubResource( 7 )
-text = "20"
+text = "0"
 
 [node name="Slider" type="Control" parent="Eater/Header/Main/MarginContainer/VBoxContainer"]
 margin_top = 104.0

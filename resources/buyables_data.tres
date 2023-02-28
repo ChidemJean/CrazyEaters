@@ -1,11 +1,13 @@
-[gd_resource type="Resource" load_steps=6 format=2]
+[gd_resource type="Resource" load_steps=8 format=2]
 
 [ext_resource path="res://src/Resources/Collections/BuyablesData.cs" type="Script" id=1]
 [ext_resource path="res://resources/items/foods/hamburguer.tres" type="Resource" id=2]
 [ext_resource path="res://resources/items/blocks/chair_block.tres" type="Resource" id=3]
 [ext_resource path="res://resources/items/blocks/wall_frame.tres" type="Resource" id=4]
 [ext_resource path="res://resources/items/blocks/stone_stair.tres" type="Resource" id=5]
+[ext_resource path="res://resources/characters/default_eater/default_eater.tres" type="Resource" id=6]
+[ext_resource path="res://resources/habitats/apocalypse_habitat/apocalypse_habitat.tres" type="Resource" id=7]
 
 [resource]
 script = ExtResource( 1 )
-buyables = [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 5 ), ExtResource( 4 ) ]
+buyables = [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 6 ), ExtResource( 7 ) ]

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://src/Resources/CustomRarity.cs" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+name = "Incomum"
+color = Color( 0.282353, 1, 0.109804, 1 )

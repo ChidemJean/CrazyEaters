@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://scenes/Game/GameScene.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/textures/UI/logo_chidem_games.fw.png" type="Texture" id=2]
@@ -22,6 +22,10 @@
 [ext_resource path="res://resources/buyables_data.tres" type="Resource" id=20]
 [ext_resource path="res://src/Managers/QuestsManager.cs" type="Script" id=21]
 [ext_resource path="res://src/Managers/AccountManager.cs" type="Script" id=22]
+[ext_resource path="res://resources/rarities/epic.tres" type="Resource" id=23]
+[ext_resource path="res://resources/rarities/super.tres" type="Resource" id=24]
+[ext_resource path="res://resources/rarities/uncommom.tres" type="Resource" id=25]
+[ext_resource path="res://resources/rarities/commom.tres" type="Resource" id=26]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 content_margin_left = 45.0
@@ -58,6 +62,10 @@ coins = 250
 
 [node name="ItemsManager" type="Node" parent="."]
 script = ExtResource( 19 )
+commonCustom = ExtResource( 26 )
+uncommonCustom = ExtResource( 25 )
+epicCustom = ExtResource( 23 )
+superCustom = ExtResource( 24 )
 allItems = ExtResource( 20 )
 
 [node name="QuestsManager" type="Node" parent="."]
