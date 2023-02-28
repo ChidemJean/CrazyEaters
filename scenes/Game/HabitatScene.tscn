@@ -294,9 +294,6 @@ numPoints = 5
 timeBetweenPoints = 0.2
 throwablePath = NodePath("../../../Hamburguer")
 
-[node name="Skeleton" parent="CameraPivot/Camera/spatula/Armature" index="0"]
-bones/4/bound_children = [ NodePath("BoneAttachment") ]
-
 [node name="BoneAttachment" parent="CameraPivot/Camera/spatula/Armature/Skeleton" index="1"]
 transform = Transform( 0.997886, 0.0615615, 0.0208422, -0.061768, 0.998046, 0.0094159, -0.0202219, -0.0106834, 0.999738, -0.248285, 3.04844, 0.0488994 )
 
@@ -384,7 +381,8 @@ transform = Transform( -0.0799941, 0, -0.000971776, 0, 0.08, 0, 0.000971776, 0, 
 transform = Transform( 0.640906, 0, 0, 0, 1, 0, 0, 0, 0.639502, -32.2242, 1.62828, -9.44412 )
 
 [node name="CharacterKB" parent="Navigation" instance=ExtResource( 26 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2795, 14.0168, 1.72584 )
+transform = Transform( -0.629714, 0, -0.776827, 0, 1, 0, 0.776827, 0, -0.629714, 2.2795, 10.1074, 1.72584 )
+visible = false
 speed = 4.0
 speedFactor = 10.0
 gravityScale = 0.4

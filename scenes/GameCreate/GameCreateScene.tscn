@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://assets/textures/radial_shadows.png" type="Texture" id=1]
 [ext_resource path="res://assets/textures/background_wood.png" type="Texture" id=2]
@@ -17,6 +17,30 @@
 [ext_resource path="res://prefabs/ui/CharacterStat.tscn" type="PackedScene" id=15]
 [ext_resource path="res://assets/textures/UI/shadow_w_screen.png" type="Texture" id=16]
 [ext_resource path="res://src/UI/EaterStep.cs" type="Script" id=17]
+[ext_resource path="res://assets/textures/UI/habitats/habitat_1.png" type="Texture" id=18]
+[ext_resource path="res://assets/textures/UI/share.png" type="Texture" id=19]
+[ext_resource path="res://assets/textures/UI/button_red.png" type="Texture" id=20]
+[ext_resource path="res://assets/textures/UI/button_red_pressed.png" type="Texture" id=21]
+[ext_resource path="res://assets/textures/UI/trash.png" type="Texture" id=22]
+[ext_resource path="res://assets/textures/UI/blocks_limit.png" type="Texture" id=23]
+[ext_resource path="res://assets/textures/UI/button_green_pressed.png" type="Texture" id=24]
+[ext_resource path="res://assets/textures/UI/button_green.png" type="Texture" id=25]
+[ext_resource path="res://assets/textures/UI/check.png" type="Texture" id=26]
+[ext_resource path="res://src/UI/LauncherItem.tscn" type="PackedScene" id=29]
+
+[sub_resource type="DynamicFont" id=6]
+size = 54
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=7]
+size = 32
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = ExtResource( 3 )
 
 [sub_resource type="DynamicFont" id=2]
 size = 35
@@ -36,6 +60,13 @@ outline_color = Color( 0, 0, 0, 1 )
 use_filter = true
 extra_spacing_top = -20
 extra_spacing_bottom = -20
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=8]
+size = 38
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
 font_data = ExtResource( 3 )
 
 [sub_resource type="DynamicFont" id=5]
@@ -75,6 +106,7 @@ texture = ExtResource( 1 )
 expand = true
 
 [node name="Eater" type="Control" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 17 )
@@ -83,8 +115,6 @@ footerPath = NodePath("../Footer")
 
 [node name="Header" type="Control" parent="Eater"]
 anchor_right = 1.0
-margin_top = -800.0
-margin_bottom = -800.0
 
 [node name="Shadow" type="TextureRect" parent="Eater/Header"]
 anchor_right = 1.0
@@ -114,19 +144,69 @@ stretch_mode = 1
 [node name="MarginContainer" type="MarginContainer" parent="Eater/Header/Main2"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_constants/margin_top = 300
+custom_constants/margin_top = 240
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Eater/Header/Main2/MarginContainer"]
-margin_top = 300.0
+margin_top = 240.0
 margin_right = 1080.0
 margin_bottom = 1085.0
 
-[node name="Control" type="Control" parent="Eater/Header/Main2/MarginContainer/VBoxContainer"]
+[node name="Current" type="Control" parent="Eater/Header/Main2/MarginContainer/VBoxContainer"]
 margin_right = 1080.0
-margin_bottom = 550.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 0, 100 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/Current"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -540.0
+margin_top = -60.0
+margin_right = 540.0
+margin_bottom = 60.0
+custom_constants/separation = 12
+alignment = 1
+
+[node name="Label" type="Label" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/Current/HBoxContainer"]
+margin_left = 489.0
+margin_top = 13.0
+margin_right = 519.0
+margin_bottom = 107.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_y = 5
+custom_fonts/font = SubResource( 6 )
+text = "8"
+
+[node name="Label2" type="Label" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/Current/HBoxContainer"]
+margin_left = 531.0
+margin_top = 32.0
+margin_right = 542.0
+margin_bottom = 88.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_y = 5
+custom_fonts/font = SubResource( 7 )
+text = "/"
+
+[node name="Label3" type="Label" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/Current/HBoxContainer"]
+margin_left = 554.0
+margin_top = 32.0
+margin_right = 590.0
+margin_bottom = 88.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_y = 5
+custom_fonts/font = SubResource( 7 )
+text = "20"
+
+[node name="Slider" type="Control" parent="Eater/Header/Main2/MarginContainer/VBoxContainer"]
+margin_top = 104.0
+margin_right = 1080.0
+margin_bottom = 654.0
 rect_min_size = Vector2( 0, 550 )
 
-[node name="TextureRect" type="TextureRect" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/Control"]
+[node name="TextureRect" type="TextureRect" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/Slider"]
 self_modulate = Color( 1, 1, 1, 0.27451 )
 anchor_left = 0.5
 anchor_top = 1.0
@@ -140,7 +220,7 @@ texture = ExtResource( 13 )
 expand = true
 stretch_mode = 6
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/Control"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/Slider"]
 anchor_left = 0.5
 anchor_right = 0.5
 anchor_bottom = 1.0
@@ -149,7 +229,7 @@ grow_vertical = 2
 custom_constants/separation = 120
 alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/Control/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/Slider/HBoxContainer"]
 modulate = Color( 0.4, 0.4, 0.4, 0.67451 )
 margin_right = 300.0
 margin_bottom = 550.0
@@ -158,7 +238,7 @@ texture = ExtResource( 11 )
 expand = true
 stretch_mode = 6
 
-[node name="TextureRect2" type="TextureRect" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/Control/HBoxContainer"]
+[node name="TextureRect2" type="TextureRect" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/Slider/HBoxContainer"]
 margin_left = 420.0
 margin_right = 870.0
 margin_bottom = 550.0
@@ -167,7 +247,7 @@ texture = ExtResource( 11 )
 expand = true
 stretch_mode = 6
 
-[node name="TextureRect3" type="TextureRect" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/Control/HBoxContainer"]
+[node name="TextureRect3" type="TextureRect" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/Slider/HBoxContainer"]
 modulate = Color( 0.4, 0.4, 0.4, 0.67451 )
 margin_left = 990.0
 margin_right = 1290.0
@@ -177,51 +257,51 @@ texture = ExtResource( 11 )
 expand = true
 stretch_mode = 6
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Eater/Header/Main2/MarginContainer/VBoxContainer"]
-margin_top = 554.0
+[node name="Infs" type="HBoxContainer" parent="Eater/Header/Main2/MarginContainer/VBoxContainer"]
+margin_top = 658.0
 margin_right = 1080.0
-margin_bottom = 785.0
+margin_bottom = 845.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/Infs"]
 margin_right = 690.0
-margin_bottom = 231.0
+margin_bottom = 187.0
 rect_min_size = Vector2( 690, 0 )
 custom_constants/margin_right = 40
 custom_constants/margin_left = 40
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/Infs/MarginContainer"]
 margin_left = 40.0
 margin_right = 650.0
-margin_bottom = 231.0
+margin_bottom = 187.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 alignment = 1
 
-[node name="Label" type="Label" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer"]
-margin_top = 54.0
+[node name="Label" type="Label" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/Infs/MarginContainer/VBoxContainer"]
+margin_top = 32.0
 margin_right = 610.0
-margin_bottom = 103.0
+margin_bottom = 81.0
 custom_colors/font_color = Color( 1, 0.952941, 0.160784, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_y = 5
 custom_fonts/font = SubResource( 2 )
 text = "Raro"
 
-[node name="Control" type="Control" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer"]
-margin_top = 107.0
+[node name="Control" type="Control" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/Infs/MarginContainer/VBoxContainer"]
+margin_top = 85.0
 margin_right = 610.0
-margin_bottom = 177.0
+margin_bottom = 155.0
 rect_min_size = Vector2( 0, 70 )
 
-[node name="Name" type="LineEdit" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/Control"]
+[node name="Name" type="LineEdit" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/Infs/MarginContainer/VBoxContainer/Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_fonts/font = ExtResource( 12 )
 custom_styles/normal = SubResource( 3 )
 
-[node name="Label2" type="Label" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/Control"]
+[node name="Label2" type="Label" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/Infs/MarginContainer/VBoxContainer/Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
@@ -230,47 +310,47 @@ custom_fonts/font = SubResource( 4 )
 text = "Default eater"
 autowrap = true
 
-[node name="MarginContainer2" type="MarginContainer" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="MarginContainer2" type="MarginContainer" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/Infs"]
 margin_left = 694.0
 margin_right = 1080.0
-margin_bottom = 231.0
+margin_bottom = 187.0
 custom_constants/margin_right = 40
 custom_constants/margin_left = 40
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer2"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/Infs/MarginContainer2"]
 margin_left = 40.0
 margin_right = 346.0
-margin_bottom = 231.0
+margin_bottom = 187.0
 size_flags_horizontal = 3
 custom_constants/separation = 18
 
-[node name="TextureRect" type="TextureRect" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer2/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/Infs/MarginContainer2/HBoxContainer"]
 modulate = Color( 0, 0, 0, 1 )
 self_modulate = Color( 1, 1, 1, 0.447059 )
 margin_right = 90.0
-margin_bottom = 231.0
+margin_bottom = 187.0
 rect_min_size = Vector2( 90, 0 )
 texture = ExtResource( 11 )
 expand = true
 stretch_mode = 6
 
-[node name="TextureRect2" type="TextureRect" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer2/HBoxContainer"]
+[node name="TextureRect2" type="TextureRect" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/Infs/MarginContainer2/HBoxContainer"]
 modulate = Color( 0, 0, 0, 1 )
 self_modulate = Color( 1, 1, 1, 0.447059 )
 margin_left = 108.0
 margin_right = 198.0
-margin_bottom = 231.0
+margin_bottom = 187.0
 rect_min_size = Vector2( 90, 0 )
 texture = ExtResource( 11 )
 expand = true
 stretch_mode = 6
 
-[node name="TextureRect3" type="TextureRect" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer2/HBoxContainer"]
+[node name="TextureRect3" type="TextureRect" parent="Eater/Header/Main2/MarginContainer/VBoxContainer/Infs/MarginContainer2/HBoxContainer"]
 modulate = Color( 0, 0, 0, 1 )
 self_modulate = Color( 1, 1, 1, 0.447059 )
 margin_left = 216.0
 margin_right = 306.0
-margin_bottom = 231.0
+margin_bottom = 187.0
 rect_min_size = Vector2( 90, 0 )
 texture = ExtResource( 11 )
 expand = true
@@ -331,12 +411,469 @@ margin_right = 990.0
 margin_bottom = 510.0
 
 [node name="Habitat" type="Control" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
+
+[node name="Header" type="Control" parent="Habitat"]
+anchor_right = 1.0
+
+[node name="Shadow" type="TextureRect" parent="Habitat/Header"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 753.0
+margin_bottom = 1010.0
+texture = ExtResource( 16 )
+expand = true
+flip_v = true
+
+[node name="Main2" type="ColorRect" parent="Habitat/Header"]
+anchor_right = 1.0
+margin_top = -206.0
+margin_bottom = 917.0
+color = Color( 0.478431, 0.27451, 0.137255, 1 )
+
+[node name="TextureRect" type="TextureRect" parent="Habitat/Header/Main2"]
+self_modulate = Color( 1, 1, 1, 0.34902 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 61.0
+margin_bottom = -24.0
+texture = ExtResource( 9 )
+expand = true
+stretch_mode = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="Habitat/Header/Main2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_top = 240
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Habitat/Header/Main2/MarginContainer"]
+margin_top = 240.0
+margin_right = 1080.0
+margin_bottom = 1123.0
+
+[node name="Current" type="Control" parent="Habitat/Header/Main2/MarginContainer/VBoxContainer"]
+margin_right = 1080.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 0, 100 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Habitat/Header/Main2/MarginContainer/VBoxContainer/Current"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -540.0
+margin_top = -60.0
+margin_right = 540.0
+margin_bottom = 60.0
+custom_constants/separation = 12
+alignment = 1
+
+[node name="Label" type="Label" parent="Habitat/Header/Main2/MarginContainer/VBoxContainer/Current/HBoxContainer"]
+margin_left = 489.0
+margin_top = 13.0
+margin_right = 519.0
+margin_bottom = 107.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_y = 5
+custom_fonts/font = SubResource( 6 )
+text = "8"
+
+[node name="Label2" type="Label" parent="Habitat/Header/Main2/MarginContainer/VBoxContainer/Current/HBoxContainer"]
+margin_left = 531.0
+margin_top = 32.0
+margin_right = 542.0
+margin_bottom = 88.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_y = 5
+custom_fonts/font = SubResource( 7 )
+text = "/"
+
+[node name="Label3" type="Label" parent="Habitat/Header/Main2/MarginContainer/VBoxContainer/Current/HBoxContainer"]
+margin_left = 554.0
+margin_top = 32.0
+margin_right = 590.0
+margin_bottom = 88.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_y = 5
+custom_fonts/font = SubResource( 7 )
+text = "20"
+
+[node name="Slider" type="Control" parent="Habitat/Header/Main2/MarginContainer/VBoxContainer"]
+margin_top = 104.0
+margin_right = 1080.0
+margin_bottom = 654.0
+rect_min_size = Vector2( 0, 550 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Habitat/Header/Main2/MarginContainer/VBoxContainer/Slider"]
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_constants/separation = 120
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Habitat/Header/Main2/MarginContainer/VBoxContainer/Slider/HBoxContainer"]
+modulate = Color( 0.4, 0.4, 0.4, 0.67451 )
+margin_right = 300.0
+margin_bottom = 550.0
+rect_min_size = Vector2( 300, 0 )
+texture = ExtResource( 18 )
+expand = true
+stretch_mode = 6
+
+[node name="TextureRect2" type="TextureRect" parent="Habitat/Header/Main2/MarginContainer/VBoxContainer/Slider/HBoxContainer"]
+margin_left = 420.0
+margin_right = 1090.0
+margin_bottom = 550.0
+rect_min_size = Vector2( 670, 0 )
+texture = ExtResource( 18 )
+expand = true
+stretch_mode = 6
+
+[node name="TextureRect3" type="TextureRect" parent="Habitat/Header/Main2/MarginContainer/VBoxContainer/Slider/HBoxContainer"]
+modulate = Color( 0.4, 0.4, 0.4, 0.67451 )
+margin_left = 1210.0
+margin_right = 1510.0
+margin_bottom = 550.0
+rect_min_size = Vector2( 300, 0 )
+texture = ExtResource( 18 )
+expand = true
+stretch_mode = 6
+
+[node name="Infs" type="HBoxContainer" parent="Habitat/Header/Main2/MarginContainer/VBoxContainer"]
+margin_top = 658.0
+margin_right = 1080.0
+margin_bottom = 883.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="Habitat/Header/Main2/MarginContainer/VBoxContainer/Infs"]
+margin_right = 650.0
+margin_bottom = 225.0
+rect_min_size = Vector2( 650, 0 )
+custom_constants/margin_right = 40
+custom_constants/margin_left = 40
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Habitat/Header/Main2/MarginContainer/VBoxContainer/Infs/MarginContainer"]
+margin_left = 40.0
+margin_right = 610.0
+margin_bottom = 225.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 10
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Habitat/Header/Main2/MarginContainer/VBoxContainer/Infs/MarginContainer/VBoxContainer"]
+margin_top = 22.0
+margin_right = 570.0
+margin_bottom = 92.0
+custom_constants/separation = 25
+alignment = 1
+
+[node name="Control" type="Control" parent="Habitat/Header/Main2/MarginContainer/VBoxContainer/Infs/MarginContainer/VBoxContainer/HBoxContainer"]
+margin_right = 570.0
+margin_bottom = 70.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 0, 70 )
+size_flags_horizontal = 3
+
+[node name="Name" type="LineEdit" parent="Habitat/Header/Main2/MarginContainer/VBoxContainer/Infs/MarginContainer/VBoxContainer/HBoxContainer/Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 12 )
+custom_styles/normal = SubResource( 3 )
+
+[node name="Label2" type="Label" parent="Habitat/Header/Main2/MarginContainer/VBoxContainer/Infs/MarginContainer/VBoxContainer/HBoxContainer/Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_y = 5
+custom_fonts/font = SubResource( 4 )
+text = "Porto inicial"
+valign = 1
+autowrap = true
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Habitat/Header/Main2/MarginContainer/VBoxContainer/Infs/MarginContainer/VBoxContainer"]
+margin_top = 102.0
+margin_right = 570.0
+margin_bottom = 202.0
+custom_constants/separation = 15
+
+[node name="BlueButtonNinePatch" parent="Habitat/Header/Main2/MarginContainer/VBoxContainer/Infs/MarginContainer/VBoxContainer/HBoxContainer2" instance=ExtResource( 5 )]
+margin_right = 100.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 100, 100 )
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="TextureButton" type="TextureButton" parent="Habitat/Header/Main2/MarginContainer/VBoxContainer/Infs/MarginContainer/VBoxContainer/HBoxContainer2/BlueButtonNinePatch"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -44.0
+margin_top = -57.0
+margin_right = 36.0
+margin_bottom = 23.0
+rect_min_size = Vector2( 80, 80 )
+mouse_filter = 2
+texture_normal = ExtResource( 19 )
+expand = true
+stretch_mode = 5
+
+[node name="BlueButtonNinePatch2" parent="Habitat/Header/Main2/MarginContainer/VBoxContainer/Infs/MarginContainer/VBoxContainer/HBoxContainer2" instance=ExtResource( 5 )]
+margin_left = 115.0
+margin_right = 215.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 100, 100 )
+size_flags_horizontal = 1
+size_flags_vertical = 1
+texture = ExtResource( 20 )
+texturePressed = ExtResource( 21 )
+textureNormal = ExtResource( 20 )
+
+[node name="TextureButton" type="TextureButton" parent="Habitat/Header/Main2/MarginContainer/VBoxContainer/Infs/MarginContainer/VBoxContainer/HBoxContainer2/BlueButtonNinePatch2"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -40.0
+margin_top = -61.0
+margin_right = 40.0
+margin_bottom = 19.0
+rect_min_size = Vector2( 80, 80 )
+mouse_filter = 2
+texture_normal = ExtResource( 22 )
+expand = true
+stretch_mode = 5
+
+[node name="MarginContainer2" type="MarginContainer" parent="Habitat/Header/Main2/MarginContainer/VBoxContainer/Infs"]
+margin_left = 654.0
+margin_right = 1080.0
+margin_bottom = 225.0
+size_flags_horizontal = 3
+custom_constants/margin_right = 25
+custom_constants/margin_left = 10
+
+[node name="TextureRect" type="TextureRect" parent="Habitat/Header/Main2/MarginContainer/VBoxContainer/Infs/MarginContainer2"]
+margin_left = 10.0
+margin_right = 401.0
+margin_bottom = 225.0
+texture = ExtResource( 23 )
+expand = true
+stretch_mode = 6
+
+[node name="Control" type="Control" parent="Habitat/Header/Main2/MarginContainer/VBoxContainer/Infs/MarginContainer2"]
+margin_left = 10.0
+margin_right = 401.0
+margin_bottom = 225.0
+
+[node name="Label" type="Label" parent="Habitat/Header/Main2/MarginContainer/VBoxContainer/Infs/MarginContainer2/Control"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -121.0
+margin_top = -87.5
+margin_bottom = -38.5
+custom_colors/font_color = Color( 0.137255, 0.917647, 1, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_y = 5
+custom_fonts/font = SubResource( 2 )
+text = "Comum"
+valign = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Habitat/Header/Main2/MarginContainer/VBoxContainer/Infs/MarginContainer2/Control"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -110.0
+margin_top = -2.0
+margin_right = -6.0
+margin_bottom = 64.0
+grow_horizontal = 0
+custom_constants/separation = 6
+
+[node name="Label" type="Label" parent="Habitat/Header/Main2/MarginContainer/VBoxContainer/Infs/MarginContainer2/Control/HBoxContainer"]
+margin_right = 23.0
+margin_bottom = 66.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_y = 5
+custom_fonts/font = SubResource( 8 )
+text = "0"
+
+[node name="Label2" type="Label" parent="Habitat/Header/Main2/MarginContainer/VBoxContainer/Infs/MarginContainer2/Control/HBoxContainer"]
+margin_left = 29.0
+margin_right = 42.0
+margin_bottom = 66.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_y = 5
+custom_fonts/font = SubResource( 8 )
+text = "/"
+
+[node name="Label3" type="Label" parent="Habitat/Header/Main2/MarginContainer/VBoxContainer/Infs/MarginContainer2/Control/HBoxContainer"]
+margin_left = 48.0
+margin_right = 92.0
+margin_bottom = 66.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_y = 5
+custom_fonts/font = SubResource( 8 )
+text = "60"
+
+[node name="Stats" type="ScrollContainer" parent="Habitat"]
+anchor_right = 1.0
+margin_top = 918.0
+margin_bottom = 1498.0
+rect_min_size = Vector2( 0, 580 )
+
+[node name="MarginContainer" type="MarginContainer" parent="Habitat/Stats"]
+margin_right = 1080.0
+margin_bottom = 560.0
+size_flags_horizontal = 3
+custom_constants/margin_right = 45
+custom_constants/margin_top = 25
+custom_constants/margin_left = 45
+custom_constants/margin_bottom = 25
+
+[node name="GridContainer" type="GridContainer" parent="Habitat/Stats/MarginContainer"]
+margin_left = 45.0
+margin_top = 25.0
+margin_right = 1035.0
+margin_bottom = 535.0
+size_flags_horizontal = 3
+custom_constants/vseparation = 30
+custom_constants/hseparation = 30
+columns = 2
+
+[node name="NinePatchRect" parent="Habitat/Stats/MarginContainer/GridContainer" instance=ExtResource( 15 )]
+margin_right = 480.0
+
+[node name="NinePatchRect2" parent="Habitat/Stats/MarginContainer/GridContainer" instance=ExtResource( 15 )]
+margin_left = 510.0
+margin_right = 990.0
+
+[node name="NinePatchRect3" parent="Habitat/Stats/MarginContainer/GridContainer" instance=ExtResource( 15 )]
+margin_top = 180.0
+margin_right = 480.0
+margin_bottom = 330.0
+
+[node name="NinePatchRect4" parent="Habitat/Stats/MarginContainer/GridContainer" instance=ExtResource( 15 )]
+margin_left = 510.0
+margin_top = 180.0
+margin_right = 990.0
+margin_bottom = 330.0
+
+[node name="NinePatchRect5" parent="Habitat/Stats/MarginContainer/GridContainer" instance=ExtResource( 15 )]
+margin_top = 360.0
+margin_right = 480.0
+margin_bottom = 510.0
+
+[node name="NinePatchRect6" parent="Habitat/Stats/MarginContainer/GridContainer" instance=ExtResource( 15 )]
+margin_left = 510.0
+margin_top = 360.0
+margin_right = 990.0
+margin_bottom = 510.0
 
 [node name="Launcher" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Launcher"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = -373.0
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="Launcher/ScrollContainer"]
+margin_right = 1068.0
+margin_bottom = 1561.0
+size_flags_horizontal = 3
+custom_constants/margin_right = 60
+custom_constants/margin_top = 170
+custom_constants/margin_left = 60
+
+[node name="GridContainer" type="GridContainer" parent="Launcher/ScrollContainer/MarginContainer"]
+margin_left = 60.0
+margin_top = 170.0
+margin_right = 1008.0
+margin_bottom = 1561.0
+size_flags_horizontal = 3
+custom_constants/vseparation = 37
+custom_constants/hseparation = 22
+columns = 3
+
+[node name="Launcher2" parent="Launcher/ScrollContainer/MarginContainer/GridContainer" instance=ExtResource( 29 )]
+margin_left = 0.0
+margin_right = 302.0
+
+[node name="Launcher3" parent="Launcher/ScrollContainer/MarginContainer/GridContainer" instance=ExtResource( 29 )]
+margin_left = 324.0
+margin_right = 625.0
+
+[node name="Launcher4" parent="Launcher/ScrollContainer/MarginContainer/GridContainer" instance=ExtResource( 29 )]
+margin_left = 647.0
+margin_right = 948.0
+
+[node name="Launcher5" parent="Launcher/ScrollContainer/MarginContainer/GridContainer" instance=ExtResource( 29 )]
+margin_left = 0.0
+margin_top = 357.0
+margin_right = 302.0
+margin_bottom = 677.0
+
+[node name="Launcher6" parent="Launcher/ScrollContainer/MarginContainer/GridContainer" instance=ExtResource( 29 )]
+margin_left = 324.0
+margin_top = 357.0
+margin_right = 625.0
+margin_bottom = 677.0
+
+[node name="Launcher7" parent="Launcher/ScrollContainer/MarginContainer/GridContainer" instance=ExtResource( 29 )]
+margin_left = 647.0
+margin_top = 357.0
+margin_right = 948.0
+margin_bottom = 677.0
+
+[node name="Launcher8" parent="Launcher/ScrollContainer/MarginContainer/GridContainer" instance=ExtResource( 29 )]
+margin_left = 0.0
+margin_top = 714.0
+margin_right = 302.0
+margin_bottom = 1034.0
+
+[node name="Launcher9" parent="Launcher/ScrollContainer/MarginContainer/GridContainer" instance=ExtResource( 29 )]
+margin_left = 324.0
+margin_top = 714.0
+margin_right = 625.0
+margin_bottom = 1034.0
+
+[node name="Launcher10" parent="Launcher/ScrollContainer/MarginContainer/GridContainer" instance=ExtResource( 29 )]
+margin_left = 647.0
+margin_top = 714.0
+margin_right = 948.0
+margin_bottom = 1034.0
+
+[node name="Launcher11" parent="Launcher/ScrollContainer/MarginContainer/GridContainer" instance=ExtResource( 29 )]
+margin_left = 0.0
+margin_top = 1071.0
+margin_right = 302.0
+margin_bottom = 1391.0
+
+[node name="Launcher12" parent="Launcher/ScrollContainer/MarginContainer/GridContainer" instance=ExtResource( 29 )]
+margin_left = 324.0
+margin_top = 1071.0
+margin_right = 625.0
+margin_bottom = 1391.0
+
+[node name="Launcher13" parent="Launcher/ScrollContainer/MarginContainer/GridContainer" instance=ExtResource( 29 )]
+margin_left = 647.0
+margin_top = 1071.0
+margin_right = 948.0
+margin_bottom = 1391.0
 
 [node name="Header" type="MarginContainer" parent="."]
 anchor_right = 1.0
@@ -396,8 +933,7 @@ stretch_mode = 6
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -4.0
-margin_bottom = 340.0
+margin_top = -344.0
 
 [node name="Dots" type="MarginContainer" parent="Footer"]
 margin_right = 1080.0
@@ -574,6 +1110,44 @@ margin_top = 36.0
 margin_right = -52.0
 margin_bottom = 106.0
 texture = ExtResource( 10 )
+expand = true
+
+[node name="BlueButtonNinePatch3" parent="Footer/Buttons/HBoxContainer" instance=ExtResource( 5 )]
+visible = false
+margin_left = 555.0
+margin_right = 980.0
+margin_bottom = 160.0
+texture = ExtResource( 25 )
+texturePressed = ExtResource( 24 )
+textureNormal = ExtResource( 25 )
+
+[node name="Control" type="Control" parent="Footer/Buttons/HBoxContainer/BlueButtonNinePatch3"]
+anchor_right = 1.0
+margin_top = -3.0
+margin_bottom = 113.0
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="Footer/Buttons/HBoxContainer/BlueButtonNinePatch3/Control"]
+margin_left = 55.0
+margin_top = 29.0
+margin_right = 285.0
+margin_bottom = 116.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_y = 5
+custom_fonts/font = SubResource( 1 )
+text = "Pronto!"
+valign = 1
+
+[node name="TextureRect" type="TextureRect" parent="Footer/Buttons/HBoxContainer/BlueButtonNinePatch3/Control"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -136.0
+margin_top = 8.0
+margin_right = -33.0
+margin_bottom = 111.0
+texture = ExtResource( 26 )
 expand = true
 
 [node name="TextureButton" type="TextureButton" parent="."]
