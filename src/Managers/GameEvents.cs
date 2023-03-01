@@ -18,6 +18,7 @@ namespace CrazyEaters.Managers
         XpUpdate,
         CoinsUpdate,
         BeansUpdate,
+        SliderSelectorChange,
     };
 
     public class CharacterStatusEventData {
