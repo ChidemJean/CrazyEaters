@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=46 format=2]
 
 [ext_resource path="res://assets/textures/radial_shadows.png" type="Texture" id=1]
 [ext_resource path="res://assets/textures/background_wood.png" type="Texture" id=2]
@@ -10,7 +10,7 @@
 [ext_resource path="res://src/Managers/GameCreateScene.cs" type="Script" id=8]
 [ext_resource path="res://assets/textures/UI/radial_shine.png" type="Texture" id=9]
 [ext_resource path="res://assets/textures/UI/arrow.png" type="Texture" id=10]
-[ext_resource path="res://assets/textures/UI/eater.png" type="Texture" id=11]
+[ext_resource path="res://prefabs/ui/CharacterAgeThumb.tscn" type="PackedScene" id=11]
 [ext_resource path="res://assets/fonts/baloom.tres" type="DynamicFont" id=12]
 [ext_resource path="res://assets/textures/UI/shadow_radial.png" type="Texture" id=13]
 [ext_resource path="res://assets/textures/UI/square_rounded.png" type="Texture" id=14]
@@ -32,6 +32,10 @@
 [ext_resource path="res://src/UI/HabitatStep.cs" type="Script" id=30]
 [ext_resource path="res://src/UI/SliderSelectorItem.cs" type="Script" id=31]
 [ext_resource path="res://src/UI/SliderSelector.cs" type="Script" id=32]
+[ext_resource path="res://prefabs/ui/CharacterSliderItem.tscn" type="PackedScene" id=33]
+[ext_resource path="res://assets/textures/UI/characters/egg.png" type="Texture" id=34]
+[ext_resource path="res://assets/textures/UI/characters/kid.png" type="Texture" id=35]
+[ext_resource path="res://assets/textures/UI/characters/adult.png" type="Texture" id=36]
 
 [sub_resource type="DynamicFont" id=6]
 size = 54
@@ -54,6 +58,15 @@ outline_color = Color( 0, 0, 0, 1 )
 use_filter = true
 extra_spacing_top = -6
 extra_spacing_bottom = -6
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=9]
+size = 58
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+extra_spacing_top = -20
+extra_spacing_bottom = -20
 font_data = ExtResource( 3 )
 
 [sub_resource type="StyleBoxEmpty" id=3]
@@ -123,6 +136,14 @@ anchor_bottom = 1.0
 script = ExtResource( 17 )
 id = "eater"
 headerPath = NodePath("Header")
+railSliderPath = NodePath("Header/Main/MarginContainer/VBoxContainer/Slider/HBoxContainer")
+sliderPath = NodePath("Header/Main/MarginContainer/VBoxContainer/Slider")
+characterSliderImgPrefab = ExtResource( 33 )
+rarityPath = NodePath("Header/Main/MarginContainer/VBoxContainer/Infs/MarginContainer/VBoxContainer/Rarity")
+namePath = NodePath("Header/Main/MarginContainer/VBoxContainer/Infs/MarginContainer/VBoxContainer/Control/Name")
+inputNamePath = NodePath("Header/Main/MarginContainer/VBoxContainer/Infs/MarginContainer/VBoxContainer/Control/InputName")
+characterAgeThumbsPath = NodePath("Header/Main/MarginContainer/VBoxContainer/Infs/MarginContainer2/Ages")
+characterAgeThumbPrefab = ExtResource( 11 )
 
 [node name="Header" type="Control" parent="Eater"]
 anchor_right = 1.0
@@ -241,56 +262,10 @@ stretch_mode = 6
 anchor_left = 0.5
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -153.0
-margin_top = 30.0
-margin_right = 1137.0
-margin_bottom = 30.0
 grow_horizontal = 2
 grow_vertical = 2
 custom_constants/separation = 190
 alignment = 1
-
-[node name="TextureRect" type="TextureRect" parent="Eater/Header/Main/MarginContainer/VBoxContainer/Slider/HBoxContainer"]
-modulate = Color( 0.4, 0.4, 0.4, 0.67451 )
-margin_left = 5.0
-margin_right = 305.0
-margin_bottom = 550.0
-grow_horizontal = 2
-rect_min_size = Vector2( 300, 0 )
-rect_pivot_offset = Vector2( 0, 275 )
-texture = ExtResource( 11 )
-expand = true
-stretch_mode = 6
-script = ExtResource( 31 )
-key = "1"
-
-[node name="TextureRect2" type="TextureRect" parent="Eater/Header/Main/MarginContainer/VBoxContainer/Slider/HBoxContainer"]
-modulate = Color( 0.4, 0.4, 0.4, 0.67451 )
-margin_left = 495.0
-margin_right = 795.0
-margin_bottom = 550.0
-grow_horizontal = 2
-rect_min_size = Vector2( 300, 0 )
-rect_pivot_offset = Vector2( 0, 275 )
-texture = ExtResource( 11 )
-expand = true
-stretch_mode = 6
-script = ExtResource( 31 )
-key = "2"
-
-[node name="TextureRect3" type="TextureRect" parent="Eater/Header/Main/MarginContainer/VBoxContainer/Slider/HBoxContainer"]
-modulate = Color( 0.4, 0.4, 0.4, 0.67451 )
-margin_left = 985.0
-margin_right = 1285.0
-margin_bottom = 550.0
-grow_horizontal = 2
-rect_min_size = Vector2( 300, 0 )
-rect_pivot_offset = Vector2( 0, 275 )
-texture = ExtResource( 11 )
-expand = true
-stretch_mode = 6
-script = ExtResource( 31 )
-key = "3"
 
 [node name="Infs" type="HBoxContainer" parent="Eater/Header/Main/MarginContainer/VBoxContainer"]
 margin_top = 658.0
@@ -314,7 +289,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 alignment = 1
 
-[node name="Label" type="Label" parent="Eater/Header/Main/MarginContainer/VBoxContainer/Infs/MarginContainer/VBoxContainer"]
+[node name="Rarity" type="Label" parent="Eater/Header/Main/MarginContainer/VBoxContainer/Infs/MarginContainer/VBoxContainer"]
 margin_top = 32.0
 margin_right = 610.0
 margin_bottom = 81.0
@@ -330,13 +305,15 @@ margin_right = 610.0
 margin_bottom = 155.0
 rect_min_size = Vector2( 0, 70 )
 
-[node name="Name" type="LineEdit" parent="Eater/Header/Main/MarginContainer/VBoxContainer/Infs/MarginContainer/VBoxContainer/Control"]
+[node name="InputName" type="LineEdit" parent="Eater/Header/Main/MarginContainer/VBoxContainer/Infs/MarginContainer/VBoxContainer/Control"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_fonts/font = ExtResource( 12 )
+custom_fonts/font = SubResource( 9 )
 custom_styles/normal = SubResource( 3 )
+text = "Default eater"
 
-[node name="Label2" type="Label" parent="Eater/Header/Main/MarginContainer/VBoxContainer/Infs/MarginContainer/VBoxContainer/Control"]
+[node name="Name" type="Label" parent="Eater/Header/Main/MarginContainer/VBoxContainer/Infs/MarginContainer/VBoxContainer/Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
@@ -352,44 +329,25 @@ margin_bottom = 187.0
 custom_constants/margin_right = 40
 custom_constants/margin_left = 40
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Eater/Header/Main/MarginContainer/VBoxContainer/Infs/MarginContainer2"]
+[node name="Ages" type="HBoxContainer" parent="Eater/Header/Main/MarginContainer/VBoxContainer/Infs/MarginContainer2"]
 margin_left = 40.0
 margin_right = 346.0
 margin_bottom = 187.0
 size_flags_horizontal = 3
 custom_constants/separation = 18
 
-[node name="TextureRect" type="TextureRect" parent="Eater/Header/Main/MarginContainer/VBoxContainer/Infs/MarginContainer2/HBoxContainer"]
-modulate = Color( 0, 0, 0, 1 )
-self_modulate = Color( 1, 1, 1, 0.447059 )
-margin_right = 90.0
-margin_bottom = 187.0
-rect_min_size = Vector2( 90, 0 )
-texture = ExtResource( 11 )
-expand = true
-stretch_mode = 6
+[node name="TextureRect" parent="Eater/Header/Main/MarginContainer/VBoxContainer/Infs/MarginContainer2/Ages" instance=ExtResource( 11 )]
+texture = ExtResource( 34 )
 
-[node name="TextureRect2" type="TextureRect" parent="Eater/Header/Main/MarginContainer/VBoxContainer/Infs/MarginContainer2/HBoxContainer"]
-modulate = Color( 0, 0, 0, 1 )
-self_modulate = Color( 1, 1, 1, 0.447059 )
+[node name="TextureRect2" parent="Eater/Header/Main/MarginContainer/VBoxContainer/Infs/MarginContainer2/Ages" instance=ExtResource( 11 )]
 margin_left = 108.0
 margin_right = 198.0
-margin_bottom = 187.0
-rect_min_size = Vector2( 90, 0 )
-texture = ExtResource( 11 )
-expand = true
-stretch_mode = 6
+texture = ExtResource( 35 )
 
-[node name="TextureRect3" type="TextureRect" parent="Eater/Header/Main/MarginContainer/VBoxContainer/Infs/MarginContainer2/HBoxContainer"]
-modulate = Color( 0, 0, 0, 1 )
-self_modulate = Color( 1, 1, 1, 0.447059 )
+[node name="TextureRect3" parent="Eater/Header/Main/MarginContainer/VBoxContainer/Infs/MarginContainer2/Ages" instance=ExtResource( 11 )]
 margin_left = 216.0
 margin_right = 306.0
-margin_bottom = 187.0
-rect_min_size = Vector2( 90, 0 )
-texture = ExtResource( 11 )
-expand = true
-stretch_mode = 6
+texture = ExtResource( 36 )
 
 [node name="Stats" type="ScrollContainer" parent="Eater"]
 anchor_right = 1.0

@@ -1,0 +1,25 @@
+[gd_resource type="Resource" load_steps=5 format=2]
+
+[ext_resource path="res://assets/textures/UI/character_status_gradient.tres" type="Gradient" id=1]
+[ext_resource path="res://assets/textures/UI/icons/food.svg" type="Texture" id=2]
+[ext_resource path="res://src/Resources/StatusCharacter.cs" type="Script" id=3]
+
+[sub_resource type="GradientTexture" id=1]
+gradient = ExtResource( 1 )
+
+[resource]
+script = ExtResource( 3 )
+name = "Hungry"
+key = "hungry"
+max = 300
+curValue = 300
+seconds = 30.0
+curSeconds = 0.0
+variation = -10
+damage = -15
+secondsForDamage = 2.0
+curSecondsForDamage = 0.0
+fillGradient = SubResource( 1 )
+icon = ExtResource( 2 )
+uiVisibility = 0
+acceptModifiers = true

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" load_steps=4 format=2]
+
+[ext_resource path="res://src/Resources/CharacterAgeData.cs" type="Script" id=1]
+[ext_resource path="res://resources/characters/alien_eater/ages/1 - egg/statuses.tres" type="Resource" id=2]
+[ext_resource path="res://resources/characters/alien_eater/ages/egg.png" type="Texture" id=3]
+
+[resource]
+script = ExtResource( 1 )
+name = "Ovo"
+icon = ExtResource( 3 )
+timeToEvolve = null
+statusesCharacter = ExtResource( 2 )

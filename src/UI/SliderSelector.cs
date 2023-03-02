@@ -42,6 +42,8 @@ namespace CrazyEaters.UI
             }
         }
 
+        [Signal] public delegate void slideChange(string key);
+
         public override void _Ready()
         {
             this.ResolveDependencies();
@@ -50,7 +52,6 @@ namespace CrazyEaters.UI
             targetRail = GetNode<Control>(targetRailPath);
             PopulateTabs();
             Connect("gui_input", this, nameof(OnGuiInput));
-            AnimateToPanel();
         }
 
         public void PopulateTabs()
@@ -60,6 +61,7 @@ namespace CrazyEaters.UI
                 panel.Connect("click", this, nameof(OnItemClick));
             }
             labelTotal.Text = panels.Count.ToString();
+            AnimateToPanel();
         }
 
         public void OnItemClick(SliderSelectorItem item)
@@ -156,6 +158,7 @@ namespace CrazyEaters.UI
 
         public async void AnimateToPanel(string key = null)
         {
+            if (panels.Count == 0) return;
             float midScreenX = RectSize.x / 2f;
             float totalGaps = targetRail.RectSize.x - minWidth * panels.Count;
             float gap = (totalGaps / (panels.Count + 1));
@@ -195,7 +198,8 @@ namespace CrazyEaters.UI
         {
             labelCurrent.Text = (currentIndex + 1).ToString();
             string keyPanel = ((SliderSelectorItem) panels[currentIndex]).Key;
-            gameManager.TriggerEvent(GameEvent.SliderSelectorChange, $"{key}-{keyPanel}");
+            EmitSignal("slideChange", keyPanel);
+            // gameManager.TriggerEvent(GameEvent.SliderSelectorChange, $"{key}-{keyPanel}");
         }
     }
 }

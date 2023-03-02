@@ -3,13 +3,16 @@ using System;
 
 namespace CrazyEaters.UI 
 {
-    public class SliderSelectorItem : Control
+    public class SliderSelectorItem : TextureRect
     {
         [Export] private string key;
 
         public string Key {
             get {
                 return key;
+            }
+            set {
+                key = value;
             }
         }
 

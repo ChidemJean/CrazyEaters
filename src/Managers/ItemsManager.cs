@@ -95,11 +95,28 @@ namespace CrazyEaters.Managers
                 return item is ProjectileData;
             }).Cast<ProjectileData>().ToList();
         }
-        public List<CrazyEaters.Resources.CharacterData> GetCharacters() 
+        public List<CrazyEaters.Resources.CharacterData> GetCharacters(bool unblocked = false) 
         {
             return allItems.buyables.FindAll((item) => {
-                return item is CrazyEaters.Resources.CharacterData;
+                var isCharacter = item is CrazyEaters.Resources.CharacterData;
+                var isUnblocked = !unblocked || (unblocked && (!item._blocked || item.unblockedByDefault));
+                return isCharacter && isUnblocked;
             }).Cast<CrazyEaters.Resources.CharacterData>().ToList();
+        }
+
+        public CustomRarity GetCustomRarity(EntityRarity rarity)
+        {
+            switch (rarity) {
+                case EntityRarity.Common:
+                    return commonCustom;
+                case EntityRarity.Uncommon:
+                    return uncommonCustom;
+                case EntityRarity.Epic:
+                    return epicCustom;
+                case EntityRarity.Super:
+                    return superCustom;
+            }
+            return null;
         }
     }
 }
