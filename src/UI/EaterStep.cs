@@ -20,7 +20,11 @@ namespace CrazyEaters.UI
         [Export] private NodePath inputNamePath;
         [Export] private NodePath characterAgeThumbsPath;
         [Export] private PackedScene characterAgeThumbPrefab;
+        [Export] private NodePath itemStatsPath;
+        [Export] private PackedScene itemStatPrefab;
+        [Export] private PackedScene gridStatsPrefab;
 
+        private Control itemStats;
         private Control characterAgeThumbs;
         private Label rarity;
         private Label name;
@@ -35,6 +39,7 @@ namespace CrazyEaters.UI
         {
             this.ResolveDependencies();
             characterAgeThumbs = GetNode<Control>(characterAgeThumbsPath);
+            itemStats = GetNode<Control>(itemStatsPath);
             name = GetNode<Label>(namePath);
             inputName = GetNode<LineEdit>(inputNamePath);
             rarity = GetNode<Label>(rarityPath);
@@ -99,10 +104,65 @@ namespace CrazyEaters.UI
                 child.QueueFree();
             }
             foreach (var age in data.agesData) {
-                var thumb = characterAgeThumbPrefab.Instance<TextureRect>();
+                var thumb = characterAgeThumbPrefab.Instance<CharacterAgeThumb>();
                 thumb.Texture = age.icon;
+                thumb.key = age.name;
                 characterAgeThumbs.AddChild(thumb);
             }
+            UpdateAgeStats(data);
+            SetAgesEvents();
+        }
+
+        public void UpdateAgeStats(CrazyEaters.Resources.CharacterData data)
+        {
+            foreach (Node child in itemStats.GetChildren()){
+                itemStats.RemoveChild(child);
+                child.QueueFree();
+            }
+            List<CharacterAgeData> ages = data.agesData;
+            foreach (var age in ages) {
+                GridContainer gridContainer = gridStatsPrefab.Instance<GridContainer>();
+                gridContainer.Name = $"Grid-{age.name}";
+                gridContainer.Visible = false;
+                itemStats.AddChild(gridContainer);
+                StatusesCharacter statuses = age.statusesCharacter;
+                foreach (KeyValuePair<string, CrazyEaters.Resources.StatusCharacter> stat in statuses.statuses) {
+                    ItemStat item = itemStatPrefab.Instance<ItemStat>();
+                    gridContainer.AddChild(item);
+                    item.Name = stat.Value.name;
+                    item.Value = stat.Value.max.ToString();
+                    item.Icon = stat.Value.icon;
+                }
+            }
+            CharacterAgeData initialAge = ages[0];
+            UpdateAgeStatsVisible(initialAge.name);
+        }
+
+        public void UpdateAgeStatsVisible(string keyAge)
+        {
+            foreach (Node grid in itemStats.GetChildren()) {
+                ((Control) grid).Visible = grid.Name == $"Grid-{keyAge}";
+            }
+            foreach (Node child in characterAgeThumbs.GetChildren()) {
+                CharacterAgeThumb ageThumb = (CharacterAgeThumb) child;
+                if (ageThumb.key != keyAge) {
+                    ageThumb.ResetModulate();
+                } else {
+                    ageThumb.Select();
+                }
+            }
+        }
+
+        public void SetAgesEvents() 
+        {
+            foreach (Node child in characterAgeThumbs.GetChildren()) {
+                child.Connect("click", this, nameof(OnAgeThumbClick));
+            }
+        }
+
+        public void OnAgeThumbClick(string key)
+        {
+            UpdateAgeStatsVisible(key);
         }
 
         public void Show()

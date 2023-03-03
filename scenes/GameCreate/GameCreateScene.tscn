@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=2]
+[gd_scene load_steps=47 format=2]
 
 [ext_resource path="res://assets/textures/radial_shadows.png" type="Texture" id=1]
 [ext_resource path="res://assets/textures/background_wood.png" type="Texture" id=2]
@@ -14,7 +14,7 @@
 [ext_resource path="res://assets/fonts/baloom.tres" type="DynamicFont" id=12]
 [ext_resource path="res://assets/textures/UI/shadow_radial.png" type="Texture" id=13]
 [ext_resource path="res://assets/textures/UI/square_rounded.png" type="Texture" id=14]
-[ext_resource path="res://prefabs/ui/CharacterStat.tscn" type="PackedScene" id=15]
+[ext_resource path="res://prefabs/ui/ItemStat.tscn" type="PackedScene" id=15]
 [ext_resource path="res://assets/textures/UI/shadow_w_screen.png" type="Texture" id=16]
 [ext_resource path="res://src/UI/EaterStep.cs" type="Script" id=17]
 [ext_resource path="res://resources/habitats/apocalypse_habitat/habitat_1.png" type="Texture" id=18]
@@ -36,6 +36,7 @@
 [ext_resource path="res://assets/textures/UI/characters/egg.png" type="Texture" id=34]
 [ext_resource path="res://assets/textures/UI/characters/kid.png" type="Texture" id=35]
 [ext_resource path="res://assets/textures/UI/characters/adult.png" type="Texture" id=36]
+[ext_resource path="res://prefabs/ui/GridStats.tscn" type="PackedScene" id=37]
 
 [sub_resource type="DynamicFont" id=6]
 size = 54
@@ -144,6 +145,9 @@ namePath = NodePath("Header/Main/MarginContainer/VBoxContainer/Infs/MarginContai
 inputNamePath = NodePath("Header/Main/MarginContainer/VBoxContainer/Infs/MarginContainer/VBoxContainer/Control/InputName")
 characterAgeThumbsPath = NodePath("Header/Main/MarginContainer/VBoxContainer/Infs/MarginContainer2/Ages")
 characterAgeThumbPrefab = ExtResource( 11 )
+itemStatsPath = NodePath("Stats/MarginContainer")
+itemStatPrefab = ExtResource( 15 )
+gridStatsPrefab = ExtResource( 37 )
 
 [node name="Header" type="Control" parent="Eater"]
 anchor_right = 1.0
@@ -357,51 +361,12 @@ rect_min_size = Vector2( 0, 620 )
 
 [node name="MarginContainer" type="MarginContainer" parent="Eater/Stats"]
 margin_right = 1080.0
-margin_bottom = 560.0
+margin_bottom = 50.0
 size_flags_horizontal = 3
 custom_constants/margin_right = 45
 custom_constants/margin_top = 25
 custom_constants/margin_left = 45
 custom_constants/margin_bottom = 25
-
-[node name="GridContainer" type="GridContainer" parent="Eater/Stats/MarginContainer"]
-margin_left = 45.0
-margin_top = 25.0
-margin_right = 1035.0
-margin_bottom = 535.0
-size_flags_horizontal = 3
-custom_constants/vseparation = 30
-custom_constants/hseparation = 30
-columns = 2
-
-[node name="NinePatchRect" parent="Eater/Stats/MarginContainer/GridContainer" instance=ExtResource( 15 )]
-margin_right = 480.0
-
-[node name="NinePatchRect2" parent="Eater/Stats/MarginContainer/GridContainer" instance=ExtResource( 15 )]
-margin_left = 510.0
-margin_right = 990.0
-
-[node name="NinePatchRect3" parent="Eater/Stats/MarginContainer/GridContainer" instance=ExtResource( 15 )]
-margin_top = 180.0
-margin_right = 480.0
-margin_bottom = 330.0
-
-[node name="NinePatchRect4" parent="Eater/Stats/MarginContainer/GridContainer" instance=ExtResource( 15 )]
-margin_left = 510.0
-margin_top = 180.0
-margin_right = 990.0
-margin_bottom = 330.0
-
-[node name="NinePatchRect5" parent="Eater/Stats/MarginContainer/GridContainer" instance=ExtResource( 15 )]
-margin_top = 360.0
-margin_right = 480.0
-margin_bottom = 510.0
-
-[node name="NinePatchRect6" parent="Eater/Stats/MarginContainer/GridContainer" instance=ExtResource( 15 )]
-margin_left = 510.0
-margin_top = 360.0
-margin_right = 990.0
-margin_bottom = 510.0
 
 [node name="Habitat" type="Control" parent="."]
 visible = false

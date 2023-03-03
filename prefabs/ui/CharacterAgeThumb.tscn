@@ -1,13 +1,14 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://assets/textures/UI/eater.png" type="Texture" id=1]
+[ext_resource path="res://src/UI/CharacterAgeThumb.cs" type="Script" id=2]
 
 [node name="TextureRect" type="TextureRect"]
 modulate = Color( 0, 0, 0, 1 )
-self_modulate = Color( 1, 1, 1, 0.447059 )
+self_modulate = Color( 0.568627, 0.568627, 0.568627, 0.447059 )
 margin_right = 90.0
 margin_bottom = 187.0
 rect_min_size = Vector2( 90, 0 )
-texture = ExtResource( 1 )
 expand = true
 stretch_mode = 6
+script = ExtResource( 2 )
+modulateOnSelected = Color( 1, 0.878431, 0.717647, 1 )
