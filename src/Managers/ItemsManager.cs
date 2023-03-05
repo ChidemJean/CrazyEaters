@@ -83,10 +83,12 @@ namespace CrazyEaters.Managers
                 return item is FoodData;
             }).Cast<FoodData>().ToList();
         }
-        public List<HabitatData> GetHabitats() 
+        public List<HabitatData> GetHabitats(bool unblocked = false) 
         {
             return allItems.buyables.FindAll((item) => {
-                return item is HabitatData;
+                var isHabitat = item is CrazyEaters.Resources.HabitatData;
+                var isUnblocked = !unblocked || (unblocked && (!item._blocked || item.unblockedByDefault));
+                return isHabitat && isUnblocked;
             }).Cast<HabitatData>().ToList();
         }
         public List<ProjectileData> GetProjectiles() 
@@ -102,6 +104,14 @@ namespace CrazyEaters.Managers
                 var isUnblocked = !unblocked || (unblocked && (!item._blocked || item.unblockedByDefault));
                 return isCharacter && isUnblocked;
             }).Cast<CrazyEaters.Resources.CharacterData>().ToList();
+        }
+        public List<CrazyEaters.Resources.LauncherData> GetLaunchers(bool unblocked = false) 
+        {
+            return allItems.buyables.FindAll((item) => {
+                var isLauncher = item is CrazyEaters.Resources.LauncherData;
+                var isUnblocked = !unblocked || (unblocked && (!item._blocked || item.unblockedByDefault));
+                return isLauncher && isUnblocked;
+            }).Cast<CrazyEaters.Resources.LauncherData>().ToList();
         }
 
         public CustomRarity GetCustomRarity(EntityRarity rarity)

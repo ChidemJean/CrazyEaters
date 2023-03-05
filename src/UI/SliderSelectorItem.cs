@@ -16,11 +16,19 @@ namespace CrazyEaters.UI
             }
         }
 
+        public Action onReady;
+
         [Signal] public delegate void click(SliderSelectorItem item);
 
         public override void _Ready()
         {
             Connect("gui_input", this, nameof(OnGuiInput));
+            OnReady();
+        }
+
+        public void OnReady()
+        {
+            if (onReady != null) onReady.Invoke();
         }
 
         public void OnGuiInput(InputEvent @event)

@@ -20,6 +20,7 @@ namespace CrazyEaters.Managers
         [Export] private Color dotSelectedColor;
         [Export] private Color dotCompletedColor;
         [Inject] SaveSystemNode saveSystemNode;
+        [Inject] ItemsManager itemsManager;
 
         private TextureButton closeBtn;
         SceneTreeTween tween;
@@ -31,6 +32,10 @@ namespace CrazyEaters.Managers
         private List<GameCreateDotStep> dotsSteps;
         private int currentStep = 0;
         private HabitatsGameData habitatsGameData = null;
+        private string selectedCharacterKey;
+        private string selectedCharacterName;
+        private string selectedHabitatKey;
+        private string selectedLauncherKey;
 
         public override void _Ready()
         {
@@ -92,6 +97,26 @@ namespace CrazyEaters.Managers
             currentStep = idx;
             UpdateDotsColors();
             UpdateButtons();
+            UpdateSelecteds(idx);
+        }
+
+        public void UpdateSelecteds(int idx)
+        {
+            foreach (var (step, i) in steps.Select((step, i) => (step, i))) {
+                if (i >= idx) continue;
+                if (step is EaterStep) {
+                    selectedCharacterKey = step.keySelected;
+                    selectedCharacterName = ((EaterStep) step).GetEaterName();
+                    continue;
+                }
+                if (step is HabitatStep) {
+                    selectedHabitatKey = step.keySelected;
+                    continue;
+                }
+                if (step is LauncherStep) {
+                    selectedLauncherKey = step.keySelected;
+                }
+            }
         }
 
         public void UpdateDotsColors()
@@ -139,7 +164,7 @@ namespace CrazyEaters.Managers
 
         public void OnCloseClick()
         {
-            if (habitatsGameData != null && habitatsGameData.habitatGameData != null && habitatsGameData.habitatGameData.Count > 0) {
+            if (habitatsGameData != null && habitatsGameData.habitats != null && habitatsGameData.habitats.Count > 0) {
                 gameManager.TriggerEvent(GameEvent.ChangeScene, "home");
             }
         }
@@ -157,6 +182,7 @@ namespace CrazyEaters.Managers
         public void OnFinishClick(bool pressed)
         {
             if (pressed) return;
+            UpdateSelecteds(steps.Count);
             InitNewGame();
         }
 
@@ -172,7 +198,49 @@ namespace CrazyEaters.Managers
 
         public void InitNewGame()
         {
+            GD.Print($"character: {selectedCharacterKey} /n habitat: {selectedHabitatKey} /n launcher: {selectedLauncherKey}");
+            saveSystemNode.LoadHabitats(OnLoadHabitats);
+        }
 
+        public void OnLoadHabitats(HabitatsGameData habitatsData) 
+        {
+            if (habitatsData == null) {
+                habitatsData = new HabitatsGameData();   
+            }
+            SaveNewHabitat(habitatsData);
+        }
+
+        public void SaveNewHabitat(HabitatsGameData habitatsData)
+        {
+            var selectedCharacter = (CrazyEaters.Resources.CharacterData) itemsManager.Find(selectedCharacterKey);
+
+            HabitatGameData habitatGameData = new HabitatGameData();
+            habitatGameData.habitatID = selectedHabitatKey;
+
+            CharacterData characterData = new CharacterData();
+            characterData.age = 0;
+            characterData.createdAt = DateTime.Now.ToString(saveSystemNode.DATETIME_FORMAT);
+            characterData.id = selectedCharacterKey;
+            characterData.name = selectedCharacterName;
+
+            habitatGameData.character = characterData;
+            List<StatusCharacter> statuses = new List<StatusCharacter>();
+            foreach(var status in selectedCharacter.agesData[0].statusesCharacter.statuses) {
+                StatusCharacter statusCharacter = new StatusCharacter(status.Key, status.Value.curValue);
+                statuses.Add(statusCharacter);
+            }
+            habitatGameData.statusesEater = statuses;
+            habitatGameData.datetimeLastPlay = DateTime.Now.ToString(saveSystemNode.DATETIME_FORMAT);
+            if (habitatsData.habitats == null) {
+                habitatsData.habitats = new List<HabitatGameData>();
+            }
+            habitatsData.habitats.Add(habitatGameData);
+            saveSystemNode.SaveHabitats(habitatsData, OnSaveNewHabitat);
+        }
+
+        public void OnSaveNewHabitat()
+        {
+            gameManager.TriggerEvent(GameEvent.ChangeScene, "habitat");
         }
 
         public void Show()

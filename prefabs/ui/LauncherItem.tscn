@@ -1,12 +1,13 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://assets/textures/UI/launcher_bg.png" type="Texture" id=1]
 [ext_resource path="res://assets/textures/UI/spatula_thumb.png" type="Texture" id=2]
 [ext_resource path="res://assets/textures/UI/check.png" type="Texture" id=3]
 [ext_resource path="res://assets/textures/UI/lock.png" type="Texture" id=4]
 [ext_resource path="res://assets/textures/UI/bar_rarity.png" type="Texture" id=5]
+[ext_resource path="res://src/UI/LauncherItem.cs" type="Script" id=6]
 
-[node name="Launcher2" type="TextureRect"]
+[node name="LauncherItem" type="TextureRect"]
 margin_left = 323.0
 margin_right = 642.0
 margin_bottom = 320.0
@@ -15,8 +16,14 @@ size_flags_horizontal = 3
 texture = ExtResource( 1 )
 expand = true
 stretch_mode = 6
+script = ExtResource( 6 )
+thumbPath = NodePath("Thumb")
+selectedPath = NodePath("Selected")
+lockPath = NodePath("Lock")
+ctnRarityPath = NodePath("RarityCtn")
+modulateThumbBlocked = Color( 0, 0, 0, 0.364706 )
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="Thumb" type="TextureRect" parent="."]
 self_modulate = Color( 0, 0, 0, 0.364706 )
 anchor_left = 0.5
 anchor_top = 0.5
@@ -30,7 +37,7 @@ texture = ExtResource( 2 )
 expand = true
 stretch_mode = 6
 
-[node name="TextureRect2" type="TextureRect" parent="."]
+[node name="Selected" type="TextureRect" parent="."]
 visible = false
 margin_left = 208.0
 margin_top = 228.0
@@ -40,7 +47,7 @@ texture = ExtResource( 3 )
 expand = true
 stretch_mode = 6
 
-[node name="TextureRect3" type="TextureRect" parent="."]
+[node name="Lock" type="TextureRect" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5

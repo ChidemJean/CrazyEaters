@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://assets/models/imported/spatula.glb" type="PackedScene" id=1]
 [ext_resource path="res://src/Controllers/Launcher/SpatulaController.cs" type="Script" id=2]
 [ext_resource path="res://prefabs/scenario/SpatulaBase.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/materials/prototype/orange.tres" type="Material" id=15]
 
 [sub_resource type="SpatialMaterial" id=2]
 albedo_color = Color( 0.729412, 0.729412, 0.729412, 1 )
@@ -13,16 +14,27 @@ albedo_color = Color( 0.917647, 0.337255, 1, 1 )
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.418301, 3.94414, 1.97693 )
 
+[sub_resource type="CubeMesh" id=23]
+size = Vector3( 3.8, 1, 2 )
+
 [node name="spatula" instance=ExtResource( 1 )]
+transform = Transform( -8.74228e-09, 0, -0.2, 0, 0.2, 0, 0.2, 0, -8.74228e-09, 0, 0, 0 )
 script = ExtResource( 2 )
 bullerSlotPath = NodePath("Armature/Skeleton/BoneAttachment/BulletSlot")
 meshPath = NodePath("Armature/Skeleton/spatula")
 skeletonPath = NodePath("Armature/Skeleton")
 skeletonBasePath = NodePath("spatula_base/Armature/Skeleton")
 animationPlayerPath = NodePath("AnimationPlayer")
+throwPower = 240.0
+spatulaMask = 16
+numPoints = 5
+timeBetweenPoints = 0.2
 
 [node name="Armature" parent="." index="0"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.60409, 0 )
+
+[node name="Skeleton" parent="Armature" index="0"]
+bones/4/bound_children = [ NodePath("BoneAttachment") ]
 
 [node name="spatula" parent="Armature/Skeleton" index="0"]
 material/0 = SubResource( 2 )
@@ -33,14 +45,15 @@ transform = Transform( 0.997886, 0.0615615, 0.0208422, -0.061768, 0.998046, 0.00
 bone_name = "Bone4_end"
 
 [node name="BulletSlot" type="Spatial" parent="Armature/Skeleton/BoneAttachment" index="0"]
-transform = Transform( 1, 3.06609e-08, 9.31323e-09, 5.82077e-10, 1, -1.86265e-09, 1.49012e-08, 2.79397e-09, 1, -0.202452, 2.4951, 0.0225681 )
+transform = Transform( 1, 2.6077e-08, 1.67638e-08, 1.11759e-08, 1, -4.5402e-09, 2.98023e-08, 7.21775e-09, 1, -1.14699, 2.43683, 0.00284021 )
 
 [node name="Area" type="Area" parent="Armature/Skeleton/BoneAttachment" index="1"]
-transform = Transform( 1, 1.58907e-08, 5.58794e-09, 8.44011e-10, 1, -9.31323e-10, 7.45058e-09, 9.31323e-10, 1, -0.0865946, 1.39919, 0.0132005 )
+transform = Transform( 1, 7.45058e-09, 9.31323e-09, 3.72529e-09, 1, -4.19095e-09, 1.49012e-08, 5.93718e-09, 1, -0.394463, 1.3802, 0.0067703 )
 collision_layer = 16
 collision_mask = 0
 
 [node name="CollisionShape" type="CollisionShape" parent="Armature/Skeleton/BoneAttachment/Area" index="0"]
+transform = Transform( 1, 0, 0, 3.72529e-09, 1, -1.28057e-09, 1.86265e-09, 9.31323e-10, 1, 0, 0, 0 )
 shape = SubResource( 1 )
 
 [node name="spatula_base" parent="." index="1" instance=ExtResource( 3 )]
@@ -51,6 +64,16 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 
 [node name="AnimationPlayer" parent="." index="2"]
 playback_speed = 3.0
+
+[node name="spatula@MeshInstance" type="MeshInstance" parent="." index="3"]
+transform = Transform( -4.37114e-07, 0, 5, 0, 2, 0, -10, 0, -2.18557e-07, 0, -1.16965, 0 )
+mesh = SubResource( 23 )
+skeleton = NodePath("../..")
+material/0 = ExtResource( 15 )
+
+[node name="spatula@SpotLight" type="SpotLight" parent="." index="4"]
+transform = Transform( 5, 1.56319e-13, -7.81597e-14, 0, 2.26887, 4.45559, 1.7053e-13, -4.45559, 2.26887, 5.57516, 16.6986, 0.000157113 )
+light_energy = 0.0
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="OnAnimationFinished"]
 

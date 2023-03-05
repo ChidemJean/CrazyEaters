@@ -12,6 +12,7 @@ namespace CrazyEaters.Save
 
     public class SaveSystemNode : Node
     {
+        [Export] public string DATETIME_FORMAT = "MM\\/dd\\/yyyy h\\:mm tt";
 
         public GameManager gameManager;
 

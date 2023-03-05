@@ -6,6 +6,8 @@ namespace CrazyEaters.UI
     public abstract class GameCreateStep : Control
     {
         [Export] private string id;
+        public string keySelected;
+
         public string Id {
             get {
                 return id;

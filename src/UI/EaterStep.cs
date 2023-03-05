@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using CrazyEaters.Save;
 using CrazyEaters.Managers;
@@ -55,15 +56,25 @@ namespace CrazyEaters.UI
             Show();
         }
 
+        public string GetEaterName()
+        {
+            return inputName.Text;
+        }
+
         public void CreateSliders()
         {
             foreach (var character in characters) {
                 var newSlide = characterSliderImgPrefab.Instance<SliderSelectorItem>();
                 newSlide.Texture = character.thumb;
                 newSlide.Key = character.id;
+                newSlide.onReady = async () => {
+                    if (newSlide.GetIndex() == characters.Count - 1) {
+                        await Task.Delay(TimeSpan.FromMilliseconds(150));
+                        slider.PopulateTabs();
+                    }
+                };
                 railSlider.AddChild(newSlide);
             }
-            slider.PopulateTabs();
             slider.Connect("slideChange", this, nameof(OnSlideChange));
         }
 
@@ -80,7 +91,7 @@ namespace CrazyEaters.UI
         public void OnSlideChange(string key)
         {
             var character = GetCharacterDataByKey(key);
-            if (character == null)  return;
+            if (character == null) return;
             name.Text = character.name;
             inputName.Text = character.name;
             CustomRarity rarityData = itemsManager.GetCustomRarity(character.rarity);
@@ -95,6 +106,7 @@ namespace CrazyEaters.UI
                 }
             }
             UpdateAges(character);
+            keySelected = character.id;
         }
 
         public void UpdateAges(CrazyEaters.Resources.CharacterData data)
@@ -132,6 +144,9 @@ namespace CrazyEaters.UI
                     item.Name = stat.Value.name;
                     item.Value = stat.Value.max.ToString();
                     item.Icon = stat.Value.icon;
+                    if (stat.Value.variation != 0) {
+                        item.Bonus = $"{stat.Value.variation} / {stat.Value.seconds}s";
+                    }
                 }
             }
             CharacterAgeData initialAge = ages[0];
@@ -165,16 +180,6 @@ namespace CrazyEaters.UI
             UpdateAgeStatsVisible(key);
         }
 
-        public void Show()
-        {
-            if (tween != null) {
-                tween.Kill();
-            }
-            tween = GetTree().CreateTween();
-            tween.SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Elastic);
-            tween.TweenProperty(header, "rect_position:y", 0f, .95f);
-        }
-
         public override async void Hide(int dir, bool animate)
         {
             base.Hide(dir, animate);
@@ -182,6 +187,14 @@ namespace CrazyEaters.UI
         public override async void Show(int dir, bool animate)
         {
             base.Show(dir, animate);
+            if (tween != null) {
+                tween.Kill();
+            }
+            tween = GetTree().CreateTween();
+            tween.SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Elastic);
+            tween.TweenProperty(header, "rect_position:y", 0f, .95f);
+            await Task.Delay(TimeSpan.FromMilliseconds(950));
+            slider.AnimateToPanel();
         }
     }
 }

@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Threading.Tasks;
 using System.Linq;
 using System.Collections.Generic;
 using Godot.Collections;
@@ -54,7 +55,7 @@ namespace CrazyEaters.UI
             Connect("gui_input", this, nameof(OnGuiInput));
         }
 
-        public void PopulateTabs()
+        public async void PopulateTabs()
         {
             panels = targetRail.GetChildren();
             foreach (SliderSelectorItem panel in panels) {

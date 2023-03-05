@@ -47,7 +47,7 @@ namespace CrazyEaters.Managers
 
         public void OnHabitatsLoaded(HabitatsGameData habitats)
         {
-            if (habitats != null && habitats.habitatGameData != null && habitats.habitatGameData.Count > 0) {
+            if (habitats != null && habitats.habitats != null && habitats.habitats.Count > 0) {
                 ChangeScene(initialScene);
                 return;
             }

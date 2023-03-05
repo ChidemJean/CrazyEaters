@@ -28,6 +28,7 @@ namespace CrazyEaters.UI
         public string Bonus {
             set {
                 bonus.Text = value;
+                bonus.Visible = true;
             }
         }
         public Texture Icon {

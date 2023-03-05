@@ -26,6 +26,7 @@ conditionsToUnblock = {
 price = 10
 coinType = 1
 calories = 200
+recipeItems = PoolStringArray(  )
 
 [sub_resource type="SphereShape" id=1]
 radius = 0.349142
@@ -45,7 +46,7 @@ shape = SubResource( 1 )
 [node name="hamburguer" parent="." instance=ExtResource( 3 )]
 transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, -0.283106, -0.066022, 0.00208533 )
 
-[node name="Sphere" parent="hamburguer" index="2"]
+[node name="Sphere" parent="hamburguer" index="0"]
 material/0 = ExtResource( 5 )
 
 [editable path="hamburguer"]

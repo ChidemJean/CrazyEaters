@@ -80,11 +80,11 @@ namespace CrazyEaters.Save
     [System.Serializable]
     public class HabitatsGameData : GameData
     {
-        public List<HabitatGameData> habitatGameData;
+        public List<HabitatGameData> habitats = new List<HabitatGameData>();
         public HabitatsGameData(){}
         public HabitatsGameData(List<HabitatGameData> habitats = null)
         {
-            this.habitatGameData = habitats;
+            this.habitats = habitats;
         }
     }
 }

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=10 format=2]
+[gd_resource type="Resource" load_steps=11 format=2]
 
 [ext_resource path="res://src/Resources/Collections/BuyablesData.cs" type="Script" id=1]
 [ext_resource path="res://resources/items/foods/hamburguer.tres" type="Resource" id=2]
@@ -9,7 +9,8 @@
 [ext_resource path="res://resources/habitats/apocalypse_habitat/apocalypse_habitat.tres" type="Resource" id=7]
 [ext_resource path="res://resources/characters/alien_eater/alien_eater.tres" type="Resource" id=8]
 [ext_resource path="res://resources/characters/bubble_eater/bubble_eater.tres" type="Resource" id=9]
+[ext_resource path="res://resources/launchers/spatula.tres" type="Resource" id=10]
 
 [resource]
 script = ExtResource( 1 )
-buyables = [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ) ]
+buyables = [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ) ]

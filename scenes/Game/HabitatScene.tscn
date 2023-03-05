@@ -1,15 +1,14 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://resources/habitats/apocalypse_habitat/MainPrefab.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/Animations/DayNightAnimation.cs" type="Script" id=5]
 [ext_resource path="res://prefabs/env/Skybox.tscn" type="PackedScene" id=6]
-[ext_resource path="res://assets/models/spatula.tscn" type="PackedScene" id=9]
+[ext_resource path="res://prefabs/launchers/spatula.tscn" type="PackedScene" id=9]
 [ext_resource path="res://assets/textures/UI/thumbs/thumb_hamb_teste.png" type="Texture" id=10]
 [ext_resource path="res://prefabs/items/foods/Hamburguer.tscn" type="PackedScene" id=11]
 [ext_resource path="res://src/Resources/FoodData.cs" type="Script" id=12]
 [ext_resource path="res://src/Tools/ExplosionTap.cs" type="Script" id=13]
 [ext_resource path="res://prefabs/utils/LineRenderer.tscn" type="PackedScene" id=14]
-[ext_resource path="res://assets/materials/prototype/orange.tres" type="Material" id=15]
 [ext_resource path="res://conf/HabitatSceneEnv.tres" type="Environment" id=18]
 [ext_resource path="res://assets/physics/explosion.tres" type="Shape" id=20]
 [ext_resource path="res://src/Controllers/CameraRotator.cs" type="Script" id=21]
@@ -83,36 +82,24 @@ tracks/4/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 0.827451, 0.372549, 1 ), Color( 0.407843, 0.694118, 1, 1 ), Color( 0.407843, 0.694118, 1, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("CameraPivot/Camera/SpotLight:light_energy")
+tracks/5/path = NodePath("Skybox:material/0:shader_param/light_vector")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"times": PoolRealArray( 0, 28.2, 33.3, 92, 94.6, 120 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
-"update": 0,
-"values": [ 0.0, 0.0, 3.0, 3.0, 0.0, 0.0 ]
-}
-tracks/6/type = "value"
-tracks/6/path = NodePath("Skybox:material/0:shader_param/light_vector")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/keys = {
 "times": PoolRealArray( 0, 12.3, 43.3, 77.9, 120 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Vector3( 0, 1, 0 ), Vector3( 0, 1, 0.528 ), Vector3( 0, -1, 1 ), Vector3( 0, -1, -0.076 ), Vector3( 0, 1, 0.528 ) ]
 }
-tracks/7/type = "method"
-tracks/7/path = NodePath("DayNightAnimation")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/keys = {
+tracks/6/type = "method"
+tracks/6/path = NodePath("DayNightAnimation")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
 "times": PoolRealArray( 31.2, 100.3 ),
 "transitions": PoolRealArray( 1, 1 ),
 "values": [ {
@@ -187,7 +174,7 @@ tracks/4/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("CameraPivot/Camera/SpotLight:light_energy")
+tracks/5/path = NodePath("Skybox:material/0:shader_param/light_vector")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -196,23 +183,8 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ 0.0 ]
-}
-tracks/6/type = "value"
-tracks/6/path = NodePath("Skybox:material/0:shader_param/light_vector")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
 "values": [ Vector3( 0, 1, 0 ) ]
 }
-
-[sub_resource type="CubeMesh" id=23]
-size = Vector3( 3.8, 1, 2 )
 
 [sub_resource type="SpatialMaterial" id=22]
 flags_transparent = true
@@ -282,32 +254,9 @@ fov = 60.8724
 far = 250.0
 
 [node name="spatula" parent="CameraPivot/Camera" instance=ExtResource( 9 )]
-transform = Transform( -6.55671e-09, 0, -0.15, 0, 0.15, 0, 0.15, 0, -6.55671e-09, 0, -2.98007, -5.9178 )
-throwPower = 240.0
-spatulaMask = 16
+transform = Transform( -8.74228e-09, 0, -0.2, 0, 0.2, 0, 0.2, 0, -8.74228e-09, 0, -3.42839, -6.62027 )
 lineRendererPath = NodePath("../../../LineRenderer")
-numPoints = 5
-timeBetweenPoints = 0.2
 throwablePath = NodePath("../../../Hamburguer")
-
-[node name="Skeleton" parent="CameraPivot/Camera/spatula/Armature" index="0"]
-bones/4/bound_children = [ NodePath("BoneAttachment") ]
-
-[node name="BoneAttachment" parent="CameraPivot/Camera/spatula/Armature/Skeleton" index="1"]
-transform = Transform( 0.997886, 0.0615615, 0.0208422, -0.061768, 0.998046, 0.0094159, -0.0202219, -0.0106834, 0.999738, -0.248285, 3.04844, 0.0488994 )
-
-[node name="CollisionShape" parent="CameraPivot/Camera/spatula/Armature/Skeleton/BoneAttachment/Area" index="0"]
-transform = Transform( 1, 0, 0, 0, 1, 8.14907e-10, 3.72529e-09, 3.49246e-10, 1, 0, 0, 0 )
-
-[node name="MeshInstance" type="MeshInstance" parent="CameraPivot/Camera"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.52622, -5.9742 )
-mesh = SubResource( 23 )
-skeleton = NodePath("../..")
-material/0 = ExtResource( 15 )
-
-[node name="SpotLight" type="SpotLight" parent="CameraPivot/Camera"]
-transform = Transform( 1, 0, 0, 0, 0.453773, 0.891117, 0, -0.891117, 0.453773, 0.057744, -0.06076, -5.2905 )
-light_energy = 0.0
 
 [node name="LineRenderer" parent="." instance=ExtResource( 14 )]
 material_override = SubResource( 22 )
@@ -345,10 +294,7 @@ gravityScale = 0.4
 jumpSpeed = 10.0
 
 [node name="Hamburguer" parent="." instance=ExtResource( 11 )]
-transform = Transform( 0.0202218, 0.0106834, -0.999738, -0.0617681, 0.998046, 0.0094159, 0.997886, 0.0615615, 0.0208422, -0.00979732, -2.57539, 29.67 )
+transform = Transform( 0.0202218, 0.0106834, -0.999738, -0.0617681, 0.998046, 0.0094159, 0.997886, 0.0615615, 0.0208422, -0.00979732, -2.57539, 27.1429 )
 foodData = SubResource( 21 )
 
 [node name="Skybox" parent="." instance=ExtResource( 6 )]
-
-[editable path="CameraPivot/Camera/spatula"]
-[editable path="CameraPivot/Camera/spatula/spatula_base"]
