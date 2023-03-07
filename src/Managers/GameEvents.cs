@@ -19,7 +19,19 @@ namespace CrazyEaters.Managers
         CoinsUpdate,
         BeansUpdate,
         SliderSelectorChange,
+        OnInventoryOperationRequest,
     };
+
+    public class InventoryOperationRequest {
+        public string entityKey;
+        public int newQtd;
+
+        public InventoryOperationRequest(string entityKey, int newQtd)
+        {
+            this.entityKey = entityKey;
+            this.newQtd = newQtd;
+        }
+    }
 
     public class CharacterStatusEventData {
         public string name;

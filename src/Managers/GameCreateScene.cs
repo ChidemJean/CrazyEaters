@@ -212,7 +212,7 @@ namespace CrazyEaters.Managers
 
         public void SaveNewHabitat(HabitatsGameData habitatsData)
         {
-            var selectedCharacter = (CrazyEaters.Resources.CharacterData) itemsManager.Find(selectedCharacterKey);
+            var selectedCharacter = (CrazyEaters.Resources.CharacterData) itemsManager.FindByKey(selectedCharacterKey);
 
             HabitatGameData habitatGameData = new HabitatGameData();
             habitatGameData.habitatID = selectedHabitatKey;

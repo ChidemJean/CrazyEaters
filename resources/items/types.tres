@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=6 format=2]
+
+[ext_resource path="res://resources/items/types/block_type.tres" type="Resource" id=1]
+[ext_resource path="res://resources/items/types/trap_type.tres" type="Resource" id=2]
+[ext_resource path="res://resources/items/types/projectile_type.tres" type="Resource" id=3]
+[ext_resource path="res://resources/items/types/food_type.tres" type="Resource" id=4]
+[ext_resource path="res://src/Resources/Collections/EntityTypes.cs" type="Script" id=5]
+
+[resource]
+script = ExtResource( 5 )
+types = [ ExtResource( 1 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ) ]

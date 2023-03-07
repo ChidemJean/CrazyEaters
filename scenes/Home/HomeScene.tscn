@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=2]
+[gd_scene load_steps=59 format=2]
 
 [ext_resource path="res://prefabs/ui/BoxCoins.tscn" type="PackedScene" id=1]
 [ext_resource path="res://prefabs/ui/UserInfs.tscn" type="PackedScene" id=2]
@@ -6,9 +6,12 @@
 [ext_resource path="res://src/Managers/HomeScene.cs" type="Script" id=4]
 [ext_resource path="res://src/UI/NewGameButton.cs" type="Script" id=5]
 [ext_resource path="res://assets/fonts/BalooTamma-Regular.ttf" type="DynamicFontData" id=6]
+[ext_resource path="res://src/UI/InventoryPanelTabItem.cs" type="Script" id=7]
 [ext_resource path="res://assets/textures/background_wood.png" type="Texture" id=8]
 [ext_resource path="res://assets/textures/radial_shadows.png" type="Texture" id=9]
 [ext_resource path="res://assets/textures/UI/eater.png" type="Texture" id=10]
+[ext_resource path="res://prefabs/ui/ItemInventory.tscn" type="PackedScene" id=11]
+[ext_resource path="res://prefabs/ui/CategoryTabButton.tscn" type="PackedScene" id=12]
 [ext_resource path="res://assets/textures/UI/button_green.png" type="Texture" id=15]
 [ext_resource path="res://assets/textures/UI/plus_gray.png" type="Texture" id=16]
 [ext_resource path="res://prefabs/ui/MenuTabItem.tscn" type="PackedScene" id=17]
@@ -30,13 +33,8 @@
 [ext_resource path="res://src/UI/PanelTabItem.cs" type="Script" id=34]
 [ext_resource path="res://src/UI/HighlightMenuSelected.cs" type="Script" id=35]
 [ext_resource path="res://assets/textures/UI/back_title.png" type="Texture" id=36]
-[ext_resource path="res://assets/textures/UI/arrow_icon_silhouette.png" type="Texture" id=37]
-[ext_resource path="res://assets/textures/UI/block_icon_silhouette.png" type="Texture" id=38]
-[ext_resource path="res://assets/textures/UI/trap_icon_silhouette.png" type="Texture" id=39]
-[ext_resource path="res://assets/textures/UI/food_icon.png" type="Texture" id=40]
 [ext_resource path="res://assets/textures/UI/square_dotted_rounded.png" type="Texture" id=41]
 [ext_resource path="res://assets/textures/UI/qrcode_icon.png" type="Texture" id=42]
-[ext_resource path="res://prefabs/ui/ItemInventory.tscn" type="PackedScene" id=43]
 [ext_resource path="res://assets/textures/UI/user_add.png" type="Texture" id=44]
 [ext_resource path="res://prefabs/ui/Friend.tscn" type="PackedScene" id=45]
 [ext_resource path="res://assets/textures/UI/offline_icon.png" type="Texture" id=46]
@@ -226,7 +224,7 @@ size_flags_vertical = 0
 scroll_horizontal_enabled = false
 
 [node name="MarginContainer" type="MarginContainer" parent="ContainerTabContents/HBoxContainer/Shop/Content/Scroll"]
-margin_right = 1068.0
+margin_right = 1080.0
 margin_bottom = 227.0
 mouse_filter = 2
 size_flags_horizontal = 3
@@ -486,8 +484,13 @@ grow_horizontal = 2
 grow_vertical = 2
 rect_min_size = Vector2( 1080, 0 )
 mouse_filter = 2
-script = ExtResource( 34 )
+script = ExtResource( 7 )
 key = "inventory"
+ctnItemsPath = NodePath("Content/Scroll/MarginContainer/CenterContainer/GridContainer")
+itemPrefab = ExtResource( 11 )
+categoriesTabButtonsPath = NodePath("TitleBar/HBoxContainer/CategoriesItems")
+categoryBtnPrefab = ExtResource( 12 )
+categoriesSelected = PoolStringArray( "food" )
 
 [node name="ScreenResizer" type="Node" parent="ContainerTabContents/HBoxContainer/Inventory"]
 script = ExtResource( 32 )
@@ -525,7 +528,7 @@ alignment = 1
 
 [node name="NinePatchRect" type="NinePatchRect" parent="ContainerTabContents/HBoxContainer/Inventory/TitleBar/HBoxContainer"]
 self_modulate = Color( 1, 1, 1, 0.690196 )
-margin_right = 579.0
+margin_right = 983.0
 margin_bottom = 111.0
 size_flags_horizontal = 3
 texture = ExtResource( 36 )
@@ -549,46 +552,11 @@ align = 1
 valign = 1
 
 [node name="CategoriesItems" type="HBoxContainer" parent="ContainerTabContents/HBoxContainer/Inventory/TitleBar/HBoxContainer"]
-margin_left = 619.0
+margin_left = 1023.0
 margin_right = 1023.0
 margin_bottom = 111.0
 custom_constants/separation = 12
 alignment = 2
-
-[node name="ProjectilesTab" type="TextureButton" parent="ContainerTabContents/HBoxContainer/Inventory/TitleBar/HBoxContainer/CategoriesItems"]
-margin_right = 92.0
-margin_bottom = 111.0
-rect_min_size = Vector2( 92, 92 )
-texture_normal = ExtResource( 37 )
-expand = true
-stretch_mode = 5
-
-[node name="BlocksTab" type="TextureButton" parent="ContainerTabContents/HBoxContainer/Inventory/TitleBar/HBoxContainer/CategoriesItems"]
-margin_left = 104.0
-margin_right = 196.0
-margin_bottom = 111.0
-rect_min_size = Vector2( 92, 92 )
-texture_normal = ExtResource( 38 )
-expand = true
-stretch_mode = 5
-
-[node name="TrapsTab" type="TextureButton" parent="ContainerTabContents/HBoxContainer/Inventory/TitleBar/HBoxContainer/CategoriesItems"]
-margin_left = 208.0
-margin_right = 300.0
-margin_bottom = 111.0
-rect_min_size = Vector2( 92, 92 )
-texture_normal = ExtResource( 39 )
-expand = true
-stretch_mode = 5
-
-[node name="FoodsTab" type="TextureButton" parent="ContainerTabContents/HBoxContainer/Inventory/TitleBar/HBoxContainer/CategoriesItems"]
-margin_left = 312.0
-margin_right = 404.0
-margin_bottom = 111.0
-rect_min_size = Vector2( 92, 92 )
-texture_normal = ExtResource( 40 )
-expand = true
-stretch_mode = 5
 
 [node name="Content" type="Control" parent="ContainerTabContents/HBoxContainer/Inventory"]
 margin_top = 330.0
@@ -609,7 +577,7 @@ scroll_horizontal_enabled = false
 
 [node name="MarginContainer" type="MarginContainer" parent="ContainerTabContents/HBoxContainer/Inventory/Content/Scroll"]
 margin_right = 1080.0
-margin_bottom = 1800.0
+margin_bottom = 140.0
 mouse_filter = 2
 size_flags_horizontal = 3
 custom_constants/margin_right = 40
@@ -621,11 +589,11 @@ custom_constants/margin_bottom = 100
 margin_left = 40.0
 margin_top = 40.0
 margin_right = 1040.0
-margin_bottom = 1700.0
+margin_bottom = 40.0
 
 [node name="GridContainer" type="GridContainer" parent="ContainerTabContents/HBoxContainer/Inventory/Content/Scroll/MarginContainer/CenterContainer"]
-margin_right = 1000.0
-margin_bottom = 1660.0
+margin_left = 500.0
+margin_right = 500.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -635,123 +603,12 @@ custom_constants/vseparation = 15
 custom_constants/hseparation = 20
 columns = 4
 
-[node name="Item" parent="ContainerTabContents/HBoxContainer/Inventory/Content/Scroll/MarginContainer/CenterContainer/GridContainer" instance=ExtResource( 43 )]
-rarity = 1
-
-[node name="Item2" parent="ContainerTabContents/HBoxContainer/Inventory/Content/Scroll/MarginContainer/CenterContainer/GridContainer" instance=ExtResource( 43 )]
-margin_left = 255.0
-margin_right = 490.0
-rarity = 1
-
-[node name="Item3" parent="ContainerTabContents/HBoxContainer/Inventory/Content/Scroll/MarginContainer/CenterContainer/GridContainer" instance=ExtResource( 43 )]
-margin_left = 510.0
-margin_right = 745.0
-rarity = 1
-
-[node name="Item4" parent="ContainerTabContents/HBoxContainer/Inventory/Content/Scroll/MarginContainer/CenterContainer/GridContainer" instance=ExtResource( 43 )]
-margin_left = 765.0
-margin_right = 1000.0
-
-[node name="Item5" parent="ContainerTabContents/HBoxContainer/Inventory/Content/Scroll/MarginContainer/CenterContainer/GridContainer" instance=ExtResource( 43 )]
-margin_top = 335.0
-margin_bottom = 655.0
-rarity = 2
-
-[node name="Item6" parent="ContainerTabContents/HBoxContainer/Inventory/Content/Scroll/MarginContainer/CenterContainer/GridContainer" instance=ExtResource( 43 )]
-margin_left = 255.0
-margin_top = 335.0
-margin_right = 490.0
-margin_bottom = 655.0
-
-[node name="Item7" parent="ContainerTabContents/HBoxContainer/Inventory/Content/Scroll/MarginContainer/CenterContainer/GridContainer" instance=ExtResource( 43 )]
-margin_left = 510.0
-margin_top = 335.0
-margin_right = 745.0
-margin_bottom = 655.0
-rarity = 3
-
-[node name="Item8" parent="ContainerTabContents/HBoxContainer/Inventory/Content/Scroll/MarginContainer/CenterContainer/GridContainer" instance=ExtResource( 43 )]
-margin_left = 765.0
-margin_top = 335.0
-margin_right = 1000.0
-margin_bottom = 655.0
-rarity = 3
-
-[node name="Item9" parent="ContainerTabContents/HBoxContainer/Inventory/Content/Scroll/MarginContainer/CenterContainer/GridContainer" instance=ExtResource( 43 )]
-margin_top = 670.0
-margin_bottom = 990.0
-rarity = 3
-
-[node name="Item10" parent="ContainerTabContents/HBoxContainer/Inventory/Content/Scroll/MarginContainer/CenterContainer/GridContainer" instance=ExtResource( 43 )]
-margin_left = 255.0
-margin_top = 670.0
-margin_right = 490.0
-margin_bottom = 990.0
-
-[node name="Item11" parent="ContainerTabContents/HBoxContainer/Inventory/Content/Scroll/MarginContainer/CenterContainer/GridContainer" instance=ExtResource( 43 )]
-margin_left = 510.0
-margin_top = 670.0
-margin_right = 745.0
-margin_bottom = 990.0
-
-[node name="Item12" parent="ContainerTabContents/HBoxContainer/Inventory/Content/Scroll/MarginContainer/CenterContainer/GridContainer" instance=ExtResource( 43 )]
-margin_left = 765.0
-margin_top = 670.0
-margin_right = 1000.0
-margin_bottom = 990.0
-
-[node name="Item13" parent="ContainerTabContents/HBoxContainer/Inventory/Content/Scroll/MarginContainer/CenterContainer/GridContainer" instance=ExtResource( 43 )]
-margin_top = 1005.0
-margin_bottom = 1325.0
-rarity = 2
-
-[node name="Item14" parent="ContainerTabContents/HBoxContainer/Inventory/Content/Scroll/MarginContainer/CenterContainer/GridContainer" instance=ExtResource( 43 )]
-margin_left = 255.0
-margin_top = 1005.0
-margin_right = 490.0
-margin_bottom = 1325.0
-rarity = 2
-
-[node name="Item15" parent="ContainerTabContents/HBoxContainer/Inventory/Content/Scroll/MarginContainer/CenterContainer/GridContainer" instance=ExtResource( 43 )]
-margin_left = 510.0
-margin_top = 1005.0
-margin_right = 745.0
-margin_bottom = 1325.0
-
-[node name="Item16" parent="ContainerTabContents/HBoxContainer/Inventory/Content/Scroll/MarginContainer/CenterContainer/GridContainer" instance=ExtResource( 43 )]
-margin_left = 765.0
-margin_top = 1005.0
-margin_right = 1000.0
-margin_bottom = 1325.0
-
-[node name="Item17" parent="ContainerTabContents/HBoxContainer/Inventory/Content/Scroll/MarginContainer/CenterContainer/GridContainer" instance=ExtResource( 43 )]
-margin_top = 1340.0
-margin_bottom = 1660.0
-
-[node name="Item18" parent="ContainerTabContents/HBoxContainer/Inventory/Content/Scroll/MarginContainer/CenterContainer/GridContainer" instance=ExtResource( 43 )]
-margin_left = 255.0
-margin_top = 1340.0
-margin_right = 490.0
-margin_bottom = 1660.0
-
-[node name="Item19" parent="ContainerTabContents/HBoxContainer/Inventory/Content/Scroll/MarginContainer/CenterContainer/GridContainer" instance=ExtResource( 43 )]
-margin_left = 510.0
-margin_top = 1340.0
-margin_right = 745.0
-margin_bottom = 1660.0
-
-[node name="Item20" parent="ContainerTabContents/HBoxContainer/Inventory/Content/Scroll/MarginContainer/CenterContainer/GridContainer" instance=ExtResource( 43 )]
-margin_left = 765.0
-margin_top = 1340.0
-margin_right = 1000.0
-margin_bottom = 1660.0
-
 [node name="VBoxContainer" type="VBoxContainer" parent="ContainerTabContents/HBoxContainer/Inventory/Content/Scroll/MarginContainer"]
 visible = false
 margin_left = 40.0
 margin_top = 40.0
 margin_right = 1040.0
-margin_bottom = 1700.0
+margin_bottom = 127.0
 custom_constants/separation = 35
 
 [node name="Label" type="Label" parent="ContainerTabContents/HBoxContainer/Inventory/Content/Scroll/MarginContainer/VBoxContainer"]
@@ -846,7 +703,7 @@ size_flags_vertical = 0
 scroll_horizontal_enabled = false
 
 [node name="MarginContainer" type="MarginContainer" parent="ContainerTabContents/HBoxContainer/Scenarios/Content/Scroll"]
-margin_right = 1068.0
+margin_right = 1080.0
 margin_bottom = 522.0
 mouse_filter = 2
 size_flags_horizontal = 3
@@ -1631,7 +1488,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="MarginContainer" type="MarginContainer" parent="QuestsContainer/QuestsPanel/ScrollContainer"]
-margin_right = 562.0
+margin_right = 1023.0
 margin_bottom = 2192.0
 size_flags_horizontal = 3
 custom_constants/margin_right = 36

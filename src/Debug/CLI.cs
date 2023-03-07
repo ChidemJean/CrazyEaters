@@ -30,6 +30,7 @@ namespace CrazyEaters.Debug
             {"help", "help - Lista os comandos disponíveis"},
             {"clr_hist", "clr_hist - Limpa o histórico de comandos"},
             {"list_hist", "list_hist - Lista o histórico de comandos"},
+            {"inv", "inv - Solicita operação no inventário"},
         };
         
         public override void _Ready()
@@ -130,6 +131,14 @@ namespace CrazyEaters.Debug
                             histStr += "\n ------ ["+(history.IndexOf(histItem)+1)+"]: " + histItem;
                         }
                         cmdLabel.Text += histStr;
+                        break;
+
+                    case "inv":
+                        string entityKey = cmdParams[0];
+                        int qtd = cmdParams[1].ToInt();
+                        InventoryOperationRequest invRequest = new InventoryOperationRequest(entityKey, qtd);
+                        gameManager.TriggerEvent(GameEvent.OnInventoryOperationRequest, invRequest);
+                        Close();
                         break;
                 }
             }
