@@ -56,32 +56,37 @@ namespace CrazyEaters.Managers
 
         public void OnChangeScene(object scene)
         {
-            string sceneStr = (string) scene;
+            object[] prms = scene is object[] ? scene as object[] : null;
+            string sceneStr = (string) (prms != null ? prms[0] : scene);
             if (!sceneStr.Contains("_scene")) {
                 sceneStr += "_scene";
+            }
+            if (prms != null) {
+                ChangeScene(sceneStr, prms);
+                return;
             }
             ChangeScene(sceneStr);
         }
 
-        public void ChangeScene(string key) {
+        public void ChangeScene(string key, object[] prms = null) {
             if (!scenes.ContainsKey(key)) return;
             currentSceneResource = scenes[key];
             if (currentSceneResource != null) {
                 isLoading = true;
                 loading.Visible = true;
-                LoadScene(currentSceneResource);
+                LoadScene(currentSceneResource, prms);
                 // loading.SetProcess(true);
                 // resourceQueueObj.Call("queue_resource", currentSceneResource.ResourcePath, true);
             }
         }
 
-        public async void LoadScene(PackedScene scene)
+        public async void LoadScene(PackedScene scene, object[] prms = null)
         {
             if (ResourceLoader.HasCached(scene.ResourcePath)){
                 if (currentScene != null) {
                     currentScene.QueueFree();
                 }
-                ShowScene(ResourceLoader.Load<PackedScene>(scene.ResourcePath));
+                ShowScene(ResourceLoader.Load<PackedScene>(scene.ResourcePath), prms);
             } else {
                 var loader = ResourceLoader.LoadInteractive(scene.ResourcePath);
                 if (loader == null) {
@@ -114,12 +119,13 @@ namespace CrazyEaters.Managers
         //     }
         // }
 
-        public void ShowScene(PackedScene scene) 
+        public void ShowScene(PackedScene scene, object[] prms = null) 
         {
             if (scene == null) return;
             Clean();
             
             currentScene = scene.Instance<CEScene>();
+            currentScene.args = prms;
             AddChild(currentScene);
             if (currentScene.viewport3d != null) {
                 gameManager.hud.ChangeViewport3d(currentScene.viewport3d);

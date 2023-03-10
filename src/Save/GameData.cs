@@ -60,6 +60,7 @@ namespace CrazyEaters.Save
     [System.Serializable]
     public class HabitatGameData : GameData
     {
+        public string uuid = "default";
         public string launcherActiveID = "default";
         public string habitatID = "default";
         public string datetimeLastPlay;
@@ -74,6 +75,15 @@ namespace CrazyEaters.Save
             this.habitatID = habitatID;
             this.blocks = blocks;
             this.statusesEater = statusesEater;
+        }
+        public override string ToString()
+        {
+            string statusesString = "";
+            foreach (StatusCharacter status in statusesEater) {
+                statusesString += $" ({status.id}) -> ({status.current}) ";
+            }
+
+            return $"[uuid: {uuid}] - [launcher: {launcherActiveID}] - [character: {character.id}|{character.age}] - [qtd blocos: {blocks?.Count}] - [statuses: {statusesString}]";
         }
     }
 

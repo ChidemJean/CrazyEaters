@@ -119,6 +119,7 @@ namespace CrazyEaters.Characters
 
       public void DebugPath()
       {
+         if (ig == null) return;
          if (pathIA != null && pathIA.Length > 0)
          {
             ig.SetAsToplevel(true);

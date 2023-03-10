@@ -94,14 +94,14 @@ namespace CrazyEaters.Managers
             globalMidleware = action;
         }
 
-        public void TriggerEvent(GameEvent gameEvent, object eventParam)
+        public void TriggerEvent(GameEvent gameEvent, params object[] eventParam)
         {
             if (!gameEventsActive) return;
             Action<object> thisEvent = null;
             if (eventDictionary.TryGetValue(gameEvent, out thisEvent))
             {
-                if (globalMidleware != null) globalMidleware.Invoke(gameEvent, eventParam);
-                if (thisEvent != null) thisEvent.Invoke(eventParam);
+                if (globalMidleware != null) globalMidleware.Invoke(gameEvent, eventParam.Length == 1 ? eventParam[0] : eventParam);
+                if (thisEvent != null) thisEvent.Invoke(eventParam.Length == 1 ? eventParam[0] : eventParam);
                 // OR USE  instance.eventDictionary[eventName](eventParam);
             }
         }

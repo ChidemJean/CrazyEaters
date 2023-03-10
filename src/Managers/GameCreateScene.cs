@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Diagnostics;
 using CrazyEaters.UI;
 using CrazyEaters.DependencyInjection;
 using CrazyEaters.Managers;
@@ -215,6 +216,7 @@ namespace CrazyEaters.Managers
             var selectedCharacter = (CrazyEaters.Resources.CharacterData) itemsManager.FindByKey(selectedCharacterKey);
 
             HabitatGameData habitatGameData = new HabitatGameData();
+            habitatGameData.uuid = Guid.NewGuid().ToString();
             habitatGameData.habitatID = selectedHabitatKey;
 
             CharacterData characterData = new CharacterData();

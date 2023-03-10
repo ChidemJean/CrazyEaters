@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=2]
+[gd_scene load_steps=56 format=2]
 
 [ext_resource path="res://prefabs/ui/BoxCoins.tscn" type="PackedScene" id=1]
 [ext_resource path="res://prefabs/ui/UserInfs.tscn" type="PackedScene" id=2]
@@ -12,6 +12,8 @@
 [ext_resource path="res://assets/textures/UI/eater.png" type="Texture" id=10]
 [ext_resource path="res://prefabs/ui/ItemInventory.tscn" type="PackedScene" id=11]
 [ext_resource path="res://prefabs/ui/CategoryTabButton.tscn" type="PackedScene" id=12]
+[ext_resource path="res://prefabs/ui/SaveDot.tscn" type="PackedScene" id=13]
+[ext_resource path="res://src/UI/SavesSelector.cs" type="Script" id=14]
 [ext_resource path="res://assets/textures/UI/button_green.png" type="Texture" id=15]
 [ext_resource path="res://assets/textures/UI/plus_gray.png" type="Texture" id=16]
 [ext_resource path="res://prefabs/ui/MenuTabItem.tscn" type="PackedScene" id=17]
@@ -22,10 +24,6 @@
 [ext_resource path="res://assets/textures/UI/shadow_w_screen.png" type="Texture" id=22]
 [ext_resource path="res://assets/textures/UI/middle_menu_bottom.png" type="Texture" id=23]
 [ext_resource path="res://assets/textures/UI/game-console.png" type="Texture" id=24]
-[ext_resource path="res://assets/textures/UI/brown_circle.png" type="Texture" id=25]
-[ext_resource path="res://assets/textures/UI/radial_white_small.png" type="Texture" id=26]
-[ext_resource path="res://assets/textures/UI/white_circle_hole.png" type="Texture" id=27]
-[ext_resource path="res://assets/textures/UI/brown_circle_hole.png" type="Texture" id=28]
 [ext_resource path="res://assets/textures/UI/dotted_square.png" type="Texture" id=29]
 [ext_resource path="res://prefabs/ui/generics/BlueButtonNinePatch.tscn" type="PackedScene" id=31]
 [ext_resource path="res://src/UI/Utils/ScreenResizer.cs" type="Script" id=32]
@@ -69,13 +67,6 @@ font_data = ExtResource( 6 )
 [sub_resource type="DynamicFont" id=11]
 size = 50
 outline_size = 2
-outline_color = Color( 0, 0, 0, 1 )
-use_filter = true
-font_data = ExtResource( 6 )
-
-[sub_resource type="DynamicFont" id=10]
-size = 42
-outline_size = 3
 outline_color = Color( 0, 0, 0, 1 )
 use_filter = true
 font_data = ExtResource( 6 )
@@ -224,7 +215,7 @@ size_flags_vertical = 0
 scroll_horizontal_enabled = false
 
 [node name="MarginContainer" type="MarginContainer" parent="ContainerTabContents/HBoxContainer/Shop/Content/Scroll"]
-margin_right = 1080.0
+margin_right = 1068.0
 margin_bottom = 227.0
 mouse_filter = 2
 size_flags_horizontal = 3
@@ -278,9 +269,9 @@ script = ExtResource( 32 )
 fullRectGuiderPath = NodePath("../../..")
 
 [node name="MarginContainer" type="MarginContainer" parent="ContainerTabContents/HBoxContainer/Saves"]
-margin_top = 335.0
+margin_top = 333.0
 margin_right = 1080.0
-margin_bottom = 575.0
+margin_bottom = 573.0
 custom_constants/margin_right = 50
 custom_constants/margin_left = 50
 custom_constants/margin_bottom = 80
@@ -303,27 +294,37 @@ script = ExtResource( 56 )
 
 [node name="NinePatchRect" parent="ContainerTabContents/HBoxContainer/Saves/MarginContainer/Control2/TextureRect" instance=ExtResource( 52 )]
 
-[node name="TextureRect" type="TextureRect" parent="ContainerTabContents/HBoxContainer/Saves"]
-margin_top = 605.0
+[node name="SavesSelector" type="VBoxContainer" parent="ContainerTabContents/HBoxContainer/Saves"]
+margin_top = 603.0
 margin_right = 1080.0
-margin_bottom = 1255.0
+margin_bottom = 1587.0
+custom_constants/separation = 32
+script = ExtResource( 14 )
+thumbPath = NodePath("TextureRect")
+btnJoinPath = NodePath("Control/EnterSaveBtn")
+ctnSavesPath = NodePath("HBoxContainer/SavesDotsCtn")
+saveDotPrefab = ExtResource( 13 )
+
+[node name="TextureRect" type="TextureRect" parent="ContainerTabContents/HBoxContainer/Saves/SavesSelector"]
+margin_right = 1080.0
+margin_bottom = 650.0
 rect_min_size = Vector2( 0, 650 )
 texture = ExtResource( 10 )
 expand = true
 stretch_mode = 6
 
-[node name="Control" type="CenterContainer" parent="ContainerTabContents/HBoxContainer/Saves"]
-margin_top = 1285.0
+[node name="Control" type="CenterContainer" parent="ContainerTabContents/HBoxContainer/Saves/SavesSelector"]
+margin_top = 682.0
 margin_right = 1080.0
-margin_bottom = 1445.0
+margin_bottom = 842.0
 
-[node name="EnterSaveBtn" parent="ContainerTabContents/HBoxContainer/Saves/Control" instance=ExtResource( 31 )]
+[node name="EnterSaveBtn" parent="ContainerTabContents/HBoxContainer/Saves/SavesSelector/Control" instance=ExtResource( 31 )]
 margin_left = 390.0
 margin_right = 690.0
 margin_bottom = 160.0
 rect_min_size = Vector2( 300, 160 )
 
-[node name="Label" type="Label" parent="ContainerTabContents/HBoxContainer/Saves/Control/EnterSaveBtn"]
+[node name="Label" type="Label" parent="ContainerTabContents/HBoxContainer/Saves/SavesSelector/Control/EnterSaveBtn"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -341,120 +342,31 @@ text = "Entrar"
 align = 1
 valign = 1
 
-[node name="SavesDotsCtn" type="HBoxContainer" parent="ContainerTabContents/HBoxContainer/Saves"]
-margin_top = 1475.0
+[node name="HBoxContainer" type="HBoxContainer" parent="ContainerTabContents/HBoxContainer/Saves/SavesSelector"]
+margin_top = 874.0
 margin_right = 1080.0
-margin_bottom = 1585.0
-grow_horizontal = 2
-grow_vertical = 2
-custom_constants/separation = 30
+margin_bottom = 984.0
+custom_constants/separation = 70
 alignment = 1
 
-[node name="SaveDot" type="Control" parent="ContainerTabContents/HBoxContainer/Saves/SavesDotsCtn"]
-margin_left = 297.0
-margin_right = 391.0
+[node name="SavesDotsCtn" type="HBoxContainer" parent="ContainerTabContents/HBoxContainer/Saves/SavesSelector/HBoxContainer"]
+margin_left = 420.0
+margin_right = 480.0
 margin_bottom = 110.0
-rect_min_size = Vector2( 94, 94 )
+grow_horizontal = 2
+grow_vertical = 2
+custom_constants/separation = 45
+alignment = 1
 
-[node name="TextureRect" type="TextureProgress" parent="ContainerTabContents/HBoxContainer/Saves/SavesDotsCtn/SaveDot"]
-self_modulate = Color( 1, 0, 0, 1 )
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -47.0
-margin_top = -47.0
-margin_right = 47.0
-margin_bottom = 47.0
-value = 20.0
-texture_under = ExtResource( 28 )
-texture_progress = ExtResource( 27 )
-fill_mode = 5
-
-[node name="Label" type="Label" parent="ContainerTabContents/HBoxContainer/Saves/SavesDotsCtn/SaveDot/TextureRect"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -11.0
-margin_top = -37.0
-margin_right = 11.0
-margin_bottom = 37.0
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_constants/shadow_offset_y = 5
-custom_fonts/font = SubResource( 10 )
-text = "2"
-
-[node name="SaveDot2" type="Control" parent="ContainerTabContents/HBoxContainer/Saves/SavesDotsCtn"]
-margin_left = 421.0
-margin_right = 475.0
+[node name="SaveDot" parent="ContainerTabContents/HBoxContainer/Saves/SavesSelector/HBoxContainer/SavesDotsCtn" instance=ExtResource( 13 )]
+margin_left = 0.0
+margin_right = 60.0
 margin_bottom = 110.0
-rect_min_size = Vector2( 54, 54 )
 
-[node name="SaveDot" type="TextureProgress" parent="ContainerTabContents/HBoxContainer/Saves/SavesDotsCtn/SaveDot2"]
-self_modulate = Color( 0.329412, 1, 0.0823529, 1 )
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -27.0
-margin_top = -27.0
-margin_right = 27.0
-margin_bottom = 27.0
-rect_min_size = Vector2( 40, 40 )
-value = 85.0
-texture_under = ExtResource( 25 )
-texture_progress = ExtResource( 26 )
-fill_mode = 5
-
-[node name="SaveDot3" type="Control" parent="ContainerTabContents/HBoxContainer/Saves/SavesDotsCtn"]
-margin_left = 505.0
-margin_right = 559.0
-margin_bottom = 110.0
-rect_min_size = Vector2( 54, 54 )
-
-[node name="SaveDot" type="TextureProgress" parent="ContainerTabContents/HBoxContainer/Saves/SavesDotsCtn/SaveDot3"]
-self_modulate = Color( 0.329412, 1, 0.0823529, 1 )
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -27.0
-margin_top = -27.0
-margin_right = 27.0
-margin_bottom = 27.0
-rect_min_size = Vector2( 40, 40 )
-value = 85.0
-texture_under = ExtResource( 25 )
-texture_progress = ExtResource( 26 )
-fill_mode = 5
-
-[node name="SaveDot4" type="Control" parent="ContainerTabContents/HBoxContainer/Saves/SavesDotsCtn"]
-margin_left = 589.0
-margin_right = 643.0
-margin_bottom = 110.0
-rect_min_size = Vector2( 54, 54 )
-
-[node name="SaveDot" type="TextureProgress" parent="ContainerTabContents/HBoxContainer/Saves/SavesDotsCtn/SaveDot4"]
-self_modulate = Color( 0.329412, 1, 0.0823529, 1 )
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -27.0
-margin_top = -27.0
-margin_right = 27.0
-margin_bottom = 27.0
-rect_min_size = Vector2( 40, 40 )
-value = 85.0
-texture_under = ExtResource( 25 )
-texture_progress = ExtResource( 26 )
-fill_mode = 5
-
-[node name="TextureButton" type="TextureButton" parent="ContainerTabContents/HBoxContainer/Saves/SavesDotsCtn"]
+[node name="TextureButton" type="TextureButton" parent="ContainerTabContents/HBoxContainer/Saves/SavesSelector/HBoxContainer"]
 modulate = Color( 1, 1, 1, 0.494118 )
-margin_left = 673.0
-margin_right = 783.0
+margin_left = 550.0
+margin_right = 660.0
 margin_bottom = 110.0
 rect_min_size = Vector2( 110, 110 )
 texture_normal = ExtResource( 29 )
@@ -462,7 +374,7 @@ expand = true
 stretch_mode = 5
 script = ExtResource( 5 )
 
-[node name="TextureRect" type="TextureRect" parent="ContainerTabContents/HBoxContainer/Saves/SavesDotsCtn/TextureButton"]
+[node name="TextureRect" type="TextureRect" parent="ContainerTabContents/HBoxContainer/Saves/SavesSelector/HBoxContainer/TextureButton"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -490,7 +402,6 @@ ctnItemsPath = NodePath("Content/Scroll/MarginContainer/CenterContainer/GridCont
 itemPrefab = ExtResource( 11 )
 categoriesTabButtonsPath = NodePath("TitleBar/HBoxContainer/CategoriesItems")
 categoryBtnPrefab = ExtResource( 12 )
-categoriesSelected = PoolStringArray( "food" )
 
 [node name="ScreenResizer" type="Node" parent="ContainerTabContents/HBoxContainer/Inventory"]
 script = ExtResource( 32 )
@@ -576,7 +487,7 @@ size_flags_vertical = 0
 scroll_horizontal_enabled = false
 
 [node name="MarginContainer" type="MarginContainer" parent="ContainerTabContents/HBoxContainer/Inventory/Content/Scroll"]
-margin_right = 1080.0
+margin_right = 1068.0
 margin_bottom = 140.0
 mouse_filter = 2
 size_flags_horizontal = 3
@@ -703,7 +614,7 @@ size_flags_vertical = 0
 scroll_horizontal_enabled = false
 
 [node name="MarginContainer" type="MarginContainer" parent="ContainerTabContents/HBoxContainer/Scenarios/Content/Scroll"]
-margin_right = 1080.0
+margin_right = 1068.0
 margin_bottom = 522.0
 mouse_filter = 2
 size_flags_horizontal = 3
@@ -1488,7 +1399,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="MarginContainer" type="MarginContainer" parent="QuestsContainer/QuestsPanel/ScrollContainer"]
-margin_right = 1023.0
+margin_right = 562.0
 margin_bottom = 2192.0
 size_flags_horizontal = 3
 custom_constants/margin_right = 36
@@ -1576,7 +1487,7 @@ margin_top = 1950.0
 margin_right = 939.0
 margin_bottom = 2120.0
 
-[editable path="ContainerTabContents/HBoxContainer/Saves/Control/EnterSaveBtn"]
+[editable path="ContainerTabContents/HBoxContainer/Saves/SavesSelector/Control/EnterSaveBtn"]
 [editable path="ContainerTabContents/HBoxContainer/Multiplayer/TitleBar/HBoxContainer/CategoriesItems/BlueButtonNinePatch"]
 [editable path="ContainerTabContents/HBoxContainer/Multiplayer/TitleBar/HBoxContainer/CategoriesItems/BlueButtonNinePatch2"]
 [editable path="ContainerTabContents/HBoxContainer/Multiplayer/Content/Scroll/MarginContainer/VBoxContainer/Friend2"]
