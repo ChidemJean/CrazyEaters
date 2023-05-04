@@ -12,7 +12,7 @@ albedo_texture = ExtResource( 3 )
 uv1_scale = Vector3( 8, 8, 8 )
 
 [node name="IronFence" instance=ExtResource( 1 )]
-transform = Transform( 0.24, 0, 0, 0, 0.24, 0, 0, 0, 0.24, 0, 0, 0 )
+transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0 )
 
 [node name="Cube" parent="." index="0"]
 material/0 = ExtResource( 2 )

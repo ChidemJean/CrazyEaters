@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://src/Entities/Habitat.cs" type="Script" id=1]
 [ext_resource path="res://prefabs/props/LightPole.tscn" type="PackedScene" id=2]
@@ -6,10 +6,12 @@
 [ext_resource path="res://prefabs/EnemySpawnPoint.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/models/imported/coconut.glb" type="PackedScene" id=5]
 [ext_resource path="res://prefabs/props/IronFence.tscn" type="PackedScene" id=6]
-[ext_resource path="res://assets/models/imported/eucalyptus.glb" type="PackedScene" id=7]
+[ext_resource path="res://assets/models/imported/garbage.glb" type="PackedScene" id=8]
+[ext_resource path="res://assets/models/imported/wood_pallete.glb" type="PackedScene" id=9]
+[ext_resource path="res://assets/models/imported/cone.glb" type="PackedScene" id=10]
 
 [sub_resource type="CubeMesh" id=1]
-size = Vector3( 4, 0.5, 4 )
+size = Vector3( 3, 0.5, 3 )
 
 [sub_resource type="SpatialMaterial" id=2]
 flags_transparent = true
@@ -19,46 +21,105 @@ albedo_color = Color( 1, 0.137255, 0.137255, 0.890196 )
 [node name="Scenario" type="Spatial"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.74054, 7.70755, -1.93319 )
 script = ExtResource( 1 )
+characterPointPath = NodePath("CharacterSpawn")
+enemyPointsPaths = [ NodePath("EnemySpawn"), NodePath("EnemySpawn2") ]
 
 [node name="coconut" parent="." instance=ExtResource( 5 )]
-transform = Transform( 0.19, 0, 0, 0, 0.19, 0, 0, 0, 0.19, -8.46416, -0.16829, 9.62467 )
+transform = Transform( 0.26, 0, 0, 0, 0.26, 0, 0, 0, 0.26, -6.87356, -0.392114, 1.31135 )
 
-[node name="eucalyptus" parent="." instance=ExtResource( 7 )]
-transform = Transform( 0.13, 0, 0, 0, 0.13, 0, 0, 0, 0.13, 5.12116, 0.38216, 4.62228 )
+[node name="coconut2" parent="." instance=ExtResource( 5 )]
+transform = Transform( -0.180927, 0, 0.186723, 0, 0.26, 0, -0.186723, 0, -0.180927, 3.79539, -0.16829, 8.75957 )
+
+[node name="coconut3" parent="." instance=ExtResource( 5 )]
+transform = Transform( -0.0972676, 0, -0.24112, 0, 0.26, 0, 0.24112, 0, -0.0972676, 6.75987, 1.36228, 23.0587 )
+
+[node name="coconut4" parent="." instance=ExtResource( 5 )]
+transform = Transform( -0.209522, 0, 0.153949, 0, 0.26, 0, -0.153949, 0, -0.209522, -3.53651, -0.187147, 18.8027 )
 
 [node name="apocalipse_scenario" parent="." instance=ExtResource( 3 )]
-
-[node name="IronFence" parent="." instance=ExtResource( 6 )]
-transform = Transform( 0.24, 0, 0, 0, 0.24, 0, 0, 0, 0.24, -19.0985, 1.84493, 2.05172 )
+transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
 
 [node name="IronFence8" parent="." instance=ExtResource( 6 )]
-transform = Transform( -0.00943909, 0, 0.239814, 0, 0.24, 0, -0.239814, 0, -0.00943909, -17.013, 1.84493, -0.19561 )
+transform = Transform( 0.00174358, 0, 0.299995, 0, 0.3, 0, -0.299995, 0, 0.00174358, -14.7171, 1.45904, 0.723076 )
 
-[node name="IronFence2" parent="." instance=ExtResource( 6 )]
-transform = Transform( 0.24, 0, 0, 0, 0.24, 0, 0, 0, 0.24, -23.0944, 1.84493, 2.05172 )
+[node name="IronFence9" parent="." instance=ExtResource( 6 )]
+transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, -17.6056, 1.4647, 3.46039 )
 
-[node name="IronFence3" parent="." instance=ExtResource( 6 )]
-transform = Transform( 0.0994546, 0.135405, -0.171389, 0.0216141, 0.181294, 0.155773, 0.217351, -0.0799866, 0.0629327, -29.6916, 1.58699, 0.0697 )
+[node name="IronFence10" parent="." instance=ExtResource( 6 )]
+transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, -22.5542, 1.4647, 3.46039 )
 
-[node name="IronFence4" parent="." instance=ExtResource( 6 )]
-transform = Transform( 0.24, 0, 0, 0, 0.24, 0, 0, 0, 0.24, -27.075, 1.84493, 2.05172 )
+[node name="IronFence11" parent="." instance=ExtResource( 6 )]
+transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, -27.495, 1.4647, 3.46039 )
 
-[node name="IronFence5" parent="." instance=ExtResource( 6 )]
-transform = Transform( 0.24, 0, 0, 0, 0.24, 0, 0, 0, 0.24, -19.0985, 1.84493, -11.2446 )
+[node name="IronFence12" parent="." instance=ExtResource( 6 )]
+transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, -32.4357, 1.4647, 3.46039 )
 
-[node name="IronFence6" parent="." instance=ExtResource( 6 )]
-transform = Transform( 0.24, 0, 0, 0, 0.24, 0, 0, 0, 0.24, -23.0944, 1.84493, -11.2446 )
+[node name="IronFence13" parent="." instance=ExtResource( 6 )]
+transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, -17.6056, 1.4647, -11.8489 )
 
-[node name="IronFence7" parent="." instance=ExtResource( 6 )]
-transform = Transform( 0.24, 0, 0, 0, 0.24, 0, 0, 0, 0.24, -27.075, 1.84493, -11.2446 )
+[node name="IronFence14" parent="." instance=ExtResource( 6 )]
+transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, -22.5542, 1.4647, -11.8489 )
+
+[node name="IronFence15" parent="." instance=ExtResource( 6 )]
+transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, -27.495, 1.4647, -11.8489 )
+
+[node name="IronFence16" parent="." instance=ExtResource( 6 )]
+transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, -32.4357, 1.4647, -11.8489 )
+
+[node name="IronFence17" parent="." instance=ExtResource( 6 )]
+transform = Transform( -1.31134e-08, 0, 0.3, 0, 0.3, 0, -0.3, 0, -1.31134e-08, -35.0543, 1.4647, 0.633641 )
+
+[node name="IronFence18" parent="." instance=ExtResource( 6 )]
+transform = Transform( -1.31134e-08, 0, 0.3, 0, 0.3, 0, -0.3, 0, -1.31134e-08, -35.0543, 1.4647, -4.24723 )
 
 [node name="light_pole" parent="." instance=ExtResource( 2 )]
-transform = Transform( 0.08, 0, 0, 0, 0.08, 0, 0, 0, 0.08, 1.75986, 1.81459, -3.10435 )
+transform = Transform( 0.08, 0, 0, 0, 0.08, 0, 0, 0, 0.08, 0.967655, 1.4473, -2.71481 )
 
 [node name="light_pole2" parent="." instance=ExtResource( 2 )]
-transform = Transform( -0.0799941, 0, -0.000971776, 0, 0.08, 0, 0.000971776, 0, -0.0799941, -17.4767, 1.81459, -7.69817 )
+transform = Transform( -0.0799941, 0, -0.000971776, 0, 0.08, 0, 0.000971776, 0, -0.0799941, -14.3655, 1.4473, -11.7537 )
 
-[node name="MeshInstance" parent="." instance=ExtResource( 4 )]
-transform = Transform( 0.640906, 0, 0, 0, 1, 0, 0, 0, 0.639502, -32.2242, 1.62828, -9.44411 )
+[node name="light_pole3" parent="." instance=ExtResource( 2 )]
+transform = Transform( -0.0799941, 0, -0.000971776, 0, 0.08, 0, 0.000971776, 0, -0.0799941, -6.26562, 1.4473, -11.7537 )
+
+[node name="light_pole4" parent="." instance=ExtResource( 2 )]
+transform = Transform( -0.0799941, 0, -0.000971776, 0, 0.08, 0, 0.000971776, 0, -0.0799941, -31.5532, 1.4473, -11.5256 )
+
+[node name="garbage" parent="." instance=ExtResource( 8 )]
+transform = Transform( -0.0495974, 0, 0.0868337, 0, 0.1, 0, -0.0868337, 0, -0.0495974, -17.0665, 1.56182, 1.3364 )
+
+[node name="wood_pallete" parent="." instance=ExtResource( 9 )]
+transform = Transform( 0.155984, 0, -0.035622, 0, 0.16, 0, 0.035622, 0, 0.155984, -20.4106, 1.60848, 1.13016 )
+
+[node name="wood_pallete3" parent="." instance=ExtResource( 9 )]
+transform = Transform( 0.159485, -0.0106925, -0.00707621, 0.00227123, 0.110464, -0.115727, 0.0126192, 0.115254, 0.11026, -27.9168, 2.21439, -10.9764 )
+
+[node name="wood_pallete2" parent="." instance=ExtResource( 9 )]
+transform = Transform( 0.14836, 0, 0.0599112, 0, 0.16, 0, -0.0599112, 0, 0.14836, -20.4106, 2.02394, 1.13016 )
+
+[node name="cone" parent="." instance=ExtResource( 10 )]
+transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, -18.5524, 1.41402, -9.6002 )
+
+[node name="cone3" parent="." instance=ExtResource( 10 )]
+transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, -17.4737, 1.41402, -11.0606 )
+
+[node name="cone2" parent="." instance=ExtResource( 10 )]
+transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, -19.6623, 1.41402, -10.3905 )
+
+[node name="CharacterSpawn" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.37598, 4.55069, -5.23143 )
+
+[node name="EnemySpawn" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -23.3818, 1.56915, -4.57386 )
+
+[node name="MeshInstance" parent="EnemySpawn" instance=ExtResource( 4 )]
 mesh = SubResource( 1 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 2 )
+
+[node name="EnemySpawn2" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -33.2013, -1.83307, 5.09575 )
+
+[node name="MeshInstance" parent="EnemySpawn2" instance=ExtResource( 4 )]
+mesh = SubResource( 1 )
+skeleton = NodePath("../..")
 material/0 = SubResource( 2 )

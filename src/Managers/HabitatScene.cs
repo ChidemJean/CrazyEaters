@@ -31,11 +31,11 @@ namespace CrazyEaters.Managers
         [Export]
         public int currentBlockId = 3;
         [Export] private NodePath characterCtnPath;
-        [Export] private NodePath characterPointPath;
+        [Export] private NodePath enemiesCtnPath;
         [Export] private NodePath habitatCtnPath;
         [Export] private NodePath navigationPath;
         private Spatial characterCtn;
-        private Position3D characterPoint;
+        private Spatial enemiesCtn;
         private Spatial habitatCtn;
         private Navigation navigation;
         private NavigationMeshInstance navigationMesh;
@@ -50,9 +50,9 @@ namespace CrazyEaters.Managers
             main3DNode = GetNode<Spatial>(main3DNodePath);
             placementController = GetNode<PlacementController>(placementControllerPath);
             characterCtn = GetNode<Spatial>(characterCtnPath);
+            enemiesCtn = GetNode<Spatial>(enemiesCtnPath);
             habitatCtn = GetNode<Spatial>(habitatCtnPath);
             navigation = GetNode<Navigation>(navigationPath);
-            characterPoint = GetNode<Position3D>(characterPointPath);
             navigationMesh = navigation.GetNode<NavigationMeshInstance>("Navmesh");
 
             saveUUID = (string) args[1];
@@ -64,22 +64,21 @@ namespace CrazyEaters.Managers
         {
             foreach (var habitat in habitatsGameData.habitats) {
                 if (habitat.uuid == saveUUID) {
-                    InitHabitat(habitat);
-                    InitCharacter(habitat.character, habitat.statusesEater);
+                    var habitatNode = InitHabitat(habitat);
+                    InitCharacter(habitat.character, habitat.statusesEater, habitatNode.CharacterPoint);
                     return;
                 }
             }
         }
 
-        public void InitCharacter(CrazyEaters.Save.CharacterData _characterData, List<CrazyEaters.Save.StatusCharacter> statusesEater)
+        public void InitCharacter(CrazyEaters.Save.CharacterData _characterData, List<CrazyEaters.Save.StatusCharacter> statusesEater, Vector3 spawnPoint)
         {
             var characterData = itemsManager.FindByKey(_characterData.id) as CrazyEaters.Resources.CharacterData;
-            GD.Print(characterData.prefab);
             var characterNode = characterData.prefab.Instance<Character>();
             characterCtn.AddChild(characterNode);
-            characterNode.GlobalTranslation = characterPoint.GlobalTransform.origin;
+            characterNode.GlobalTranslation = spawnPoint;
         }
-        public void InitHabitat(HabitatGameData habitatGameData)
+        public Habitat InitHabitat(HabitatGameData habitatGameData)
         {
             var habitatData = itemsManager.FindByKey(habitatGameData.habitatID) as CrazyEaters.Resources.HabitatData;
             var habitatNode = habitatData.prefab.Instance<Habitat>();
@@ -87,6 +86,7 @@ namespace CrazyEaters.Managers
                 navigationMesh.BakeNavigationMesh(true);
             };
             habitatCtn.AddChild(habitatNode);
+            return habitatNode;
         }
 
         public BlockData RetrieveBlockDataFromId(int blockId)

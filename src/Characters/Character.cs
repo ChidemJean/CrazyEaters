@@ -45,36 +45,38 @@ namespace CrazyEaters.Characters
 
       public override void _Ready()
       {
-			base._Ready();
+         base._Ready();
          this.ResolveDependencies();
 
          eyeMaterial = (SpatialMaterial)GetNode<MeshInstance>(eyePath).Mesh.SurfaceGetMaterial(0);
-         scene = ((HabitatScene) sSwitcher.currentScene);
+         scene = ((HabitatScene)sSwitcher.currentScene);
 
          // Debug
          labelVel = GetNode<Label>(labelVelPath);
 
          gm.StartListening(GameEvent.UpdateCharacterStatus, OnUpdateStatus);
 
+         ai_StateMachine.AddAnyTransition(new IdleState(this), () =>
+         {
+            return moveDir.x == 0 && moveDir.z == 0 && !openMouth;
+         });
+         ai_StateMachine.AddAnyTransition(new WalkState(this), () =>
+         {
+            return moveDir != Vector3.Zero && canWalk;
+         });
+         ai_StateMachine.AddAnyTransition(new OpenMouthState(this), () =>
+         {
+            return openMouth;
+         });
          WalkState walkState = ai_StateMachine.GetState<WalkState>();
       }
 
-      public void OnUpdateStatus(object param) 
+      public void OnUpdateStatus(object param)
       {
-         CharacterStatusEventData status = (CharacterStatusEventData) param;
-         if (status.name == "health" && statusesResource.statuses["health"].curValue == 0) {
-            isDead = true;
-            SpawnTombstone();
-            QueueFree();
-         }
-      }
-
-      public void SpawnTombstone()
-      {
-         if (tombstone != null) {
-            var tombNode = tombstone.Instance<Tombstone>();
-            gm.currentMainNode3D?.AddChild(tombNode);
-            tombNode.GlobalTranslation = new Vector3(this.GlobalTransform.origin + new Vector3(0, 10f, 0));
+         CharacterStatusEventData status = (CharacterStatusEventData)param;
+         if (status.name == "health" && statusesResource.statuses["health"].curValue == 0)
+         {
+            Die();
          }
       }
 
@@ -170,26 +172,32 @@ namespace CrazyEaters.Characters
 
       public override void _PhysicsProcess(float delta)
       {
-			base._PhysicsProcess(delta);
+         base._PhysicsProcess(delta);
          if (!isBlinking)
          {
             Blink();
          }
-         if (!isDead) {
-            foreach (KeyValuePair<string, StatusCharacter> item in statusesResource.statuses) {
+         if (!isDead)
+         {
+            foreach (KeyValuePair<string, StatusCharacter> item in statusesResource.statuses)
+            {
                StatusCharacter status = item.Value;
-               if (status.seconds > 0) {
+               if (status.seconds > 0)
+               {
                   status.curSeconds += delta;
                }
-               if (status.secondsForDamage > 0 && status.curValue == 0) {
+               if (status.secondsForDamage > 0 && status.curValue == 0)
+               {
                   status.curSecondsForDamage += delta;
                }
-               if (status.curSeconds > status.seconds) {
+               if (status.curSeconds > status.seconds)
+               {
                   status.curValue = Mathf.Clamp(status.curValue + status.variation, 0, status.max);
                   gm.TriggerEvent(GameEvent.UpdateCharacterStatus, new CharacterStatusEventData(status.key, status.variation));
                   status.curSeconds = 0;
                }
-               if (status.damage != 0 && status.curSecondsForDamage > status.secondsForDamage) {
+               if (status.damage != 0 && status.curSecondsForDamage > status.secondsForDamage)
+               {
                   var healthStatus = statusesResource.statuses["health"];
                   healthStatus.curValue = Mathf.Clamp(healthStatus.curValue + status.damage, 0, healthStatus.max);
                   gm.TriggerEvent(GameEvent.UpdateCharacterStatus, new CharacterStatusEventData("health", status.damage));
@@ -210,7 +218,7 @@ namespace CrazyEaters.Characters
 
       public override void OnNavmeshChanged()
       {
-         
+
       }
 
       public override float IdleAnimationVariations(float idleTime)
@@ -245,6 +253,28 @@ namespace CrazyEaters.Characters
       {
          base.Eat(food);
          UpdateStatus("hungry", food.GetCalories());
+      }
+
+      public override void TakeDamage(int damage)
+      {
+         
+      }
+
+      public override void Die()
+      {
+         isDead = true;
+         SpawnTombstone();
+         QueueFree();
+      }
+
+      public void SpawnTombstone()
+      {
+         if (tombstone != null)
+         {
+            var tombNode = tombstone.Instance<Tombstone>();
+            gm.currentMainNode3D?.AddChild(tombNode);
+            tombNode.GlobalTranslation = new Vector3(this.GlobalTransform.origin + new Vector3(0, 10f, 0));
+         }
       }
    }
 }

@@ -46,7 +46,7 @@ cameraPath = NodePath("ViewportContainer/Viewport/HabitatScene/CameraPivot/Camer
 gameViewportPath = NodePath("ViewportContainer/Viewport")
 placementControllerPath = NodePath("ViewportContainer/Viewport/HabitatScene/PlacementController")
 characterCtnPath = NodePath("ViewportContainer/Viewport/HabitatScene/Navigation")
-characterPointPath = NodePath("ViewportContainer/Viewport/HabitatScene/Navigation/CharacterSpawn")
+enemiesCtnPath = NodePath("ViewportContainer/Viewport/HabitatScene/Navigation")
 habitatCtnPath = NodePath("ViewportContainer/Viewport/HabitatScene/Navigation/Navmesh")
 navigationPath = NodePath("ViewportContainer/Viewport/HabitatScene/Navigation")
 

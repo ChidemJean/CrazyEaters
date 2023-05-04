@@ -1,12 +1,19 @@
-[gd_resource type="SpatialMaterial" load_steps=3 format=2]
+[gd_resource type="SpatialMaterial" load_steps=5 format=2]
 
 [ext_resource path="res://assets/shaders/pixel_perfect_outline3d.tres" type="Shader" id=1]
+[ext_resource path="res://assets/models/imported/char.png" type="Texture" id=2]
+
+[sub_resource type="SpatialMaterial" id=2]
+render_priority = 2
+flags_transparent = true
+albedo_texture = ExtResource( 2 )
 
 [sub_resource type="ShaderMaterial" id=1]
 render_priority = 1
+next_pass = SubResource( 2 )
 shader = ExtResource( 1 )
 shader_param/outline_color = Color( 1, 1, 1, 1 )
-shader_param/outline_width = 2.5
+shader_param/outline_width = 2.0
 
 [resource]
 next_pass = SubResource( 1 )

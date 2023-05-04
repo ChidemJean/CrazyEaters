@@ -77,7 +77,7 @@ namespace CrazyEaters.Characters
          navigation = GetParent<Navigation>();
          navmesh = navigation.GetNode<NavigationMeshInstance>("Navmesh");
          navigationAgent = GetNode<NavigationAgent>(navigationAgentPath);
-         ig = GetNode<ImmediateGeometry>(igPath);
+         if (igPath != null) ig = GetNode<ImmediateGeometry>(igPath);
 
          navmesh.Connect("bake_finished", this, nameof(OnNavmeshChanged));
          sensorMouth.Connect("body_entered", this, nameof(OnBodyEnteredMouth));
@@ -85,18 +85,6 @@ namespace CrazyEaters.Characters
          // navigationAgent.SetTargetLocation(targetIALocation);
 
          _ai_stateMachine = new StateMachine();
-         _ai_stateMachine.AddAnyTransition(new IdleState(this), () =>
-         {
-            return moveDir.x == 0 && moveDir.z == 0 && !openMouth;
-         });
-         _ai_stateMachine.AddAnyTransition(new WalkState(this), () =>
-         {
-            return moveDir != Vector3.Zero && canWalk;
-         });
-         _ai_stateMachine.AddAnyTransition(new OpenMouthState(this), () =>
-         {
-            return openMouth;
-         });
 
          _speed = speed;
 
@@ -265,5 +253,8 @@ namespace CrazyEaters.Characters
          eating = false;
          gameManager.TriggerEvent(GameEvent.FoodEatFinish, this);
       }
+
+      public abstract void Die();
+      public abstract void TakeDamage(int damage);
    }
 }

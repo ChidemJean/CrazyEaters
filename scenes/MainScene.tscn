@@ -42,6 +42,8 @@ size_flags_vertical = 3
 script = ExtResource( 3 )
 scaleFactor = 0.7
 
+[node name="ResourcePreloader" type="ResourcePreloader" parent="."]
+
 [node name="DEV" type="Node" parent="."]
 script = ExtResource( 10 )
 

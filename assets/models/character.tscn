@@ -113,11 +113,8 @@ graph_offset = Vector2( -285, -22 )
 
 [node name="character" instance=ExtResource( 1 )]
 
-[node name="Skeleton" parent="Armature" index="0"]
-bones/17/bound_children = [ NodePath("Eyes") ]
-
 [node name="Eyes" type="BoneAttachment" parent="Armature/Skeleton" index="1"]
-transform = Transform( 1, -1.78814e-07, -2.99513e-06, 2.14204e-06, -0.606031, 0.795441, 6.25849e-07, -0.795444, -0.606034, -0.0953017, 8.61198, -1.598 )
+transform = Transform( 1, -1.57952e-06, -2.68221e-07, 2.01166e-07, 0.0422917, 0.999106, 1.01328e-06, -0.99911, 0.0422914, -0.0952901, 8.89431, -0.759584 )
 bone_name = "mouth_up"
 
 [node name="REye" type="Spatial" parent="Armature/Skeleton/Eyes" index="0"]

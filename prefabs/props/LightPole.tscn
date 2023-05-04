@@ -28,15 +28,16 @@ lightPath = NodePath("SpotLight")
 meshConePath = NodePath("cone_light/Cone")
 
 [node name="SpotLight" type="SpotLight" parent="." index="1"]
-transform = Transform( 2, 0, 0, 0, -0.0193031, 1.99991, 0, -1.99991, -0.0193031, 0, 41.5575, -18.731 )
+transform = Transform( 7.69231, 0, 0, 0, -0.0742426, 7.69195, 0, -7.69195, -0.0742426, 0, 53.9544, -18.731 )
 light_energy = 0.0
 spot_range = 7.8322
-spot_angle = 41.4961
+spot_angle = 38.3053
 
 [node name="cone_light" parent="." index="2" instance=ExtResource( 2 )]
 transform = Transform( 6, 0, 0, 0, 6, 0, 0, 0, 6, 0.163386, -1.35687, -18.7017 )
 
 [node name="Cone" parent="cone_light" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.35952, 0 )
 visible = false
 material/0 = SubResource( 3 )
 

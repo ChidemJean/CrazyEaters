@@ -8,7 +8,7 @@ namespace CrazyEaters.Characters.States
    public class IdleState : BaseState
    {
       protected float idleTime = 0.0f;
-      protected double radius = 20f;
+      protected double radius = 200f;
 
       public IdleState(BaseCharacter baseCharacter) : base(baseCharacter)
       {
