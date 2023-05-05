@@ -1,0 +1,25 @@
+[gd_resource type="Resource" load_steps=4 format=2]
+
+[ext_resource path="res://src/Resources/FoodData.cs" type="Script" id=1]
+[ext_resource path="res://resources/items/foods/Hamburguer/thumb_hamb_teste.png" type="Texture" id=2]
+[ext_resource path="res://resources/items/foods/Hamburguer/Hamburguer.tscn" type="PackedScene" id=3]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource( 1 )
+id = "hamb"
+name = "Hamburguer"
+prefab = ExtResource( 3 )
+description = null
+thumb = ExtResource( 2 )
+blocked = false
+unblockedByDefault = true
+stackable = true
+maxStack = 0
+rarity = 0
+conditionsToUnblock = {
+}
+price = 10
+coinType = 1
+calories = 100
+recipeItems = PoolStringArray(  )

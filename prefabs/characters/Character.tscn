@@ -152,7 +152,7 @@ nodes/WalkAnim/position = Vector2( -200, -20 )
 nodes/WalkScale/node = SubResource( 10 )
 nodes/WalkScale/position = Vector2( -60, -20 )
 nodes/output/position = Vector2( 1660, 60 )
-node_connections = [ "Eat", 0, "Land", "Eat", 1, "EatAnim", "WalkScale", 0, "WalkAnim", "CloseMouth", 0, "Eat", "CloseMouth", 1, "Animation", "IdleHead", 0, "IdleFoot", "IdleHead", 1, "Animation 3", "IdleFoot", 0, "State", "IdleFoot", 1, "Animation 2", "Walk", 0, "IdleScale", "Walk", 1, "WalkScale", "Land", 0, "IdlePose", "Land", 1, "JumpDown", "State", 0, "OpenMouth", "State", 1, "Jump", "IdlePose", 0, "IdleHead", "IdlePose", 1, "Animation 4", "OpenMouth", 0, "Walk", "OpenMouth", 1, "OpenMouthAnim", "IdleScale", 0, "IdleAnim", "output", 0, "CloseMouth" ]
+node_connections = [ "output", 0, "CloseMouth", "Eat", 0, "Land", "Eat", 1, "EatAnim", "CloseMouth", 0, "Eat", "CloseMouth", 1, "Animation", "IdlePose", 0, "IdleHead", "IdlePose", 1, "Animation 4", "Land", 0, "IdlePose", "Land", 1, "JumpDown", "State", 0, "OpenMouth", "State", 1, "Jump", "IdleFoot", 0, "State", "IdleFoot", 1, "Animation 2", "OpenMouth", 0, "Walk", "OpenMouth", 1, "OpenMouthAnim", "WalkScale", 0, "WalkAnim", "IdleHead", 0, "IdleFoot", "IdleHead", 1, "Animation 3", "IdleScale", 0, "IdleAnim", "Walk", 0, "IdleScale", "Walk", 1, "WalkScale" ]
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=20]
 
@@ -190,7 +190,7 @@ transform = Transform( 0.17, 0, 0, 0, 0.17, 0, 0, 0, 0.17, 0, 0, 0 )
 material/0 = ExtResource( 9 )
 
 [node name="Eyes" parent="character/Armature/Skeleton" index="1"]
-transform = Transform( 1, -2.83122e-07, -2.98023e-06, 2.07685e-06, -0.58311, 0.812393, 5.66244e-07, -0.812396, -0.583113, -0.0953014, 8.65763, -1.45338 )
+transform = Transform( 1, -1.57952e-06, -2.68221e-07, 2.01166e-07, 0.0422917, 0.999106, 1.01328e-06, -0.99911, 0.0422914, -0.0952901, 8.89431, -0.759584 )
 
 [node name="character_eye" parent="character/Armature/Skeleton/Eyes/REye" index="0"]
 transform = Transform( 1, -7.36793e-07, -2.54251e-07, 7.21542e-07, 0.87976, 0.475423, 6.75092e-07, -0.475425, 0.879753, -0.0732958, 0.0953681, 0.116553 )
@@ -199,7 +199,7 @@ transform = Transform( 1, -7.36793e-07, -2.54251e-07, 7.21542e-07, 0.87976, 0.47
 transform = Transform( 1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0 )
 
 [node name="Mouth" type="BoneAttachment" parent="character/Armature/Skeleton" index="2"]
-transform = Transform( 1, -1.46031e-06, 1.93715e-07, 1.6205e-07, 0.370486, 0.928838, 1.19209e-06, -0.928842, 0.370487, -0.0952981, 5.41801, -1.46785 )
+transform = Transform( 1, -9.83477e-07, 1.20699e-06, -1.19209e-06, 0.165981, 0.986129, 1.46031e-06, -0.986133, 0.165981, -0.0952938, 5.52546, -1.50738 )
 bone_name = "mouth_down"
 
 [node name="MouthSensor" type="Area" parent="character/Armature/Skeleton/Mouth"]

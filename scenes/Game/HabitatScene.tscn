@@ -1,11 +1,8 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://src/Animations/DayNightAnimation.cs" type="Script" id=5]
 [ext_resource path="res://prefabs/env/Skybox.tscn" type="PackedScene" id=6]
 [ext_resource path="res://prefabs/launchers/spatula.tscn" type="PackedScene" id=9]
-[ext_resource path="res://assets/textures/UI/thumbs/thumb_hamb_teste.png" type="Texture" id=10]
-[ext_resource path="res://prefabs/items/foods/Hamburguer.tscn" type="PackedScene" id=11]
-[ext_resource path="res://src/Resources/FoodData.cs" type="Script" id=12]
 [ext_resource path="res://src/Tools/ExplosionTap.cs" type="Script" id=13]
 [ext_resource path="res://prefabs/utils/LineRenderer.tscn" type="PackedScene" id=14]
 [ext_resource path="res://conf/HabitatSceneEnv.tres" type="Environment" id=18]
@@ -201,25 +198,6 @@ polygon_verts_per_poly = 3.0
 filter_ledge_spans = true
 filter_walkable_low_height_spans = true
 
-[sub_resource type="Resource" id=21]
-resource_local_to_scene = true
-script = ExtResource( 12 )
-id = "hamb"
-name = "Hamburguer"
-description = null
-thumb = ExtResource( 10 )
-blocked = false
-unblockedByDefault = true
-stackable = true
-maxStack = 99
-rarity = 0
-conditionsToUnblock = {
-}
-price = 10
-coinType = 1
-calories = 200
-recipeItems = PoolStringArray(  )
-
 [node name="HabitatScene" type="Spatial"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -254,7 +232,7 @@ far = 250.0
 [node name="spatula" parent="CameraPivot/Camera" instance=ExtResource( 9 )]
 transform = Transform( -8.74228e-09, 0, -0.2, 0, 0.2, 0, 0.2, 0, -8.74228e-09, 0, -3.42839, -6.62027 )
 lineRendererPath = NodePath("../../../LineRenderer")
-throwablePath = NodePath("../../../Hamburguer")
+throwablePath = NodePath("")
 
 [node name="LineRenderer" parent="." instance=ExtResource( 14 )]
 material_override = SubResource( 22 )
@@ -284,9 +262,5 @@ navmesh = SubResource( 20 )
 
 [node name="CharacterSpawn" type="Position3D" parent="Navigation"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.28, 10.107, 1.726 )
-
-[node name="Hamburguer" parent="." instance=ExtResource( 11 )]
-transform = Transform( 0.0202218, 0.0106834, -0.999738, -0.0617681, 0.998046, 0.0094159, 0.997886, 0.0615615, 0.0208422, -0.00979732, -2.57539, 27.1429 )
-foodData = SubResource( 21 )
 
 [node name="Skybox" parent="." instance=ExtResource( 6 )]

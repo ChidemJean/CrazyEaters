@@ -1,0 +1,24 @@
+[gd_resource type="Resource" load_steps=4 format=2]
+
+[ext_resource path="res://resources/items/foods/Pizza/Pizza.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/Resources/FoodData.cs" type="Script" id=2]
+[ext_resource path="res://resources/items/foods/Pizza/pizza_thumb.png" type="Texture" id=3]
+
+[resource]
+script = ExtResource( 2 )
+id = "pizza"
+name = "Pizza"
+prefab = ExtResource( 1 )
+description = ""
+thumb = ExtResource( 3 )
+blocked = false
+unblockedByDefault = true
+stackable = true
+maxStack = 0
+rarity = 0
+conditionsToUnblock = {
+}
+price = 45
+coinType = 1
+calories = 30
+recipeItems = PoolStringArray(  )

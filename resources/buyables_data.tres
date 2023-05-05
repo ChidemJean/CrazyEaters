@@ -1,7 +1,7 @@
-[gd_resource type="Resource" load_steps=11 format=2]
+[gd_resource type="Resource" load_steps=21 format=2]
 
 [ext_resource path="res://src/Resources/Collections/BuyablesData.cs" type="Script" id=1]
-[ext_resource path="res://resources/items/foods/hamburguer.tres" type="Resource" id=2]
+[ext_resource path="res://resources/items/foods/Hamburguer/hamburguer.tres" type="Resource" id=2]
 [ext_resource path="res://resources/items/blocks/chair_block.tres" type="Resource" id=3]
 [ext_resource path="res://resources/items/blocks/wall_frame.tres" type="Resource" id=4]
 [ext_resource path="res://resources/items/blocks/stone_stair.tres" type="Resource" id=5]
@@ -10,7 +10,17 @@
 [ext_resource path="res://resources/characters/alien_eater/alien_eater.tres" type="Resource" id=8]
 [ext_resource path="res://resources/characters/bubble_eater/bubble_eater.tres" type="Resource" id=9]
 [ext_resource path="res://resources/launchers/spatula.tres" type="Resource" id=10]
+[ext_resource path="res://resources/items/foods/Pizza/pizza.tres" type="Resource" id=11]
+[ext_resource path="res://resources/items/foods/Soda/soda.tres" type="Resource" id=12]
+[ext_resource path="res://resources/items/foods/Potato/potato.tres" type="Resource" id=13]
+[ext_resource path="res://resources/items/foods/Flour/flour.tres" type="Resource" id=14]
+[ext_resource path="res://resources/items/foods/Meat/meat.tres" type="Resource" id=15]
+[ext_resource path="res://resources/items/foods/Egg/egg.tres" type="Resource" id=16]
+[ext_resource path="res://resources/items/foods/Fries/fries.tres" type="Resource" id=17]
+[ext_resource path="res://resources/items/foods/Bread/bread.tres" type="Resource" id=18]
+[ext_resource path="res://resources/items/foods/Milk/milk.tres" type="Resource" id=19]
+[ext_resource path="res://resources/items/foods/Tomato/tomato.tres" type="Resource" id=20]
 
 [resource]
 script = ExtResource( 1 )
-buyables = [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ) ]
+buyables = [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 18 ), ExtResource( 16 ), ExtResource( 14 ), ExtResource( 17 ), ExtResource( 15 ), ExtResource( 19 ), ExtResource( 11 ), ExtResource( 13 ), ExtResource( 12 ), ExtResource( 20 ) ]
