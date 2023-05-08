@@ -1,8 +1,6 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://src/Resources/FoodData.cs" type="Script" id=1]
 [ext_resource path="res://assets/textures/UI/radial_gradient_scene.png" type="Texture" id=2]
-[ext_resource path="res://resources/items/foods/Hamburguer/thumb_hamb_teste.png" type="Texture" id=3]
 [ext_resource path="res://src/Managers/HabitatScene.cs" type="Script" id=5]
 [ext_resource path="res://scenes/Game/HabitatScene.tscn" type="PackedScene" id=6]
 [ext_resource path="res://prefabs/ui/HUD_Habitat.tscn" type="PackedScene" id=7]
@@ -16,25 +14,6 @@ colors = PoolColorArray( 0.241431, 0.22316, 0.457031, 1, 1, 1, 1, 1 )
 
 [sub_resource type="GradientTexture" id=3]
 gradient = SubResource( 2 )
-
-[sub_resource type="Resource" id=1]
-resource_local_to_scene = true
-script = ExtResource( 1 )
-id = "hamb"
-name = "Hamburguer"
-description = null
-thumb = ExtResource( 3 )
-blocked = false
-unblockedByDefault = true
-stackable = true
-maxStack = 99
-rarity = 0
-conditionsToUnblock = {
-}
-price = 10
-coinType = 1
-calories = 200
-recipeItems = PoolStringArray(  )
 
 [node name="MainSceneHabitat" type="Control"]
 anchor_right = 1.0
@@ -85,15 +64,6 @@ shadow_atlas_quad_0 = 1
 [node name="DirectionalLight" parent="ViewportContainer/Viewport/HabitatScene" index="1"]
 transform = Transform( -0.515891, 0.856654, -3.74456e-08, 3.82137e-15, 4.37114e-08, 1, 0.856655, 0.51589, -2.25503e-08, 0, 8.84839, 0 )
 
-[node name="Skeleton" parent="ViewportContainer/Viewport/HabitatScene/CameraPivot/Camera/spatula/Armature" index="0"]
-bones/4/bound_children = [  ]
-
-[node name="BoneAttachment" parent="ViewportContainer/Viewport/HabitatScene/CameraPivot/Camera/spatula/Armature/Skeleton" index="1"]
-transform = Transform( 0.997886, 0.0615615, 0.0208422, -0.061768, 0.998046, 0.0094159, -0.0202219, -0.0106834, 0.999738, -0.248285, 3.04844, 0.0488994 )
-
-[node name="Hamburguer" parent="ViewportContainer/Viewport/HabitatScene" index="9"]
-foodData = SubResource( 1 )
-
 [node name="DebugPanel" type="MarginContainer" parent="."]
 visible = false
 margin_top = 305.0
@@ -137,5 +107,3 @@ text = "Bake navmesh"
 [node name="HUD_Habitat" parent="." instance=ExtResource( 7 )]
 
 [editable path="ViewportContainer/Viewport/HabitatScene"]
-[editable path="ViewportContainer/Viewport/HabitatScene/CameraPivot/Camera/spatula"]
-[editable path="ViewportContainer/Viewport/HabitatScene/CameraPivot/Camera/spatula/spatula_base"]

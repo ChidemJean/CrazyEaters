@@ -3,6 +3,7 @@ using System;
 using CrazyEaters.Managers;
 using CrazyEaters.Entities;
 using CrazyEaters.Characters.States;
+using CrazyEaters.Enemies;
 using CrazyEaters.AI.StateMachine;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -215,7 +216,7 @@ namespace CrazyEaters.Characters
          }
          velocity = this.MoveAndSlideWithSnap(velocity, isJumping ? Vector3.Zero : Vector3.Down, Vector3.Up, true, 4, Mathf.Deg2Rad(52));
 
-         DebugPath();
+         // DebugPath();
       }
 
       public async void OnJumpDownAnimationEnd()

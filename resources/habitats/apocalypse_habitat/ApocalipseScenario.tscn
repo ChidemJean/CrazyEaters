@@ -15,6 +15,7 @@ data = PoolVector3Array( 16.2596, -27.6449, 263.097, 108.454, -24.0029, 132.252,
 transform = Transform( 0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 0 )
 script = ExtResource( 2 )
 characterPointPath = NodePath("CharacterSpawn")
+enemyPointsPaths = [ NodePath("EnemySpawn1"), NodePath("EnemySpawn2") ]
 
 [node name="BaseScenario" type="StaticBody" parent="."]
 transform = Transform( 0.24, 0, 0, 0, 0.24, 0, 0, 0, 0.24, 0, 0, 0 )
@@ -28,16 +29,16 @@ shape = SubResource( 1 )
 [node name="apocalipse_scenario" parent="BaseScenario" instance=ExtResource( 1 )]
 
 [node name="CharacterSpawn" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.90609, -11.378 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13.5254, 3.7433, -9.55544 )
 
 [node name="light_pole" parent="." instance=ExtResource( 3 )]
-transform = Transform( 0.13, 0, 0, 0, 0.13, 0, 0, 0, 0.13, -0.838908, 1.64184, -3.1939 )
+transform = Transform( 0.13, 0, 0, 0, 0.13, 0, 0, 0, 0.13, -1.46705, 1.64184, -3.1939 )
 
 [node name="light_pole2" parent="." instance=ExtResource( 3 )]
 transform = Transform( 0.13, 0, 0, 0, 0.13, 0, 0, 0, 0.13, 14.0632, 1.64184, -3.1939 )
 
 [node name="light_pole3" parent="." instance=ExtResource( 3 )]
-transform = Transform( 0.13, 0, 0, 0, 0.13, 0, 0, 0, 0.13, -16.7185, 1.64184, -3.1939 )
+transform = Transform( 0.13, 0, 0, 0, 0.13, 0, 0, 0, 0.13, -16.6862, 1.64184, -3.1939 )
 
 [node name="Garbage" parent="." instance=ExtResource( 4 )]
 transform = Transform( -0.000136138, 0, 0.18, 0, 0.15, 0, -0.15, 0, -0.000163365, -21.4136, 1.82219, 1.46689 )
@@ -89,5 +90,11 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -21.5156, 1.80589, -12.6149 )
 
 [node name="Cone3" parent="." instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -23.8911, 1.80589, -14.5904 )
+
+[node name="EnemySpawn1" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.5895, 1.51623, 10.1312 )
+
+[node name="EnemySpawn2" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.7429, 0.849988, 24.9546 )
 
 [editable path="BaseScenario/apocalipse_scenario"]

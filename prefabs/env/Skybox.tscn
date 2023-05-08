@@ -3,6 +3,8 @@
 [ext_resource path="res://assets/materials/env/Skybox.tres" type="Material" id=1]
 
 [sub_resource type="SphereMesh" id=6]
+radial_segments = 6
+rings = 3
 
 [node name="Skybox" type="MeshInstance"]
 transform = Transform( 120, 0, 0, 0, 120, 0, 0, 0, 120, 0, 0, 0 )

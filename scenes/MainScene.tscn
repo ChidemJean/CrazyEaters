@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://scenes/Game/GameScene.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/textures/UI/logo_chidem_games.fw.png" type="Texture" id=2]
@@ -27,6 +27,7 @@
 [ext_resource path="res://resources/rarities/uncommom.tres" type="Resource" id=25]
 [ext_resource path="res://resources/rarities/commom.tres" type="Resource" id=26]
 [ext_resource path="res://resources/items/types.tres" type="Resource" id=27]
+[ext_resource path="res://resources/enemies_data.tres" type="Resource" id=28]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 content_margin_left = 45.0
@@ -62,6 +63,7 @@ sounds = {
 script = ExtResource( 22 )
 xp = 600
 coins = 250
+allEnemies = ExtResource( 28 )
 
 [node name="ItemsManager" type="Node" parent="."]
 script = ExtResource( 19 )

@@ -1,6 +1,9 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using CrazyEaters.Resources;
+using CrazyEaters.Enemies;
+using CrazyEaters.Utils;
 
 namespace CrazyEaters.Entities
 {
@@ -29,6 +32,13 @@ namespace CrazyEaters.Entities
                     enemyPoints.Add(GetNode<Position3D>(enemyPoint));
                 }
             }
+        }
+
+        public Position3D GetRandomEnemySpawnPoint()
+        {
+            if (enemyPoints == null || enemyPoints.Count == 0) return null;
+            int idx = MathUtils.RandiRange(0, enemyPoints.Count - 1);
+            return enemyPoints[idx];
         }
 
     }

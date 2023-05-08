@@ -40,6 +40,25 @@ namespace CrazyEaters.Managers
         private Navigation navigation;
         private NavigationMeshInstance navigationMesh;
         private string saveUUID;
+        private Habitat currentHabitat;
+        private Character character;
+        public Habitat CurrentHabitat {
+            get {
+                return currentHabitat;
+            }
+        }
+        public Spatial EnemiesCtn {
+            get {
+                return enemiesCtn;
+            }
+        }
+        public Character Character {
+            get {
+                return character;
+            }
+        }
+        
+        [Signal] public delegate void HabitatInit();
 
         public override void _Ready()
         {
@@ -76,17 +95,19 @@ namespace CrazyEaters.Managers
             var characterData = itemsManager.FindByKey(_characterData.id) as CrazyEaters.Resources.CharacterData;
             var characterNode = characterData.prefab.Instance<Character>();
             characterCtn.AddChild(characterNode);
+            character = characterNode;
             characterNode.GlobalTranslation = spawnPoint;
         }
         public Habitat InitHabitat(HabitatGameData habitatGameData)
         {
             var habitatData = itemsManager.FindByKey(habitatGameData.habitatID) as CrazyEaters.Resources.HabitatData;
-            var habitatNode = habitatData.prefab.Instance<Habitat>();
-            habitatNode.onReady = () => {
+            currentHabitat = habitatData.prefab.Instance<Habitat>();
+            currentHabitat.onReady = () => {
                 navigationMesh.BakeNavigationMesh(true);
             };
-            habitatCtn.AddChild(habitatNode);
-            return habitatNode;
+            habitatCtn.AddChild(currentHabitat);
+            EmitSignal("HabitatInit");
+            return currentHabitat;
         }
 
         public BlockData RetrieveBlockDataFromId(int blockId)
