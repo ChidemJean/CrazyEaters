@@ -10,7 +10,7 @@ extents = Vector3( 7.55861, 5.39751, 0.35005 )
 [sub_resource type="SpatialMaterial" id=1]
 flags_transparent = true
 params_cull_mode = 2
-params_depth_draw_mode = 3
+params_depth_draw_mode = 1
 albedo_texture = ExtResource( 3 )
 uv1_scale = Vector3( 8, 8, 8 )
 
@@ -24,6 +24,7 @@ shape = SubResource( 2 )
 [node name="iron_fence" parent="." instance=ExtResource( 1 )]
 
 [node name="Cube" parent="iron_fence" index="0"]
+visible = false
 material/0 = ExtResource( 2 )
 material/1 = SubResource( 1 )
 

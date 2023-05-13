@@ -19,6 +19,7 @@ flags_transparent = true
 flags_unshaded = true
 flags_do_not_receive_shadows = true
 flags_disable_ambient_light = true
+params_depth_draw_mode = 1
 albedo_texture = SubResource( 5 )
 
 [node name="light_pole" instance=ExtResource( 1 )]
@@ -35,10 +36,10 @@ spot_angle = 37.2125
 
 [node name="cone_light" parent="." index="2" instance=ExtResource( 2 )]
 transform = Transform( 7, 0, 0, 0, 9, 0, 0, 0, 7, 0.163386, -18.2663, -18.8256 )
+visible = false
 
 [node name="Cone" parent="cone_light" index="0"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.35952, 0 )
-visible = false
 material/0 = SubResource( 3 )
 
 [editable path="cone_light"]

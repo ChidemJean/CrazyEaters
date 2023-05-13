@@ -249,3 +249,4 @@ navmesh = SubResource( 20 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.28, 10.107, 1.726 )
 
 [node name="Skybox" parent="." instance=ExtResource( 6 )]
+visible = false

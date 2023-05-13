@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=2]
+[gd_scene load_steps=55 format=2]
 
 [ext_resource path="res://prefabs/ui/BoxCoins.tscn" type="PackedScene" id=1]
 [ext_resource path="res://prefabs/ui/UserInfs.tscn" type="PackedScene" id=2]
@@ -24,6 +24,7 @@
 [ext_resource path="res://assets/textures/UI/shadow_w_screen.png" type="Texture" id=22]
 [ext_resource path="res://assets/textures/UI/middle_menu_bottom.png" type="Texture" id=23]
 [ext_resource path="res://assets/textures/UI/game-console.png" type="Texture" id=24]
+[ext_resource path="res://assets/fonts/Sigmar50.tres" type="DynamicFont" id=25]
 [ext_resource path="res://assets/textures/UI/dotted_square.png" type="Texture" id=29]
 [ext_resource path="res://prefabs/ui/generics/BlueButtonNinePatch.tscn" type="PackedScene" id=31]
 [ext_resource path="res://src/UI/Utils/ScreenResizer.cs" type="Script" id=32]
@@ -50,13 +51,6 @@
 [ext_resource path="res://assets/textures/UI/button_red_pressed.png" type="Texture" id=58]
 [ext_resource path="res://assets/textures/UI/invitation_icone.png" type="Texture" id=59]
 
-[sub_resource type="DynamicFont" id=12]
-size = 48
-outline_size = 2
-outline_color = Color( 0, 0, 0, 1 )
-use_filter = true
-font_data = ExtResource( 6 )
-
 [sub_resource type="DynamicFont" id=13]
 size = 50
 outline_size = 2
@@ -80,13 +74,6 @@ font_data = ExtResource( 6 )
 
 [sub_resource type="DynamicFont" id=9]
 size = 40
-outline_size = 2
-outline_color = Color( 0, 0, 0, 1 )
-use_filter = true
-font_data = ExtResource( 6 )
-
-[sub_resource type="DynamicFont" id=15]
-size = 60
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
 use_filter = true
@@ -192,7 +179,7 @@ grow_vertical = 2
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_y = 6
-custom_fonts/font = SubResource( 12 )
+custom_fonts/font = ExtResource( 25 )
 text = "Loja"
 align = 1
 valign = 1
@@ -457,7 +444,7 @@ grow_vertical = 2
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_y = 6
-custom_fonts/font = SubResource( 12 )
+custom_fonts/font = ExtResource( 25 )
 text = "Inventário"
 align = 1
 valign = 1
@@ -591,7 +578,7 @@ grow_vertical = 2
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_y = 6
-custom_fonts/font = SubResource( 12 )
+custom_fonts/font = ExtResource( 25 )
 text = "Cenários salvos"
 align = 1
 valign = 1
@@ -802,7 +789,7 @@ grow_vertical = 2
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_y = 6
-custom_fonts/font = SubResource( 12 )
+custom_fonts/font = ExtResource( 25 )
 text = "Multiplayer"
 align = 1
 valign = 1
@@ -1357,7 +1344,7 @@ margin_right = 299.0
 margin_bottom = 122.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_y = 5
-custom_fonts/font = SubResource( 15 )
+custom_fonts/font = ExtResource( 25 )
 text = "Quests"
 valign = 1
 

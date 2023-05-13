@@ -38,6 +38,8 @@ namespace CrazyEaters.Managers
         private string selectedHabitatKey;
         private string selectedLauncherKey;
 
+        HabitatGameData habitatGameData;
+
         public override void _Ready()
         {
             this.ResolveDependencies();
@@ -199,7 +201,6 @@ namespace CrazyEaters.Managers
 
         public void InitNewGame()
         {
-            GD.Print($"character: {selectedCharacterKey} /n habitat: {selectedHabitatKey} /n launcher: {selectedLauncherKey}");
             saveSystemNode.LoadHabitats(OnLoadHabitats);
         }
 
@@ -215,7 +216,7 @@ namespace CrazyEaters.Managers
         {
             var selectedCharacter = (CrazyEaters.Resources.CharacterData) itemsManager.FindByKey(selectedCharacterKey);
 
-            HabitatGameData habitatGameData = new HabitatGameData();
+            habitatGameData = new HabitatGameData();
             habitatGameData.uuid = Guid.NewGuid().ToString();
             habitatGameData.habitatID = selectedHabitatKey;
 
@@ -242,7 +243,7 @@ namespace CrazyEaters.Managers
 
         public void OnSaveNewHabitat()
         {
-            gameManager.TriggerEvent(GameEvent.ChangeScene, "habitat");
+            gameManager.TriggerEvent(GameEvent.ChangeScene, new string[] {"habitat", habitatGameData.uuid});
         }
 
         public void Show()
