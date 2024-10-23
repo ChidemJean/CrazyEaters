@@ -1,5 +1,5 @@
 ## Crazy Eaters ##
-Game desenvolvido em C# na Godot Engine com foco no mobile. Uma evolução do Pou 😆.
+Game desenvolvido em C# na Godot Engine com foco no mobile.
 
 ![](https://drive.google.com/uc?export=view&id=1ylSTMIeW3qn7C8VaNcWe4F7V7UdRTVH9)
 
